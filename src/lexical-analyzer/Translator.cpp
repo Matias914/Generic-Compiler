@@ -1,7 +1,10 @@
-#include "lexical-analyzer/translator/Translator.h"
+#include "lexical-analyzer/Translator.h"
 
-// Utiliza los valores ASCII para determinar en que grupo se
-// encuentra cada char. Cada grupo es un MACRO.
+/*
+ * @brief Utiliza los valores ASCII para determinar en que grupo se
+ * encuentra cada char. Cada grupo es un MACRO.
+ *
+ */
 unsigned int Translator::translate(const char& c)
 {
     const unsigned int asc = static_cast<unsigned int>(c);
@@ -11,12 +14,10 @@ unsigned int Translator::translate(const char& c)
         return LOWER_CASE;
     if (asc >= 48 && asc <= 57)
         return NUMBER;
-    // Special Character: '( ) *'
     if (asc >= 40 && asc <= 42)
-        return SPECIAL;
-    // Also Special Character: '! % /  ;  _  {  }'
+        return SPECIAL; // Special Character: '( ) *'
     if (asc == 33 || asc == 37 || asc == 47 || asc == 59 || asc == 95 || asc == 123 || asc == 125)
-        return SPECIAL;
+        return SPECIAL; // Also Special Character: '! % /  ;  _  {  }'
     if (asc >= 58  && asc <= 62)
         return OPERATOR;
     if (asc == 9 || asc == 32)

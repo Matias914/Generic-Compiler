@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "files/FileReader.h"
+#include "lexical-analyzer/FileReader.h"
 
 /*
  * @brief crea un archivo y un string para su contenido.

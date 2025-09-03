@@ -1,9 +1,7 @@
 #ifndef TPE_STATEMACHINE_H
 #define TPE_STATEMACHINE_H
 
-#include <functional>
-
-#include "lexical-analyzer/semantic-actions/SemanticAction.h"
+#include "SemanticActions.h"
 
 /*
  * @brief clase que representa una State Machine
@@ -15,9 +13,9 @@
 struct StateMachine
 {
     bool finalState;
-    std::function<SemanticAction*(StateMachine* s, const unsigned int& value)> state;
+    SemanticAction (*state) (StateMachine* s, const unsigned int& value);
 
-    SemanticAction* getSemanticAction(const unsigned int& value)
+    SemanticAction getSemanticAction(const unsigned int& value)
     {
         return state(this, value);
     }

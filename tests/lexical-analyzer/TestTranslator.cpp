@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "../../include/lexical-analyzer/translator/Translator.h"
+#include "lexical-analyzer/Translator.h"
 
 /*
  * @brief prueba los casos de uso. Se establecen caracteres

@@ -1,4 +1,4 @@
-#include "files/FileReader.h"
+#include "lexical-analyzer/FileReader.h"
 
 FileReader::FileReader()
 {

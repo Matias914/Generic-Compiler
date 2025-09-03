@@ -10,11 +10,12 @@ include_directories(include)
 # Ejecutable principal
 add_executable(TPE
         src/main.cpp
-        src/files/FileReader.cpp
-        src/lexical-analyzer/state-machine/States.cpp
-        src/lexical-analyzer/translator/Translator.cpp
         src/tables/SymbolTable.cpp
+        src/lexical-analyzer/States.cpp
+        src/lexical-analyzer/FileReader.cpp
+        src/lexical-analyzer/Translator.cpp
         src/lexical-analyzer/LexicalAnalyzer.cpp
+        src/lexical-analyzer/SemanticActions.cpp
 )
 
 # =========================================================
@@ -36,10 +37,11 @@ FetchContent_MakeAvailable(googletest)
 
 # Definir un ejecutable para tus tests
 add_executable(my_tests
-        src/files/FileReader.cpp
-        src/lexical-analyzer/translator/Translator.cpp
-        tests/files/TestFileReader.cpp
-        tests/translator/TestTranslator.cpp
+        src/lexical-analyzer/Translator.cpp
+        src/lexical-analyzer/FileReader.cpp
+        tests/lexical-analyzer/TestFileReader.cpp
+        tests/lexical-analyzer/TestTranslator.cpp
+        src/lexical-analyzer/SemanticActions.cpp
         # Agrega otros archivos de test aquí, si los tienes
 )
 
