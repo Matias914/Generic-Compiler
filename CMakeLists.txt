@@ -10,7 +10,12 @@ include_directories(include)
 # Ejecutable principal
 add_executable(TPE
         src/main.cpp
-        include/prueba.h)
+        src/files/FileReader.cpp
+        src/lexical-analyzer/state-machine/States.cpp
+        src/lexical-analyzer/translator/Translator.cpp
+        src/tables/SymbolTable.cpp
+        src/lexical-analyzer/LexicalAnalyzer.cpp
+)
 
 # =========================================================
 # === CONFIGURACIÓN DE TESTING CON FETCHCONTENT
@@ -31,7 +36,10 @@ FetchContent_MakeAvailable(googletest)
 
 # Definir un ejecutable para tus tests
 add_executable(my_tests
-        tests/test_mapping.cpp
+        src/files/FileReader.cpp
+        src/lexical-analyzer/translator/Translator.cpp
+        tests/files/TestFileReader.cpp
+        tests/translator/TestTranslator.cpp
         # Agrega otros archivos de test aquí, si los tienes
 )
 
