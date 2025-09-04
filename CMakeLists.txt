@@ -41,7 +41,6 @@ add_executable(my_tests
         src/lexical-analyzer/FileReader.cpp
         tests/lexical-analyzer/TestFileReader.cpp
         tests/lexical-analyzer/TestTranslator.cpp
-        src/lexical-analyzer/SemanticActions.cpp
         # Agrega otros archivos de test aquí, si los tienes
 )
 

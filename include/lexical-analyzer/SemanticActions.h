@@ -10,25 +10,25 @@
  * Realiza una accion sobre el lexema. Puede tirar error en caso de detectarlos.
  *
  */
-using SemanticAction = void(*) (std::string&);
+using SemanticAction = void(*) (std::string&, const char& character);
 
 namespace SemanticActions
 {
-    void  SA1(std::string& lexeme);
-    void  SA2(std::string& lexeme);
-    void  SA3(std::string& lexeme);
-    void  SA4(std::string& lexeme);
-    void  SA5(std::string& lexeme);
-    void  SA6(std::string& lexeme);
-    void  SA7(std::string& lexeme);
-    void  SA8(std::string& lexeme);
-    void  SA9(std::string& lexeme);
-    void SA10(std::string& lexeme);
-    void SA11(std::string& lexeme);
-    void SA12(std::string& lexeme);
-    void SA13(std::string& lexeme);
-    void SA14(std::string& lexeme);
-    void SA15(std::string& lexeme);
+    void  SA1(std::string& lexeme, const char& character);
+    void  SA2(std::string& lexeme, const char& character);
+    void  SA3(std::string& lexeme, const char& character);
+    void  SA4(std::string& lexeme, const char& character);
+    void  SA5(std::string& lexeme, const char& character);
+    void  SA6(std::string& lexeme, const char& character);
+    void  SA7(std::string& lexeme, const char& character);
+    void  SA8(std::string& lexeme, const char& character);
+    void  SA9(std::string& lexeme, const char& character);
+    void SA10(std::string& lexeme, const char& character);
+    void SA11(std::string& lexeme, const char& character);
+    void SA12(std::string& lexeme, const char& character);
+    void SA13(std::string& lexeme, const char& character);
+    void SA14(std::string& lexeme, const char& character);
+    void SA15(std::string& lexeme, const char& character);
 }
 
 #endif //TPE_SEMANTICACTION_H

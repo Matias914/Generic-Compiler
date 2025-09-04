@@ -19,7 +19,7 @@ int LexicalAnalyzer::yylex()
     {
         const int ivalue = Translator::translate(character);
         const SemanticAction as = sm.getSemanticAction(ivalue);
-        as(lexeme);
+        as(lexeme, character);
     }
     // TODO: yyval.sval = lexeme; o usar directamente esa variable
     return 0;

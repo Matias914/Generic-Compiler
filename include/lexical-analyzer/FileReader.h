@@ -14,12 +14,13 @@ class FileReader
 {
 public:
     // Lleva en cuenta el número de línea y sigue la convencion de Flex
-    int yylineno;
+    unsigned int yylineno;
 
     FileReader();
 
     void set(const char* filename);
     bool get(char& c);
+    void unget();
 
 private:
     std::ifstream file;
