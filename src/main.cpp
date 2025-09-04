@@ -3,7 +3,7 @@
 #include "tables/SymbolTable.h"
 #include "lexical-analyzer/LexicalAnalyzer.h"
 
-SymbolTable SYMBOLS_TABLE = SymbolTable();
+SymbolTable SYMBOL_TABLE = SymbolTable();
 
 int main(const int argc, char* argv[])
 {

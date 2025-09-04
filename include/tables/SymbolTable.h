@@ -13,9 +13,9 @@
 class SymbolTable
 {
 public:
-    class Entry
+    // TODO: Si crece en memoria, pasar a puntero.
+    struct Metadata
     {
-    public:
         union
         {
             int   i;
@@ -23,13 +23,19 @@ public:
         } value;
         unsigned int type;
     };
+    struct EntryReference
+    {
+        const std::string* sptr;
+        const Metadata*    dptr;
+    };
     SymbolTable();
 
-    Entry* add(const std::string& symbol, Entry* entry);
-    Entry* get(const std::string& symbol) const;
+    bool add(const std::string& symbol, const Metadata& entry);
+    /* Devuelve iterador constante */
+    EntryReference get(const std::string& symbol) const;
 
 private:
-    std::unordered_map<std::string, Entry*> table;
+    std::unordered_map<std::string, Metadata> table;
 };
 
 #endif //TPE_SYMBOLTABLE_H

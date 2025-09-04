@@ -1,100 +1,121 @@
-#include "lexical-analyzer/FileReader.h"
+#include "syntax-analyzer/Parser.h"
+#include "tables/ReservedWordsTable.h"
 #include "lexical-analyzer/SemanticActions.h"
+#include "lexical-analyzer/LexicalAnalyzer.h"
+
+#include "tables/SymbolTable.h"
 
 extern FileReader GFILE;
+extern SymbolTable SYMBOL_TABLE;
 
 /*
- * @brief se utiliza para lanzar errores con numero de linea.
- *
+ * @brief se utiliza para lanzar errores con número de línea.
  */
 void lanzarError(const std::string& suffix)
 {
-    const std::string prefix = "Linea " + std::to_string(GFILE.yylineno) + ": ";
-    throw std::runtime_error(prefix + suffix);
+    const std::string prefix = "ERROR. Line " + std::to_string(GFILE.yylineno) + ": ";
+    throw std::runtime_error(prefix + suffix + ".");
 }
 
 /* ------------------------- SEMANTIC ACTIONS ------------------------- */
 
-void  SemanticActions::SA1(std::string& lexeme, const char& character)
+int  SemanticActions::SA1(std::string& lexeme, const char& character)
 {
-    lexeme = "" + character;
+    lexeme.clear();
+    lexeme.reserve(32);
+    lexeme += character;
+    return -1;
 }
 
-void  SemanticActions::SA2(std::string& lexeme, const char& character)
+int  SemanticActions::SA2(std::string& lexeme, const char& character)
 {
     lexeme += character;
+    return -1;
 }
 
-void  SemanticActions::SA3(std::string& lexeme, const char& character)
+int  SemanticActions::SA3(std::string& lexeme, const char& character)
 {
-    if (character == 'U')
-        lanzarError(lexeme + "el sufijo de una constante es UI");
+    if (character != 'U')
+        lanzarError(lexeme + "the uint constant suffix is defined as UI");
     lexeme += character;
+    return -1;
 }
 
-void  SemanticActions::SA4(std::string& lexeme, const char& character)
+int  SemanticActions::SA4(std::string& lexeme, const char& character)
 {
-    if (character == 'I')
-        lanzarError(lexeme + "el sufijo de una constante es UI");
+    if (character != 'I')
+        lanzarError(lexeme + "the uint constant suffix is defined as UI");
     lexeme += character;
-    // TODO: si el lexema solo puede ser uint, no comparar con cero. TABLA DE SIMBOLOS
+    // TODO: si el lexema solo puede ser uint, no comparar con cero.
     const int value = stoi(lexeme.substr(0, lexeme.size() - 2));
-    if (value >= 0 && value <= 65535)
-        lanzarError(lexeme + "la constante sobrepasa 65535");
+    if (value < 0 || value > 65535)
+        lanzarError(lexeme + "the constant is out of range [0-65535]");
+    return INTEGER_LITERAL;
 }
 
-void  SemanticActions::SA5(std::string& lexeme, const char& character)
+int  SemanticActions::SA5(std::string& lexeme, const char& character)
 {
 
+    return -1;
 }
 
-void  SemanticActions::SA6(std::string& lexeme, const char& character)
+int  SemanticActions::SA6(std::string& lexeme, const char& character)
 {
 
+    return -1;
 }
 
-void  SemanticActions::SA7(std::string& lexeme, const char& character)
+int  SemanticActions::SA7(std::string& lexeme, const char& character)
 {
 
+    return -1;
 }
 
-void  SemanticActions::SA8(std::string& lexeme, const char& character)
+int  SemanticActions::SA8(std::string& lexeme, const char& character)
 {
 
+    return -1;
 }
 
 // TODO: preguntar por el tema de la insercion de espacio
-void  SemanticActions::SA9(std::string& lexeme, const char& character)
+int  SemanticActions::SA9(std::string& lexeme, const char& character)
 {
 
+    return -1;
 }
 
-void SemanticActions::SA10(std::string& lexeme, const char& character)
+int SemanticActions::SA10(std::string& lexeme, const char& character)
 {
 
+    return -1;
 }
 
-void SemanticActions::SA11(std::string& lexeme, const char& character)
+int SemanticActions::SA11(std::string& lexeme, const char& character)
 {
 
+    return -1;
 }
 
-void SemanticActions::SA12(std::string& lexeme, const char& character)
+int SemanticActions::SA12(std::string& lexeme, const char& character)
 {
 
+    return -1;
 }
 
-void SemanticActions::SA13(std::string& lexeme, const char& character)
+int SemanticActions::SA13(std::string& lexeme, const char& character)
 {
 
+    return -1;
 }
 
-void SemanticActions::SA14(std::string& lexeme, const char& character)
+int SemanticActions::SA14(std::string& lexeme, const char& character)
 {
 
+    return -1;
 }
 
-void SemanticActions::SA15(std::string& lexeme, const char& character)
+int SemanticActions::SA15(std::string& lexeme, const char& character)
 {
 
+    return -1;
 }

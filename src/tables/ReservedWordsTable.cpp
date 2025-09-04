@@ -1,0 +1,27 @@
+#include "syntax-analyzer/Parser.h"
+#include "tables/ReservedWordsTable.h"
+
+#include <stdexcept>
+
+int ReservedWordsTable::getToken(const std::string& word)
+{
+    if (word == "if")
+        return IF;
+    if (word == "else")
+        return ELSE;
+    if (word == "endif")
+        return ENDIF;
+    if (word == "do")
+        return DO;
+    if (word == "while")
+        return WHILE;
+    if (word == "return")
+        return RETURN;
+    if (word == "print")
+        return PRINT;
+    if (word == "uint")
+        return UINT;
+    if (word == "float")
+        return FLOAT;
+    return -1;
+}

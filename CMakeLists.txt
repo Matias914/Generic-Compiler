@@ -16,6 +16,8 @@ add_executable(TPE
         src/lexical-analyzer/Translator.cpp
         src/lexical-analyzer/LexicalAnalyzer.cpp
         src/lexical-analyzer/SemanticActions.cpp
+        src/tables/ReservedWordsTable.cpp
+        include/tables/ReservedWordsTable.h
 )
 
 # =========================================================
@@ -37,10 +39,18 @@ FetchContent_MakeAvailable(googletest)
 
 # Definir un ejecutable para tus tests
 add_executable(my_tests
+        src/lexical-analyzer/States.cpp
         src/lexical-analyzer/Translator.cpp
         src/lexical-analyzer/FileReader.cpp
+        src/lexical-analyzer/SemanticActions.cpp
+        src/lexical-analyzer/LexicalAnalyzer.cpp
+        src/tables/SymbolTable.cpp
         tests/lexical-analyzer/TestFileReader.cpp
         tests/lexical-analyzer/TestTranslator.cpp
+        tests/lexical-analyzer/TestSemanticActions.cpp
+        tests/tables/TestSymbolTable.cpp
+        src/tables/ReservedWordsTable.cpp
+        include/tables/ReservedWordsTable.h
         # Agrega otros archivos de test aquí, si los tienes
 )
 

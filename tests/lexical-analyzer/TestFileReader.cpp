@@ -4,7 +4,6 @@
 /*
  * @brief crea un archivo y verifica que no tenga
  * líneas.
- *
  */
 TEST(TestFileReader, yylinenoZero)
 {
@@ -15,7 +14,6 @@ TEST(TestFileReader, yylinenoZero)
 /*
  * @brief crea un archivo y verifica que tenga al
  * menos una línea.
- *
  */
 TEST(TestFileReader, setFile)
 {
@@ -35,7 +33,6 @@ TEST(TestFileReader, setFile)
  * Luego, verifica que el contenido del archivo
  * se pueda leer como el de un string (caracter
  * a caracter).
- *
  */
 TEST(TestFileReader, getCharacter)
 {
@@ -59,7 +56,6 @@ TEST(TestFileReader, getCharacter)
 /*
  * @brief crea un archivo y verifica que tenga al
  * menos una línea, aun haciendo unget().
- *
  */
 TEST(TestFileReader, ungetWithNoCharacters)
 {
@@ -80,7 +76,6 @@ TEST(TestFileReader, ungetWithNoCharacters)
  * @brief crea un archivo y lo recorre usando get().
  * Luego, verifica que el unget() devuelva los resultados
  * leidos.
- *
  */
 TEST(TestFileReader, ungetCharacter)
 {

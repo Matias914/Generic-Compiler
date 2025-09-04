@@ -14,14 +14,21 @@ int LexicalAnalyzer::yylex()
     sm.state = States::state0;
     // Logic
     char character;
-    const bool OK = GFILE.get(character);
-    while (OK || sm.finalState)
+    bool OK = GFILE.get(character);
+    if (OK)
     {
-        const int ivalue = Translator::translate(character);
-        const SemanticAction as = sm.getSemanticAction(ivalue);
-        as(lexeme, character);
+        int token = 0;
+        while (!sm.finalState)
+        {
+            if (!OK)
+                throw std::runtime_error("End of File Unexpected");
+            const int ivalue = Translator::translate(character);
+            const SemanticAction as = sm.getSemanticAction(ivalue);
+            token = as(lexeme, character);
+            OK = GFILE.get(character);
+        }
+        return token;
     }
-    // TODO: yyval.sval = lexeme; o usar directamente esa variable
     return 0;
 }
 

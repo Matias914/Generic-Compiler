@@ -4,11 +4,12 @@
 #include <string>
 
 /*
- * @brief clase que representa una accion asociada a una transicion en
- * la máquina de estados
+ * @brief clase que representa una accion asociada a una transicion en la máquina
+ * de estados
  *
  * Realiza una accion sobre el lexema. Puede tirar error en caso de detectarlos.
  *
+ * IMPORTANTE: Actualiza el yylval y se encarga de agregar a la tabla de simbolos.
  */
 using SemanticAction = void(*) (std::string&, const char& character);
 

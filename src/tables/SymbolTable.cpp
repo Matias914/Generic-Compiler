@@ -1,19 +1,40 @@
 #include "tables/SymbolTable.h"
 
+#include <iostream>
+#include <ostream>
+
 SymbolTable::SymbolTable()
 {
-    this->table = std::unordered_map<std::string, Entry*>();
+    this->table = std::unordered_map<std::string, Metadata>();
 }
 
-SymbolTable::Entry* SymbolTable::add(const std::string& symbol, Entry* entry)
+/*
+ * @brief agrega una entrada a la tabla de simbolos. Retorna un bool
+ * que indica el estado de la operacion.
+ */
+bool SymbolTable::add(const std::string& symbol, const Metadata& entry)
 {
     const auto it = this->table.find(symbol);
-    if (it == this->table.end())
+    if (it == this->table.end()) {
         this->table[symbol] = entry;
-    return it->second;
+        return true;
+    }
+    return false;
 }
 
-SymbolTable::Entry* SymbolTable::get(const std::string& symbol) const
+/*
+ * @brief da una referencia a la tabla. Lanza un std::runtime_error
+ * en caso de no encontrarse.
+ */
+SymbolTable::EntryReference SymbolTable::get(const std::string& symbol) const
 {
-    return this->table.find(symbol)->second;
+    const auto it = table.find(symbol);
+    if (it != table.end())
+    {
+        EntryReference e;
+        e.sptr = &it->first;
+        e.dptr = &it->second;
+        return e;
+    }
+    throw std::runtime_error("Symbol not found");
 }

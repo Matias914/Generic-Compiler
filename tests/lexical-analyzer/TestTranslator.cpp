@@ -4,7 +4,6 @@
 /*
  * @brief prueba los casos de uso. Se establecen caracteres
  * que deberian ser matcheados con un determinado grupo.
- *
  */
 TEST(TestTranslator, translate)
 {
