@@ -119,3 +119,11 @@ int SemanticActions::SA15(std::string& lexeme, const char& character)
 
     return -1;
 }
+
+int SemanticActions::SA16(std::string& lexeme, const char& character)
+{
+    const int token = ReservedWordsTable::getToken(lexeme);
+    if (token == -1)
+        lanzarError("Unknown reserved word '" + lexeme + "'");
+    return token;
+}
