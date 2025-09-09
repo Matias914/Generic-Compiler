@@ -11,13 +11,14 @@ include_directories(include)
 add_executable(TPE
         src/main.cpp
         src/tables/SymbolTable.cpp
+        src/tables/ReservedWordsTable.cpp
         src/lexical-analyzer/States.cpp
         src/lexical-analyzer/FileReader.cpp
         src/lexical-analyzer/Translator.cpp
         src/lexical-analyzer/LexicalAnalyzer.cpp
         src/lexical-analyzer/SemanticActions.cpp
-        src/tables/ReservedWordsTable.cpp
-        include/tables/ReservedWordsTable.h
+        src/lexical-analyzer/StateMachine.cpp
+        src/syntax-analyzer/Parser.cpp
 )
 
 # =========================================================

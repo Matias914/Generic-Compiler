@@ -39,6 +39,7 @@ SemanticAction  States::state1(StateMachine* s, const unsigned int& value)
 
 SemanticAction  States::state2(StateMachine* s, const unsigned int& value)
 {
+    s->finalState = false;
     return SemanticActions::SA1;
 }
 
@@ -64,11 +65,13 @@ SemanticAction  States::state6(StateMachine* s, const unsigned int& value)
 
 SemanticAction  States::state7(StateMachine* s, const unsigned int& value)
 {
+    s->finalState = false;
     return SemanticActions::SA1;
 }
 
 SemanticAction  States::state8(StateMachine* s, const unsigned int& value)
 {
+    s->finalState = false;
     return SemanticActions::SA1;
 }
 
@@ -94,7 +97,17 @@ SemanticAction States::state12(StateMachine* s, const unsigned int& value)
 
 SemanticAction States::state13(StateMachine* s, const unsigned int& value)
 {
-    return SemanticActions::SA1;
+    s->finalState = false;
+    switch (value)
+    {
+    case LOWER_CASE:
+        s->state = state13;
+        return SemanticActions::SA2;
+    default:
+        s->finalState = true;
+        s->state = fstate;
+        return SemanticActions::SA16;
+    }
 }
 
 SemanticAction States::state14(StateMachine* s, const unsigned int& value)

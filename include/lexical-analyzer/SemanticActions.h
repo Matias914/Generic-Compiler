@@ -31,6 +31,9 @@ namespace SemanticActions
     int SA14(std::string& lexeme, const char& character);
     int SA15(std::string& lexeme, const char& character);
     int SA16(std::string& lexeme, const char& character);
+
+    int DoNothing(std::string& lexeme, const char& character);
+    [[noreturn]] int Trap(std::string& lexeme, const char& character);
 }
 
 #endif //TPE_SEMANTICACTION_H
