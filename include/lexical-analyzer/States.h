@@ -12,6 +12,8 @@
  */
 namespace States
 {
+    SemanticAction  fstate(StateMachine* s, const unsigned int& value);
+    SemanticAction  tstate(StateMachine* s, const unsigned int& value);
     SemanticAction  state0(StateMachine* s, const unsigned int& value);
     SemanticAction  state1(StateMachine* s, const unsigned int& value);
     SemanticAction  state2(StateMachine* s, const unsigned int& value);

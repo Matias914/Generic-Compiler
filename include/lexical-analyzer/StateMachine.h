@@ -10,15 +10,14 @@
  * y el uso de objetos en memoria.
  *
  */
-struct StateMachine
+class StateMachine
 {
+public:
     bool finalState;
     SemanticAction (*state) (StateMachine* s, const unsigned int& value);
 
-    SemanticAction getSemanticAction(const unsigned int& value)
-    {
-        return state(this, value);
-    }
+    StateMachine();
+    SemanticAction getSemanticAction(const unsigned int& value);
 };
 
 #endif //TPE_STATEMACHINE_H

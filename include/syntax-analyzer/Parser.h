@@ -45,7 +45,7 @@
 extern int yydebug;
 #endif
 /* "%code requires" blocks.  */
-#line 2 "include/syntax-analyzer/Parser.y"
+#line 3 "include/syntax-analyzer/Parser.y"
 
     #include "tables/SymbolTable.h"
 

@@ -61,3 +61,34 @@ TEST(TestSemanticActions, SA4)
     lexeme = "65600U";
     EXPECT_ANY_THROW(SemanticActions::SA4(lexeme, character));
 }
+
+/*
+ * @brief verifica que devuelva la representacion ASCII.
+ */
+TEST(TestSemanticActions, SA13)
+{
+    std::string lexeme = "";
+    char character = '+';
+    EXPECT_EQ(SemanticActions::SA13(lexeme, character), 43);
+    character = '-';
+    EXPECT_EQ(SemanticActions::SA13(lexeme, character), 45);
+    character = '(';
+    EXPECT_EQ(SemanticActions::SA13(lexeme, character), 40);
+}
+
+/*
+ * @brief verifica que devuelva el token del parser asociado
+ * a la palabra reservada dada.
+ */
+TEST(TestSemanticActions, SA16)
+{
+    std::string lexeme = "if";
+    constexpr char character = ' ';
+    int token = SemanticActions::SA16(lexeme, character);
+    EXPECT_EQ(token, 258);
+    lexeme = "else";
+    token = SemanticActions::SA16(lexeme, character);
+    EXPECT_EQ(token, 259);
+    lexeme = "pepitoelpistolero";
+    EXPECT_ANY_THROW(SemanticActions::SA16(lexeme, character));
+}

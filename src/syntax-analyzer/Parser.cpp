@@ -67,22 +67,19 @@
 
 
 /* First part of user prologue.  */
-#line 7 "include/syntax-analyzer/Parser.y"
+#line 8 "include/syntax-analyzer/Parser.y"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include "lexical-analyzer/LexicalAnalyzer.h"
 
-// Define MACRO para el namespace
 #define yylex LexicalAnalyzer::yylex
 
-// Prototipos de funciones
-void yyerror(const char* s);
-
-// Variables globales
 extern FileReader GFILE;
 
-#line 86 "src/syntax-analyzer/Parser.cpp"
+void yyerror(const char* s);
+
+#line 83 "src/syntax-analyzer/Parser.cpp"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -132,8 +129,11 @@ enum yysymbol_kind_t
   YYSYMBOL_FLOAT_LITERAL = 19,             /* FLOAT_LITERAL  */
   YYSYMBOL_INTEGER_LITERAL = 20,           /* INTEGER_LITERAL  */
   YYSYMBOL_STRING_LITERAL = 21,            /* STRING_LITERAL  */
-  YYSYMBOL_YYACCEPT = 22,                  /* $accept  */
-  YYSYMBOL_program = 23                    /* program  */
+  YYSYMBOL_22_ = 22,                       /* '('  */
+  YYSYMBOL_23_ = 23,                       /* ')'  */
+  YYSYMBOL_24_ = 24,                       /* ';'  */
+  YYSYMBOL_YYACCEPT = 25,                  /* $accept  */
+  YYSYMBOL_program = 26                    /* program  */
 };
 typedef enum yysymbol_kind_t yysymbol_kind_t;
 
@@ -459,18 +459,18 @@ union yyalloc
 #endif /* !YYCOPY_NEEDED */
 
 /* YYFINAL -- State number of the termination state.  */
-#define YYFINAL  2
+#define YYFINAL  4
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   0
+#define YYLAST   8
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  22
+#define YYNTOKENS  25
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  2
 /* YYNRULES -- Number of rules.  */
 #define YYNRULES  2
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  3
+#define YYNSTATES  11
 
 /* YYMAXUTOK -- Last valid token kind.  */
 #define YYMAXUTOK   276
@@ -491,8 +491,8 @@ static const yytype_int8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+      22,    23,     2,     2,     2,     2,     2,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,     2,    24,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -521,7 +521,7 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    54,    54
+       0,    56,    56
 };
 #endif
 
@@ -540,8 +540,8 @@ static const char *const yytname[] =
   "\"end of file\"", "error", "\"invalid token\"", "IF", "ELSE", "ENDIF",
   "DO", "WHILE", "RETURN", "PRINT", "UINT", "FLOAT", "POINTER_OP",
   "EQUAL_OP", "GE_OP", "LE_OP", "ASSIGN_OP", "NOT_EQUAL_OP", "IDENTIFIER",
-  "FLOAT_LITERAL", "INTEGER_LITERAL", "STRING_LITERAL", "$accept",
-  "program", YY_NULLPTR
+  "FLOAT_LITERAL", "INTEGER_LITERAL", "STRING_LITERAL", "'('", "')'",
+  "';'", "$accept", "program", YY_NULLPTR
 };
 
 static const char *
@@ -551,7 +551,7 @@ yysymbol_name (yysymbol_kind_t yysymbol)
 }
 #endif
 
-#define YYPACT_NINF (-1)
+#define YYPACT_NINF (-22)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -565,7 +565,8 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      -1,     0,    -1
+      -3,   -21,     2,   -20,   -22,    -4,     1,    -2,     3,   -17,
+     -22
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -573,19 +574,20 @@ static const yytype_int8 yypact[] =
    means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       2,     0,     1
+       0,     0,     0,     0,     1,     0,     0,     0,     0,     0,
+       2
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-      -1,    -1
+     -22,   -22
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-       0,     1
+       0,     2
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -593,31 +595,32 @@ static const yytype_int8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-       2
+       1,     3,     4,     5,     6,     7,     8,    10,     9
 };
 
 static const yytype_int8 yycheck[] =
 {
-       0
+       3,    22,     0,    23,     8,     4,     8,    24,     5
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
    state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,    23,     0
+       0,     3,    26,    22,     0,    23,     8,     4,     8,     5,
+      24
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr1[] =
 {
-       0,    22,    23
+       0,    25,    26
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr2[] =
 {
-       0,     2,     0
+       0,     2,     8
 };
 
 
@@ -1080,8 +1083,16 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
+  case 2: /* program: IF '(' ')' RETURN ELSE RETURN ENDIF ';'  */
+#line 57 "include/syntax-analyzer/Parser.y"
+    {
+        yyerror("HOLA");
+    }
+#line 1092 "src/syntax-analyzer/Parser.cpp"
+    break;
 
-#line 1085 "src/syntax-analyzer/Parser.cpp"
+
+#line 1096 "src/syntax-analyzer/Parser.cpp"
 
       default: break;
     }
@@ -1274,10 +1285,10 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 58 "include/syntax-analyzer/Parser.y"
+#line 62 "include/syntax-analyzer/Parser.y"
 
 
-// Función de manejo de errores
-void yyerror(const char* s) {
+void yyerror(const char* s)
+{
     fprintf(stderr, "Error: %s\n", s);
 }

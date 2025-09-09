@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "tables/SymbolTable.h"
+#include "syntax-analyzer/Parser.h"
 #include "lexical-analyzer/LexicalAnalyzer.h"
 
 SymbolTable SYMBOL_TABLE = SymbolTable();
@@ -14,7 +15,7 @@ int main(const int argc, char* argv[])
         std::cout << argv[0] << "\n";
         // Logica del main
         LexicalAnalyzer::setFileName(argv[1]);
-        LexicalAnalyzer::yylex();
+        yyparse();
     }
     catch (const std::exception& e)
     {
