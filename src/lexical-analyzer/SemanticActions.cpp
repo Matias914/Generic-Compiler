@@ -119,8 +119,8 @@ int SemanticActions::SA15(std::string& lexeme, const char& character)
 int SemanticActions::SA16(std::string& lexeme, const char& character)
 {
     const int token = ReservedWordsTable::getToken(lexeme);
+    GFILE.unget();
     if (token == -1)
         ErrorHandler::throwError("Unknown reserved word '" + lexeme + "'");
-    GFILE.unget();
     return token;
 }
