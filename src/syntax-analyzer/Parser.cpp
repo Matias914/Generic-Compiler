@@ -67,19 +67,16 @@
 
 
 /* First part of user prologue.  */
-#line 8 "include/syntax-analyzer/Parser.y"
+#line 9 "include/syntax-analyzer/Parser.y"
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "lexical-analyzer/LexicalAnalyzer.h"
-
+#include "utils/ErrorHandler.h"
+#include "lexical-analyzer/lexical_analyzer.h"
 #define yylex LexicalAnalyzer::yylex
-
-extern FileReader GFILE;
-
 void yyerror(const char* s);
 
-#line 83 "src/syntax-analyzer/Parser.cpp"
+#line 80 "src/syntax-analyzer/Parser.cpp"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -521,7 +518,7 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    56,    56
+       0,    53,    53
 };
 #endif
 
@@ -1084,15 +1081,15 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* program: IF '(' ')' RETURN ELSE RETURN ENDIF ';'  */
-#line 57 "include/syntax-analyzer/Parser.y"
+#line 54 "include/syntax-analyzer/Parser.y"
     {
-        yyerror("HOLA");
+        yyerror("\nHOLA");
     }
-#line 1092 "src/syntax-analyzer/Parser.cpp"
+#line 1089 "src/syntax-analyzer/Parser.cpp"
     break;
 
 
-#line 1096 "src/syntax-analyzer/Parser.cpp"
+#line 1093 "src/syntax-analyzer/Parser.cpp"
 
       default: break;
     }
@@ -1285,10 +1282,9 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 62 "include/syntax-analyzer/Parser.y"
+#line 59 "include/syntax-analyzer/Parser.y"
 
 
 void yyerror(const char* s)
 {
-    fprintf(stderr, "Error: %s\n", s);
 }

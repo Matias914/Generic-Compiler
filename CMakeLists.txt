@@ -10,16 +10,17 @@ include_directories(include)
 # Ejecutable principal
 add_executable(TPE
         src/main.cpp
-        src/tables/SymbolTable.cpp
-        src/tables/ReservedWordsTable.cpp
-        src/lexical-analyzer/States.cpp
-        src/lexical-analyzer/FileReader.cpp
-        src/lexical-analyzer/Translator.cpp
-        src/lexical-analyzer/ErrorHandler.cpp
-        src/lexical-analyzer/LexicalAnalyzer.cpp
-        src/lexical-analyzer/SemanticActions.cpp
-        src/lexical-analyzer/StateMachine.cpp
+        src/utils/globals.cpp
+        src/utils/SymbolTable.cpp
+        src/utils/LiteralTable.cpp
+        src/utils/ErrorHandler.cpp
         src/syntax-analyzer/Parser.cpp
+        src/lexical-analyzer/lexical_analyzer.cpp
+        src/lexical-analyzer/components/states.cpp
+        src/lexical-analyzer/components/translator.cpp
+        src/lexical-analyzer/components/StateMachine.cpp
+        src/lexical-analyzer/components/reserved_words.cpp
+        src/lexical-analyzer/components/semantic_actions.cpp
 )
 
 # =========================================================
@@ -41,21 +42,22 @@ FetchContent_MakeAvailable(googletest)
 
 # Definir un ejecutable para tus tests
 add_executable(my_tests
-        src/tables/SymbolTable.cpp
-        src/tables/ReservedWordsTable.cpp
-        src/lexical-analyzer/States.cpp
-        src/lexical-analyzer/Translator.cpp
-        src/lexical-analyzer/FileReader.cpp
-        src/lexical-analyzer/ErrorHandler.cpp
-        src/lexical-analyzer/SemanticActions.cpp
-        src/lexical-analyzer/LexicalAnalyzer.cpp
-        tests/tables/TestSymbolTable.cpp
-        tests/lexical-analyzer/TestFileReader.cpp
-        tests/lexical-analyzer/TestTranslator.cpp
-        tests/lexical-analyzer/TestSemanticActions.cpp
-        tests/lexical-analyzer/TestStates.cpp
-        tests/lexical-analyzer/TestLexicalAnalyzer.cpp
-        src/lexical-analyzer/StateMachine.cpp
+        src/utils/globals.cpp
+        src/utils/SymbolTable.cpp
+        src/utils/LiteralTable.cpp
+        src/utils/ErrorHandler.cpp
+        src/syntax-analyzer/Parser.cpp
+        src/lexical-analyzer/lexical_analyzer.cpp
+        src/lexical-analyzer/components/states.cpp
+        src/lexical-analyzer/components/translator.cpp
+        src/lexical-analyzer/components/StateMachine.cpp
+        src/lexical-analyzer/components/reserved_words.cpp
+        src/lexical-analyzer/components/semantic_actions.cpp
+        tests/unit/utils/SymbolTable_test.cpp
+        tests/unit/lexical-analyzer/lexical_analyzer_test.cpp
+        tests/unit/lexical-analyzer/components/states_test.cpp
+        tests/unit/lexical-analyzer/components/translator_test.cpp
+        tests/unit/lexical-analyzer/components/semantic_actions_test.cpp
         # Agrega otros archivos de test aquí, si los tienes
 )
 

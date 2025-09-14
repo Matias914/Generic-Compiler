@@ -1,0 +1,9 @@
+#ifndef TPE_ERROR_CODES_H
+#define TPE_ERROR_CODES_H
+
+#define UNEXPECTED_EOF        0
+#define INVALID_RESERVED_WORD 1
+#define INTEGER_OUT_OF_RANGE  2
+#define FLOAT_OUT_OF_RANGE    3
+
+#endif //TPE_ERROR_CODES_H

@@ -1,10 +1,7 @@
-#include <iostream>
-
-#include "tables/SymbolTable.h"
 #include "syntax-analyzer/Parser.h"
-#include "lexical-analyzer/LexicalAnalyzer.h"
+#include "lexical-analyzer/lexical_analyzer.h"
 
-SymbolTable SYMBOL_TABLE = SymbolTable();
+#include <iostream>
 
 int main(const int argc, char* argv[])
 {
@@ -13,8 +10,7 @@ int main(const int argc, char* argv[])
         if (argc > 2)
             throw std::runtime_error("\nSolo se admite un archivo de compilacion");
         std::cout << argv[0] << "\n";
-        // Logica del main
-        LexicalAnalyzer::setFileName(argv[1]);
+        LexicalAnalyzer::filename(argv[1]);
         yyparse();
     }
     catch (const std::exception& e)

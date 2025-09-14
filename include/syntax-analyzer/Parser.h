@@ -47,9 +47,10 @@ extern int yydebug;
 /* "%code requires" blocks.  */
 #line 3 "include/syntax-analyzer/Parser.y"
 
-    #include "tables/SymbolTable.h"
+    #include "utils/SymbolTable.h"
+    #include "utils/LiteralTable.h"
 
-#line 53 "include/syntax-analyzer/Parser.h"
+#line 54 "include/syntax-analyzer/Parser.h"
 
 /* Token kinds.  */
 #ifndef YYTOKENTYPE
@@ -86,7 +87,7 @@ extern int yydebug;
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef 
-    SymbolTable::EntryReference
+    int
  YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1

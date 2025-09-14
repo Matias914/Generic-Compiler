@@ -1,0 +1,17 @@
+
+X = 1.23F+10;
+
+if (X <= 9UI) {
+    X := "hola como estas?"
+}
+else {
+    ## Ignorar este comentario ##
+    Y =  -1UI;
+    if (.3F-1 =! do    while;
+endif
+
+X -> X
+X >= Y;
+VARIABLE%%1 >= X;
+
+return 0UI;
