@@ -1,5 +1,5 @@
 #include "lexical-analyzer/components/states.h"
-#include "lexical-analyzer/components/translator.h"
+#include "lexical-analyzer/components/mapping.h"
 #include "lexical-analyzer/components/semantic_actions.h"
 
 using namespace LexicalAnalyzer;
@@ -16,7 +16,6 @@ using namespace LexicalAnalyzer;
  */
 SemanticAction States::fstate(StateMachine* s, const unsigned int& value)
 {
-    s->finalState = true;
     s->state = fstate;
     return SemanticActions::DoNothing;
 }
@@ -25,7 +24,6 @@ SemanticAction States::fstate(StateMachine* s, const unsigned int& value)
 
 SemanticAction  States::state0(StateMachine* s, const unsigned int& value)
 {
-    s->finalState = false;
     switch(value)
     {
     case UPPER_CASE:
@@ -42,7 +40,6 @@ SemanticAction  States::state0(StateMachine* s, const unsigned int& value)
         return SemanticActions::SA1;
     case PLUS:
     case SPECIAL:
-        s->finalState = true;
         s->state = fstate;
         return SemanticActions::SA8;
     case QUOTE:
@@ -75,15 +72,17 @@ SemanticAction  States::state0(StateMachine* s, const unsigned int& value)
     case ENDLINE:
         s->state = state0;
         return SemanticActions::SA7;
+    case END_OF_FILE:
+        s->state = fstate;
+        return SemanticActions::EndOfFile;
     default:
-        s->state = state0;
-        return SemanticActions::Trap;
+        s->state = fstate;
+        return SemanticActions::UnexpectedCharTrap;
     }
 }
 
 SemanticAction  States::state1(StateMachine* s, const unsigned int& value)
 {
-    s->finalState = false;
     switch (value)
     {
     case U:
@@ -96,29 +95,26 @@ SemanticAction  States::state1(StateMachine* s, const unsigned int& value)
         s->state = state3;
         return SemanticActions::SA2;
     default:
-        s->state = state0;
-        return SemanticActions::Trap;
+        s->state = fstate;
+        return SemanticActions::ExpectedUITrap;
     }
 }
 
 SemanticAction  States::state2(StateMachine* s, const unsigned int& value)
 {
-    s->finalState = false;
     switch (value)
     {
     case I:
-        s->finalState = true;
         s->state = fstate;
         return SemanticActions::SA3;
     default:
-        s->state = state0;
-        return SemanticActions::Trap;
+        s->state = fstate;
+        return SemanticActions::ExpectedUITrap;
     }
 }
 
 SemanticAction  States::state3(StateMachine* s, const unsigned int& value)
 {
-    s->finalState = false;
     switch (value)
     {
     case F:
@@ -128,7 +124,6 @@ SemanticAction  States::state3(StateMachine* s, const unsigned int& value)
         s->state = state3;
         return SemanticActions::SA2;
     default:
-        s->finalState = true;
         s->state = fstate;
         return SemanticActions::SA4;
     }
@@ -136,15 +131,14 @@ SemanticAction  States::state3(StateMachine* s, const unsigned int& value)
 
 SemanticAction  States::state4(StateMachine* s, const unsigned int& value)
 {
-    s->finalState = false;
     switch (value)
     {
     case NUMBER:
         s->state = state3;
         return SemanticActions::SA2;
     default:
-        s->state = state0;
-        return SemanticActions::Trap;
+        s->state = fstate;
+        return SemanticActions::ExpectedNumberTrap;
     }
 }
 
@@ -157,35 +151,32 @@ SemanticAction  States::state5(StateMachine* s, const unsigned int& value)
         s->state = state6;
         return SemanticActions::SA2;
     default:
-        s->state = state0;
-        return SemanticActions::Trap;
+        s->state = fstate;
+        return SemanticActions::ExpectedSignTrap;
     }
 }
 
 SemanticAction  States::state6(StateMachine* s, const unsigned int& value)
 {
-    s->finalState = false;
     switch (value)
     {
     case NUMBER:
         s->state = state7;
         return SemanticActions::SA2;
     default:
-        s->state = state0;
-        return SemanticActions::Trap;
+        s->state = fstate;
+        return SemanticActions::ExpectedNumberTrap;
     }
 }
 
 SemanticAction  States::state7(StateMachine* s, const unsigned int& value)
 {
-    s->finalState = false;
     switch (value)
     {
     case NUMBER:
         s->state = state7;
         return SemanticActions::SA2;
     default:
-        s->finalState = true;
         s->state = fstate;
         return SemanticActions::SA4;
     }
@@ -193,16 +184,17 @@ SemanticAction  States::state7(StateMachine* s, const unsigned int& value)
 
 SemanticAction  States::state8(StateMachine* s, const unsigned int& value)
 {
-    s->finalState = false;
     switch (value)
     {
     case QUOTE:
-        s->finalState = true;
         s->state = fstate;
         return SemanticActions::SA5;
     case ENDLINE:
-        s->state = state0;
-        return SemanticActions::Trap;
+        s->state = fstate;
+        return SemanticActions::ExpectedNoEndlTrap;
+    case END_OF_FILE:
+        s->state = fstate;
+        return SemanticActions::ExpectedQuoteTrap;
     default:
         s->state = state8;
         return SemanticActions::SA2;
@@ -211,7 +203,6 @@ SemanticAction  States::state8(StateMachine* s, const unsigned int& value)
 
 SemanticAction  States::state9(StateMachine* s, const unsigned int& value)
 {
-    s->finalState = false;
     switch (value)
     {
     case NUMERAL:
@@ -219,13 +210,13 @@ SemanticAction  States::state9(StateMachine* s, const unsigned int& value)
         return SemanticActions::DoNothing;
     default:
         s->state = state0;
-        return SemanticActions::Trap;
+        return SemanticActions::ExpectedNumeralTrap;
     }
 }
 
 SemanticAction States::state10(StateMachine* s, const unsigned int& value)
 {
-    s->finalState = false;
+    
     switch (value)
     {
     case NUMERAL:
@@ -234,6 +225,9 @@ SemanticAction States::state10(StateMachine* s, const unsigned int& value)
     case ENDLINE:
         s->state = state10;
         return SemanticActions::SA7;
+    case END_OF_FILE:
+        s->state = fstate;
+        return SemanticActions::ExpectedCommentEndTrap;
     default:
         s->state = state10;
         return SemanticActions::DoNothing;
@@ -242,12 +236,17 @@ SemanticAction States::state10(StateMachine* s, const unsigned int& value)
 
 SemanticAction States::state11(StateMachine* s, const unsigned int& value)
 {
-    s->finalState = false;
     switch (value)
     {
     case NUMERAL:
         s->state = state0;
         return SemanticActions::DoNothing;
+    case ENDLINE:
+        s->state = state10;
+        return SemanticActions::SA7;
+    case END_OF_FILE:
+        s->state = fstate;
+        return SemanticActions::ExpectedCommentEndTrap;
     default:
         s->state = state10;
         return SemanticActions::DoNothing;
@@ -256,7 +255,6 @@ SemanticAction States::state11(StateMachine* s, const unsigned int& value)
 
 SemanticAction States::state12(StateMachine* s, const unsigned int& value)
 {
-    s->finalState = false;
     switch (value)
     {
     case F:
@@ -268,7 +266,6 @@ SemanticAction States::state12(StateMachine* s, const unsigned int& value)
         s->state = state12;
         return SemanticActions::SA2;
     default:
-        s->finalState = true;
         s->state = fstate;
         return SemanticActions::SA6;
     }
@@ -276,14 +273,12 @@ SemanticAction States::state12(StateMachine* s, const unsigned int& value)
 
 SemanticAction States::state13(StateMachine* s, const unsigned int& value)
 {
-    s->finalState = false;
     switch (value)
     {
     case LOWER_CASE:
         s->state = state13;
         return SemanticActions::SA2;
     default:
-        s->finalState = true;
         s->state = fstate;
         return SemanticActions::SA19;
     }
@@ -291,7 +286,6 @@ SemanticAction States::state13(StateMachine* s, const unsigned int& value)
 
 SemanticAction States::state14(StateMachine* s, const unsigned int& value)
 {
-    s->finalState = true;
     s->state = fstate;
     switch (value)
     {
@@ -306,22 +300,19 @@ SemanticAction States::state14(StateMachine* s, const unsigned int& value)
 
 SemanticAction States::state15(StateMachine* s, const unsigned int& value)
 {
-    s->finalState = false;
     switch (value)
     {
     case EQUALS:
-        s->finalState = true;
         s->state = fstate;
         return SemanticActions::SA11;
     default:
-        s->state = state0;
-        return SemanticActions::Trap;
+        s->state = fstate;
+        return SemanticActions::ExpectedEqualsTrap;
     }
 }
 
 SemanticAction States::state16(StateMachine* s, const unsigned int& value)
 {
-    s->finalState = true;
     s->state = fstate;
     switch (value)
     {
@@ -334,7 +325,6 @@ SemanticAction States::state16(StateMachine* s, const unsigned int& value)
 
 SemanticAction States::state17(StateMachine* s, const unsigned int& value)
 {
-    s->finalState = true;
     s->state = fstate;
     switch (value)
     {
@@ -347,7 +337,6 @@ SemanticAction States::state17(StateMachine* s, const unsigned int& value)
 
 SemanticAction States::state18(StateMachine* s, const unsigned int& value)
 {
-    s->finalState = true;
     s->state = fstate;
     switch (value)
     {

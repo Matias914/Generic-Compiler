@@ -13,9 +13,9 @@ int SymbolTable::add(const std::string& symbol)
     const auto it = this->mapping.find(symbol);
     if (it == this->mapping.end()) {
         const int id = this->entries.size();
-        const auto [it, _] = mapping.insert({symbol, id});
+        const auto pair = mapping.insert({symbol, id});
         auto entry = Entry();
-        entry.symbol = &it->first;
+        entry.symbol = &pair.first->first;
         this->entries.push_back(entry);
         return id;
     }

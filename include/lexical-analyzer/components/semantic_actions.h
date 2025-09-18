@@ -43,7 +43,19 @@ namespace LexicalAnalyzer
         LexemeData SA19(std::string& lexeme, const char& character);
 
         LexemeData DoNothing(std::string& lexeme, const char& character);
-        LexemeData Trap(std::string& lexeme, const char& character);
+        LexemeData EndOfFile(std::string& lexeme, const char& character);
+
+        /* Traps */
+        LexemeData UnexpectedCharTrap(std::string& lexeme, const char& character);
+        LexemeData ExpectedUITrap(std::string& lexeme, const char& character);
+        LexemeData ExpectedSignTrap(std::string& lexeme, const char& character);
+        LexemeData ExpectedNumberTrap(std::string& lexeme, const char& character);
+        LexemeData ExpectedNoEndlTrap(std::string& lexeme, const char& character);
+        LexemeData ExpectedQuoteTrap(std::string& lexeme, const char& character);
+        LexemeData ExpectedNumeralTrap(std::string& lexeme, const char& character);
+        LexemeData ExpectedCommentEndTrap(std::string& lexeme, const char& character);
+        LexemeData ExpectedEqualsTrap(std::string& lexeme, const char& character);
+
     }
 }
 

@@ -1,4 +1,5 @@
 #include "gtest/gtest.h"
+#include "utils/ErrorHandler.h"
 #include "syntax-analyzer/Parser.h"
 #include "lexical-analyzer/lexical_analyzer.h"
 #include "lexical-analyzer/components/semantic_actions.h"
@@ -6,12 +7,16 @@
 using namespace LexicalAnalyzer;
 using namespace LexicalAnalyzer::SemanticActions;
 
+extern ErrorHandler ERROR_HANDLER;
+
+// TODO: Chequear que anden todos los LOGS
+
 TEST(TestSemanticActions, SA1)
 {
     std::string lexeme = "a";
     constexpr char character = 'b';
     const LexemeData l = SA1(lexeme, character);
-    EXPECT_EQ(l.token, -1);
+    EXPECT_EQ(l.token, INVALID_TOKEN);
     EXPECT_EQ(l.entry_reference, -1);
     EXPECT_EQ(lexeme, "b");
 }
@@ -21,7 +26,7 @@ TEST(TestSemanticActions, SA2)
     std::string lexeme = "a";
     constexpr char character = 'b';
     const LexemeData l = SA2(lexeme, character);
-    EXPECT_EQ(l.token, -1);
+    EXPECT_EQ(l.token, INVALID_TOKEN);
     EXPECT_EQ(l.entry_reference, -1);
     EXPECT_EQ(lexeme, "ab");
 }
@@ -39,7 +44,7 @@ TEST(TestSemanticActions, SA3)
     EXPECT_EQ(l1.entry_reference, l2.entry_reference);
     lexeme = "66300U";
     l2 = SA3(lexeme, character);
-    EXPECT_EQ(l2.token, -1);
+    EXPECT_EQ(l2.token, INVALID_TOKEN);
     EXPECT_EQ(l2.entry_reference, -1);
 }
 
@@ -55,7 +60,7 @@ TEST(TestSemanticActions, SA4)
     EXPECT_EQ(l1.entry_reference, l2.entry_reference);
     lexeme = "1.02F-39";
     l2 = SA4(lexeme, character);
-    EXPECT_EQ(l2.token, -1);
+    EXPECT_EQ(l2.token, INVALID_TOKEN);
     EXPECT_EQ(l2.entry_reference, -1);
     lexeme = "-0.1F-3";
     l2 = SA4(lexeme, character);
@@ -86,6 +91,11 @@ TEST(TestSemanticActions, SA6)
     EXPECT_EQ(lexeme, "A");
     const LexemeData l2 = SA6(lexeme, character);
     EXPECT_EQ(l1.entry_reference, l2.entry_reference);
+    lexeme = "LONGVARIABLENAME%%%%%%";
+    SA6(lexeme, character);
+    const auto log = ERROR_HANDLER.getLastestLog();
+    EXPECT_EQ(log->type, WARNING);
+    EXPECT_EQ(log->code, TRUNCATED_VARIABLE);
 }
 
 TEST(TestSemanticActions, SA7)
@@ -94,7 +104,7 @@ TEST(TestSemanticActions, SA7)
     constexpr char character = '\n';
     const int line = YYLINENO;
     const LexemeData l = SA7(lexeme, character);
-    EXPECT_EQ(l.token, -1);
+    EXPECT_EQ(l.token, INVALID_TOKEN);
     EXPECT_EQ(l.entry_reference, -1);
     EXPECT_EQ(lexeme, "a");
     EXPECT_EQ(line + 1, YYLINENO);
@@ -219,6 +229,6 @@ TEST(TestSemanticActions, SA19)
     EXPECT_EQ(l.entry_reference, -1);
     lexeme = "ab";
     l = SA19(lexeme, character);
-    EXPECT_EQ(l.token, -1);
+    EXPECT_EQ(l.token, INVALID_TOKEN);
     EXPECT_EQ(l.entry_reference, -1);
 }

@@ -1,8 +1,8 @@
 #ifndef TPE_ERRORHANDLER_H
 #define TPE_ERRORHANDLER_H
 
-#include "handler-macros/error_codes.h"
-#include "handler-macros/warning_codes.h"
+#include "handler-resources/codes.h"
+#include "handler-resources/message_builder.h"
 
 #include <string>
 #include <vector>
@@ -23,11 +23,13 @@ public:
     ErrorHandler();
 
     void add(const Log& log);
-    int errorCount() const;
-    void showLogs() const;
-    const Log& getLastestLog() const;
 
-    [[noreturn]] static void fatal();
+    int errorCount() const;
+    int warningCount() const;
+
+    const Log* getLastestLog() const;
+
+    std::string getLogs() const;
 
 private:
     std::vector<Log> logs;

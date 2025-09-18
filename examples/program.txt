@@ -1,8 +1,16 @@
 
+%
 
+endi
 
 if ( )
-    endif
-else
-    return
-endif;
+    endif "aaa
+    veces"
+VARIBLE 25U . :
+
+"aaa" x = y;
+
+## Este es un comentario #
+klklkl jajajjaa @ ##
+
+@ !! +! =!

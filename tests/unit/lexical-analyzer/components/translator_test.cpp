@@ -1,4 +1,5 @@
 #include "gtest/gtest.h"
+#include "lexical-analyzer/components/mapping.h"
 #include "lexical-analyzer/components/translator.h"
 
 using namespace LexicalAnalyzer::Translator;

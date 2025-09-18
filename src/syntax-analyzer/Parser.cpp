@@ -71,12 +71,13 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <iostream>
 #include "utils/ErrorHandler.h"
 #include "lexical-analyzer/lexical_analyzer.h"
 #define yylex LexicalAnalyzer::yylex
 void yyerror(const char* s);
 
-#line 80 "src/syntax-analyzer/Parser.cpp"
+#line 81 "src/syntax-analyzer/Parser.cpp"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -107,30 +108,31 @@ enum yysymbol_kind_t
   YYSYMBOL_YYEOF = 0,                      /* "end of file"  */
   YYSYMBOL_YYerror = 1,                    /* error  */
   YYSYMBOL_YYUNDEF = 2,                    /* "invalid token"  */
-  YYSYMBOL_IF = 3,                         /* IF  */
-  YYSYMBOL_ELSE = 4,                       /* ELSE  */
-  YYSYMBOL_ENDIF = 5,                      /* ENDIF  */
-  YYSYMBOL_DO = 6,                         /* DO  */
-  YYSYMBOL_WHILE = 7,                      /* WHILE  */
-  YYSYMBOL_RETURN = 8,                     /* RETURN  */
-  YYSYMBOL_PRINT = 9,                      /* PRINT  */
-  YYSYMBOL_UINT = 10,                      /* UINT  */
-  YYSYMBOL_FLOAT = 11,                     /* FLOAT  */
-  YYSYMBOL_POINTER_OP = 12,                /* POINTER_OP  */
-  YYSYMBOL_EQUAL_OP = 13,                  /* EQUAL_OP  */
-  YYSYMBOL_GE_OP = 14,                     /* GE_OP  */
-  YYSYMBOL_LE_OP = 15,                     /* LE_OP  */
-  YYSYMBOL_ASSIGN_OP = 16,                 /* ASSIGN_OP  */
-  YYSYMBOL_NOT_EQUAL_OP = 17,              /* NOT_EQUAL_OP  */
-  YYSYMBOL_IDENTIFIER = 18,                /* IDENTIFIER  */
-  YYSYMBOL_FLOAT_LITERAL = 19,             /* FLOAT_LITERAL  */
-  YYSYMBOL_INTEGER_LITERAL = 20,           /* INTEGER_LITERAL  */
-  YYSYMBOL_STRING_LITERAL = 21,            /* STRING_LITERAL  */
-  YYSYMBOL_22_ = 22,                       /* '('  */
-  YYSYMBOL_23_ = 23,                       /* ')'  */
-  YYSYMBOL_24_ = 24,                       /* ';'  */
-  YYSYMBOL_YYACCEPT = 25,                  /* $accept  */
-  YYSYMBOL_program = 26                    /* program  */
+  YYSYMBOL_INVALID_TOKEN = 3,              /* INVALID_TOKEN  */
+  YYSYMBOL_IF = 4,                         /* IF  */
+  YYSYMBOL_ELSE = 5,                       /* ELSE  */
+  YYSYMBOL_ENDIF = 6,                      /* ENDIF  */
+  YYSYMBOL_DO = 7,                         /* DO  */
+  YYSYMBOL_WHILE = 8,                      /* WHILE  */
+  YYSYMBOL_RETURN = 9,                     /* RETURN  */
+  YYSYMBOL_PRINT = 10,                     /* PRINT  */
+  YYSYMBOL_UINT = 11,                      /* UINT  */
+  YYSYMBOL_FLOAT = 12,                     /* FLOAT  */
+  YYSYMBOL_POINTER_OP = 13,                /* POINTER_OP  */
+  YYSYMBOL_EQUAL_OP = 14,                  /* EQUAL_OP  */
+  YYSYMBOL_GE_OP = 15,                     /* GE_OP  */
+  YYSYMBOL_LE_OP = 16,                     /* LE_OP  */
+  YYSYMBOL_ASSIGN_OP = 17,                 /* ASSIGN_OP  */
+  YYSYMBOL_NOT_EQUAL_OP = 18,              /* NOT_EQUAL_OP  */
+  YYSYMBOL_IDENTIFIER = 19,                /* IDENTIFIER  */
+  YYSYMBOL_FLOAT_LITERAL = 20,             /* FLOAT_LITERAL  */
+  YYSYMBOL_INTEGER_LITERAL = 21,           /* INTEGER_LITERAL  */
+  YYSYMBOL_STRING_LITERAL = 22,            /* STRING_LITERAL  */
+  YYSYMBOL_23_ = 23,                       /* '('  */
+  YYSYMBOL_24_ = 24,                       /* ')'  */
+  YYSYMBOL_25_ = 25,                       /* ';'  */
+  YYSYMBOL_YYACCEPT = 26,                  /* $accept  */
+  YYSYMBOL_program = 27                    /* program  */
 };
 typedef enum yysymbol_kind_t yysymbol_kind_t;
 
@@ -461,7 +463,7 @@ union yyalloc
 #define YYLAST   8
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  25
+#define YYNTOKENS  26
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  2
 /* YYNRULES -- Number of rules.  */
@@ -470,7 +472,7 @@ union yyalloc
 #define YYNSTATES  11
 
 /* YYMAXUTOK -- Last valid token kind.  */
-#define YYMAXUTOK   276
+#define YYMAXUTOK   277
 
 
 /* YYTRANSLATE(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
@@ -488,8 +490,8 @@ static const yytype_int8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-      22,    23,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,    24,
+      23,    24,     2,     2,     2,     2,     2,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,     2,    25,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -511,14 +513,14 @@ static const yytype_int8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
        5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
-      15,    16,    17,    18,    19,    20,    21
+      15,    16,    17,    18,    19,    20,    21,    22
 };
 
 #if YYDEBUG
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    53,    53
+       0,    55,    55
 };
 #endif
 
@@ -534,11 +536,11 @@ static const char *yysymbol_name (yysymbol_kind_t yysymbol) YY_ATTRIBUTE_UNUSED;
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "\"end of file\"", "error", "\"invalid token\"", "IF", "ELSE", "ENDIF",
-  "DO", "WHILE", "RETURN", "PRINT", "UINT", "FLOAT", "POINTER_OP",
-  "EQUAL_OP", "GE_OP", "LE_OP", "ASSIGN_OP", "NOT_EQUAL_OP", "IDENTIFIER",
-  "FLOAT_LITERAL", "INTEGER_LITERAL", "STRING_LITERAL", "'('", "')'",
-  "';'", "$accept", "program", YY_NULLPTR
+  "\"end of file\"", "error", "\"invalid token\"", "INVALID_TOKEN", "IF",
+  "ELSE", "ENDIF", "DO", "WHILE", "RETURN", "PRINT", "UINT", "FLOAT",
+  "POINTER_OP", "EQUAL_OP", "GE_OP", "LE_OP", "ASSIGN_OP", "NOT_EQUAL_OP",
+  "IDENTIFIER", "FLOAT_LITERAL", "INTEGER_LITERAL", "STRING_LITERAL",
+  "'('", "')'", "';'", "$accept", "program", YY_NULLPTR
 };
 
 static const char *
@@ -548,7 +550,7 @@ yysymbol_name (yysymbol_kind_t yysymbol)
 }
 #endif
 
-#define YYPACT_NINF (-22)
+#define YYPACT_NINF (-23)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -562,8 +564,8 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      -3,   -21,     2,   -20,   -22,    -4,     1,    -2,     3,   -17,
-     -22
+      -4,   -22,     2,   -21,   -23,    -2,     0,    -3,     1,   -17,
+     -23
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -578,7 +580,7 @@ static const yytype_int8 yydefact[] =
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -22,   -22
+     -23,   -23
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
@@ -592,26 +594,26 @@ static const yytype_int8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-       1,     3,     4,     5,     6,     7,     8,    10,     9
+       1,     3,     4,     5,     6,     7,     8,     9,    10
 };
 
 static const yytype_int8 yycheck[] =
 {
-       3,    22,     0,    23,     8,     4,     8,    24,     5
+       4,    23,     0,    24,     6,     5,     9,     6,    25
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
    state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,     3,    26,    22,     0,    23,     8,     4,     8,     5,
-      24
+       0,     4,    27,    23,     0,    24,     6,     5,     9,     6,
+      25
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr1[] =
 {
-       0,    25,    26
+       0,    26,    27
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
@@ -1080,16 +1082,16 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-  case 2: /* program: IF '(' ')' RETURN ELSE RETURN ENDIF ';'  */
-#line 54 "include/syntax-analyzer/Parser.y"
+  case 2: /* program: IF '(' ')' ENDIF ELSE RETURN ENDIF ';'  */
+#line 56 "include/syntax-analyzer/Parser.y"
     {
         yyerror("\nHOLA");
     }
-#line 1089 "src/syntax-analyzer/Parser.cpp"
+#line 1091 "src/syntax-analyzer/Parser.cpp"
     break;
 
 
-#line 1093 "src/syntax-analyzer/Parser.cpp"
+#line 1095 "src/syntax-analyzer/Parser.cpp"
 
       default: break;
     }
@@ -1282,9 +1284,10 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 59 "include/syntax-analyzer/Parser.y"
+#line 61 "include/syntax-analyzer/Parser.y"
 
 
 void yyerror(const char* s)
 {
+    std::cout << s << std::endl;
 }

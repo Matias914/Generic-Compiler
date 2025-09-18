@@ -1,6 +1,6 @@
 #ifndef TPE_WARNING_CODES_H
 #define TPE_WARNING_CODES_H
 
-#define TRUNCATED_VARIABLE 0
+// TODO: Ver que hacer con las funciones.
 
 #endif //TPE_WARNING_CODES_H

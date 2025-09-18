@@ -61,25 +61,26 @@ extern int yydebug;
     YYEOF = 0,                     /* "end of file"  */
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
-    IF = 258,                      /* IF  */
-    ELSE = 259,                    /* ELSE  */
-    ENDIF = 260,                   /* ENDIF  */
-    DO = 261,                      /* DO  */
-    WHILE = 262,                   /* WHILE  */
-    RETURN = 263,                  /* RETURN  */
-    PRINT = 264,                   /* PRINT  */
-    UINT = 265,                    /* UINT  */
-    FLOAT = 266,                   /* FLOAT  */
-    POINTER_OP = 267,              /* POINTER_OP  */
-    EQUAL_OP = 268,                /* EQUAL_OP  */
-    GE_OP = 269,                   /* GE_OP  */
-    LE_OP = 270,                   /* LE_OP  */
-    ASSIGN_OP = 271,               /* ASSIGN_OP  */
-    NOT_EQUAL_OP = 272,            /* NOT_EQUAL_OP  */
-    IDENTIFIER = 273,              /* IDENTIFIER  */
-    FLOAT_LITERAL = 274,           /* FLOAT_LITERAL  */
-    INTEGER_LITERAL = 275,         /* INTEGER_LITERAL  */
-    STRING_LITERAL = 276           /* STRING_LITERAL  */
+    INVALID_TOKEN = 258,           /* INVALID_TOKEN  */
+    IF = 259,                      /* IF  */
+    ELSE = 260,                    /* ELSE  */
+    ENDIF = 261,                   /* ENDIF  */
+    DO = 262,                      /* DO  */
+    WHILE = 263,                   /* WHILE  */
+    RETURN = 264,                  /* RETURN  */
+    PRINT = 265,                   /* PRINT  */
+    UINT = 266,                    /* UINT  */
+    FLOAT = 267,                   /* FLOAT  */
+    POINTER_OP = 268,              /* POINTER_OP  */
+    EQUAL_OP = 269,                /* EQUAL_OP  */
+    GE_OP = 270,                   /* GE_OP  */
+    LE_OP = 271,                   /* LE_OP  */
+    ASSIGN_OP = 272,               /* ASSIGN_OP  */
+    NOT_EQUAL_OP = 273,            /* NOT_EQUAL_OP  */
+    IDENTIFIER = 274,              /* IDENTIFIER  */
+    FLOAT_LITERAL = 275,           /* FLOAT_LITERAL  */
+    INTEGER_LITERAL = 276,         /* INTEGER_LITERAL  */
+    STRING_LITERAL = 277           /* STRING_LITERAL  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif

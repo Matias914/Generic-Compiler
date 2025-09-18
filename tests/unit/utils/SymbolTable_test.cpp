@@ -1,6 +1,8 @@
 #include "gtest/gtest.h"
 #include "utils/SymbolTable.h"
 
+SymbolTable SYMBOL_TABLE;
+
 TEST(TestSymbolTable, add)
 {
     SymbolTable table;

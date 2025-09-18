@@ -13,12 +13,12 @@ public:
         int     i;
         float   f;
     };
-    struct Entry
-    {
-        const std::string* symbol;
-        unsigned int type;
-        Type value;
-    };
+        struct Entry
+        {
+            const std::string* symbol;
+            unsigned int type;
+            Type value;
+        };
     SymbolTable();
     // Devuelve la referencia a la entrada de la tabla
     int add(const std::string& symbol);

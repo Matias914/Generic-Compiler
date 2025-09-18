@@ -14,7 +14,7 @@ namespace LexicalAnalyzer
     extern std::ifstream SOURCE_FILE;
 
     int yylex();
-    void filename(const char* filename);
+    bool open(const char* filename);
 }
 
 #endif //TPE_LEXICALANALYZER_H

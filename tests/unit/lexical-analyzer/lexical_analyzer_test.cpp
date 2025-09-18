@@ -1,13 +1,17 @@
 #include "gtest/gtest.h"
-#include "utils/globals.h"
 #include "syntax-analyzer/Parser.h"
 #include "lexical-analyzer/lexical_analyzer.h"
 
+#include "utils/ErrorHandler.h"
+
 using namespace LexicalAnalyzer;
+
+extern SymbolTable SYMBOL_TABLE;
+extern LiteralTable LITERAL_TABLE;
 
 TEST(TestLexicalAnalyzer, yylex_test)
 {
-    filename("../tests/unit/lexical-analyzer/files/test.txt");
+    open("../tests/unit/lexical-analyzer/files/test.txt");
 
     EXPECT_EQ(yylex(), IDENTIFIER);
     auto* entry = SYMBOL_TABLE.get(yylval);
