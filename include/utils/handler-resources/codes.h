@@ -14,6 +14,9 @@
 #define UNCLOSED_COMMENT         10
 #define INVALID_COLON            11
 
+
+#define SYNTAX_ERROR             12
+
 /*    For Warnings    */
 
 #define TRUNCATED_VARIABLE 0

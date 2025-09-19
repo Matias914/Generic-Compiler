@@ -46,7 +46,7 @@ unsigned int Translator::translate(const char& c)
         return NUMBER;
     if (asc >= 40 && asc <= 42)
         return SPECIAL; // Special Character: '( ) *'
-    if (asc == 47 || asc == 59 || asc == 95 || asc == 123 || asc == 125)
-        return SPECIAL; // Also Special Character: '/  ;  _  {  }'
+    if (asc == 47 || asc == 59 || asc == 123 || asc == 125)
+        return SPECIAL; // Also Special Character: '/  ; {  }'
     return OTHER;
 }

@@ -1,4 +1,4 @@
-
+##
 %
 
 endi
@@ -10,7 +10,12 @@ VARIBLE 25U . :
 
 "aaa" x = y;
 
-## Este es un comentario #
-klklkl jajajjaa @ ##
+Este es un comentario #
+klklkl jajajjaa @
 
 @ !! +! =!
+##
+
+PROGRAMA {
+    do while (x <= y);
+}

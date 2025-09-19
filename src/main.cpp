@@ -18,8 +18,8 @@ int main(const int argc, char* argv[])
             throw std::runtime_error("\nOnly one build file is supported");
         if (!LexicalAnalyzer::open(argv[1]))
             throw std::runtime_error("\nThe file could not be opened");
-        //yyparse();
-        while (LexicalAnalyzer::yylex() != 0);
+        yyparse();
+        //while (LexicalAnalyzer::yylex() != 0);
         std::string mssg = ERROR_HANDLER.getLogs();
         if (ERROR_HANDLER.errorCount() != 0)
         {

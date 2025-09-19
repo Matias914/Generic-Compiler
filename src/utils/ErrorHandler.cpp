@@ -91,6 +91,10 @@ std::string ErrorHandler::createErrorMssg(const int& code, const std::vector<std
         return "Unexpected End Of File. Unclosed comment (##).";
     case INVALID_COLON:
         return "':' is not valid. Did you mean ':=' ?";
+
+    case SYNTAX_ERROR:
+        return content[0];
+
     default:
         return "Unknown Error.";
     }
