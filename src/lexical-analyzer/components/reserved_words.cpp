@@ -23,5 +23,7 @@ int ReservedWordsTable::token(const std::string& word)
         return UINT;
     if (word == "float")
         return FLOAT;
+    if (word == "cr")
+        return CR;
     return -1;
 }

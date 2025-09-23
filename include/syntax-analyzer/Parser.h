@@ -71,16 +71,17 @@ extern int yydebug;
     PRINT = 265,                   /* PRINT  */
     UINT = 266,                    /* UINT  */
     FLOAT = 267,                   /* FLOAT  */
-    POINTER_OP = 268,              /* POINTER_OP  */
-    EQUAL_OP = 269,                /* EQUAL_OP  */
-    GE_OP = 270,                   /* GE_OP  */
-    LE_OP = 271,                   /* LE_OP  */
-    ASSIGN_OP = 272,               /* ASSIGN_OP  */
-    NOT_EQUAL_OP = 273,            /* NOT_EQUAL_OP  */
-    IDENTIFIER = 274,              /* IDENTIFIER  */
-    FLOAT_LITERAL = 275,           /* FLOAT_LITERAL  */
-    INTEGER_LITERAL = 276,         /* INTEGER_LITERAL  */
-    STRING_LITERAL = 277           /* STRING_LITERAL  */
+    CR = 268,                      /* CR  */
+    POINTER_OP = 269,              /* POINTER_OP  */
+    EQUAL_OP = 270,                /* EQUAL_OP  */
+    GE_OP = 271,                   /* GE_OP  */
+    LE_OP = 272,                   /* LE_OP  */
+    ASSIGN_OP = 273,               /* ASSIGN_OP  */
+    NOT_EQUAL_OP = 274,            /* NOT_EQUAL_OP  */
+    IDENTIFIER = 275,              /* IDENTIFIER  */
+    FLOAT_LITERAL = 276,           /* FLOAT_LITERAL  */
+    INTEGER_LITERAL = 277,         /* INTEGER_LITERAL  */
+    STRING_LITERAL = 278           /* STRING_LITERAL  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif

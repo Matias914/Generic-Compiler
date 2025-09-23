@@ -1,21 +1,36 @@
-##
-%
-
-endi
-
-if ( )
-    endif "aaa
-    veces"
-VARIBLE 25U . :
-
-"aaa" x = y;
-
-Este es un comentario #
-klklkl jajajjaa @
-
-@ !! +! =!
-##
 
 PROGRAMA {
-    do while (x <= y);
+    uint X, Y, Z;
+    uint X, Y;
+    
+    uint Y(cr uint Z, cr uint P, cr uint Y) {
+        return (X);
+    };
+
+    Y(X->Y, P->P);
+ 
+    if (X1 =! X2) 
+        Y := X;
+    else
+        X := Z;
+    endif;
+
+    print("hola");
+
+    ## Se deberia poder? ##
+
+    if (X =! Z)
+        X := Y;
+    endif;
+
+    print(X);
+
+    do {
+        X := Y;
+        F(X->B, Y->P);
+    } while (X =! Z);
+
+    A, B, C = 1UI, 2.1F+12, 5UI;
+    X, Y = 1UI, 0.25F-2, 2UI;
+    X = 1UI, 0.25F-2, 2UI;
 }
