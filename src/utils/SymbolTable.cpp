@@ -8,7 +8,7 @@ SymbolTable::SymbolTable()
     this->entries = std::list<Entry>();
 }
 
-const SymbolTable::Entry* SymbolTable::add(const std::string& symbol)
+const SymbolTable::Entry* SymbolTable::addAndGet(const std::string& symbol)
 {
     const auto it = this->mapping.find(symbol);
     if (it == this->mapping.end()) {

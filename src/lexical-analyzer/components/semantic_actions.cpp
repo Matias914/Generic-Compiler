@@ -58,7 +58,7 @@ LexemeData SemanticActions::SA3(std::string& lexeme, const char& character)
     return{
         INTEGER_LITERAL,
         nullptr,
-        LITERAL_TABLE.add(lexeme, TYPE_UI, val)
+        LITERAL_TABLE.addAndGet(lexeme, TYPE_UI, val)
     };
 }
 
@@ -93,7 +93,7 @@ LexemeData SemanticActions::SA4(std::string& lexeme, const char& character)
     return {
         FLOAT_LITERAL,
         nullptr,
-        LITERAL_TABLE.add(lexeme, TYPE_FLOAT, val)
+        LITERAL_TABLE.addAndGet(lexeme, TYPE_FLOAT, val)
     };
 }
 
@@ -104,7 +104,7 @@ LexemeData SemanticActions::SA5(std::string& lexeme, const char& character)
     return {
         STRING_LITERAL,
         nullptr,
-        LITERAL_TABLE.add(lexeme, TYPE_STRING, val)
+        LITERAL_TABLE.addAndGet(lexeme, TYPE_STRING, val)
     };
 }
 
@@ -125,7 +125,7 @@ LexemeData SemanticActions::SA6(std::string& lexeme, const char& character)
     }
     return {
         IDENTIFIER,
-        SYMBOL_TABLE.add(lexeme),
+        SYMBOL_TABLE.addAndGet(lexeme),
         nullptr
     };
 }

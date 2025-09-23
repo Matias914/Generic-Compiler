@@ -16,7 +16,7 @@ public:
     };
     SymbolTable();
     // Devuelve la referencia a la entrada de la tabla
-    const Entry* add(const std::string& symbol);
+    const Entry* addAndGet(const std::string& symbol);
     int addScope(const std::string& symbol, const Entry& entry) const;
     // Se puede invalidar el Entry si se agregan scopes
     const Entry* get(const std::string& symbol) const;

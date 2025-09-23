@@ -71,6 +71,7 @@
 
 
 #include "utils/ErrorHandler.h"
+#include "utils/LiteralTable.h"
 #include "lexical-analyzer/lexical_analyzer.h"
 
 #include <stdio.h>
@@ -80,11 +81,12 @@
 #define yylex LexicalAnalyzer::yylex
 
 extern ErrorHandler ERROR_HANDLER;
+extern LiteralTable LITERAL_TABLE;
 
 void yyerror(const char* s);
 
 
-#line 88 "src/syntax-analyzer/Parser.cpp"
+#line 90 "src/syntax-analyzer/Parser.cpp"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -575,14 +577,14 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,    64,    64,    68,    71,    73,    77,    78,    79,    85,
-      86,    92,    93,    97,   103,   104,   108,   109,   113,   117,
-     121,   122,   126,   127,   128,   133,   134,   135,   136,   137,
-     138,   142,   146,   147,   153,   157,   158,   161,   163,   169,
-     173,   174,   178,   183,   187,   188,   194,   195,   199,   200,
-     204,   205,   211,   217,   218,   222,   223,   227,   228,   234,
-     238,   239,   240,   241,   245,   246,   247,   251,   252,   253,
-     257,   258,   262,   263,   267,   268,   269
+       0,    66,    66,    70,    73,    75,    79,    80,    81,    87,
+      88,    94,    95,    99,   105,   106,   110,   111,   115,   119,
+     123,   124,   128,   129,   130,   135,   136,   137,   138,   139,
+     140,   144,   148,   149,   155,   159,   160,   163,   165,   171,
+     175,   176,   180,   185,   189,   190,   196,   197,   201,   202,
+     206,   207,   213,   219,   220,   224,   225,   229,   230,   236,
+     240,   241,   242,   243,   247,   248,   249,   253,   254,   255,
+     259,   260,   264,   265,   269,   270,   271
 };
 #endif
 
@@ -1256,8 +1258,19 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
+  case 76: /* numeric_constant: '-' FLOAT_LITERAL  */
+#line 271 "include/syntax-analyzer/Parser.y"
+                        {
+        std::string new_constant = "-" + yylval.constant_reference->constant;
+        LiteralTable::Type value = { .f = -yylval.constant_reference->value.f};
+        LITERAL_TABLE.decrementReferences(yylval.constant_reference->constant);
+        yylval.constant_reference = LITERAL_TABLE.addAndGet(new_constant, TYPE_FLOAT, value);
+    }
+#line 1270 "src/syntax-analyzer/Parser.cpp"
+    break;
 
-#line 1261 "src/syntax-analyzer/Parser.cpp"
+
+#line 1274 "src/syntax-analyzer/Parser.cpp"
 
       default: break;
     }
@@ -1450,7 +1463,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 272 "include/syntax-analyzer/Parser.y"
+#line 279 "include/syntax-analyzer/Parser.y"
 
 
 void yyerror(const char* s)

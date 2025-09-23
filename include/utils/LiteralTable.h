@@ -20,15 +20,15 @@ public:
     struct Entry
     {
         std::string constant;
+        unsigned int refcount;
         unsigned int type;
         Type value;
-        std::bitset<1> valid;
     };
     LiteralTable();
-    // Wrapper de la tabla de simbolos
-    const Entry* add(const std::string& constant, const unsigned int& type, const Type& value);
+
+    const Entry* addAndGet(const std::string& constant, const unsigned int& type, const Type& value);
     const Entry* get(const std::string& constant) const;
-    bool updateToNegative(const std::string& constant);
+    bool decrementReferences(const std::string& constant);
 
 private:
     std::map<std::string_view, Entry*> mapping;

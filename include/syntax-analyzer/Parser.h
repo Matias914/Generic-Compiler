@@ -91,7 +91,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 27 "include/syntax-analyzer/Parser.y"
+#line 29 "include/syntax-analyzer/Parser.y"
 
     const SymbolTable::Entry* symbol_reference;
     const LiteralTable::Entry* constant_reference;
