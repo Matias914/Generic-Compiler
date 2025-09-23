@@ -69,28 +69,37 @@ extern int yydebug;
     WHILE = 263,                   /* WHILE  */
     RETURN = 264,                  /* RETURN  */
     PRINT = 265,                   /* PRINT  */
-    UINT = 266,                    /* UINT  */
-    FLOAT = 267,                   /* FLOAT  */
-    CR = 268,                      /* CR  */
-    POINTER_OP = 269,              /* POINTER_OP  */
-    EQUAL_OP = 270,                /* EQUAL_OP  */
-    GE_OP = 271,                   /* GE_OP  */
-    LE_OP = 272,                   /* LE_OP  */
-    ASSIGN_OP = 273,               /* ASSIGN_OP  */
-    NOT_EQUAL_OP = 274,            /* NOT_EQUAL_OP  */
-    IDENTIFIER = 275,              /* IDENTIFIER  */
-    FLOAT_LITERAL = 276,           /* FLOAT_LITERAL  */
-    INTEGER_LITERAL = 277,         /* INTEGER_LITERAL  */
-    STRING_LITERAL = 278           /* STRING_LITERAL  */
+    TRUNC = 266,                   /* TRUNC  */
+    UINT = 267,                    /* UINT  */
+    FLOAT = 268,                   /* FLOAT  */
+    CR = 269,                      /* CR  */
+    POINTER_OP = 270,              /* POINTER_OP  */
+    EQUAL_OP = 271,                /* EQUAL_OP  */
+    GE_OP = 272,                   /* GE_OP  */
+    LE_OP = 273,                   /* LE_OP  */
+    ASSIGN_OP = 274,               /* ASSIGN_OP  */
+    NOT_EQUAL_OP = 275,            /* NOT_EQUAL_OP  */
+    IDENTIFIER = 276,              /* IDENTIFIER  */
+    FLOAT_LITERAL = 277,           /* FLOAT_LITERAL  */
+    INTEGER_LITERAL = 278,         /* INTEGER_LITERAL  */
+    STRING_LITERAL = 279           /* STRING_LITERAL  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef 
-    int
- YYSTYPE;
+union YYSTYPE
+{
+#line 27 "include/syntax-analyzer/Parser.y"
+
+    const SymbolTable::Entry* symbol_reference;
+    const LiteralTable::Entry* constant_reference;
+
+#line 100 "include/syntax-analyzer/Parser.h"
+
+};
+typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif

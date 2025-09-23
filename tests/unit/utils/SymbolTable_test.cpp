@@ -7,12 +7,19 @@ TEST(TestSymbolTable, add)
 {
     SymbolTable table;
     const std::string symbol = "foo";
-    const int ref = table.add(symbol);
-    EXPECT_NE(ref, -1);
-    auto entry = table.get(ref);
-    EXPECT_EQ(*(entry->symbol), symbol);
-    entry = table.get(symbol);
-    EXPECT_EQ(*(entry->symbol), symbol);
+    const auto ref = table.add(symbol);
+    EXPECT_NE(ref, nullptr);
+    EXPECT_EQ(ref->symbol, symbol);
+}
+
+TEST(TestSymbolTable, get)
+{
+    SymbolTable table;
+    const std::string symbol = "foo";
+    table.add(symbol);
+    const auto ref = table.get(symbol);
+    EXPECT_NE(ref, nullptr);
+    EXPECT_EQ(ref->symbol, symbol);
 }
 
 

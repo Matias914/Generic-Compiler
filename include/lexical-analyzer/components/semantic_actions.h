@@ -3,6 +3,9 @@
 
 #include <string>
 
+#include "utils/SymbolTable.h"
+#include "utils/LiteralTable.h"
+
 /*
  * @brief representa el grupo funciones que asocian a las transiciones de la
  * máquina de estados del analizador lexico.
@@ -15,7 +18,8 @@ namespace LexicalAnalyzer
     struct LexemeData
     {
         int token;
-        int entry_reference;
+        const SymbolTable::Entry* symbol_reference;
+        const LiteralTable::Entry* constant_reference;
     };
 
     using SemanticAction = LexemeData(*) (std::string&, const char& character);
@@ -41,6 +45,8 @@ namespace LexicalAnalyzer
         LexemeData SA17(std::string& lexeme, const char& character);
         LexemeData SA18(std::string& lexeme, const char& character);
         LexemeData SA19(std::string& lexeme, const char& character);
+        // Agregada por compatibilidad con el '.'
+        LexemeData SA20(std::string& lexeme, const char& character);
 
         LexemeData DoNothing(std::string& lexeme, const char& character);
         LexemeData EndOfFile(std::string& lexeme, const char& character);

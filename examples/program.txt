@@ -1,16 +1,16 @@
 
 PROGRAMA {
     uint X, Y, Z;
-    uint X, Y;
+    uint PROGRAMA.X, Y;
     
     uint Y(cr uint Z, cr uint P, cr uint Y) {
-        return (X);
+        return (Y.X);
     };
 
-    Y(X->Y, P->P);
+    Y(X->Y, PROGRAMA.P->P);
  
-    if (X1 =! X2) 
-        Y := X;
+    if (X1 =! trunc(-0.6))
+        Y := trunc(2.54 * -2.3 + 2UI);
     else
         X := Z;
     endif;
@@ -19,18 +19,22 @@ PROGRAMA {
 
     ## Se deberia poder? ##
 
-    if (X =! Z)
-        X := Y;
+    if (PROGRAMA.X =! Z)
+        PROGRAMA.X := Y;
     endif;
 
     print(X);
 
     do {
         X := Y;
-        F(X->B, Y->P);
+        F(trunc(-2.1)->B, Y->P);
     } while (X =! Z);
 
-    A, B, C = 1UI, 2.1F+12, 5UI;
+    A, F.B, F.C = 1UI, -2.1F+12, 5UI;
     X, Y = 1UI, 0.25F-2, 2UI;
-    X = 1UI, 0.25F-2, 2UI;
+    X = 1UI, 0.25F-2, trunc(-2.54);
+
+    (uint PARAMETER) { if (X =! Y) { print("a"); } endif; } (trunc(PROGRAMA.X));
+    (uint PARAMETER) { if (X =! Y) { print("a"); } endif; } (PROGRAMA.X);
+    (uint PARAMETER) { if (X =! Y) { print("a"); } endif; } (trunc(2.3));
 }

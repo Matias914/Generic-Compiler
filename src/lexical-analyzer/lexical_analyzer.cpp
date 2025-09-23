@@ -19,19 +19,21 @@ namespace LexicalAnalyzer
         char character;
         std::string lexeme = "";
         auto sm = StateMachine();
-        LexemeData data = {0, -1};
+        LexemeData data = {0, nullptr, nullptr};
         while (!sm.endState())
         {
             int ivalue = END_OF_FILE;
-            const bool OK = static_cast<bool>(SOURCE_FILE.get(character));
-            if (OK)
+            if (const bool OK = static_cast<bool>(SOURCE_FILE.get(character)))
                 ivalue = Translator::translate(character);
             else
                 SOURCE_FILE.close();
             const SemanticAction as = sm.getSemanticAction(ivalue);
             data = as(lexeme, character);
         }
-        yylval = data.entry_reference;
+        if (data.symbol_reference != nullptr)
+            yylval.symbol_reference = data.symbol_reference;
+        else if (data.constant_reference != nullptr)
+            yylval.constant_reference = data.constant_reference;
         return data.token;
     }
 

@@ -14,17 +14,17 @@ TEST(TestLexicalAnalyzer, yylex_test)
     open("../tests/unit/lexical-analyzer/files/test.txt");
 
     EXPECT_EQ(yylex(), IDENTIFIER);
-    auto* entry = SYMBOL_TABLE.get(yylval);
-    EXPECT_NE(entry, nullptr);
-    std::string lexeme = *(entry->symbol);
+    auto symb_entry = SYMBOL_TABLE.get(yylval.symbol_reference->symbol);
+    EXPECT_NE(symb_entry, nullptr);
+    std::string lexeme = symb_entry->symbol;
     EXPECT_EQ(lexeme, "X");
 
     EXPECT_EQ(yylex(), '=');
 
     EXPECT_EQ(yylex(), FLOAT_LITERAL);
-    entry = LITERAL_TABLE.get(yylval);
-    EXPECT_NE(entry, nullptr);
-    lexeme = *(entry->symbol);
+    auto const_entry = LITERAL_TABLE.get(yylval.constant_reference->constant);
+    EXPECT_NE(const_entry, nullptr);
+    lexeme = const_entry->constant;
     EXPECT_EQ(lexeme, "1.23F+10");
 
     EXPECT_EQ(yylex(), ';');
@@ -32,34 +32,34 @@ TEST(TestLexicalAnalyzer, yylex_test)
     EXPECT_EQ(yylex(), '(');
 
     EXPECT_EQ(yylex(), IDENTIFIER);
-    entry = SYMBOL_TABLE.get(yylval);
-    EXPECT_NE(entry, nullptr);
-    lexeme = *(entry->symbol);
+    symb_entry = SYMBOL_TABLE.get(yylval.symbol_reference->symbol);
+    EXPECT_NE(symb_entry, nullptr);
+    lexeme = symb_entry->symbol;
     EXPECT_EQ(lexeme, "X");
 
     EXPECT_EQ(yylex(), LE_OP);
 
     EXPECT_EQ(yylex(), INTEGER_LITERAL);
-    entry = LITERAL_TABLE.get(yylval);
-    EXPECT_NE(entry, nullptr);
-    lexeme = *(entry->symbol);
+    const_entry = LITERAL_TABLE.get(yylval.constant_reference->constant);
+    EXPECT_NE(const_entry, nullptr);
+    lexeme = const_entry->constant;
     EXPECT_EQ(lexeme, "9UI");
 
     EXPECT_EQ(yylex(), ')');
     EXPECT_EQ(yylex(), '{');
 
     EXPECT_EQ(yylex(), IDENTIFIER);
-    entry = SYMBOL_TABLE.get(yylval);
-    EXPECT_NE(entry, nullptr);
-    lexeme = *(entry->symbol);
+    symb_entry = SYMBOL_TABLE.get(yylval.symbol_reference->symbol);
+    EXPECT_NE(symb_entry, nullptr);
+    lexeme = symb_entry->symbol;
     EXPECT_EQ(lexeme, "X");
 
     EXPECT_EQ(yylex(), ASSIGN_OP);
 
     EXPECT_EQ(yylex(), STRING_LITERAL);
-    entry = LITERAL_TABLE.get(yylval);
-    EXPECT_NE(entry, nullptr);
-    lexeme = *(entry->symbol);
+    const_entry = LITERAL_TABLE.get(yylval.constant_reference->constant);
+    EXPECT_NE(const_entry, nullptr);
+    lexeme = const_entry->constant;
     EXPECT_EQ(lexeme, "\"hola como estas?\"");
 
     EXPECT_EQ(yylex(), '}');
@@ -67,18 +67,18 @@ TEST(TestLexicalAnalyzer, yylex_test)
     EXPECT_EQ(yylex(), '{');
 
     EXPECT_EQ(yylex(), IDENTIFIER);
-    entry = SYMBOL_TABLE.get(yylval);
-    EXPECT_NE(entry, nullptr);
-    lexeme = *(entry->symbol);
+    symb_entry = SYMBOL_TABLE.get(yylval.symbol_reference->symbol);
+    EXPECT_NE(symb_entry, nullptr);
+    lexeme = symb_entry->symbol;
     EXPECT_EQ(lexeme, "Y");
 
     EXPECT_EQ(yylex(), '=');
     EXPECT_EQ(yylex(), '-');
 
     EXPECT_EQ(yylex(), INTEGER_LITERAL);
-    entry = LITERAL_TABLE.get(yylval);
-    EXPECT_NE(entry, nullptr);
-    lexeme = *(entry->symbol);
+    const_entry = LITERAL_TABLE.get(yylval.constant_reference->constant);
+    EXPECT_NE(const_entry, nullptr);
+    lexeme = const_entry->constant;
     EXPECT_EQ(lexeme, "1UI");
 
     EXPECT_EQ(yylex(), ';');
@@ -86,9 +86,9 @@ TEST(TestLexicalAnalyzer, yylex_test)
     EXPECT_EQ(yylex(), '(');
 
     EXPECT_EQ(yylex(), FLOAT_LITERAL);
-    entry = LITERAL_TABLE.get(yylval);
-    EXPECT_NE(entry, nullptr);
-    lexeme = *(entry->symbol);
+    const_entry = LITERAL_TABLE.get(yylval.constant_reference->constant);
+    EXPECT_NE(const_entry, nullptr);
+    lexeme = const_entry->constant;
     EXPECT_EQ(lexeme, ".3F-1");
 
     EXPECT_EQ(yylex(), NOT_EQUAL_OP);
@@ -98,56 +98,56 @@ TEST(TestLexicalAnalyzer, yylex_test)
     EXPECT_EQ(yylex(), ENDIF);
 
     EXPECT_EQ(yylex(), IDENTIFIER);
-    entry = SYMBOL_TABLE.get(yylval);
-    EXPECT_NE(entry, nullptr);
-    lexeme = *(entry->symbol);
+    symb_entry = SYMBOL_TABLE.get(yylval.symbol_reference->symbol);
+    EXPECT_NE(symb_entry, nullptr);
+    lexeme = symb_entry->symbol;
     EXPECT_EQ(lexeme, "X");
 
     EXPECT_EQ(yylex(), POINTER_OP);
 
     EXPECT_EQ(yylex(), IDENTIFIER);
-    entry = SYMBOL_TABLE.get(yylval);
-    EXPECT_NE(entry, nullptr);
-    lexeme = *(entry->symbol);
+    symb_entry = SYMBOL_TABLE.get(yylval.symbol_reference->symbol);
+    EXPECT_NE(symb_entry, nullptr);
+    lexeme = symb_entry->symbol;
     EXPECT_EQ(lexeme, "X");
 
     EXPECT_EQ(yylex(), IDENTIFIER);
-    entry = SYMBOL_TABLE.get(yylval);
-    EXPECT_NE(entry, nullptr);
-    lexeme = *(entry->symbol);
+    symb_entry = SYMBOL_TABLE.get(yylval.symbol_reference->symbol);
+    EXPECT_NE(symb_entry, nullptr);
+    lexeme = symb_entry->symbol;
     EXPECT_EQ(lexeme, "X");
 
     EXPECT_EQ(yylex(), GE_OP);
 
     EXPECT_EQ(yylex(), IDENTIFIER);
-    entry = SYMBOL_TABLE.get(yylval);
-    EXPECT_NE(entry, nullptr);
-    lexeme = *(entry->symbol);
+    symb_entry = SYMBOL_TABLE.get(yylval.symbol_reference->symbol);
+    EXPECT_NE(symb_entry, nullptr);
+    lexeme = symb_entry->symbol;
     EXPECT_EQ(lexeme, "Y");
 
     EXPECT_EQ(yylex(), ';');
 
     EXPECT_EQ(yylex(), IDENTIFIER);
-    entry = SYMBOL_TABLE.get(yylval);
-    EXPECT_NE(entry, nullptr);
-    lexeme = *(entry->symbol);
+    symb_entry = SYMBOL_TABLE.get(yylval.symbol_reference->symbol);
+    EXPECT_NE(symb_entry, nullptr);
+    lexeme = symb_entry->symbol;
     EXPECT_EQ(lexeme, "VARIABLE%%1");
 
     EXPECT_EQ(yylex(), GE_OP);
 
     EXPECT_EQ(yylex(), IDENTIFIER);
-    entry = SYMBOL_TABLE.get(yylval);
-    EXPECT_NE(entry, nullptr);
-    lexeme = *(entry->symbol);
+    symb_entry = SYMBOL_TABLE.get(yylval.symbol_reference->symbol);
+    EXPECT_NE(symb_entry, nullptr);
+    lexeme = symb_entry->symbol;
     EXPECT_EQ(lexeme, "X");
 
     EXPECT_EQ(yylex(), ';');
     EXPECT_EQ(yylex(), RETURN);
 
     EXPECT_EQ(yylex(), INTEGER_LITERAL);
-    entry = LITERAL_TABLE.get(yylval);
-    EXPECT_NE(entry, nullptr);
-    lexeme = *(entry->symbol);
+    const_entry = LITERAL_TABLE.get(yylval.constant_reference->constant);
+    EXPECT_NE(const_entry, nullptr);
+    lexeme = const_entry->constant;
     EXPECT_EQ(lexeme, "0UI");
 
     EXPECT_EQ(yylex(), ';');

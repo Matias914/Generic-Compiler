@@ -16,120 +16,12 @@ using namespace LexicalAnalyzer;
 
 LexemeData SemanticActions::DoNothing(std::string& lexeme, const char& character)
 {
-    return {INVALID_TOKEN, -1};
+    return {INVALID_TOKEN, nullptr, nullptr};
 }
 
 LexemeData SemanticActions::EndOfFile(std::string& lexeme, const char& character)
 {
-    return {YYEOF, -1};
-}
-
-/*
- * @brief estas acciones semanticas fueron hechas para tratar
- * errores.
- *
- * Conceptualmente, son las acciones semanticas asociadas a las
- * transiciones que llevan al estado de error.
- */
-LexemeData SemanticActions::UnexpectedCharTrap(std::string& lexeme, const char& character)
-{
-    ErrorHandler::Log log;
-    log.type = ERROR;
-    log.line = YYLINENO;
-    log.code = UNEXPECTED_CHARACTER;
-    log.content = {std::string(1, character)};
-    ERROR_HANDLER.add(log);
-    return {INVALID_TOKEN, -1};
-}
-
-LexemeData SemanticActions::ExpectedUITrap(std::string& lexeme, const char& character)
-{
-    SOURCE_FILE.unget();
-    ErrorHandler::Log log;
-    log.type = ERROR;
-    log.line = YYLINENO;
-    log.code = INTEGER_WITHOUT_SUFFIX;
-    log.content = {lexeme};
-    ERROR_HANDLER.add(log);
-    return {INVALID_TOKEN, -1};
-}
-
-LexemeData SemanticActions::ExpectedSignTrap(std::string& lexeme, const char& character)
-{
-    SOURCE_FILE.unget();
-    ErrorHandler::Log log;
-    log.type = ERROR;
-    log.line = YYLINENO;
-    log.code = EXPONENT_WITHOUT_SIGN;
-    ERROR_HANDLER.add(log);
-    return {INVALID_TOKEN, -1};
-}
-
-LexemeData SemanticActions::ExpectedNumberTrap(std::string& lexeme, const char& character)
-{
-    SOURCE_FILE.unget();
-    ErrorHandler::Log log;
-    log.type = ERROR;
-    log.line = YYLINENO;
-    log.code = FLOAT_WITHOUT_NUMBERS;
-    log.content.push_back(lexeme);
-    ERROR_HANDLER.add(log);
-    return {INVALID_TOKEN, -1};
-}
-
-LexemeData SemanticActions::ExpectedNoEndlTrap(std::string& lexeme, const char& character)
-{
-    SOURCE_FILE.unget();
-    ErrorHandler::Log log;
-    log.type = ERROR;
-    log.line = YYLINENO;
-    log.code = STRING_LITERAL_WITH_ENDL;
-    ERROR_HANDLER.add(log);
-    return {INVALID_TOKEN, -1};
-}
-
-LexemeData SemanticActions::ExpectedQuoteTrap(std::string& lexeme, const char& character)
-{
-    SOURCE_FILE.unget();
-    ErrorHandler::Log log;
-    log.type = ERROR;
-    log.line = YYLINENO;
-    log.code = UNCLOSED_STRING_LITERAL;
-    ERROR_HANDLER.add(log);
-    return {INVALID_TOKEN, -1};
-}
-
-LexemeData SemanticActions::ExpectedNumeralTrap(std::string& lexeme, const char& character)
-{
-    SOURCE_FILE.unget();
-    ErrorHandler::Log log;
-    log.type = ERROR;
-    log.line = YYLINENO;
-    log.code = UNOPENED_COMMENT;
-    ERROR_HANDLER.add(log);
-    return {INVALID_TOKEN, -1};
-}
-
-LexemeData SemanticActions::ExpectedCommentEndTrap(std::string& lexeme, const char& character)
-{
-    SOURCE_FILE.unget();
-    ErrorHandler::Log log;
-    log.type = ERROR;
-    log.line = YYLINENO;
-    log.code = UNCLOSED_COMMENT;
-    ERROR_HANDLER.add(log);
-    return {INVALID_TOKEN, -1};
-}
-
-LexemeData SemanticActions::ExpectedEqualsTrap(std::string& lexeme, const char& character)
-{
-    SOURCE_FILE.unget();
-    ErrorHandler::Log log;
-    log.type = ERROR;
-    log.line = YYLINENO;
-    log.code = INVALID_COLON;
-    ERROR_HANDLER.add(log);
-    return {INVALID_TOKEN, -1};
+    return {YYEOF, nullptr, nullptr};
 }
 
 /* ------------------------- SEMANTIC ACTIONS ------------------------- */
@@ -139,13 +31,13 @@ LexemeData SemanticActions::SA1(std::string& lexeme, const char& character)
     lexeme.clear();
     lexeme.reserve(32);
     lexeme += character;
-    return {INVALID_TOKEN, -1};
+    return {INVALID_TOKEN, nullptr, nullptr};
 }
 
 LexemeData SemanticActions::SA2(std::string& lexeme, const char& character)
 {
     lexeme += character;
-    return {INVALID_TOKEN, -1};
+    return {INVALID_TOKEN, nullptr, nullptr};
 }
 
 LexemeData SemanticActions::SA3(std::string& lexeme, const char& character)
@@ -160,9 +52,14 @@ LexemeData SemanticActions::SA3(std::string& lexeme, const char& character)
         log.code = INTEGER_OUT_OF_RANGE;
         log.content = {lexeme};
         ERROR_HANDLER.add(log);
-        return {INVALID_TOKEN, -1};
+        return {INVALID_TOKEN, nullptr, nullptr};
     }
-    return {INTEGER_LITERAL, LITERAL_TABLE.add(lexeme)};
+    const LiteralTable::Type val = {.i = value};
+    return{
+        INTEGER_LITERAL,
+        nullptr,
+        LITERAL_TABLE.add(lexeme, TYPE_UI, val)
+    };
 }
 
 LexemeData SemanticActions::SA4(std::string& lexeme, const char& character)
@@ -190,15 +87,25 @@ LexemeData SemanticActions::SA4(std::string& lexeme, const char& character)
         log.code = FLOAT_OUT_OF_RANGE;
         log.content = {lexeme};
         ERROR_HANDLER.add(log);
-        return {INVALID_TOKEN, -1};
+        return {INVALID_TOKEN, nullptr, nullptr};
     }
-    return {FLOAT_LITERAL, LITERAL_TABLE.add(lexeme)};
+    const LiteralTable::Type val = {.f = value};
+    return {
+        FLOAT_LITERAL,
+        nullptr,
+        LITERAL_TABLE.add(lexeme, TYPE_FLOAT, val)
+    };
 }
 
 LexemeData SemanticActions::SA5(std::string& lexeme, const char& character)
 {
     lexeme += character;
-    return {STRING_LITERAL, LITERAL_TABLE.add(lexeme)};
+    constexpr LiteralTable::Type val = {.i = 0};
+    return {
+        STRING_LITERAL,
+        nullptr,
+        LITERAL_TABLE.add(lexeme, TYPE_STRING, val)
+    };
 }
 
 LexemeData SemanticActions::SA6(std::string& lexeme, const char& character)
@@ -216,72 +123,76 @@ LexemeData SemanticActions::SA6(std::string& lexeme, const char& character)
         ERROR_HANDLER.add(log);
         lexeme = new_lexeme;
     }
-    return {IDENTIFIER, SYMBOL_TABLE.add(lexeme)};
+    return {
+        IDENTIFIER,
+        SYMBOL_TABLE.add(lexeme),
+        nullptr
+    };
 }
 
 LexemeData SemanticActions::SA7(std::string& lexeme, const char& character)
 {
     YYLINENO++;
-    return {INVALID_TOKEN, -1};
+    return {INVALID_TOKEN, nullptr, nullptr};
 }
 
 LexemeData SemanticActions::SA8(std::string& lexeme, const char& character)
 {
-    return {character,-1};
+    return {character,nullptr, nullptr};
 }
 
 LexemeData SemanticActions::SA9(std::string& lexeme, const char& character)
 {
-    return {EQUAL_OP,-1};
+    return {EQUAL_OP,nullptr, nullptr};
 }
 
 LexemeData SemanticActions::SA10(std::string& lexeme, const char& character)
 {
-    return {NOT_EQUAL_OP,-1};
+    return {NOT_EQUAL_OP,nullptr, nullptr};
 }
 
 LexemeData SemanticActions::SA11(std::string& lexeme, const char& character)
 {
-    return {ASSIGN_OP,-1};
+    return {ASSIGN_OP,nullptr, nullptr};
 }
 
 LexemeData SemanticActions::SA12(std::string& lexeme, const char& character)
 {
-    return {LE_OP,-1};
+    return {LE_OP,nullptr, nullptr};
 }
 
 LexemeData SemanticActions::SA13(std::string& lexeme, const char& character)
 {
-    return {GE_OP,-1};
+    return {GE_OP,nullptr, nullptr};
 }
 
 LexemeData SemanticActions::SA14(std::string& lexeme, const char& character)
 {
-    return {POINTER_OP,-1};
+    return {POINTER_OP,nullptr, nullptr};
 }
 
 LexemeData SemanticActions::SA15(std::string& lexeme, const char& character)
 {
     SOURCE_FILE.unget();
-    return {'=',-1};
+    return {'=',nullptr, nullptr};
 }
 
 LexemeData SemanticActions::SA16(std::string& lexeme, const char& character)
 {
     SOURCE_FILE.unget();
-    return {'<',-1};
+    return {'<',nullptr, nullptr};
 }
 
 LexemeData SemanticActions::SA17(std::string& lexeme, const char& character)
 {
     SOURCE_FILE.unget();
-    return {'>',-1};
+    return {'>',nullptr, nullptr};
 }
 
 LexemeData SemanticActions::SA18(std::string& lexeme, const char& character)
 {
     SOURCE_FILE.unget();
-    return {'-',-1};
+    return {'-',nullptr, nullptr};
 }
 
 LexemeData SemanticActions::SA19(std::string& lexeme, const char& character)
@@ -296,7 +207,14 @@ LexemeData SemanticActions::SA19(std::string& lexeme, const char& character)
         log.code = INVALID_RESERVED_WORD;
         log.content = {lexeme};
         ERROR_HANDLER.add(log);
-        return {INVALID_TOKEN, -1};
+        return {INVALID_TOKEN, nullptr, nullptr};
     }
-    return {token,-1};
+    return {token,nullptr, nullptr};
 }
+
+LexemeData SemanticActions::SA20(std::string& lexeme, const char& character)
+{
+    SOURCE_FILE.unget();
+    return {'.',nullptr, nullptr};
+}
+

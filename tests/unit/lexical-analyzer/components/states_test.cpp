@@ -136,28 +136,28 @@ TEST(TestStates, state3)
 TEST(TestStates, state4)
 {
     TestState ts = {StateMachine(), state4};
-    ts.test(UPPER_CASE , fstate, ExpectedNumberTrap, true );
-    ts.test(F          , fstate, ExpectedNumberTrap, true );
-    ts.test(I          , fstate, ExpectedNumberTrap, true );
-    ts.test(U          , fstate, ExpectedNumberTrap, true );
-    ts.test(LOWER_CASE , fstate, ExpectedNumberTrap, true );
-    ts.test(NUMBER     , state3,    SA2               , false);
-    ts.test(SPECIAL    , fstate, ExpectedNumberTrap, true );
-    ts.test(PERCENTAGE , fstate, ExpectedNumberTrap, true );
-    ts.test(QUOTE      , fstate, ExpectedNumberTrap, true );
-    ts.test(DOT        , fstate, ExpectedNumberTrap, true );
-    ts.test(EQUALS     , fstate, ExpectedNumberTrap, true );
-    ts.test(EXCLAMATION, fstate, ExpectedNumberTrap, true );
-    ts.test(GREATER    , fstate, ExpectedNumberTrap, true );
-    ts.test(LESS       , fstate, ExpectedNumberTrap, true );
-    ts.test(NUMERAL    , fstate, ExpectedNumberTrap, true );
-    ts.test(COLON      , fstate, ExpectedNumberTrap, true );
-    ts.test(MINUS      , fstate, ExpectedNumberTrap, true );
-    ts.test(PLUS       , fstate, ExpectedNumberTrap, true );
-    ts.test(BLANK      , fstate, ExpectedNumberTrap, true );
-    ts.test(ENDLINE    , fstate, ExpectedNumberTrap, true );
-    ts.test(OTHER      , fstate, ExpectedNumberTrap, true );
-    ts.test(END_OF_FILE, fstate, ExpectedNumberTrap, true );
+    ts.test(UPPER_CASE , fstate, SA20, true );
+    ts.test(F          , fstate, SA20, true );
+    ts.test(I          , fstate, SA20, true );
+    ts.test(U          , fstate, SA20, true );
+    ts.test(LOWER_CASE , fstate, SA20, true );
+    ts.test(NUMBER     , state3, SA2 , false);
+    ts.test(SPECIAL    , fstate, SA20, true );
+    ts.test(PERCENTAGE , fstate, SA20, true );
+    ts.test(QUOTE      , fstate, SA20, true );
+    ts.test(DOT        , fstate, SA20, true );
+    ts.test(EQUALS     , fstate, SA20, true );
+    ts.test(EXCLAMATION, fstate, SA20, true );
+    ts.test(GREATER    , fstate, SA20, true );
+    ts.test(LESS       , fstate, SA20, true );
+    ts.test(NUMERAL    , fstate, SA20, true );
+    ts.test(COLON      , fstate, SA20, true );
+    ts.test(MINUS      , fstate, SA20, true );
+    ts.test(PLUS       , fstate, SA20, true );
+    ts.test(BLANK      , fstate, SA20, true );
+    ts.test(ENDLINE    , fstate, SA20, true );
+    ts.test(OTHER      , fstate, SA20, true );
+    ts.test(END_OF_FILE, fstate, SA20, true );
 }
 
 TEST(TestStates, state5)

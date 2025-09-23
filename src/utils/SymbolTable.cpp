@@ -4,56 +4,41 @@
 
 SymbolTable::SymbolTable()
 {
-    this->mapping = std::map<std::string, int>();
-    this->entries = std::vector<Entry>();
+    this->mapping = std::unordered_map<std::string_view, Entry*>();
+    this->entries = std::list<Entry>();
 }
 
-int SymbolTable::add(const std::string& symbol)
+const SymbolTable::Entry* SymbolTable::add(const std::string& symbol)
 {
     const auto it = this->mapping.find(symbol);
     if (it == this->mapping.end()) {
-        const int id = this->entries.size();
-        const auto pair = mapping.insert({symbol, id});
         auto entry = Entry();
-        entry.symbol = &pair.first->first;
-        this->entries.push_back(entry);
-        return id;
+        entry.symbol = symbol;
+        Entry& ref = entries.emplace_back(entry);
+        mapping.insert({std::string_view(ref.symbol), &ref});
+        return &ref;
     }
     return it->second;
 }
 
 // TODO: hacer algo a futuro XD
-int SymbolTable::addScope(const std::string& symbol, const Entry& entry)
+int SymbolTable::addScope(const std::string& symbol, const Entry& entry) const
 {
-    return -1;
-}
-
-const SymbolTable::Entry* SymbolTable::get(const int& id) const
-{
-    if (id < this->entries.size())
-        return &this->entries[id];
-    return nullptr;
+    return this->entries.size();
 }
 
 const SymbolTable::Entry* SymbolTable::get(const std::string& symbol) const
 {
-    const auto it = mapping.find(symbol);
-    if (it != mapping.end())
-        return &this->entries[it->second];
+
+    if (const auto it = this->mapping.find(symbol); it != mapping.end())
+        return it->second;
     return nullptr;
 }
 
-bool SymbolTable::updateValue(const int& id, const Type& value)
-{
-    if (id  >= this->entries.size()) return false;
-    this->entries[id].value = value;
-    return true;
-}
-
-bool SymbolTable::updateValue(const std::string& symbol, const Type& value)
+bool SymbolTable::updateValue(const std::string& symbol, const unsigned int& value)
 {
     const auto it = mapping.find(symbol);
     if (it == mapping.end()) return false;
-    this->entries[it->second].value = value;
+    it->second->value = value;
     return true;
 }

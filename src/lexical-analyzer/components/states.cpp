@@ -138,7 +138,7 @@ SemanticAction  States::state4(StateMachine* s, const unsigned int& value)
         return SemanticActions::SA2;
     default:
         s->state = fstate;
-        return SemanticActions::ExpectedNumberTrap;
+        return SemanticActions::SA20;
     }
 }
 

@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.22.1)
 project(TPE)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
 # Directorios de includes
 include_directories(src)
@@ -15,6 +15,7 @@ add_executable(TPE
         src/utils/ErrorHandler.cpp
         src/syntax-analyzer/Parser.cpp
         src/lexical-analyzer/lexical_analyzer.cpp
+        src/lexical-analyzer/components/traps.cpp
         src/lexical-analyzer/components/states.cpp
         src/lexical-analyzer/components/translator.cpp
         src/lexical-analyzer/components/StateMachine.cpp
@@ -47,6 +48,7 @@ add_executable(my_tests
         src/utils/ErrorHandler.cpp
         src/syntax-analyzer/Parser.cpp
         src/lexical-analyzer/lexical_analyzer.cpp
+        src/lexical-analyzer/components/traps.cpp
         src/lexical-analyzer/components/states.cpp
         src/lexical-analyzer/components/translator.cpp
         src/lexical-analyzer/components/StateMachine.cpp

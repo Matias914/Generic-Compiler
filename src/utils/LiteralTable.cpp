@@ -1,40 +1,40 @@
-#include "utils/SymbolTable.h"
 #include "utils/LiteralTable.h"
-
-#include <iostream>
 
 LiteralTable::LiteralTable()
 {
-    this->ts = SymbolTable();
+    this->mapping = std::map<std::string_view, Entry*>();
+    this->entries = std::list<Entry>();
 }
 
-int LiteralTable::add(const std::string& symbol)
+const LiteralTable::Entry* LiteralTable::add(const std::string& constant, const unsigned int& type, const Type& value)
 {
-    return this->ts.add(symbol);
+    const auto it = this->mapping.find(constant);
+    if (it == this->mapping.end()) {
+        auto entry = Entry();
+        entry.constant = constant;
+        entry.type = type;
+        entry.value = value;
+        // Solo la constante flotante puede no ser correcta
+        if (type == TYPE_FLOAT)
+            entry.valid.reset();
+        else
+            entry.valid.set();
+        Entry& ref = entries.emplace_back(entry);
+        mapping.insert({std::string_view(ref.constant), &ref});
+        return &ref;
+    }
+    return it->second;
 }
 
-// TODO: hacer algo a futuro XD
-int LiteralTable::addScope(const std::string& symbol, const SymbolTable::Entry& entry)
+const LiteralTable::Entry* LiteralTable::get(const std::string& constant) const
 {
-    return this->ts.addScope(symbol, entry);
+    if (const auto it = mapping.find(constant); it != mapping.end())
+        return it->second;
+    return nullptr;
 }
 
-const SymbolTable::Entry* LiteralTable::get(const int& id) const
+// TODO:
+bool LiteralTable::updateToNegative(const std::string& constant)
 {
-    return this->ts.get(id);
-}
-
-const SymbolTable::Entry* LiteralTable::get(const std::string& symbol) const
-{
-    return this->ts.get(symbol);
-}
-
-void LiteralTable::updateValue(const int& id, const SymbolTable::Type& value)
-{
-    this->ts.updateValue(id, value);
-}
-
-void LiteralTable::updateValue(const std::string& symbol, const SymbolTable::Type& value)
-{
-    this->ts.updateValue(symbol, value);
+    return false;
 }

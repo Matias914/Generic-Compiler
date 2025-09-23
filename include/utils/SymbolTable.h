@@ -1,39 +1,32 @@
 #ifndef TPE_SYMBOLTABLE_H
 #define TPE_SYMBOLTABLE_H
 
-#include <map>
-#include <vector>
+#include <unordered_map>
+#include <list>
+#include <string_view>
 #include <string>
 
 class SymbolTable
 {
 public:
-    union Type
+    struct Entry
     {
-        int     i;
-        float   f;
+        std::string symbol;
+        unsigned int value;
     };
-        struct Entry
-        {
-            const std::string* symbol;
-            unsigned int type;
-            Type value;
-        };
     SymbolTable();
     // Devuelve la referencia a la entrada de la tabla
-    int add(const std::string& symbol);
-    int addScope(const std::string& symbol, const Entry& entry);
+    const Entry* add(const std::string& symbol);
+    int addScope(const std::string& symbol, const Entry& entry) const;
     // Se puede invalidar el Entry si se agregan scopes
-    const Entry* get(const int& id) const;
     const Entry* get(const std::string& symbol) const;
     // Se puede invalidar la referencia a symbol si se borran
     // elementos del mapa
-    bool updateValue(const int& id, const Type& value);
-    bool updateValue(const std::string& symbol, const Type& value);
+    bool updateValue(const std::string& symbol, const unsigned int& value);
 
 private:
-    std::map<std::string, int> mapping;
-    std::vector<Entry> entries;
+    std::unordered_map<std::string_view, Entry*> mapping;
+    std::list<Entry> entries;
 };
 
 #endif //TPE_SYMBOLTABLE_H
