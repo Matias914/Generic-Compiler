@@ -2,7 +2,7 @@
 #define TPE_ERRORHANDLER_H
 
 #include "handler-resources/codes.h"
-#include "handler-resources/message_builder.h"
+#include "handler-resources/builders.h"
 
 #include <string>
 #include <vector>
@@ -23,6 +23,7 @@ public:
     ErrorHandler();
 
     void add(const Log& log);
+    bool updateLatestLog(const Log& l);
 
     int errorCount() const;
     int warningCount() const;

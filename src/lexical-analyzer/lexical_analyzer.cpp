@@ -5,8 +5,6 @@
 #include "lexical-analyzer/components/translator.h"
 #include "lexical-analyzer/components/StateMachine.h"
 
-#include <fstream>
-
 extern ErrorHandler ERROR_HANDLER;
 
 namespace LexicalAnalyzer

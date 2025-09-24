@@ -15,7 +15,8 @@
 #define INVALID_COLON            11
 
 
-#define SYNTAX_ERROR             12
+#define STATEMENT_WITHOUT_SEMICOLON 12
+#define SYNTAX_ERROR                13
 
 /*    For Warnings    */
 

@@ -45,7 +45,7 @@
 extern int yydebug;
 #endif
 /* "%code requires" blocks.  */
-#line 3 "include/syntax-analyzer/Parser.y"
+#line 5 "include/syntax-analyzer/Parser.y"
 
     #include "utils/SymbolTable.h"
     #include "utils/LiteralTable.h"
@@ -91,7 +91,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 29 "include/syntax-analyzer/Parser.y"
+#line 23 "include/syntax-analyzer/Parser.y"
 
     const SymbolTable::Entry* symbol_reference;
     const LiteralTable::Entry* constant_reference;

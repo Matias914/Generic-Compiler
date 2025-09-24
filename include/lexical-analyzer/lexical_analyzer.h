@@ -1,6 +1,8 @@
 #ifndef TPE_LEXICALANALYZER_H
 #define TPE_LEXICALANALYZER_H
 
+#include <fstream>
+
 /*
  * @brief representa el analizador lexico de un compilador.
  *

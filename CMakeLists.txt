@@ -13,6 +13,8 @@ add_executable(TPE
         src/utils/SymbolTable.cpp
         src/utils/LiteralTable.cpp
         src/utils/ErrorHandler.cpp
+        src/utils/handler-resources/mappers.cpp
+        src/utils/handler-resources/builders.cpp
         src/syntax-analyzer/Parser.cpp
         src/lexical-analyzer/lexical_analyzer.cpp
         src/lexical-analyzer/components/traps.cpp
@@ -21,7 +23,7 @@ add_executable(TPE
         src/lexical-analyzer/components/StateMachine.cpp
         src/lexical-analyzer/components/reserved_words.cpp
         src/lexical-analyzer/components/semantic_actions.cpp
-        src/utils/handler-resources/message_builder.cpp
+        src/syntax-analyzer/components/semantic_actions.cpp
 )
 
 # =========================================================
@@ -46,7 +48,10 @@ add_executable(my_tests
         src/utils/SymbolTable.cpp
         src/utils/LiteralTable.cpp
         src/utils/ErrorHandler.cpp
+        src/utils/handler-resources/mappers.cpp
+        src/utils/handler-resources/builders.cpp
         src/syntax-analyzer/Parser.cpp
+        src/syntax-analyzer/components/semantic_actions.cpp
         src/lexical-analyzer/lexical_analyzer.cpp
         src/lexical-analyzer/components/traps.cpp
         src/lexical-analyzer/components/states.cpp
@@ -61,8 +66,6 @@ add_executable(my_tests
         tests/unit/lexical-analyzer/components/states_test.cpp
         tests/unit/lexical-analyzer/components/translator_test.cpp
         tests/unit/lexical-analyzer/components/semantic_actions_test.cpp
-        include/lexical-analyzer/components/mapping.h
-        src/utils/handler-resources/message_builder.cpp
         # Agrega otros archivos de test aquí, si los tienes
 )
 

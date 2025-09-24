@@ -1,13 +1,15 @@
 
 PROGRAMA {
-    uint X, Y, Z;
+    uint X, Y, Z
     uint PROGRAMA.X, Y;
     
     uint Y(cr uint Z, cr uint P, cr uint Y) {
-        return (Y.X);
+        return (Y.X)
+        A := Y
+        B := C;
     };
 
-    Y(X->Y, PROGRAMA.P->P);
+    Y(X->Y, PROGRAMA.P->P)
  
     if (X1 =! trunc(-0.6))
         Y := trunc(2.54 * -2.3 + 2UI);
