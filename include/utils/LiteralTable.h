@@ -1,13 +1,9 @@
-#ifndef TPE_CONSTANTLITERALTABLE_H
-#define TPE_CONSTANTLITERALTABLE_H
+#ifndef TPE_LITERALTABLE_H
+#define TPE_LITERALTABLE_H
 
 #include <map>
 #include <list>
 #include <bitset>
-
-#define TYPE_UI     0
-#define TYPE_FLOAT  1
-#define TYPE_STRING 2
 
 class LiteralTable
 {
@@ -21,18 +17,19 @@ public:
     {
         std::string constant;
         unsigned int refcount;
-        unsigned int type;
+        int type;
         Type value;
     };
     LiteralTable();
 
-    const Entry* addAndGet(const std::string& constant, const unsigned int& type, const Type& value);
+    const Entry* addAndGet(const std::string& constant, const int& type, const Type& value);
     const Entry* get(const std::string& constant) const;
     bool decrementReferences(const std::string& constant);
 
+    std::string toString() const;
 private:
     std::map<std::string_view, Entry*> mapping;
     std::list<Entry> entries;
 };
 
-#endif //TPE_CONSTANTLITERALTABLE_H
+#endif //TPE_LITERALTABLE_H

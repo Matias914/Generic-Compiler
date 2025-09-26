@@ -1,5 +1,6 @@
 #include "gtest/gtest.h"
 #include "utils/ErrorHandler.h"
+#include "utils/resources/macros.h"
 #include "syntax-analyzer/Parser.h"
 #include "lexical-analyzer/lexical_analyzer.h"
 #include "lexical-analyzer/components/semantic_actions.h"
@@ -58,7 +59,7 @@ TEST(TestSemanticActions, SA3)
     std::string lexeme = "12U";
     constexpr char character = 'I';
     const LexemeData l1 = SA3(lexeme, character);
-    EXPECT_EQ(l1.token, INTEGER_LITERAL);
+    EXPECT_EQ(l1.token, UINTEGER_LITERAL);
     EXPECT_EQ(l1.symbol_reference, nullptr);
     EXPECT_NE(l1.constant_reference, nullptr);
     EXPECT_EQ(lexeme, "12UI");

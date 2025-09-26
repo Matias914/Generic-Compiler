@@ -39,7 +39,7 @@ TEST(TestLexicalAnalyzer, yylex_test)
 
     EXPECT_EQ(yylex(), LE_OP);
 
-    EXPECT_EQ(yylex(), INTEGER_LITERAL);
+    EXPECT_EQ(yylex(), UINTEGER_LITERAL);
     const_entry = LITERAL_TABLE.get(yylval.constant_reference->constant);
     EXPECT_NE(const_entry, nullptr);
     lexeme = const_entry->constant;
@@ -75,7 +75,7 @@ TEST(TestLexicalAnalyzer, yylex_test)
     EXPECT_EQ(yylex(), '=');
     EXPECT_EQ(yylex(), '-');
 
-    EXPECT_EQ(yylex(), INTEGER_LITERAL);
+    EXPECT_EQ(yylex(), UINTEGER_LITERAL);
     const_entry = LITERAL_TABLE.get(yylval.constant_reference->constant);
     EXPECT_NE(const_entry, nullptr);
     lexeme = const_entry->constant;
@@ -144,7 +144,7 @@ TEST(TestLexicalAnalyzer, yylex_test)
     EXPECT_EQ(yylex(), ';');
     EXPECT_EQ(yylex(), RETURN);
 
-    EXPECT_EQ(yylex(), INTEGER_LITERAL);
+    EXPECT_EQ(yylex(), UINTEGER_LITERAL);
     const_entry = LITERAL_TABLE.get(yylval.constant_reference->constant);
     EXPECT_NE(const_entry, nullptr);
     lexeme = const_entry->constant;

@@ -24,6 +24,8 @@ public:
     // elementos del mapa
     bool updateValue(const std::string& symbol, const unsigned int& value);
 
+    std::string toString() const;
+
 private:
     std::unordered_map<std::string_view, Entry*> mapping;
     std::list<Entry> entries;

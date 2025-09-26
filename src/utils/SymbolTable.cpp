@@ -1,6 +1,6 @@
 #include "utils/SymbolTable.h"
-
-#include <iostream>
+#include "utils/resources/macros.h"
+#include "utils/resources/string_builder_dispatcher.h"
 
 SymbolTable::SymbolTable()
 {
@@ -41,4 +41,21 @@ bool SymbolTable::updateValue(const std::string& symbol, const unsigned int& val
     if (it == mapping.end()) return false;
     it->second->value = value;
     return true;
+}
+
+std::string SymbolTable::toString() const
+{
+    std::string mssg;
+    mssg.reserve(32 * entries.size());
+    using namespace StringBuilderDispatcher;
+    StringBuilder builder = getStringBuilder(TABLE, SYMBOL_HEADER);
+    mssg.append(builder({})).append("\n");
+    builder = getStringBuilder(TABLE, SYMBOL_ENTRY);
+    bool first = true;
+    for (const auto& [symbol, value] : entries) {
+        if (!first) mssg.append("\n");
+        first = false;
+        mssg.append(builder({symbol}));
+    }
+    return mssg;
 }

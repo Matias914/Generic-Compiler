@@ -1,5 +1,5 @@
-#ifndef TPE_MAPPING_H
-#define TPE_MAPPING_H
+#ifndef TPE_LEXICAL_ANALYZER_MACROS_H
+#define TPE_LEXICAL_ANALYZER_MACROS_H
 
 #define UPPER_CASE   0
 #define F            1
@@ -24,4 +24,4 @@
 #define OTHER       20
 #define END_OF_FILE 21
 
-#endif //TPE_MAPPING_H
+#endif //TPE_LEXICAL_ANALYZER_MACROS_H

@@ -1,11 +1,12 @@
 #include "utils/ErrorHandler.h"
-#include "utils/handler-resources/mappers.h"
+#include "utils/resources/macros.h"
+#include "utils/resources/string_builder_dispatcher.h"
 
 #include <iostream>
 
 ErrorHandler::ErrorHandler()
 {
-    this->logs = std::vector<Log>();
+    this->logs = std::list<Log>();
     this->error_count = 0;
 }
 
@@ -16,11 +17,11 @@ void ErrorHandler::add(const Log& log)
         error_count++;
 }
 
-bool ErrorHandler::updateLatestLog(const Log& l)
+bool ErrorHandler::updateLatestLog(const Log& log)
 {
     if (this->logs.empty())
         return false;
-    this->logs[this->logs.size() - 1] = l;
+    this->logs.back() = log;
     return true;
 }
 
@@ -34,7 +35,7 @@ int ErrorHandler::warningCount() const
     return this->logs.size() - this->error_count;
 }
 
-const ErrorHandler::Log* ErrorHandler::getLastestLog() const
+const Log* ErrorHandler::getLastestLog() const
 {
     if (this->logs.empty())
         return nullptr;
@@ -43,20 +44,17 @@ const ErrorHandler::Log* ErrorHandler::getLastestLog() const
 
 std::string ErrorHandler::getLogs() const
 {
-    const int n =  logs.size();
     std::string mssg;
-    for (int i = 0; i < n; i++)
+    mssg.reserve(256 * logs.size());
+    using namespace StringBuilderDispatcher;
+    bool first = true;
+    for (const auto& [type, code, line, content] : logs)
     {
-        Builder builder;
-        auto& [type, line, code, content] = this->logs[i];
-        mssg += "Line " + std::to_string(line) + "\t - ";
-        if (type == ERROR)
-            builder = Mapper::getBuilderForErrors(code);
-        else
-            builder = Mapper::getBuilderForWarnings(code);
-        mssg += builder(content);
-        if (i + 1 != n)
-            mssg += "\n";
+        if (!first) mssg.append("\n");
+        first = false;
+        mssg.append("Line ").append(std::to_string(line)).append("\t - ");
+        const StringBuilder builder = getStringBuilder(type, code);
+        mssg.append(builder(content));
     }
     return mssg;
 }

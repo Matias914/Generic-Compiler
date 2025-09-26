@@ -40,6 +40,9 @@
 # debug information files
 *.dwo
 
+# Log Output Files
+output.txt
+
 # YACC
 *.y
 *.output

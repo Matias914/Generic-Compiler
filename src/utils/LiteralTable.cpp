@@ -1,4 +1,7 @@
 #include "utils/LiteralTable.h"
+#include "utils/resources/macros.h"
+#include "syntax-analyzer/Parser.h"
+#include "utils/resources/string_builder_dispatcher.h"
 
 LiteralTable::LiteralTable()
 {
@@ -6,7 +9,7 @@ LiteralTable::LiteralTable()
     this->entries = std::list<Entry>();
 }
 
-const LiteralTable::Entry* LiteralTable::addAndGet(const std::string& constant, const unsigned int& type, const Type& value)
+const LiteralTable::Entry* LiteralTable::addAndGet(const std::string& constant, const int& type, const Type& value)
 {
     const auto it = this->mapping.find(constant);
     if (it == this->mapping.end()) {
@@ -48,4 +51,31 @@ bool LiteralTable::decrementReferences(const std::string& constant)
         return true;
     }
     return false;
+}
+
+std::string LiteralTable::toString() const
+{
+    std::string mssg;
+    mssg.reserve(256 * entries.size());
+    using namespace StringBuilderDispatcher;
+    StringBuilder builder = getStringBuilder(TABLE, LITERAL_HEADER);
+    mssg.append(builder({})).append("\n");
+    builder = getStringBuilder(TABLE, LITERAL_ENTRY);
+    bool first = true;
+    for (const auto& entry : entries) {
+        if (!first) mssg.append("\n");
+        first = false;
+        switch (entry.type)
+        {
+        case STRING_LITERAL:
+            mssg.append(builder({entry.constant, "   String   ", std::to_string(entry.refcount)}));
+            break;
+        case UINTEGER_LITERAL:
+            mssg.append(builder({entry.constant, "Unsigned Int", std::to_string(entry.refcount)}));
+            break;
+        default:
+            mssg.append(builder({entry.constant, "    Float   ", std::to_string(entry.refcount)}));
+        }
+    }
+    return mssg;
 }

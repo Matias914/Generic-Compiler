@@ -10,12 +10,20 @@ include_directories(include)
 # Ejecutable principal
 add_executable(TPE
         src/main.cpp
+        # Utils
         src/utils/SymbolTable.cpp
         src/utils/LiteralTable.cpp
+        src/utils/LogHandler.cpp
         src/utils/ErrorHandler.cpp
-        src/utils/handler-resources/mappers.cpp
-        src/utils/handler-resources/builders.cpp
+        src/utils/resources/string_table_builders.cpp
+        src/utils/resources/string_error_builders.cpp
+        src/utils/resources/string_report_builders.cpp
+        src/utils/resources/string_builder_dispatcher.cpp
+        # Syntax Analyzer
         src/syntax-analyzer/Parser.cpp
+        src/syntax-analyzer/components/translator.cpp
+        src/syntax-analyzer/components/semantic_actions.cpp
+        # Lexical Analyzer
         src/lexical-analyzer/lexical_analyzer.cpp
         src/lexical-analyzer/components/traps.cpp
         src/lexical-analyzer/components/states.cpp
@@ -23,7 +31,6 @@ add_executable(TPE
         src/lexical-analyzer/components/StateMachine.cpp
         src/lexical-analyzer/components/reserved_words.cpp
         src/lexical-analyzer/components/semantic_actions.cpp
-        src/syntax-analyzer/components/semantic_actions.cpp
 )
 
 # =========================================================
@@ -45,13 +52,20 @@ FetchContent_MakeAvailable(googletest)
 
 # Definir un ejecutable para tus tests
 add_executable(my_tests
+        # Utils
         src/utils/SymbolTable.cpp
         src/utils/LiteralTable.cpp
+        src/utils/LogHandler.cpp
         src/utils/ErrorHandler.cpp
-        src/utils/handler-resources/mappers.cpp
-        src/utils/handler-resources/builders.cpp
+        src/utils/resources/string_table_builders.cpp
+        src/utils/resources/string_error_builders.cpp
+        src/utils/resources/string_report_builders.cpp
+        src/utils/resources/string_builder_dispatcher.cpp
+        # Syntax Analyzer
         src/syntax-analyzer/Parser.cpp
+        src/syntax-analyzer/components/translator.cpp
         src/syntax-analyzer/components/semantic_actions.cpp
+        # Lexical Analyzer
         src/lexical-analyzer/lexical_analyzer.cpp
         src/lexical-analyzer/components/traps.cpp
         src/lexical-analyzer/components/states.cpp
@@ -59,6 +73,7 @@ add_executable(my_tests
         src/lexical-analyzer/components/StateMachine.cpp
         src/lexical-analyzer/components/reserved_words.cpp
         src/lexical-analyzer/components/semantic_actions.cpp
+        # Tests
         tests/unit/utils/SymbolTable_test.cpp
         tests/unit/utils/ErrorHandler_test.cpp
         tests/unit/utils/LiteralTable_test.cpp
@@ -66,6 +81,7 @@ add_executable(my_tests
         tests/unit/lexical-analyzer/components/states_test.cpp
         tests/unit/lexical-analyzer/components/translator_test.cpp
         tests/unit/lexical-analyzer/components/semantic_actions_test.cpp
+        src/syntax-analyzer/components/translator.cpp
         # Agrega otros archivos de test aquí, si los tienes
 )
 

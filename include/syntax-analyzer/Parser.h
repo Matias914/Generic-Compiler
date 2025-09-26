@@ -45,7 +45,7 @@
 extern int yydebug;
 #endif
 /* "%code requires" blocks.  */
-#line 5 "include/syntax-analyzer/Parser.y"
+#line 6 "include/syntax-analyzer/Parser.y"
 
     #include "utils/SymbolTable.h"
     #include "utils/LiteralTable.h"
@@ -81,7 +81,7 @@ extern int yydebug;
     NOT_EQUAL_OP = 275,            /* NOT_EQUAL_OP  */
     IDENTIFIER = 276,              /* IDENTIFIER  */
     FLOAT_LITERAL = 277,           /* FLOAT_LITERAL  */
-    INTEGER_LITERAL = 278,         /* INTEGER_LITERAL  */
+    UINTEGER_LITERAL = 278,        /* UINTEGER_LITERAL  */
     STRING_LITERAL = 279           /* STRING_LITERAL  */
   };
   typedef enum yytokentype yytoken_kind_t;
@@ -91,10 +91,10 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 23 "include/syntax-analyzer/Parser.y"
+#line 24 "include/syntax-analyzer/Parser.y"
 
-    const SymbolTable::Entry* symbol_reference;
-    const LiteralTable::Entry* constant_reference;
+    const SymbolTable::Entry*  sref;
+    const LiteralTable::Entry* lref;
 
 #line 100 "include/syntax-analyzer/Parser.h"
 

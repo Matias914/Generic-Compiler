@@ -7,12 +7,9 @@
  * @brief permite obtener el número de token asociado
  * a cada palabra de la tabla. Si no existe, retorna -1.
  */
-namespace LexicalAnalyzer
+namespace LexicalAnalyzer::ReservedWordsTable
 {
-    namespace ReservedWordsTable
-    {
-        int token(const std::string& word);
-    };
+    int token(const std::string& word);
 }
 
 #endif //TPE_RESERVEDWORDSTABLE_H

@@ -1,15 +1,16 @@
-#include "utils/ErrorHandler.h"
-#include "syntax-analyzer/Parser.h"
+#include "utils/Log.h"
+#include "utils/resources/macros.h"
 #include "lexical-analyzer/lexical_analyzer.h"
-#include "lexical-analyzer/components/mapping.h"
+#include "lexical-analyzer/components/macros.h"
 #include "lexical-analyzer/components/translator.h"
 #include "lexical-analyzer/components/StateMachine.h"
+#include "utils/LogHandler.h"
 
-extern ErrorHandler ERROR_HANDLER;
+extern LogHandler LOG_HANDLER;
 
 namespace LexicalAnalyzer
 {
-    int YYLINENO = 1;
+    unsigned int YYLINENO = 1;
     std::ifstream SOURCE_FILE;
 
     int yylex()
@@ -17,22 +18,25 @@ namespace LexicalAnalyzer
         char character;
         std::string lexeme = "";
         auto sm = StateMachine();
-        LexemeData data = {0, nullptr, nullptr};
+        int token = 0;
         while (!sm.endState())
         {
             int ivalue = END_OF_FILE;
-            if (const bool OK = static_cast<bool>(SOURCE_FILE.get(character)))
+            if (static_cast<bool>(SOURCE_FILE.get(character)))
                 ivalue = Translator::translate(character);
             else
                 SOURCE_FILE.close();
             const SemanticAction as = sm.getSemanticAction(ivalue);
-            data = as(lexeme, character);
+            token = as(lexeme, character);
         }
-        if (data.symbol_reference != nullptr)
-            yylval.symbol_reference = data.symbol_reference;
-        else if (data.constant_reference != nullptr)
-            yylval.constant_reference = data.constant_reference;
-        return data.token;
+        // Logs the token and lexeme found
+        Log log;
+        log.type = TOKEN;
+        log.code = token;
+        log.line = YYLINENO;
+        log.content = {lexeme};
+        LOG_HANDLER.add(log);
+        return token;
     }
 
     bool open(const char* filename)

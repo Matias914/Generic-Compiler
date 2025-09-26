@@ -1,5 +1,5 @@
 #include "lexical-analyzer/components/states.h"
-#include "lexical-analyzer/components/mapping.h"
+#include "lexical-analyzer/components/macros.h"
 #include "lexical-analyzer/components/semantic_actions.h"
 
 using namespace LexicalAnalyzer;

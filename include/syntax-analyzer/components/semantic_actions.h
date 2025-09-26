@@ -3,9 +3,14 @@
 
 namespace SyntaxAnalyzer::SemanticActions
 {
+    // Traps
     void announceSyntaxError();
-    void specifySemicolonError();
+    void specifyExpectedError(const std::string& expected);
 
+    // Logs
+    void logStructure(const std::string& structure);
+
+    // Semantic Actions
     void addNegativeFloatToTable();
 }
 

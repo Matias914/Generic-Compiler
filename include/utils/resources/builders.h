@@ -1,12 +1,10 @@
-#ifndef TPE_WARNING_CODES_H
-#define TPE_WARNING_CODES_H
+#ifndef TPE_BUILDERS_H
+#define TPE_BUILDERS_H
 
 #include <string>
 #include <vector>
 
-using Builder = std::string (*) (const std::vector<std::string>&);
-
-namespace Builders
+namespace StringBuilders
 {
     // Errors
     std::string defaultError(const std::vector<std::string>& content);
@@ -22,12 +20,25 @@ namespace Builders
     std::string unopenedComment(const std::vector<std::string>& content);
     std::string unclosedComment(const std::vector<std::string>& content);
     std::string invalidColon(const std::vector<std::string>& content);
-    std::string statementWithoutSemicolon(const std::vector<std::string>& content);
-    std::string genericSyntaxError(const std::vector<std::string>& content);
+    std::string expectedButFound(const std::vector<std::string>& content);
     std::string genericSyntaxError(const std::vector<std::string>& content);
 
     // Warnings
     std::string truncatedIdentifier(const std::vector<std::string>& content);
+
+    // Tokens
+    std::string reportToken(const std::vector<std::string>& content);
+    std::string reportEndOfFile(const std::vector<std::string>& content);
+    std::string reportInvalidToken(const std::vector<std::string>& content);
+
+    // Structures
+    std::string reportStructure(const std::vector<std::string>& content);
+
+    // Tables
+    std::string symbolTableEntry(const std::vector<std::string>& content);
+    std::string symbolTableHeader(const std::vector<std::string>& content);
+    std::string literalTableEntry(const std::vector<std::string>& content);
+    std::string literalTableHeader(const std::vector<std::string>& content);
 }
 
-#endif //TPE_WARNING_CODES_H
+#endif //TPE_BUILDERS_H

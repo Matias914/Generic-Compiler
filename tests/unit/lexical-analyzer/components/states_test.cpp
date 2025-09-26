@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 #include "lexical-analyzer/components/states.h"
-#include "lexical-analyzer/components/mapping.h"
+#include "lexical-analyzer/components/macros.h"
 
 using namespace LexicalAnalyzer;
 using namespace LexicalAnalyzer::States;

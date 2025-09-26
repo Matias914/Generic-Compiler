@@ -1,5 +1,5 @@
-#ifndef TPE_LEXICALANALYZER_H
-#define TPE_LEXICALANALYZER_H
+#ifndef TPE_LEXICAL_ANALYZER_H
+#define TPE_LEXICAL_ANALYZER_H
 
 #include <fstream>
 
@@ -12,11 +12,11 @@
  */
 namespace LexicalAnalyzer
 {
-    extern int YYLINENO;
+    extern unsigned int YYLINENO;
     extern std::ifstream SOURCE_FILE;
 
     int yylex();
     bool open(const char* filename);
 }
 
-#endif //TPE_LEXICALANALYZER_H
+#endif //TPE_LEXICAL_ANALYZER_H
