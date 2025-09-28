@@ -6,15 +6,17 @@
 #include <list>
 #include <fstream>
 
-const std::string output = "../examples/output.txt";
-
 class LogHandler
 {
 public:
-    void add(const Log& log);
+    explicit LogHandler(const std::string& output);
 
-    bool generateReport() const;
+    void add(const Log& log);
+    void generateReport() const;
+
+    bool validOutput() const;
 private:
+    std::string output;
     std::list<Log> logs;
 };
 

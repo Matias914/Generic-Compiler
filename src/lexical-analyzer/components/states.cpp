@@ -50,22 +50,22 @@ SemanticAction  States::state0(StateMachine* s, const unsigned int& value)
         return SemanticActions::SA1;
     case EQUALS:
         s->state = state14;
-        return SemanticActions::DoNothing;
+        return SemanticActions::SA1;
     case GREATER:
         s->state = state17;
-        return SemanticActions::DoNothing;
+        return SemanticActions::SA1;
     case LESS:
         s->state = state16;
-        return SemanticActions::DoNothing;
+        return SemanticActions::SA1;
     case NUMERAL:
         s->state = state9;
         return SemanticActions::DoNothing;
     case COLON:
         s->state = state15;
-        return SemanticActions::DoNothing;
+        return SemanticActions::SA1;
     case MINUS:
         s->state = state18;
-        return SemanticActions::DoNothing;
+        return SemanticActions::SA1;
     case BLANK:
         s->state = state0;
         return SemanticActions::DoNothing;
@@ -138,7 +138,7 @@ SemanticAction  States::state4(StateMachine* s, const unsigned int& value)
         return SemanticActions::SA2;
     default:
         s->state = fstate;
-        return SemanticActions::SA20;
+        return SemanticActions::SA15;
     }
 }
 
@@ -280,7 +280,7 @@ SemanticAction States::state13(StateMachine* s, const unsigned int& value)
         return SemanticActions::SA2;
     default:
         s->state = fstate;
-        return SemanticActions::SA19;
+        return SemanticActions::SA16;
     }
 }
 
@@ -319,7 +319,7 @@ SemanticAction States::state16(StateMachine* s, const unsigned int& value)
     case EQUALS:
         return SemanticActions::SA12;
     default:
-        return SemanticActions::SA16;
+        return SemanticActions::SA15;
     }
 }
 
@@ -331,7 +331,7 @@ SemanticAction States::state17(StateMachine* s, const unsigned int& value)
     case EQUALS:
         return SemanticActions::SA13;
     default:
-        return SemanticActions::SA17;
+        return SemanticActions::SA15;
     }
 }
 
@@ -343,6 +343,6 @@ SemanticAction States::state18(StateMachine* s, const unsigned int& value)
     case GREATER:
         return SemanticActions::SA14;
     default:
-        return SemanticActions::SA18;
+        return SemanticActions::SA15;
     }
 }

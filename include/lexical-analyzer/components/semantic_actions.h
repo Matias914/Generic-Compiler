@@ -36,11 +36,6 @@ namespace LexicalAnalyzer
         int SA14(std::string& lexeme, const char& character);
         int SA15(std::string& lexeme, const char& character);
         int SA16(std::string& lexeme, const char& character);
-        int SA17(std::string& lexeme, const char& character);
-        int SA18(std::string& lexeme, const char& character);
-        int SA19(std::string& lexeme, const char& character);
-        // Agregada por compatibilidad con el '.'
-        int SA20(std::string& lexeme, const char& character);
 
         int DoNothing(std::string& lexeme, const char& character);
         int EndOfFile(std::string& lexeme, const char& character);

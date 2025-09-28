@@ -41,4 +41,5 @@ PROGRAMA {
 
     (uint PARAMETER) { if (X =! Y) { print("a"); } endif; } (trunc(PROGRAMA.X));
     (uint PARAMETER) { if (X =! Y) { print("a"); } endif; } (PROGRAMA.X);
-    (uint PARAMETER) { if (X =! Y) { print("a"); } endif; } (trunc(2.3));
+    (uint PARAMETER) { if (X =! Y) { print("a"); } endif; } (trunc(2.3))
+}

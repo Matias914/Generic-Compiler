@@ -67,7 +67,7 @@
 
 
 /* First part of user prologue.  */
-#line 12 "include/syntax-analyzer/Parser.y"
+#line 2 "include/syntax-analyzer/Parser.y"
 
 #include "lexical-analyzer/lexical_analyzer.h"
 #include "syntax-analyzer/components/semantic_actions.h"
@@ -569,15 +569,15 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,    58,    58,    62,    63,    70,    72,    73,    77,    85,
-      86,    87,    93,    97,   106,   107,   108,   116,   122,   123,
-     124,   132,   133,   137,   141,   142,   150,   151,   156,   157,
-     165,   166,   167,   172,   173,   174,   175,   176,   177,   181,
-     185,   186,   193,   197,   198,   201,   203,   209,   213,   214,
-     215,   223,   230,   234,   235,   241,   245,   252,   253,   254,
-     261,   262,   263,   268,   269,   279,   285,   286,   290,   291,
-     295,   296,   302,   306,   307,   308,   309,   313,   314,   315,
-     319,   320,   321,   325,   326,   330,   331,   335,   336,   337
+       0,    58,    58,    65,    66,    73,    75,    76,    80,    88,
+      89,    90,    96,   100,   109,   110,   111,   119,   125,   126,
+     127,   135,   136,   140,   144,   145,   153,   154,   159,   160,
+     168,   169,   170,   175,   176,   177,   178,   179,   180,   184,
+     191,   192,   202,   209,   210,   213,   215,   221,   228,   229,
+     230,   238,   245,   252,   253,   259,   263,   270,   271,   272,
+     280,   281,   282,   287,   288,   298,   307,   308,   312,   313,
+     317,   318,   324,   328,   329,   330,   331,   335,   336,   337,
+     341,   342,   343,   347,   348,   352,   353,   357,   358,   359
 };
 #endif
 
@@ -1263,155 +1263,211 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-  case 4: /* program_body: '{' program_statements error $end  */
-#line 64 "include/syntax-analyzer/Parser.y"
+  case 2: /* program: IDENTIFIER program_body  */
+#line 59 "include/syntax-analyzer/Parser.y"
     {
-        specifyExpectedError("}");
-        yyerrok;
+        logStructure("PROGRAM");
     }
-#line 1273 "src/syntax-analyzer/Parser.cpp"
+#line 1272 "src/syntax-analyzer/Parser.cpp"
     break;
 
-  case 7: /* program_statements: program_statements error ';'  */
-#line 74 "include/syntax-analyzer/Parser.y"
+  case 4: /* program_body: '{' program_statements error $end  */
+#line 67 "include/syntax-analyzer/Parser.y"
     {
+        specifyExpectedError("}");
         yyerrok;
     }
 #line 1281 "src/syntax-analyzer/Parser.cpp"
     break;
 
+  case 7: /* program_statements: program_statements error ';'  */
+#line 77 "include/syntax-analyzer/Parser.y"
+    {
+        yyerrok;
+    }
+#line 1289 "src/syntax-analyzer/Parser.cpp"
+    break;
+
   case 8: /* program_statements: program_statements program_statement error  */
-#line 78 "include/syntax-analyzer/Parser.y"
+#line 81 "include/syntax-analyzer/Parser.y"
     {
         specifyExpectedError(";");
         yyerrok;
-    }
-#line 1290 "src/syntax-analyzer/Parser.cpp"
-    break;
-
-  case 12: /* declarative_stmt: type variable_list  */
-#line 94 "include/syntax-analyzer/Parser.y"
-    {
-        logStructure("Declaration");
     }
 #line 1298 "src/syntax-analyzer/Parser.cpp"
     break;
 
-  case 13: /* declarative_stmt: type IDENTIFIER '(' formal_parameter_list ')' function_body  */
-#line 98 "include/syntax-analyzer/Parser.y"
+  case 12: /* declarative_stmt: type variable_list  */
+#line 97 "include/syntax-analyzer/Parser.y"
     {
-        logStructure("FUNCTION");
+        logStructure("VARIABLE DECLARATION");
     }
 #line 1306 "src/syntax-analyzer/Parser.cpp"
     break;
 
+  case 13: /* declarative_stmt: type IDENTIFIER '(' formal_parameter_list ')' function_body  */
+#line 101 "include/syntax-analyzer/Parser.y"
+    {
+        logStructure("FUNCTION DECLARATION");
+    }
+#line 1314 "src/syntax-analyzer/Parser.cpp"
+    break;
+
   case 16: /* variable_list: variable_list error variable  */
-#line 109 "include/syntax-analyzer/Parser.y"
+#line 112 "include/syntax-analyzer/Parser.y"
     {
         specifyExpectedError(",");
         yyerrok;
     }
-#line 1315 "src/syntax-analyzer/Parser.cpp"
+#line 1323 "src/syntax-analyzer/Parser.cpp"
     break;
 
   case 20: /* formal_parameter_list: formal_parameter_list error formal_parameter  */
-#line 125 "include/syntax-analyzer/Parser.y"
+#line 128 "include/syntax-analyzer/Parser.y"
     {
         specifyExpectedError(",");
         yyerrok;
     }
-#line 1324 "src/syntax-analyzer/Parser.cpp"
+#line 1332 "src/syntax-analyzer/Parser.cpp"
     break;
 
   case 25: /* function_body: '{' function_statements error  */
-#line 143 "include/syntax-analyzer/Parser.y"
+#line 146 "include/syntax-analyzer/Parser.y"
     {
         specifyExpectedError("}");
         yyerrok;
     }
-#line 1333 "src/syntax-analyzer/Parser.cpp"
+#line 1341 "src/syntax-analyzer/Parser.cpp"
     break;
 
   case 27: /* function_statements: function_statement error  */
-#line 152 "include/syntax-analyzer/Parser.y"
+#line 155 "include/syntax-analyzer/Parser.y"
     {
         specifyExpectedError(";");
         yyerrok;
     }
-#line 1342 "src/syntax-analyzer/Parser.cpp"
+#line 1350 "src/syntax-analyzer/Parser.cpp"
     break;
 
   case 29: /* function_statements: function_statements function_statement error  */
-#line 158 "include/syntax-analyzer/Parser.y"
+#line 161 "include/syntax-analyzer/Parser.y"
     {
         specifyExpectedError(";");
         yyerrok;
     }
-#line 1351 "src/syntax-analyzer/Parser.cpp"
+#line 1359 "src/syntax-analyzer/Parser.cpp"
+    break;
+
+  case 39: /* assignment: variable ASSIGN_OP opt_trunc_expression  */
+#line 185 "include/syntax-analyzer/Parser.y"
+    {
+        logStructure("ASSIGNMENT");
+    }
+#line 1367 "src/syntax-analyzer/Parser.cpp"
+    break;
+
+  case 41: /* print: PRINT '(' opt_trunc_expression ')'  */
+#line 193 "include/syntax-analyzer/Parser.y"
+    {
+        logStructure("PRINT");
+    }
+#line 1375 "src/syntax-analyzer/Parser.cpp"
+    break;
+
+  case 42: /* multiple_assignments: variable assignment_list opt_trunc_constant extra_numeric_constants  */
+#line 203 "include/syntax-analyzer/Parser.y"
+    {
+        logStructure("MULTIPLE ASSIGNMENT");
+    }
+#line 1383 "src/syntax-analyzer/Parser.cpp"
+    break;
+
+  case 47: /* function_invocation: IDENTIFIER '(' real_parameter_list ')'  */
+#line 222 "include/syntax-analyzer/Parser.y"
+    {
+        logStructure("FUNCTION INVOCATION");
+    }
+#line 1391 "src/syntax-analyzer/Parser.cpp"
     break;
 
   case 50: /* real_parameter_list: real_parameter_list error real_parameter  */
-#line 216 "include/syntax-analyzer/Parser.y"
+#line 231 "include/syntax-analyzer/Parser.y"
     {
         specifyExpectedError(",");
         yyerrok;
     }
-#line 1360 "src/syntax-analyzer/Parser.cpp"
+#line 1400 "src/syntax-analyzer/Parser.cpp"
+    break;
+
+  case 52: /* lambda_invocation: '(' type IDENTIFIER ')' '{' executable_statements '}' '(' lambda_real_parameter ')'  */
+#line 246 "include/syntax-analyzer/Parser.y"
+    {
+        logStructure("LAMBDA");
+    }
+#line 1408 "src/syntax-analyzer/Parser.cpp"
     break;
 
   case 55: /* if: IF '(' condition ')' executable_body ENDIF  */
-#line 242 "include/syntax-analyzer/Parser.y"
+#line 260 "include/syntax-analyzer/Parser.y"
     {
         logStructure("IF");
     }
-#line 1368 "src/syntax-analyzer/Parser.cpp"
+#line 1416 "src/syntax-analyzer/Parser.cpp"
     break;
 
   case 56: /* if: IF '(' condition ')' executable_body ELSE executable_body ENDIF  */
-#line 246 "include/syntax-analyzer/Parser.y"
+#line 264 "include/syntax-analyzer/Parser.y"
     {
         logStructure("IF-ELSE");
     }
-#line 1376 "src/syntax-analyzer/Parser.cpp"
+#line 1424 "src/syntax-analyzer/Parser.cpp"
     break;
 
   case 59: /* executable_body: executable_stmt error  */
-#line 254 "include/syntax-analyzer/Parser.y"
-                            {
+#line 273 "include/syntax-analyzer/Parser.y"
+    {
         specifyExpectedError(";");
         yyerrok;
     }
-#line 1385 "src/syntax-analyzer/Parser.cpp"
+#line 1433 "src/syntax-analyzer/Parser.cpp"
     break;
 
   case 62: /* executable_statements: executable_stmt error  */
-#line 264 "include/syntax-analyzer/Parser.y"
+#line 283 "include/syntax-analyzer/Parser.y"
     {
         specifyExpectedError(";");
         yyerrok;
     }
-#line 1394 "src/syntax-analyzer/Parser.cpp"
+#line 1442 "src/syntax-analyzer/Parser.cpp"
     break;
 
   case 64: /* executable_statements: executable_statements executable_stmt error  */
-#line 270 "include/syntax-analyzer/Parser.y"
+#line 289 "include/syntax-analyzer/Parser.y"
     {
         specifyExpectedError(";");
         yyerrok;
     }
-#line 1403 "src/syntax-analyzer/Parser.cpp"
+#line 1451 "src/syntax-analyzer/Parser.cpp"
+    break;
+
+  case 65: /* control_stmt: DO executable_body WHILE '(' condition ')'  */
+#line 299 "include/syntax-analyzer/Parser.y"
+    {
+        logStructure("DO-WHILE");
+    }
+#line 1459 "src/syntax-analyzer/Parser.cpp"
     break;
 
   case 89: /* numeric_constant: '-' FLOAT_LITERAL  */
-#line 338 "include/syntax-analyzer/Parser.y"
+#line 360 "include/syntax-analyzer/Parser.y"
     {
         addNegativeFloatToTable();
     }
-#line 1411 "src/syntax-analyzer/Parser.cpp"
+#line 1467 "src/syntax-analyzer/Parser.cpp"
     break;
 
 
-#line 1415 "src/syntax-analyzer/Parser.cpp"
+#line 1471 "src/syntax-analyzer/Parser.cpp"
 
       default: break;
     }
@@ -1604,7 +1660,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 343 "include/syntax-analyzer/Parser.y"
+#line 365 "include/syntax-analyzer/Parser.y"
 
 
 void yyerror(const char* s)

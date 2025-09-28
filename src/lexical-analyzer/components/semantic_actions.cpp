@@ -166,37 +166,13 @@ int SemanticActions::SA14(std::string& lexeme, const char& character)
     return POINTER_OP;
 }
 
-// TODO: RESUMIR ACCIONES SEMANTICAS [15, 20]
-
 int SemanticActions::SA15(std::string& lexeme, const char& character)
 {
     SOURCE_FILE.unget();
-    lexeme = '=';
-    return '=';
+    return lexeme.at(0);
 }
 
 int SemanticActions::SA16(std::string& lexeme, const char& character)
-{
-    SOURCE_FILE.unget();
-    lexeme = '<';
-    return '<';
-}
-
-int SemanticActions::SA17(std::string& lexeme, const char& character)
-{
-    SOURCE_FILE.unget();
-    lexeme = '>';
-    return '>';
-}
-
-int SemanticActions::SA18(std::string& lexeme, const char& character)
-{
-    SOURCE_FILE.unget();
-    lexeme = '-';
-    return '-';
-}
-
-int SemanticActions::SA19(std::string& lexeme, const char& character)
 {
     SOURCE_FILE.unget();
     const int token = ReservedWordsTable::token(lexeme);
@@ -212,11 +188,3 @@ int SemanticActions::SA19(std::string& lexeme, const char& character)
     }
     return token;
 }
-
-int SemanticActions::SA20(std::string& lexeme, const char& character)
-{
-    SOURCE_FILE.unget();
-    lexeme = '.';
-    return '.';
-}
-
