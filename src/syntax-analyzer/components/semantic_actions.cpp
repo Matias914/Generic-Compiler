@@ -21,25 +21,16 @@ void SemanticActions::announceSyntaxError()
     l.type = ERROR;
     l.code = SYNTAX_ERROR;
     l.line = LexicalAnalyzer::YYLINENO;
-    switch (yychar)
-    {
-    case IDENTIFIER:
-        l.content = {yylval.sref->symbol};
-        break;
-    case FLOAT_LITERAL:
-    case STRING_LITERAL:
-    case UINTEGER_LITERAL:
-        l.content = {yylval.lref->constant};
-        break;
-    default:
-        l.content = {Translator::translate(yychar)};
-    }
+    l.content = {Translator::translate(yychar)};
     ERROR_HANDLER.add(l);
 }
 
 void SemanticActions::specifyExpectedError(const std::string& expected)
 {
-    auto l = *ERROR_HANDLER.getLastestLog();
+    const auto ptr = ERROR_HANDLER.getLastestLog();
+    if (ptr == nullptr)
+        throw std::runtime_error("\nspecifyExpectedError: No Log was found");
+    auto l = *ptr;
     l.code = EXPECTED_BUT_FOUND;
     l.content.push_back(expected);
     ERROR_HANDLER.updateLatestLog(l);

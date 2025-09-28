@@ -1,9 +1,6 @@
 #include "syntax-analyzer/Parser.h"
 #include "syntax-analyzer/components/translator.h"
 
-#include <ostream>
-#include <stdexcept>
-
 using namespace SyntaxAnalyzer;
 
 std::string Translator::translate(const int& token) {
@@ -47,9 +44,14 @@ std::string Translator::translate(const int& token) {
         return "!=";
     case YYEOF:
         return "EOF";
+    case IDENTIFIER:
+        return yylval.sref->symbol;
+    case FLOAT_LITERAL:
+    case STRING_LITERAL:
+    case UINTEGER_LITERAL:
+        return yylval.lref->constant;
     default:
         const char c = static_cast<char>(token);
         return std::string(1, c);
     }
-    return "";
 }

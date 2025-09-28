@@ -18,6 +18,8 @@ public:
 private:
     std::string output;
     std::list<Log> logs;
+
+    std::list<Log>::iterator last_token;
 };
 
 #endif //TPE_LOGHANDLER_H

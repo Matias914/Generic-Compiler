@@ -24,9 +24,6 @@ public:
 private:
     std::list<Log> logs;
     int error_count;
-
-    static std::string   createErrorMssg(const int& code, const std::vector<std::string>& content);
-    static std::string createWarningMssg(const int& code, const std::vector<std::string>& content);
 };
 
 

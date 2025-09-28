@@ -16,18 +16,16 @@ LiteralTable LITERAL_TABLE;
 LogHandler LOG_HANDLER("../examples/output.txt");
 ErrorHandler ERROR_HANDLER;
 
-#define FATAL(mssg) "\nFatal Error: " mssg
-
 int main(const int argc, char* argv[])
 {
     try
     {
         if (argc == 0)
-            throw std::runtime_error(FATAL("No arguments were found"));
+            throw std::runtime_error("\nNo arguments were found");
         if (argc > 3)
-            throw std::runtime_error(FATAL("Too many arguments were passed!"));
+            throw std::runtime_error("\nToo many arguments were passed!");
 
-        const char* file;
+        auto file = "";
         bool file_given = false;
         for (int i = 1; i < argc; ++i)
             if (!std::strcmp(argv[i], "-v"))
@@ -38,18 +36,18 @@ int main(const int argc, char* argv[])
                 file_given = true;
             }
             else
-                throw std::runtime_error(FATAL("More than one file was given"));
+                throw std::runtime_error("\nMore than one file was given");
 
         if (!file_given)
-            throw std::runtime_error(FATAL("No file was given"));
+            throw std::runtime_error("\nNo file was given");
 
         if (!LexicalAnalyzer::open(file))
-            throw std::runtime_error(FATAL("The file could not be opened"));
+            throw std::runtime_error("\nThe file could not be opened");
 
         if (VERBOSE_OPTION)
         {
             if (!LOG_HANDLER.validOutput())
-                throw std::runtime_error(FATAL("Couldn't generate report"));
+                throw std::runtime_error("\nCouldn't generate report");
             yyparse();
             LOG_HANDLER.generateReport();
         } else
