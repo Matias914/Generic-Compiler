@@ -2,8 +2,9 @@
 #include "utils/ErrorHandler.h"
 #include "utils/LiteralTable.h"
 #include "utils/resources/macros.h"
-#include "syntax-analyzer/Parser.h"
 #include "lexical-analyzer/lexical_analyzer.h"
+#include "syntax-analyzer/syntax_analyzer.h"
+#include "syntax-analyzer/components/parser.h"
 #include "syntax-analyzer/components/translator.h"
 #include "syntax-analyzer/components/semantic_actions.h"
 
@@ -17,23 +18,23 @@ extern int yychar;
 
 void SemanticActions::announceSyntaxError()
 {
+    BUFFER.commit();
     Log l;
     l.type = ERROR;
     l.code = SYNTAX_ERROR;
     l.line = LexicalAnalyzer::YYLINENO;
     l.content = {Translator::translate(yychar)};
-    ERROR_HANDLER.add(l);
+    BUFFER.buffer(l);
 }
 
 void SemanticActions::specifyExpectedError(const std::string& expected)
 {
-    const auto ptr = ERROR_HANDLER.getLastestLog();
+    const auto ptr = BUFFER.get();
     if (ptr == nullptr)
-        throw std::runtime_error("\nspecifyExpectedError: No Log was found");
-    auto l = *ptr;
-    l.code = EXPECTED_BUT_FOUND;
-    l.content.push_back(expected);
-    ERROR_HANDLER.updateLatestLog(l);
+        throw std::runtime_error("\nspecifyExpectedError: No log was buffered");
+    ptr->code = EXPECTED_BUT_FOUND;
+    ptr->content.push_back(expected);
+    BUFFER.commit();
 }
 
 void SemanticActions::logStructure(const std::string& structure)
@@ -53,4 +54,3 @@ void SemanticActions::addNegativeFloatToTable()
     LITERAL_TABLE.decrementReferences(yylval.lref->constant);
     yylval.lref = LITERAL_TABLE.addAndGet(new_constant, FLOAT, value);
 }
-

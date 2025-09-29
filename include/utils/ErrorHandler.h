@@ -12,7 +12,6 @@ public:
     ErrorHandler();
 
     void add(const Log& log);
-    bool updateLatestLog(const Log& log);
 
     int errorCount() const;
     int warningCount() const;
@@ -24,6 +23,8 @@ public:
 private:
     std::list<Log> logs;
     int error_count;
+
+    friend class ErrorBuffer;
 };
 
 

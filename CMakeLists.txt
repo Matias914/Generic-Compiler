@@ -11,6 +11,7 @@ include_directories(include)
 add_executable(TPE
         src/main.cpp
         # Utils
+        src/utils/ErrorBuffer.cpp
         src/utils/SymbolTable.cpp
         src/utils/LiteralTable.cpp
         src/utils/LogHandler.cpp
@@ -20,7 +21,8 @@ add_executable(TPE
         src/utils/resources/string_report_builders.cpp
         src/utils/resources/string_builder_dispatcher.cpp
         # Syntax Analyzer
-        src/syntax-analyzer/Parser.cpp
+        src/syntax-analyzer/syntax_analyzer.cpp
+        src/syntax-analyzer/components/parser.cpp
         src/syntax-analyzer/components/translator.cpp
         src/syntax-analyzer/components/semantic_actions.cpp
         # Lexical Analyzer
@@ -53,6 +55,7 @@ FetchContent_MakeAvailable(googletest)
 # Definir un ejecutable para tus tests
 add_executable(my_tests
         # Utils
+        src/utils/ErrorBuffer.cpp
         src/utils/SymbolTable.cpp
         src/utils/LiteralTable.cpp
         src/utils/LogHandler.cpp
@@ -62,7 +65,8 @@ add_executable(my_tests
         src/utils/resources/string_report_builders.cpp
         src/utils/resources/string_builder_dispatcher.cpp
         # Syntax Analyzer
-        src/syntax-analyzer/Parser.cpp
+        src/syntax-analyzer/syntax_analyzer.cpp
+        src/syntax-analyzer/components/parser.cpp
         src/syntax-analyzer/components/translator.cpp
         src/syntax-analyzer/components/semantic_actions.cpp
         # Lexical Analyzer
@@ -81,8 +85,6 @@ add_executable(my_tests
         tests/unit/lexical-analyzer/components/states_test.cpp
         tests/unit/lexical-analyzer/components/translator_test.cpp
         tests/unit/lexical-analyzer/components/semantic_actions_test.cpp
-        src/syntax-analyzer/components/translator.cpp
-        # Agrega otros archivos de test aquí, si los tienes
 )
 
 # Vincular las bibliotecas necesarias. GTest::gtest y GTest::gtest_main

@@ -1,4 +1,4 @@
-#include "syntax-analyzer/Parser.h"
+#include "syntax-analyzer/components/parser.h"
 #include "lexical-analyzer/components/reserved_words.h"
 
 using namespace LexicalAnalyzer;

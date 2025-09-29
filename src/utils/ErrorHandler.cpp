@@ -17,14 +17,6 @@ void ErrorHandler::add(const Log& log)
         error_count++;
 }
 
-bool ErrorHandler::updateLatestLog(const Log& log)
-{
-    if (this->logs.empty())
-        return false;
-    this->logs.back() = log;
-    return true;
-}
-
 int ErrorHandler::errorCount() const
 {
     return this->error_count;

@@ -1,6 +1,10 @@
 #ifndef TPE_SEMANTIC_ACTIONS_H
 #define TPE_SEMANTIC_ACTIONS_H
 
+#include "utils/ErrorBuffer.h"
+
+extern ErrorHandler ERROR_HANDLER;
+
 namespace SyntaxAnalyzer::SemanticActions
 {
     // Traps

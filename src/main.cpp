@@ -2,7 +2,7 @@
 #include "utils/LiteralTable.h"
 #include "utils/LogHandler.h"
 #include "utils/ErrorHandler.h"
-#include "syntax-analyzer/Parser.h"
+#include "syntax-analyzer/syntax_analyzer.h"
 #include "lexical-analyzer/lexical_analyzer.h"
 
 #include <iostream>
@@ -48,10 +48,10 @@ int main(const int argc, char* argv[])
         {
             if (!LOG_HANDLER.validOutput())
                 throw std::runtime_error("\nCouldn't generate report");
-            yyparse();
+            SyntaxAnalyzer::yyparsewrapper();
             LOG_HANDLER.generateReport();
         } else
-            yyparse();
+            SyntaxAnalyzer::yyparsewrapper();
 
         // Compilation Errors Handling (non fatal)
         std::string mssg = ERROR_HANDLER.getLogs();

@@ -1,11 +1,11 @@
 
 PROGRAMA {
-    uint 2.345F+2;
-    uint PROGRAMA.X, Y, Z;
+    float 2.345F+2;
+    uint PROGRAMA.X, Y;
     
     uint Y(cr uint Z, cr uint P, cr uint Y) {
         return (Y.X);
-        A := Y;
+        A := Y
         B := C;
     };
 
@@ -16,6 +16,8 @@ PROGRAMA {
     else
         X := Z;
     endif;
+
+    uint PROGRAMA.X, :=, Y := 234.F;
 
     print("recuérdame cuantos caracteres tiene este string que me olvido");
     print("hola");
@@ -32,8 +34,8 @@ PROGRAMA {
 
     do {
         X := Y;
-        F(trunc(-2.1)->B, Y->P);
-    while (X =! Z);
+        F(trunc(-2.1F)->B, Y->P);
+    while (X = Z);
 
     A, F.B, F.C = 1UI, -1.13452345F+12, 5UI;
     X, Y = 1UI, 0.25F-2, 2UI;
@@ -45,3 +47,5 @@ PROGRAMA {
     (uint PARAMETER) { if (X =! Y) { print("a"); } endif; } (PROGRAMA.X);
     (uint PARAMETER) { if (X =! Y) { print("a"); } endif; } (trunc(2.3));
 }
+
+~

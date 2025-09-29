@@ -3,10 +3,6 @@
 
 #include <string>
 
-#include "utils/SymbolTable.h"
-#include "utils/LiteralTable.h"
-#include "syntax-analyzer/Parser.h"
-
 /*
  * @brief representa el grupo funciones que asocian a las transiciones de la
  * máquina de estados del analizador lexico.

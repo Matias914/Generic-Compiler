@@ -1,7 +1,7 @@
-#include "syntax-analyzer/Parser.h"
 #include "utils/resources/macros.h"
 #include "utils/resources/builders.h"
 #include "utils/resources/string_builder_dispatcher.h"
+#include "syntax-analyzer/components/parser.h"
 
 using namespace StringBuilders;
 

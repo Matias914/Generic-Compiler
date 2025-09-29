@@ -1,4 +1,4 @@
-#include "syntax-analyzer/Parser.h"
+#include "syntax-analyzer/components/parser.h"
 #include "syntax-analyzer/components/translator.h"
 
 using namespace SyntaxAnalyzer;
@@ -6,6 +6,14 @@ using namespace SyntaxAnalyzer;
 std::string Translator::translate(const int& token) {
     switch (token)
     {
+    case YYEMPTY:
+        return "No Value";
+    case YYEOF:
+        return "EOF";
+    case YYerror:
+        return "ERROR";
+    case YYUNDEF:
+        return "Unknown Token";
     case INVALID_TOKEN:
         return "Unknown Word";
     case IF:
@@ -42,13 +50,11 @@ std::string Translator::translate(const int& token) {
         return ":=";
     case NOT_EQUAL_OP:
         return "!=";
-    case YYEOF:
-        return "EOF";
     case IDENTIFIER:
         return yylval.sref->symbol;
     case FLOAT_LITERAL:
-    case STRING_LITERAL:
     case UINTEGER_LITERAL:
+    case STRING_LITERAL:
         return yylval.lref->constant;
     default:
         const char c = static_cast<char>(token);

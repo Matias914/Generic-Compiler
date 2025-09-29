@@ -1,7 +1,7 @@
 #include "utils/ErrorHandler.h"
 #include "utils/resources/macros.h"
-#include "syntax-analyzer/Parser.h"
 #include "lexical-analyzer/lexical_analyzer.h"
+#include "syntax-analyzer/components/parser.h"
 #include "lexical-analyzer/components/reserved_words.h"
 #include "lexical-analyzer/components/semantic_actions.h"
 

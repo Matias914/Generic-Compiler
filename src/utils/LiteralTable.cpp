@@ -1,7 +1,7 @@
 #include "utils/LiteralTable.h"
 #include "utils/resources/macros.h"
-#include "syntax-analyzer/Parser.h"
 #include "utils/resources/string_builder_dispatcher.h"
+#include "syntax-analyzer/components/parser.h"
 
 LiteralTable::LiteralTable()
 {
