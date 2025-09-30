@@ -10,8 +10,6 @@ extern ErrorHandler ERROR_HANDLER;
 
 using namespace LexicalAnalyzer;
 
-// TODO: SE PODRIAN AHORRAR CON LOS LOGS POR PARTES
-
 /*
  * @brief estas acciones semanticas fueron hechas para tratar
  * errores.

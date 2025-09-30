@@ -7,8 +7,8 @@
  * @brief representa el grupo funciones que asocian a las transiciones de la
  * máquina de estados del analizador lexico.
  *
- * Se define una estructura int que viene a ser un DTO para la comunicacion
- * con el analizador lexico.
+ * Las acciones semanticas son las responsables de conocer qué es lo que se
+ * debe de hacer por cada tipo de caracter encontrado.
  */
 namespace LexicalAnalyzer
 {

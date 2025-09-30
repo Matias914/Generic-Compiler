@@ -46,3 +46,5 @@ output.txt
 # YACC
 *.y
 *.output
+
+.idea/

@@ -8,13 +8,14 @@
 #include "syntax-analyzer/components/translator.h"
 #include "syntax-analyzer/components/semantic_actions.h"
 
+// Usada por Bison, guarda el token obtenido del lexico.
+extern int yychar;
+
 extern LogHandler   LOG_HANDLER;
 extern ErrorHandler ERROR_HANDLER;
 extern LiteralTable LITERAL_TABLE;
 
 using namespace SyntaxAnalyzer;
-
-extern int yychar;
 
 void SemanticActions::announceSyntaxError()
 {

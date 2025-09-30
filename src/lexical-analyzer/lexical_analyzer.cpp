@@ -15,19 +15,22 @@ namespace LexicalAnalyzer
 
     int yylex()
     {
-        char character;
+        int token = 0;
         std::string lexeme = "";
         auto sm = StateMachine();
-        int token = 0;
         while (!sm.endState())
         {
-            int ivalue = END_OF_FILE;
-            if (static_cast<bool>(SOURCE_FILE.get(character)))
-                ivalue = Translator::translate(character);
-            else
+            char character;
+            int  chartype;
+            if (!static_cast<bool>(SOURCE_FILE.get(character)))
+            {
                 SOURCE_FILE.close();
-            const SemanticAction as = sm.getSemanticAction(ivalue);
-            token = as(lexeme, character);
+                chartype = END_OF_FILE;
+            }
+            else
+                chartype = Translator::translate(character);
+            const SemanticAction SA = sm.getSemanticAction(chartype);
+            token = SA(lexeme, character);
         }
         // Logs the token and lexeme found
         Log log;

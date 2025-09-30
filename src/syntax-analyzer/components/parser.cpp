@@ -145,43 +145,42 @@ enum yysymbol_kind_t
   YYSYMBOL_36_ = 36,                       /* '.'  */
   YYSYMBOL_YYACCEPT = 37,                  /* $accept  */
   YYSYMBOL_program = 38,                   /* program  */
-  YYSYMBOL_program_body = 39,              /* program_body  */
-  YYSYMBOL_program_statements = 40,        /* program_statements  */
-  YYSYMBOL_program_statement = 41,         /* program_statement  */
-  YYSYMBOL_declarative_stmt = 42,          /* declarative_stmt  */
-  YYSYMBOL_variable_list = 43,             /* variable_list  */
-  YYSYMBOL_type = 44,                      /* type  */
-  YYSYMBOL_formal_parameter_list = 45,     /* formal_parameter_list  */
-  YYSYMBOL_formal_parameter = 46,          /* formal_parameter  */
-  YYSYMBOL_parameter_type = 47,            /* parameter_type  */
-  YYSYMBOL_function_body = 48,             /* function_body  */
-  YYSYMBOL_function_statements = 49,       /* function_statements  */
-  YYSYMBOL_function_statement = 50,        /* function_statement  */
-  YYSYMBOL_executable_stmt = 51,           /* executable_stmt  */
-  YYSYMBOL_assignment = 52,                /* assignment  */
-  YYSYMBOL_print = 53,                     /* print  */
-  YYSYMBOL_multiple_assignments = 54,      /* multiple_assignments  */
-  YYSYMBOL_assignment_list = 55,           /* assignment_list  */
-  YYSYMBOL_extra_numeric_constants = 56,   /* extra_numeric_constants  */
-  YYSYMBOL_function_invocation = 57,       /* function_invocation  */
-  YYSYMBOL_real_parameter_list = 58,       /* real_parameter_list  */
-  YYSYMBOL_real_parameter = 59,            /* real_parameter  */
-  YYSYMBOL_lambda_invocation = 60,         /* lambda_invocation  */
-  YYSYMBOL_lambda_real_parameter = 61,     /* lambda_real_parameter  */
-  YYSYMBOL_if = 62,                        /* if  */
-  YYSYMBOL_executable_body = 63,           /* executable_body  */
-  YYSYMBOL_executable_statements = 64,     /* executable_statements  */
-  YYSYMBOL_control_stmt = 65,              /* control_stmt  */
-  YYSYMBOL_opt_trunc_constant = 66,        /* opt_trunc_constant  */
-  YYSYMBOL_opt_trunc_variable = 67,        /* opt_trunc_variable  */
-  YYSYMBOL_opt_trunc_expression = 68,      /* opt_trunc_expression  */
-  YYSYMBOL_condition = 69,                 /* condition  */
-  YYSYMBOL_comparison_operator = 70,       /* comparison_operator  */
-  YYSYMBOL_expression = 71,                /* expression  */
-  YYSYMBOL_term = 72,                      /* term  */
-  YYSYMBOL_factor = 73,                    /* factor  */
-  YYSYMBOL_variable = 74,                  /* variable  */
-  YYSYMBOL_numeric_constant = 75           /* numeric_constant  */
+  YYSYMBOL_program_statements = 39,        /* program_statements  */
+  YYSYMBOL_program_statement = 40,         /* program_statement  */
+  YYSYMBOL_declarative_stmt = 41,          /* declarative_stmt  */
+  YYSYMBOL_variable_list = 42,             /* variable_list  */
+  YYSYMBOL_type = 43,                      /* type  */
+  YYSYMBOL_formal_parameter_list = 44,     /* formal_parameter_list  */
+  YYSYMBOL_formal_parameter = 45,          /* formal_parameter  */
+  YYSYMBOL_parameter_type = 46,            /* parameter_type  */
+  YYSYMBOL_function_body = 47,             /* function_body  */
+  YYSYMBOL_function_statements = 48,       /* function_statements  */
+  YYSYMBOL_function_statement = 49,        /* function_statement  */
+  YYSYMBOL_executable_stmt = 50,           /* executable_stmt  */
+  YYSYMBOL_assignment = 51,                /* assignment  */
+  YYSYMBOL_print = 52,                     /* print  */
+  YYSYMBOL_multiple_assignments = 53,      /* multiple_assignments  */
+  YYSYMBOL_assignment_list = 54,           /* assignment_list  */
+  YYSYMBOL_extra_numeric_constants = 55,   /* extra_numeric_constants  */
+  YYSYMBOL_function_invocation = 56,       /* function_invocation  */
+  YYSYMBOL_real_parameter_list = 57,       /* real_parameter_list  */
+  YYSYMBOL_real_parameter = 58,            /* real_parameter  */
+  YYSYMBOL_lambda_invocation = 59,         /* lambda_invocation  */
+  YYSYMBOL_lambda_real_parameter = 60,     /* lambda_real_parameter  */
+  YYSYMBOL_if = 61,                        /* if  */
+  YYSYMBOL_executable_body = 62,           /* executable_body  */
+  YYSYMBOL_executable_statements = 63,     /* executable_statements  */
+  YYSYMBOL_control_stmt = 64,              /* control_stmt  */
+  YYSYMBOL_opt_trunc_constant = 65,        /* opt_trunc_constant  */
+  YYSYMBOL_opt_trunc_variable = 66,        /* opt_trunc_variable  */
+  YYSYMBOL_opt_trunc_expression = 67,      /* opt_trunc_expression  */
+  YYSYMBOL_condition = 68,                 /* condition  */
+  YYSYMBOL_comparison_operator = 69,       /* comparison_operator  */
+  YYSYMBOL_expression = 70,                /* expression  */
+  YYSYMBOL_term = 71,                      /* term  */
+  YYSYMBOL_factor = 72,                    /* factor  */
+  YYSYMBOL_variable = 73,                  /* variable  */
+  YYSYMBOL_numeric_constant = 74           /* numeric_constant  */
 };
 typedef enum yysymbol_kind_t yysymbol_kind_t;
 
@@ -507,18 +506,18 @@ union yyalloc
 #endif /* !YYCOPY_NEEDED */
 
 /* YYFINAL -- State number of the termination state.  */
-#define YYFINAL  5
+#define YYFINAL  7
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   236
+#define YYLAST   262
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  37
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  39
+#define YYNNTS  38
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  95
+#define YYNRULES  102
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  200
+#define YYNSTATES  214
 
 /* YYMAXUTOK -- Last valid token kind.  */
 #define YYMAXUTOK   279
@@ -569,16 +568,17 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,    58,    58,    65,    66,    73,    75,    79,    80,    81,
-      82,    91,    95,   100,   104,   114,   115,   116,   124,   130,
-     131,   132,   140,   141,   145,   149,   150,   158,   159,   163,
-     164,   169,   170,   175,   176,   177,   178,   179,   180,   184,
-     188,   196,   200,   205,   209,   220,   224,   232,   233,   236,
-     238,   244,   248,   256,   257,   258,   266,   273,   277,   285,
-     286,   292,   296,   301,   305,   313,   314,   319,   323,   324,
-     330,   334,   344,   345,   349,   350,   354,   355,   361,   365,
-     366,   367,   368,   372,   373,   374,   378,   379,   380,   384,
-     385,   389,   390,   394,   395,   396
+       0,    58,    58,    62,    67,    72,    77,    84,    86,    90,
+      91,    92,    93,   102,   106,   111,   116,   120,   130,   131,
+     132,   137,   145,   151,   152,   153,   161,   162,   166,   170,
+     171,   179,   180,   184,   185,   190,   191,   196,   197,   198,
+     199,   200,   201,   205,   209,   217,   221,   226,   230,   241,
+     245,   253,   254,   257,   259,   265,   269,   277,   278,   283,
+     284,   289,   297,   304,   308,   316,   317,   323,   327,   332,
+     336,   344,   345,   350,   354,   355,   361,   365,   375,   376,
+     380,   381,   385,   386,   392,   393,   401,   402,   403,   404,
+     408,   409,   410,   414,   415,   416,   420,   421,   425,   426,
+     430,   431,   432
 };
 #endif
 
@@ -599,14 +599,14 @@ static const char *const yytname[] =
   "FLOAT", "CR", "POINTER_OP", "EQUAL_OP", "GE_OP", "LE_OP", "ASSIGN_OP",
   "NOT_EQUAL_OP", "IDENTIFIER", "FLOAT_LITERAL", "UINTEGER_LITERAL",
   "STRING_LITERAL", "'{'", "'}'", "';'", "'('", "')'", "','", "'='", "'+'",
-  "'-'", "'*'", "'/'", "'.'", "$accept", "program", "program_body",
-  "program_statements", "program_statement", "declarative_stmt",
-  "variable_list", "type", "formal_parameter_list", "formal_parameter",
-  "parameter_type", "function_body", "function_statements",
-  "function_statement", "executable_stmt", "assignment", "print",
-  "multiple_assignments", "assignment_list", "extra_numeric_constants",
-  "function_invocation", "real_parameter_list", "real_parameter",
-  "lambda_invocation", "lambda_real_parameter", "if", "executable_body",
+  "'-'", "'*'", "'/'", "'.'", "$accept", "program", "program_statements",
+  "program_statement", "declarative_stmt", "variable_list", "type",
+  "formal_parameter_list", "formal_parameter", "parameter_type",
+  "function_body", "function_statements", "function_statement",
+  "executable_stmt", "assignment", "print", "multiple_assignments",
+  "assignment_list", "extra_numeric_constants", "function_invocation",
+  "real_parameter_list", "real_parameter", "lambda_invocation",
+  "lambda_real_parameter", "if", "executable_body",
   "executable_statements", "control_stmt", "opt_trunc_constant",
   "opt_trunc_variable", "opt_trunc_expression", "condition",
   "comparison_operator", "expression", "term", "factor", "variable",
@@ -620,7 +620,7 @@ yysymbol_name (yysymbol_kind_t yysymbol)
 }
 #endif
 
-#define YYPACT_NINF (-104)
+#define YYPACT_NINF (-116)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -634,26 +634,28 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int16 yypact[] =
 {
-       5,    20,    50,  -104,  -104,  -104,    68,    19,     2,   127,
-      42,  -104,    59,  -104,    47,  -104,  -104,    60,  -104,  -104,
-    -104,  -104,  -104,  -104,  -104,  -104,   -10,  -104,  -104,   148,
-     111,  -104,    80,   142,   148,    83,    92,    69,     6,  -104,
-     148,   109,  -104,   163,    73,   102,  -104,  -104,   119,   177,
-     125,   -16,   112,  -104,  -104,  -104,  -104,    82,   129,   133,
-     147,    11,  -104,   165,  -104,   171,    65,    79,  -104,   109,
-      12,   152,   173,  -104,  -104,   169,  -104,  -104,  -104,  -104,
-    -104,   148,   127,   169,   169,   169,   169,   176,  -104,  -104,
-     148,    21,    22,   148,    26,   148,   183,   180,  -104,   185,
-      13,  -104,    47,  -104,  -104,  -104,   181,  -104,   163,    51,
-      17,    93,  -104,   167,   112,   112,  -104,  -104,  -104,   178,
-     182,  -104,   184,  -104,  -104,   186,  -104,  -104,  -104,   111,
-    -104,    65,   187,    65,   189,  -104,   188,   190,   193,  -104,
-     163,  -104,   127,    27,    28,  -104,  -104,  -104,   130,  -104,
-     107,    30,  -104,  -104,  -104,  -104,  -104,  -104,   208,   194,
-    -104,   195,  -104,   196,   197,  -104,    81,  -104,  -104,   199,
-    -104,    31,  -104,  -104,   156,   148,   200,  -104,  -104,  -104,
-     201,  -104,   202,   203,  -104,  -104,  -104,   204,  -104,  -104,
-     169,    33,    37,   205,   209,  -104,  -104,  -104,  -104,  -104
+      14,    80,    20,    96,  -116,   108,  -116,  -116,  -116,    81,
+       9,   -14,   136,    87,  -116,    53,   129,    38,  -116,  -116,
+      58,  -116,  -116,  -116,  -116,  -116,  -116,  -116,  -116,    97,
+    -116,  -116,   175,   164,  -116,   117,   154,     7,   122,  -116,
+     152,   137,   139,   113,    16,  -116,   175,   142,  -116,   171,
+     145,   134,  -116,  -116,   158,   189,   155,   170,   181,  -116,
+    -116,  -116,  -116,   110,   160,   162,   194,  -116,    12,  -116,
+     195,  -116,  -116,   198,  -116,    85,    -1,  -116,    73,    26,
+     187,   200,  -116,  -116,   191,  -116,   175,  -116,  -116,  -116,
+    -116,   175,   136,   191,   191,   191,   191,   202,  -116,  -116,
+     175,    30,    36,   175,    50,    11,   209,   206,  -116,   211,
+      18,  -116,    38,  -116,  -116,   142,  -116,   207,  -116,   171,
+      99,    22,    33,  -116,  -116,   214,   181,   181,  -116,  -116,
+    -116,   204,   208,  -116,   210,  -116,  -116,   212,  -116,  -116,
+    -116,  -116,   164,  -116,    85,   213,    85,   215,  -116,  -116,
+     216,   218,   217,  -116,   171,  -116,   136,    57,    59,  -116,
+    -116,  -116,   141,  -116,   114,    63,  -116,  -116,  -116,  -116,
+    -116,  -116,   234,   221,  -116,   222,  -116,   223,   224,  -116,
+      91,  -116,  -116,   226,  -116,    71,  -116,  -116,   178,   175,
+     227,  -116,  -116,  -116,   228,  -116,   229,   230,  -116,  -116,
+    -116,   231,  -116,  -116,   191,    77,    86,   232,   235,  -116,
+    -116,  -116,  -116,  -116
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -661,44 +663,46 @@ static const yytype_int16 yypact[] =
    means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       0,     0,     0,     5,     2,     1,     0,     0,     0,     0,
-       0,    18,    91,     3,     0,     6,     7,     0,     8,    33,
-      37,    34,    35,    38,    36,     9,     0,     4,    10,     0,
-       0,    67,     0,     0,     0,     0,     0,    91,     0,    15,
-       0,     0,    47,     0,     0,    91,    94,    93,     0,     0,
-       0,    76,    85,    88,    89,    90,    68,     0,     0,     0,
-       0,     0,    53,     0,    92,     0,     0,     0,    11,     0,
-       0,     0,     0,    49,    72,     0,    95,    79,    81,    82,
-      80,     0,     0,     0,     0,     0,     0,     0,    65,    69,
-       0,     0,     0,     0,     0,     0,     0,     0,    24,     0,
-       0,    19,     0,    12,    17,    16,     0,    39,     0,     0,
-       0,     0,    78,     0,    83,    84,    86,    87,    66,     0,
-       0,    41,     0,    43,    55,     0,    51,    54,    56,     0,
-      22,     0,     0,     0,     0,    40,     0,     0,     0,    45,
-       0,    77,     0,     0,     0,    42,    44,    52,     0,    21,
-       0,     0,    20,    23,    48,    73,    46,    50,     0,     0,
-      61,     0,    70,     0,     0,    31,     0,    27,    32,     0,
-      13,     0,    62,    71,     0,     0,     0,    25,    28,    14,
-       0,    63,     0,     0,    60,    59,    74,     0,    26,    64,
-       0,     0,     0,     0,     0,    57,    30,    29,    75,    58
+       0,     0,     0,     0,     3,     0,     7,     1,     4,     0,
+       0,     0,     0,     0,    22,    98,     0,     0,     8,     9,
+       0,    10,    37,    41,    38,    39,    42,    40,    11,     0,
+       5,    12,     0,     0,    73,     0,     0,     0,     0,     2,
+       0,     0,     0,    98,     0,    18,     0,     0,    51,     0,
+       0,    98,   101,   100,     0,     0,     0,    82,    92,    95,
+      96,    97,    74,     0,     0,     0,     0,    58,     0,    57,
+       0,    99,     6,     0,    15,     0,     0,    13,     0,     0,
+       0,     0,    53,    78,     0,   102,     0,    86,    88,    89,
+      87,     0,     0,     0,     0,     0,     0,     0,    71,    75,
+       0,     0,     0,     0,     0,     0,     0,     0,    28,     0,
+       0,    23,     0,    14,    21,     0,    19,     0,    43,     0,
+       0,     0,     0,    85,    84,     0,    90,    91,    93,    94,
+      72,     0,     0,    45,     0,    47,    61,     0,    55,    60,
+      59,    62,     0,    26,     0,     0,     0,     0,    20,    44,
+       0,     0,     0,    49,     0,    83,     0,     0,     0,    46,
+      48,    56,     0,    25,     0,     0,    24,    27,    52,    79,
+      50,    54,     0,     0,    67,     0,    76,     0,     0,    35,
+       0,    31,    36,     0,    16,     0,    68,    77,     0,     0,
+       0,    29,    32,    17,     0,    69,     0,     0,    66,    65,
+      80,     0,    30,    70,     0,     0,     0,     0,     0,    63,
+      34,    33,    81,    64
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int16 yypgoto[] =
 {
-    -104,  -104,  -104,  -104,  -104,   210,  -104,    -4,  -104,   -19,
-    -104,  -104,  -104,    49,    -5,  -104,  -104,  -104,   146,  -104,
-    -104,  -104,    25,  -104,  -104,  -104,   -76,    94,  -104,  -103,
-    -104,   -25,   139,  -104,   160,   104,   113,    -6,   -41
+    -116,  -116,  -116,  -116,   233,  -116,    -7,  -116,     4,  -116,
+    -116,  -116,    61,    -8,  -116,  -116,  -116,   163,  -116,  -116,
+    -116,    78,  -116,  -116,  -116,   -85,   103,  -116,  -115,  -116,
+     -30,   150,  -116,   172,   128,   130,    -9,   -44
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_uint8 yydefgoto[] =
 {
-       0,     2,     4,     6,    15,   165,    38,    17,   100,   101,
-     102,   151,   166,   167,    31,    19,    20,    21,    43,   110,
-      22,    61,    62,    23,   183,    24,    32,    57,    25,    73,
-     185,    63,    50,    81,    51,    52,    53,    54,    55
+       0,     3,     9,    18,   179,    44,    20,   110,   111,   112,
+     165,   180,   181,    34,    22,    23,    24,    49,   121,    25,
+      68,    69,    26,   197,    27,    35,    63,    28,    82,   199,
+      70,    56,    91,    57,    58,    59,    60,    61
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -706,114 +710,124 @@ static const yytype_uint8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_uint8 yytable[] =
 {
-      26,    18,    74,    26,    49,   136,   113,    67,    60,    40,
-      36,    39,    93,   106,   131,    70,    83,    84,   138,    27,
-      41,    42,   120,   122,    26,    56,     1,   125,   159,   161,
-      29,   169,   180,    68,   194,    71,    69,   157,   196,   107,
-      94,    95,   132,   133,   139,     3,    28,   140,   121,   123,
-       5,    26,    89,   126,   160,   162,   112,   170,   181,    11,
-     195,   104,    99,   105,   197,    49,   158,    74,   137,     7,
-      33,   184,     8,    46,    47,     9,    26,    11,    10,    98,
-      11,    37,   176,    87,    48,     8,     8,    34,    58,    12,
-     164,    10,    10,    11,    13,    35,    14,    66,   134,    74,
-      45,    75,    12,    12,    64,    35,   103,   177,    88,    14,
-      14,     8,   149,    65,   152,     8,   164,    10,   124,    11,
-     127,    10,   141,    26,    56,    83,    84,    99,    12,    99,
-      45,     8,    12,    74,     8,    14,    26,    10,    35,    14,
-      10,    76,    26,    89,    26,   168,    85,    86,    12,   137,
-     187,    12,    30,    44,    82,    14,   163,    90,    14,    44,
-      26,   168,    91,    45,    46,    47,    59,   182,   186,    45,
-      46,    47,   142,   143,    72,    48,    92,    45,    46,    47,
-      96,    48,    41,    42,   193,    46,    47,   114,   115,    48,
-      45,    46,    47,    77,    78,    79,    48,    80,   116,   117,
-      97,   109,    48,   118,   128,   129,   130,   144,   135,   145,
-     153,   146,   150,   147,   171,   178,    16,   108,   154,   155,
-     156,   172,   173,   148,   174,   175,   179,   188,   189,   119,
-     190,     0,   191,   192,   198,   111,   199
+      29,    21,    55,    29,   150,    83,    66,   125,    67,    30,
+      41,    45,   139,   103,    32,     1,    79,    76,    50,   144,
+      51,     5,    50,   152,    29,    62,   113,   117,    51,    52,
+      53,   132,    51,    52,    53,     2,    31,   134,    80,   171,
+      54,   104,   105,    77,    54,     6,    78,   145,   146,   153,
+      14,   137,   154,   118,    29,    99,   123,   133,   173,    42,
+     175,   124,   155,   135,   183,    93,    94,   114,   109,   116,
+      55,   172,   194,   198,   115,    83,   151,   138,   208,    43,
+       4,    37,    10,    29,   174,    11,   176,   210,    12,    38,
+     184,    13,   190,    14,    51,    11,     7,    14,   195,   108,
+     178,    13,    15,    14,   209,   147,   148,    16,     8,    17,
+      83,    97,    15,   211,    11,    36,    46,   191,    11,    17,
+      13,    52,    53,   178,    13,    64,    14,    47,    48,    39,
+      40,    15,    54,    29,    62,    15,    98,   109,    17,   109,
+      11,    75,    17,    71,    83,    11,    13,    29,   163,    38,
+     166,    13,    72,    29,    99,    29,   182,    15,    73,   201,
+     151,    33,    15,    51,    17,    50,    74,   177,    11,    17,
+      38,    29,   182,    84,    13,    51,    52,    53,    65,   200,
+      85,   136,    81,   140,    92,    15,    50,    54,   100,   196,
+      86,   101,    17,    52,    53,   207,    51,    52,    53,    51,
+      52,    53,    93,    94,    54,    87,    88,    89,    54,    90,
+     106,    54,    51,    52,    53,    95,    96,    47,    48,   156,
+     157,   126,   127,   102,    54,   128,   129,   107,   120,   130,
+     141,   142,   143,   158,   149,   159,   167,   160,   164,   161,
+     185,   192,    19,   119,   170,   162,   168,   169,   186,   187,
+     131,   188,   189,   193,   202,   203,   122,   204,     0,   205,
+     206,   212,   213
 };
 
 static const yytype_int16 yycheck[] =
 {
-       6,     6,    43,     9,    29,   108,    82,     1,    33,    19,
-      14,    17,     1,     1,     1,    40,    32,    33,     1,     0,
-      30,    31,     1,     1,    30,    30,    21,     1,     1,     1,
-      28,     1,     1,    27,     1,    41,    30,   140,     1,    27,
-      29,    30,    29,    30,    27,    25,    27,    30,    27,    27,
-       0,    57,    57,    27,    27,    27,    81,    27,    27,    12,
-      27,    67,    66,    69,    27,    90,   142,   108,   109,     1,
-      28,   174,     4,    22,    23,     7,    82,    12,    10,    14,
-      12,    21,     1,     1,    33,     4,     4,    28,     8,    21,
-       9,    10,    10,    12,    26,    36,    28,    28,   102,   140,
-      21,    28,    21,    21,    21,    36,    27,    26,    26,    28,
-      28,     4,   131,    21,   133,     4,     9,    10,    93,    12,
-      95,    10,    29,   129,   129,    32,    33,   131,    21,   133,
-      21,     4,    21,   174,     4,    28,   142,    10,    36,    28,
-      10,    22,   148,   148,   150,   150,    34,    35,    21,   190,
-     175,    21,    25,    11,    29,    28,    26,    28,    28,    11,
-     166,   166,    29,    21,    22,    23,    24,    11,   174,    21,
-      22,    23,     5,     6,    11,    33,    29,    21,    22,    23,
-      15,    33,    30,    31,   190,    22,    23,    83,    84,    33,
-      21,    22,    23,    16,    17,    18,    33,    20,    85,    86,
-      29,    28,    33,    27,    21,    25,    21,    29,    27,    27,
-      21,    27,    25,    27,     6,   166,     6,    71,    30,    29,
-      27,    27,    27,   129,    28,    28,    27,    27,    27,    90,
-      28,    -1,    29,    29,    29,    75,    27
+       9,     9,    32,    12,   119,    49,    36,    92,     1,     0,
+      17,    20,     1,     1,    28,     1,    46,     1,    11,     1,
+      21,     1,    11,     1,    33,    33,    27,     1,    21,    22,
+      23,     1,    21,    22,    23,    21,    27,     1,    47,   154,
+      33,    29,    30,    27,    33,    25,    30,    29,    30,    27,
+      12,     1,    30,    27,    63,    63,    86,    27,     1,     1,
+       1,    91,    29,    27,     1,    32,    33,    76,    75,    78,
+     100,   156,     1,   188,     1,   119,   120,    27,     1,    21,
+       0,    28,     1,    92,    27,     4,    27,     1,     7,    36,
+      27,    10,     1,    12,    21,     4,     0,    12,    27,    14,
+       9,    10,    21,    12,    27,   112,   115,    26,     0,    28,
+     154,     1,    21,    27,     4,    28,    19,    26,     4,    28,
+      10,    22,    23,     9,    10,     8,    12,    30,    31,     0,
+       1,    21,    33,   142,   142,    21,    26,   144,    28,   146,
+       4,    28,    28,    21,   188,     4,    10,   156,   144,    36,
+     146,    10,     0,   162,   162,   164,   164,    21,    21,   189,
+     204,    25,    21,    21,    28,    11,    27,    26,     4,    28,
+      36,   180,   180,    28,    10,    21,    22,    23,    24,   188,
+      22,   103,    11,   105,    29,    21,    11,    33,    28,    11,
+       1,    29,    28,    22,    23,   204,    21,    22,    23,    21,
+      22,    23,    32,    33,    33,    16,    17,    18,    33,    20,
+      15,    33,    21,    22,    23,    34,    35,    30,    31,     5,
+       6,    93,    94,    29,    33,    95,    96,    29,    28,    27,
+      21,    25,    21,    29,    27,    27,    21,    27,    25,    27,
+       6,   180,     9,    80,    27,   142,    30,    29,    27,    27,
+     100,    28,    28,    27,    27,    27,    84,    28,    -1,    29,
+      29,    29,    27
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
    state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,    21,    38,    25,    39,     0,    40,     1,     4,     7,
-      10,    12,    21,    26,    28,    41,    42,    44,    51,    52,
-      53,    54,    57,    60,    62,    65,    74,     0,    27,    28,
-      25,    51,    63,    28,    28,    36,    44,    21,    43,    74,
-      19,    30,    31,    55,    11,    21,    22,    23,    33,    68,
-      69,    71,    72,    73,    74,    75,    51,    64,     8,    24,
-      68,    58,    59,    68,    21,    21,    28,     1,    27,    30,
-      68,    74,    11,    66,    75,    28,    22,    16,    17,    18,
-      20,    70,    29,    32,    33,    34,    35,     1,    26,    51,
-      28,    29,    29,     1,    29,    30,    15,    29,    14,    44,
-      45,    46,    47,    27,    74,    74,     1,    27,    55,    28,
-      56,    71,    68,    63,    72,    72,    73,    73,    27,    69,
-       1,    27,     1,    27,    59,     1,    27,    59,    21,    25,
-      21,     1,    29,    30,    44,    27,    66,    75,     1,    27,
-      30,    29,     5,     6,    29,    27,    27,    27,    64,    46,
-      25,    48,    46,    21,    30,    29,    27,    66,    63,     1,
-      27,     1,    27,    26,     9,    42,    49,    50,    51,     1,
-      27,     6,    27,    27,    28,    28,     1,    26,    50,    27,
-       1,    27,    11,    61,    66,    67,    74,    68,    27,    27,
-      28,    29,    29,    74,     1,    27,     1,    27,    29,    27
+       0,     1,    21,    38,     0,     1,    25,     0,     0,    39,
+       1,     4,     7,    10,    12,    21,    26,    28,    40,    41,
+      43,    50,    51,    52,    53,    56,    59,    61,    64,    73,
+       0,    27,    28,    25,    50,    62,    28,    28,    36,     0,
+       1,    43,     1,    21,    42,    73,    19,    30,    31,    54,
+      11,    21,    22,    23,    33,    67,    68,    70,    71,    72,
+      73,    74,    50,    63,     8,    24,    67,     1,    57,    58,
+      67,    21,     0,    21,    27,    28,     1,    27,    30,    67,
+      73,    11,    65,    74,    28,    22,     1,    16,    17,    18,
+      20,    69,    29,    32,    33,    34,    35,     1,    26,    50,
+      28,    29,    29,     1,    29,    30,    15,    29,    14,    43,
+      44,    45,    46,    27,    73,     1,    73,     1,    27,    54,
+      28,    55,    70,    67,    67,    62,    71,    71,    72,    72,
+      27,    68,     1,    27,     1,    27,    58,     1,    27,     1,
+      58,    21,    25,    21,     1,    29,    30,    43,    73,    27,
+      65,    74,     1,    27,    30,    29,     5,     6,    29,    27,
+      27,    27,    63,    45,    25,    47,    45,    21,    30,    29,
+      27,    65,    62,     1,    27,     1,    27,    26,     9,    41,
+      48,    49,    50,     1,    27,     6,    27,    27,    28,    28,
+       1,    26,    49,    27,     1,    27,    11,    60,    65,    66,
+      73,    67,    27,    27,    28,    29,    29,    73,     1,    27,
+       1,    27,    29,    27
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr1[] =
 {
-       0,    37,    38,    39,    39,    40,    40,    41,    41,    41,
-      41,    42,    42,    42,    42,    43,    43,    43,    44,    45,
-      45,    45,    46,    46,    47,    48,    48,    49,    49,    50,
-      50,    50,    50,    51,    51,    51,    51,    51,    51,    52,
-      52,    53,    53,    53,    53,    54,    54,    55,    55,    56,
-      56,    57,    57,    58,    58,    58,    59,    60,    60,    61,
-      61,    62,    62,    62,    62,    63,    63,    63,    64,    64,
-      65,    65,    66,    66,    67,    67,    68,    68,    69,    70,
-      70,    70,    70,    71,    71,    71,    72,    72,    72,    73,
-      73,    74,    74,    75,    75,    75
+       0,    37,    38,    38,    38,    38,    38,    39,    39,    40,
+      40,    40,    40,    41,    41,    41,    41,    41,    42,    42,
+      42,    42,    43,    44,    44,    44,    45,    45,    46,    47,
+      47,    48,    48,    49,    49,    49,    49,    50,    50,    50,
+      50,    50,    50,    51,    51,    52,    52,    52,    52,    53,
+      53,    54,    54,    55,    55,    56,    56,    57,    57,    57,
+      57,    57,    58,    59,    59,    60,    60,    61,    61,    61,
+      61,    62,    62,    62,    63,    63,    64,    64,    65,    65,
+      66,    66,    67,    67,    68,    68,    69,    69,    69,    69,
+      70,    70,    70,    71,    71,    71,    72,    72,    73,    73,
+      74,    74,    74
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr2[] =
 {
-       0,     2,     2,     3,     4,     0,     2,     1,     1,     1,
-       2,     3,     4,     7,     8,     1,     3,     3,     1,     1,
-       3,     3,     2,     3,     1,     3,     4,     1,     2,     5,
-       5,     1,     1,     1,     1,     1,     1,     1,     1,     4,
-       5,     5,     6,     5,     6,     5,     6,     1,     5,     0,
-       3,     5,     6,     1,     3,     3,     3,    11,    12,     1,
-       1,     7,     8,     9,    10,     3,     4,     1,     1,     2,
-       7,     8,     1,     4,     1,     4,     1,     4,     3,     1,
-       1,     1,     1,     3,     3,     1,     3,     3,     1,     1,
-       1,     1,     3,     1,     1,     2
+       0,     2,     5,     2,     3,     5,     6,     0,     2,     1,
+       1,     1,     2,     3,     4,     3,     7,     8,     1,     3,
+       4,     3,     1,     1,     3,     3,     2,     3,     1,     3,
+       4,     1,     2,     5,     5,     1,     1,     1,     1,     1,
+       1,     1,     1,     4,     5,     5,     6,     5,     6,     5,
+       6,     1,     5,     0,     3,     5,     6,     1,     1,     3,
+       3,     3,     3,    11,    12,     1,     1,     7,     8,     9,
+      10,     3,     4,     1,     1,     2,     7,     8,     1,     4,
+       1,     4,     1,     4,     3,     3,     1,     1,     1,     1,
+       3,     3,     1,     3,     3,     1,     1,     1,     1,     3,
+       1,     1,     2
 };
 
 
@@ -1276,282 +1290,354 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-  case 2: /* program: IDENTIFIER program_body  */
+  case 2: /* program: IDENTIFIER '{' program_statements '}' $end  */
 #line 59 "include/syntax-analyzer/components/yacc.y"
     {
         logStructure("PROGRAM");
     }
-#line 1285 "src/syntax-analyzer/components/parser.cpp"
+#line 1299 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 4: /* program_body: '{' program_statements error $end  */
-#line 67 "include/syntax-analyzer/components/yacc.y"
+  case 3: /* program: error $end  */
+#line 63 "include/syntax-analyzer/components/yacc.y"
+    {
+        specifyExpectedError("program name");
+        yyerrok;
+    }
+#line 1308 "src/syntax-analyzer/components/parser.cpp"
+    break;
+
+  case 4: /* program: IDENTIFIER error $end  */
+#line 68 "include/syntax-analyzer/components/yacc.y"
+    {
+        specifyExpectedError("{");
+        yyerrok;
+    }
+#line 1317 "src/syntax-analyzer/components/parser.cpp"
+    break;
+
+  case 5: /* program: IDENTIFIER '{' program_statements error $end  */
+#line 73 "include/syntax-analyzer/components/yacc.y"
     {
         specifyExpectedError("}");
         yyerrok;
     }
-#line 1294 "src/syntax-analyzer/components/parser.cpp"
+#line 1326 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 10: /* program_statement: error ';'  */
-#line 83 "include/syntax-analyzer/components/yacc.y"
+  case 6: /* program: IDENTIFIER '{' program_statements '}' error $end  */
+#line 78 "include/syntax-analyzer/components/yacc.y"
+    {
+        specifyExpectedError("End of File");
+        yyerrok;
+    }
+#line 1335 "src/syntax-analyzer/components/parser.cpp"
+    break;
+
+  case 12: /* program_statement: error ';'  */
+#line 94 "include/syntax-analyzer/components/yacc.y"
     {
         yyerrok;
     }
-#line 1302 "src/syntax-analyzer/components/parser.cpp"
+#line 1343 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 11: /* declarative_stmt: type variable_list ';'  */
-#line 92 "include/syntax-analyzer/components/yacc.y"
+  case 13: /* declarative_stmt: type variable_list ';'  */
+#line 103 "include/syntax-analyzer/components/yacc.y"
     {
         logStructure("VARIABLE DECLARATION");
     }
-#line 1310 "src/syntax-analyzer/components/parser.cpp"
+#line 1351 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 12: /* declarative_stmt: type variable_list error ';'  */
-#line 96 "include/syntax-analyzer/components/yacc.y"
+  case 14: /* declarative_stmt: type variable_list error ';'  */
+#line 107 "include/syntax-analyzer/components/yacc.y"
     {
         specifyExpectedError(";");
         yyerrok;
     }
-#line 1319 "src/syntax-analyzer/components/parser.cpp"
+#line 1360 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 13: /* declarative_stmt: type IDENTIFIER '(' formal_parameter_list ')' function_body ';'  */
-#line 101 "include/syntax-analyzer/components/yacc.y"
+  case 15: /* declarative_stmt: type error ';'  */
+#line 112 "include/syntax-analyzer/components/yacc.y"
+    {
+        specifyExpectedError("variable");
+        yyerrok;
+    }
+#line 1369 "src/syntax-analyzer/components/parser.cpp"
+    break;
+
+  case 16: /* declarative_stmt: type IDENTIFIER '(' formal_parameter_list ')' function_body ';'  */
+#line 117 "include/syntax-analyzer/components/yacc.y"
     {
         logStructure("FUNCTION DECLARATION");
     }
-#line 1327 "src/syntax-analyzer/components/parser.cpp"
+#line 1377 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 14: /* declarative_stmt: type IDENTIFIER '(' formal_parameter_list ')' function_body error ';'  */
-#line 105 "include/syntax-analyzer/components/yacc.y"
+  case 17: /* declarative_stmt: type IDENTIFIER '(' formal_parameter_list ')' function_body error ';'  */
+#line 121 "include/syntax-analyzer/components/yacc.y"
     {
         specifyExpectedError(";");
         yyerrok;
     }
-#line 1336 "src/syntax-analyzer/components/parser.cpp"
+#line 1386 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 17: /* variable_list: variable_list error variable  */
-#line 117 "include/syntax-analyzer/components/yacc.y"
-    {
-        specifyExpectedError(",");
-        yyerrok;
-    }
-#line 1345 "src/syntax-analyzer/components/parser.cpp"
-    break;
-
-  case 21: /* formal_parameter_list: formal_parameter_list error formal_parameter  */
+  case 20: /* variable_list: variable_list ',' error variable  */
 #line 133 "include/syntax-analyzer/components/yacc.y"
     {
+        specifyExpectedError("variable");
+        yyerrok;
+    }
+#line 1395 "src/syntax-analyzer/components/parser.cpp"
+    break;
+
+  case 21: /* variable_list: variable_list error variable  */
+#line 138 "include/syntax-analyzer/components/yacc.y"
+    {
         specifyExpectedError(",");
         yyerrok;
     }
-#line 1354 "src/syntax-analyzer/components/parser.cpp"
+#line 1404 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 26: /* function_body: '{' function_statements error ';'  */
-#line 151 "include/syntax-analyzer/components/yacc.y"
+  case 25: /* formal_parameter_list: formal_parameter_list error formal_parameter  */
+#line 154 "include/syntax-analyzer/components/yacc.y"
+    {
+        specifyExpectedError(",");
+        yyerrok;
+    }
+#line 1413 "src/syntax-analyzer/components/parser.cpp"
+    break;
+
+  case 30: /* function_body: '{' function_statements error ';'  */
+#line 172 "include/syntax-analyzer/components/yacc.y"
     {
         specifyExpectedError("}");
         yyerrok;
     }
-#line 1363 "src/syntax-analyzer/components/parser.cpp"
+#line 1422 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 30: /* function_statement: RETURN '(' opt_trunc_expression ')' error  */
-#line 165 "include/syntax-analyzer/components/yacc.y"
+  case 34: /* function_statement: RETURN '(' opt_trunc_expression ')' error  */
+#line 186 "include/syntax-analyzer/components/yacc.y"
     {
         specifyExpectedError(";");
         yyerrok;
     }
-#line 1372 "src/syntax-analyzer/components/parser.cpp"
+#line 1431 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 39: /* assignment: variable ASSIGN_OP opt_trunc_expression ';'  */
-#line 185 "include/syntax-analyzer/components/yacc.y"
+  case 43: /* assignment: variable ASSIGN_OP opt_trunc_expression ';'  */
+#line 206 "include/syntax-analyzer/components/yacc.y"
     {
         logStructure("ASSIGNMENT");
     }
-#line 1380 "src/syntax-analyzer/components/parser.cpp"
+#line 1439 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 40: /* assignment: variable ASSIGN_OP opt_trunc_expression error ';'  */
-#line 189 "include/syntax-analyzer/components/yacc.y"
-    {
-        specifyExpectedError(";");
-        yyerrok;
-    }
-#line 1389 "src/syntax-analyzer/components/parser.cpp"
-    break;
-
-  case 41: /* print: PRINT '(' STRING_LITERAL ')' ';'  */
-#line 197 "include/syntax-analyzer/components/yacc.y"
-    {
-        logStructure("PRINT");
-    }
-#line 1397 "src/syntax-analyzer/components/parser.cpp"
-    break;
-
-  case 42: /* print: PRINT '(' STRING_LITERAL ')' error ';'  */
-#line 201 "include/syntax-analyzer/components/yacc.y"
-    {
-        specifyExpectedError(";");
-        yyerrok;
-    }
-#line 1406 "src/syntax-analyzer/components/parser.cpp"
-    break;
-
-  case 43: /* print: PRINT '(' opt_trunc_expression ')' ';'  */
-#line 206 "include/syntax-analyzer/components/yacc.y"
-    {
-        logStructure("PRINT");
-    }
-#line 1414 "src/syntax-analyzer/components/parser.cpp"
-    break;
-
-  case 44: /* print: PRINT '(' opt_trunc_expression ')' error ';'  */
+  case 44: /* assignment: variable ASSIGN_OP opt_trunc_expression error ';'  */
 #line 210 "include/syntax-analyzer/components/yacc.y"
     {
         specifyExpectedError(";");
         yyerrok;
     }
-#line 1423 "src/syntax-analyzer/components/parser.cpp"
-    break;
-
-  case 45: /* multiple_assignments: variable assignment_list opt_trunc_constant extra_numeric_constants ';'  */
-#line 221 "include/syntax-analyzer/components/yacc.y"
-    {
-        logStructure("MULTIPLE ASSIGNMENT");
-    }
-#line 1431 "src/syntax-analyzer/components/parser.cpp"
-    break;
-
-  case 46: /* multiple_assignments: variable assignment_list opt_trunc_constant extra_numeric_constants error ';'  */
-#line 225 "include/syntax-analyzer/components/yacc.y"
-    {
-        specifyExpectedError(";");
-        yyerrok;
-    }
-#line 1440 "src/syntax-analyzer/components/parser.cpp"
-    break;
-
-  case 51: /* function_invocation: IDENTIFIER '(' real_parameter_list ')' ';'  */
-#line 245 "include/syntax-analyzer/components/yacc.y"
-    {
-        logStructure("FUNCTION INVOCATION");
-    }
 #line 1448 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 52: /* function_invocation: IDENTIFIER '(' real_parameter_list ')' error ';'  */
-#line 249 "include/syntax-analyzer/components/yacc.y"
+  case 45: /* print: PRINT '(' STRING_LITERAL ')' ';'  */
+#line 218 "include/syntax-analyzer/components/yacc.y"
+    {
+        logStructure("PRINT");
+    }
+#line 1456 "src/syntax-analyzer/components/parser.cpp"
+    break;
+
+  case 46: /* print: PRINT '(' STRING_LITERAL ')' error ';'  */
+#line 222 "include/syntax-analyzer/components/yacc.y"
     {
         specifyExpectedError(";");
         yyerrok;
     }
-#line 1457 "src/syntax-analyzer/components/parser.cpp"
+#line 1465 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 55: /* real_parameter_list: real_parameter_list error real_parameter  */
-#line 259 "include/syntax-analyzer/components/yacc.y"
+  case 47: /* print: PRINT '(' opt_trunc_expression ')' ';'  */
+#line 227 "include/syntax-analyzer/components/yacc.y"
     {
-        specifyExpectedError(",");
-        yyerrok;
+        logStructure("PRINT");
     }
-#line 1466 "src/syntax-analyzer/components/parser.cpp"
+#line 1473 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 57: /* lambda_invocation: '(' type IDENTIFIER ')' '{' executable_statements '}' '(' lambda_real_parameter ')' ';'  */
-#line 274 "include/syntax-analyzer/components/yacc.y"
-    {
-        logStructure("LAMBDA");
-    }
-#line 1474 "src/syntax-analyzer/components/parser.cpp"
-    break;
-
-  case 58: /* lambda_invocation: '(' type IDENTIFIER ')' '{' executable_statements '}' '(' lambda_real_parameter ')' error ';'  */
-#line 278 "include/syntax-analyzer/components/yacc.y"
+  case 48: /* print: PRINT '(' opt_trunc_expression ')' error ';'  */
+#line 231 "include/syntax-analyzer/components/yacc.y"
     {
         specifyExpectedError(";");
         yyerrok;
     }
-#line 1483 "src/syntax-analyzer/components/parser.cpp"
+#line 1482 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 61: /* if: IF '(' condition ')' executable_body ENDIF ';'  */
-#line 293 "include/syntax-analyzer/components/yacc.y"
+  case 49: /* multiple_assignments: variable assignment_list opt_trunc_constant extra_numeric_constants ';'  */
+#line 242 "include/syntax-analyzer/components/yacc.y"
     {
-        logStructure("IF");
+        logStructure("MULTIPLE ASSIGNMENT");
     }
-#line 1491 "src/syntax-analyzer/components/parser.cpp"
+#line 1490 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 62: /* if: IF '(' condition ')' executable_body ENDIF error ';'  */
-#line 297 "include/syntax-analyzer/components/yacc.y"
+  case 50: /* multiple_assignments: variable assignment_list opt_trunc_constant extra_numeric_constants error ';'  */
+#line 246 "include/syntax-analyzer/components/yacc.y"
     {
         specifyExpectedError(";");
         yyerrok;
     }
-#line 1500 "src/syntax-analyzer/components/parser.cpp"
+#line 1499 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 63: /* if: IF '(' condition ')' executable_body ELSE executable_body ENDIF ';'  */
-#line 302 "include/syntax-analyzer/components/yacc.y"
+  case 55: /* function_invocation: IDENTIFIER '(' real_parameter_list ')' ';'  */
+#line 266 "include/syntax-analyzer/components/yacc.y"
     {
-        logStructure("IF-ELSE");
+        logStructure("FUNCTION INVOCATION");
     }
-#line 1508 "src/syntax-analyzer/components/parser.cpp"
+#line 1507 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 64: /* if: IF '(' condition ')' executable_body ELSE executable_body ENDIF error ';'  */
-#line 306 "include/syntax-analyzer/components/yacc.y"
+  case 56: /* function_invocation: IDENTIFIER '(' real_parameter_list ')' error ';'  */
+#line 270 "include/syntax-analyzer/components/yacc.y"
     {
         specifyExpectedError(";");
         yyerrok;
     }
-#line 1517 "src/syntax-analyzer/components/parser.cpp"
+#line 1516 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 66: /* executable_body: '{' executable_statements error ';'  */
-#line 315 "include/syntax-analyzer/components/yacc.y"
+  case 58: /* real_parameter_list: error  */
+#line 279 "include/syntax-analyzer/components/yacc.y"
     {
-        specifyExpectedError("}");
+        specifyExpectedError("valid parameter");
         yyerrok;
     }
-#line 1526 "src/syntax-analyzer/components/parser.cpp"
+#line 1525 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 70: /* control_stmt: DO executable_body WHILE '(' condition ')' ';'  */
-#line 331 "include/syntax-analyzer/components/yacc.y"
+  case 60: /* real_parameter_list: real_parameter_list ',' error  */
+#line 285 "include/syntax-analyzer/components/yacc.y"
     {
-        logStructure("DO-WHILE");
+        specifyExpectedError("valid parameter");
+        yyerrok;
     }
 #line 1534 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 71: /* control_stmt: DO executable_body WHILE '(' condition ')' error ';'  */
-#line 335 "include/syntax-analyzer/components/yacc.y"
+  case 61: /* real_parameter_list: real_parameter_list error real_parameter  */
+#line 290 "include/syntax-analyzer/components/yacc.y"
     {
-        specifyExpectedError(";");
+        specifyExpectedError(",");
         yyerrok;
     }
 #line 1543 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 95: /* numeric_constant: '-' FLOAT_LITERAL  */
-#line 397 "include/syntax-analyzer/components/yacc.y"
+  case 63: /* lambda_invocation: '(' type IDENTIFIER ')' '{' executable_statements '}' '(' lambda_real_parameter ')' ';'  */
+#line 305 "include/syntax-analyzer/components/yacc.y"
     {
-        addNegativeFloatToTable();
+        logStructure("LAMBDA");
     }
 #line 1551 "src/syntax-analyzer/components/parser.cpp"
     break;
 
+  case 64: /* lambda_invocation: '(' type IDENTIFIER ')' '{' executable_statements '}' '(' lambda_real_parameter ')' error ';'  */
+#line 309 "include/syntax-analyzer/components/yacc.y"
+    {
+        specifyExpectedError(";");
+        yyerrok;
+    }
+#line 1560 "src/syntax-analyzer/components/parser.cpp"
+    break;
 
-#line 1555 "src/syntax-analyzer/components/parser.cpp"
+  case 67: /* if: IF '(' condition ')' executable_body ENDIF ';'  */
+#line 324 "include/syntax-analyzer/components/yacc.y"
+    {
+        logStructure("IF");
+    }
+#line 1568 "src/syntax-analyzer/components/parser.cpp"
+    break;
+
+  case 68: /* if: IF '(' condition ')' executable_body ENDIF error ';'  */
+#line 328 "include/syntax-analyzer/components/yacc.y"
+    {
+        specifyExpectedError(";");
+        yyerrok;
+    }
+#line 1577 "src/syntax-analyzer/components/parser.cpp"
+    break;
+
+  case 69: /* if: IF '(' condition ')' executable_body ELSE executable_body ENDIF ';'  */
+#line 333 "include/syntax-analyzer/components/yacc.y"
+    {
+        logStructure("IF-ELSE");
+    }
+#line 1585 "src/syntax-analyzer/components/parser.cpp"
+    break;
+
+  case 70: /* if: IF '(' condition ')' executable_body ELSE executable_body ENDIF error ';'  */
+#line 337 "include/syntax-analyzer/components/yacc.y"
+    {
+        specifyExpectedError(";");
+        yyerrok;
+    }
+#line 1594 "src/syntax-analyzer/components/parser.cpp"
+    break;
+
+  case 72: /* executable_body: '{' executable_statements error ';'  */
+#line 346 "include/syntax-analyzer/components/yacc.y"
+    {
+        specifyExpectedError("}");
+        yyerrok;
+    }
+#line 1603 "src/syntax-analyzer/components/parser.cpp"
+    break;
+
+  case 76: /* control_stmt: DO executable_body WHILE '(' condition ')' ';'  */
+#line 362 "include/syntax-analyzer/components/yacc.y"
+    {
+        logStructure("DO-WHILE");
+    }
+#line 1611 "src/syntax-analyzer/components/parser.cpp"
+    break;
+
+  case 77: /* control_stmt: DO executable_body WHILE '(' condition ')' error ';'  */
+#line 366 "include/syntax-analyzer/components/yacc.y"
+    {
+        specifyExpectedError(";");
+        yyerrok;
+    }
+#line 1620 "src/syntax-analyzer/components/parser.cpp"
+    break;
+
+  case 85: /* condition: opt_trunc_expression error opt_trunc_expression  */
+#line 394 "include/syntax-analyzer/components/yacc.y"
+    {
+        specifyExpectedError("COMPARISON OP");
+        yyerrok;
+    }
+#line 1629 "src/syntax-analyzer/components/parser.cpp"
+    break;
+
+  case 102: /* numeric_constant: '-' FLOAT_LITERAL  */
+#line 433 "include/syntax-analyzer/components/yacc.y"
+    {
+        addNegativeFloatToTable();
+    }
+#line 1637 "src/syntax-analyzer/components/parser.cpp"
+    break;
+
+
+#line 1641 "src/syntax-analyzer/components/parser.cpp"
 
       default: break;
     }
@@ -1744,7 +1830,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 402 "include/syntax-analyzer/components/yacc.y"
+#line 438 "include/syntax-analyzer/components/yacc.y"
 
 
 void yyerror(const char* s)
