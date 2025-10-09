@@ -216,7 +216,7 @@ SemanticAction  States::state9(StateMachine* s, const unsigned int& value)
 
 SemanticAction States::state10(StateMachine* s, const unsigned int& value)
 {
-    
+
     switch (value)
     {
     case NUMERAL:

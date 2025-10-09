@@ -1,6 +1,6 @@
 #include "utils/ErrorHandler.h"
 #include "utils/resources/macros.h"
-#include "utils/resources/string_builder_dispatcher.h"
+#include "utils/resources/dispatcher.h"
 
 #include <iostream>
 
@@ -44,7 +44,7 @@ std::string ErrorHandler::getLogs() const
     {
         if (!first) mssg.append("\n");
         first = false;
-        mssg.append("Line ").append(std::to_string(line)).append("\t - ");
+        mssg.append("Line ").append(std::to_string(line)).append(" - ");
         const StringBuilder builder = getStringBuilder(type, code);
         mssg.append(builder(content));
     }

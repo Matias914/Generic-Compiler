@@ -35,20 +35,20 @@ TEST(TestTranslator, translate)
     EXPECT_EQ(translate('/'), SPECIAL);
     EXPECT_EQ(translate(';'), SPECIAL);
     // Unique Characters
-    EXPECT_EQ(translate('%'),  PERCENTAGE);
-    EXPECT_EQ(translate('"'),  QUOTE);
-    EXPECT_EQ(translate('.'),  DOT);
-    EXPECT_EQ(translate('='),  EQUALS);
-    EXPECT_EQ(translate('!'),  EXCLAMATION);
-    EXPECT_EQ(translate('>'),  GREATER);
-    EXPECT_EQ(translate('<'),  LESS);
-    EXPECT_EQ(translate('#'),  NUMERAL);
-    EXPECT_EQ(translate(':'),  COLON);
-    EXPECT_EQ(translate('-'),  MINUS);
-    EXPECT_EQ(translate('+'),  PLUS);
+    EXPECT_EQ(translate('%' ), PERCENTAGE);
+    EXPECT_EQ(translate('"' ), QUOTE);
+    EXPECT_EQ(translate('.' ), DOT);
+    EXPECT_EQ(translate('=' ), EQUALS);
+    EXPECT_EQ(translate('!' ), EXCLAMATION);
+    EXPECT_EQ(translate('>' ), GREATER);
+    EXPECT_EQ(translate('<' ), LESS);
+    EXPECT_EQ(translate('#' ), NUMERAL);
+    EXPECT_EQ(translate(':' ), COLON);
+    EXPECT_EQ(translate('-' ), MINUS);
+    EXPECT_EQ(translate('+' ), PLUS);
     EXPECT_EQ(translate('\n'), ENDLINE);
     // Blank Characters
-    EXPECT_EQ(translate(' '),  BLANK);
+    EXPECT_EQ(translate(' ' ), BLANK);
     EXPECT_EQ(translate('\t'), BLANK);
     // Others
     EXPECT_EQ(translate('~'), OTHER);

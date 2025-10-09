@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "syntax-analyzer/Parser.h"
+#include "syntax-analyzer/components/parser.h"
 #include "lexical-analyzer/lexical_analyzer.h"
 
 #include "utils/ErrorHandler.h"
@@ -14,7 +14,7 @@ TEST(TestLexicalAnalyzer, yylex_test)
     open("../tests/unit/lexical-analyzer/files/test.txt");
 
     EXPECT_EQ(yylex(), IDENTIFIER);
-    auto symb_entry = SYMBOL_TABLE.get(yylval.symbol_reference->symbol);
+    auto symb_entry = SYMBOL_TABLE.get(yylval.sref->symbol);
     EXPECT_NE(symb_entry, nullptr);
     std::string lexeme = symb_entry->symbol;
     EXPECT_EQ(lexeme, "X");
@@ -22,7 +22,7 @@ TEST(TestLexicalAnalyzer, yylex_test)
     EXPECT_EQ(yylex(), '=');
 
     EXPECT_EQ(yylex(), FLOAT_LITERAL);
-    auto const_entry = LITERAL_TABLE.get(yylval.constant_reference->constant);
+    auto const_entry = LITERAL_TABLE.get(yylval.lref->constant);
     EXPECT_NE(const_entry, nullptr);
     lexeme = const_entry->constant;
     EXPECT_EQ(lexeme, "1.23F+10");
@@ -32,7 +32,7 @@ TEST(TestLexicalAnalyzer, yylex_test)
     EXPECT_EQ(yylex(), '(');
 
     EXPECT_EQ(yylex(), IDENTIFIER);
-    symb_entry = SYMBOL_TABLE.get(yylval.symbol_reference->symbol);
+    symb_entry = SYMBOL_TABLE.get(yylval.sref->symbol);
     EXPECT_NE(symb_entry, nullptr);
     lexeme = symb_entry->symbol;
     EXPECT_EQ(lexeme, "X");
@@ -40,7 +40,7 @@ TEST(TestLexicalAnalyzer, yylex_test)
     EXPECT_EQ(yylex(), LE_OP);
 
     EXPECT_EQ(yylex(), UINTEGER_LITERAL);
-    const_entry = LITERAL_TABLE.get(yylval.constant_reference->constant);
+    const_entry = LITERAL_TABLE.get(yylval.lref->constant);
     EXPECT_NE(const_entry, nullptr);
     lexeme = const_entry->constant;
     EXPECT_EQ(lexeme, "9UI");
@@ -49,7 +49,7 @@ TEST(TestLexicalAnalyzer, yylex_test)
     EXPECT_EQ(yylex(), '{');
 
     EXPECT_EQ(yylex(), IDENTIFIER);
-    symb_entry = SYMBOL_TABLE.get(yylval.symbol_reference->symbol);
+    symb_entry = SYMBOL_TABLE.get(yylval.sref->symbol);
     EXPECT_NE(symb_entry, nullptr);
     lexeme = symb_entry->symbol;
     EXPECT_EQ(lexeme, "X");
@@ -57,7 +57,7 @@ TEST(TestLexicalAnalyzer, yylex_test)
     EXPECT_EQ(yylex(), ASSIGN_OP);
 
     EXPECT_EQ(yylex(), STRING_LITERAL);
-    const_entry = LITERAL_TABLE.get(yylval.constant_reference->constant);
+    const_entry = LITERAL_TABLE.get(yylval.lref->constant);
     EXPECT_NE(const_entry, nullptr);
     lexeme = const_entry->constant;
     EXPECT_EQ(lexeme, "\"hola como estas?\"");
@@ -67,7 +67,7 @@ TEST(TestLexicalAnalyzer, yylex_test)
     EXPECT_EQ(yylex(), '{');
 
     EXPECT_EQ(yylex(), IDENTIFIER);
-    symb_entry = SYMBOL_TABLE.get(yylval.symbol_reference->symbol);
+    symb_entry = SYMBOL_TABLE.get(yylval.sref->symbol);
     EXPECT_NE(symb_entry, nullptr);
     lexeme = symb_entry->symbol;
     EXPECT_EQ(lexeme, "Y");
@@ -76,7 +76,7 @@ TEST(TestLexicalAnalyzer, yylex_test)
     EXPECT_EQ(yylex(), '-');
 
     EXPECT_EQ(yylex(), UINTEGER_LITERAL);
-    const_entry = LITERAL_TABLE.get(yylval.constant_reference->constant);
+    const_entry = LITERAL_TABLE.get(yylval.lref->constant);
     EXPECT_NE(const_entry, nullptr);
     lexeme = const_entry->constant;
     EXPECT_EQ(lexeme, "1UI");
@@ -86,7 +86,7 @@ TEST(TestLexicalAnalyzer, yylex_test)
     EXPECT_EQ(yylex(), '(');
 
     EXPECT_EQ(yylex(), FLOAT_LITERAL);
-    const_entry = LITERAL_TABLE.get(yylval.constant_reference->constant);
+    const_entry = LITERAL_TABLE.get(yylval.lref->constant);
     EXPECT_NE(const_entry, nullptr);
     lexeme = const_entry->constant;
     EXPECT_EQ(lexeme, ".3F-1");
@@ -98,7 +98,7 @@ TEST(TestLexicalAnalyzer, yylex_test)
     EXPECT_EQ(yylex(), ENDIF);
 
     EXPECT_EQ(yylex(), IDENTIFIER);
-    symb_entry = SYMBOL_TABLE.get(yylval.symbol_reference->symbol);
+    symb_entry = SYMBOL_TABLE.get(yylval.sref->symbol);
     EXPECT_NE(symb_entry, nullptr);
     lexeme = symb_entry->symbol;
     EXPECT_EQ(lexeme, "X");
@@ -106,13 +106,13 @@ TEST(TestLexicalAnalyzer, yylex_test)
     EXPECT_EQ(yylex(), POINTER_OP);
 
     EXPECT_EQ(yylex(), IDENTIFIER);
-    symb_entry = SYMBOL_TABLE.get(yylval.symbol_reference->symbol);
+    symb_entry = SYMBOL_TABLE.get(yylval.sref->symbol);
     EXPECT_NE(symb_entry, nullptr);
     lexeme = symb_entry->symbol;
     EXPECT_EQ(lexeme, "X");
 
     EXPECT_EQ(yylex(), IDENTIFIER);
-    symb_entry = SYMBOL_TABLE.get(yylval.symbol_reference->symbol);
+    symb_entry = SYMBOL_TABLE.get(yylval.sref->symbol);
     EXPECT_NE(symb_entry, nullptr);
     lexeme = symb_entry->symbol;
     EXPECT_EQ(lexeme, "X");
@@ -120,7 +120,7 @@ TEST(TestLexicalAnalyzer, yylex_test)
     EXPECT_EQ(yylex(), GE_OP);
 
     EXPECT_EQ(yylex(), IDENTIFIER);
-    symb_entry = SYMBOL_TABLE.get(yylval.symbol_reference->symbol);
+    symb_entry = SYMBOL_TABLE.get(yylval.sref->symbol);
     EXPECT_NE(symb_entry, nullptr);
     lexeme = symb_entry->symbol;
     EXPECT_EQ(lexeme, "Y");
@@ -128,7 +128,7 @@ TEST(TestLexicalAnalyzer, yylex_test)
     EXPECT_EQ(yylex(), ';');
 
     EXPECT_EQ(yylex(), IDENTIFIER);
-    symb_entry = SYMBOL_TABLE.get(yylval.symbol_reference->symbol);
+    symb_entry = SYMBOL_TABLE.get(yylval.sref->symbol);
     EXPECT_NE(symb_entry, nullptr);
     lexeme = symb_entry->symbol;
     EXPECT_EQ(lexeme, "VARIABLE%%1");
@@ -136,7 +136,7 @@ TEST(TestLexicalAnalyzer, yylex_test)
     EXPECT_EQ(yylex(), GE_OP);
 
     EXPECT_EQ(yylex(), IDENTIFIER);
-    symb_entry = SYMBOL_TABLE.get(yylval.symbol_reference->symbol);
+    symb_entry = SYMBOL_TABLE.get(yylval.sref->symbol);
     EXPECT_NE(symb_entry, nullptr);
     lexeme = symb_entry->symbol;
     EXPECT_EQ(lexeme, "X");
@@ -145,7 +145,7 @@ TEST(TestLexicalAnalyzer, yylex_test)
     EXPECT_EQ(yylex(), RETURN);
 
     EXPECT_EQ(yylex(), UINTEGER_LITERAL);
-    const_entry = LITERAL_TABLE.get(yylval.constant_reference->constant);
+    const_entry = LITERAL_TABLE.get(yylval.lref->constant);
     EXPECT_NE(const_entry, nullptr);
     lexeme = const_entry->constant;
     EXPECT_EQ(lexeme, "0UI");

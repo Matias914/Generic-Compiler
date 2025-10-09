@@ -1,6 +1,9 @@
 #include "utils/LiteralTable.h"
+
+#include <stdexcept>
+
 #include "utils/resources/macros.h"
-#include "utils/resources/string_builder_dispatcher.h"
+#include "utils/resources/dispatcher.h"
 #include "syntax-analyzer/components/parser.h"
 
 LiteralTable::LiteralTable()
@@ -13,6 +16,8 @@ const LiteralTable::Entry* LiteralTable::addAndGet(const std::string& constant, 
 {
     const auto it = this->mapping.find(constant);
     if (it == this->mapping.end()) {
+        if (type != FLOAT_LITERAL && type != UINTEGER_LITERAL && type != STRING_LITERAL)
+            return nullptr;
         auto entry = Entry();
         entry.constant = constant;
         entry.refcount = 1;

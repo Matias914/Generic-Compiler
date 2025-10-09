@@ -1,6 +1,6 @@
 #include "utils/SymbolTable.h"
 #include "utils/resources/macros.h"
-#include "utils/resources/string_builder_dispatcher.h"
+#include "utils/resources/dispatcher.h"
 
 SymbolTable::SymbolTable()
 {

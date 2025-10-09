@@ -57,6 +57,8 @@ int SemanticActions::SA3(std::string& lexeme, const char& character)
     }
     const LiteralTable::Type val = {.i = value};
     yylval.lref = LITERAL_TABLE.addAndGet(lexeme, UINTEGER_LITERAL, val);
+    if (yylval.lref == nullptr)
+        throw std::runtime_error("SA3: failed to add new constant to table");
     return UINTEGER_LITERAL;
 }
 
@@ -74,10 +76,10 @@ int SemanticActions::SA4(std::string& lexeme, const char& character)
             if (lexeme[i + 1] == '-')
                 exponent = -exponent;
         }
-    float value = stof(lexeme.substr(0, end_base));
-    value *= std::pow(10, exponent);
-    value = std::abs(value);
-    if (value < std::numeric_limits<float>::min() || value > std::numeric_limits<float>::max())
+    // Se usa long double para evitar problemas de precision
+    long double ldvalue = stold(lexeme.substr(0, end_base));
+    ldvalue *= std::pow(10.0L, exponent);
+    if (ldvalue > std::numeric_limits<float>::max() || ldvalue < std::numeric_limits<float>::min())
     {
         Log log;
         log.type = ERROR;
@@ -87,8 +89,11 @@ int SemanticActions::SA4(std::string& lexeme, const char& character)
         ERROR_HANDLER.add(log);
         return INVALID_TOKEN;
     }
+    const float value = static_cast<float>(ldvalue);
     const LiteralTable::Type val = {.f = value};
     yylval.lref = LITERAL_TABLE.addAndGet(lexeme, FLOAT_LITERAL, val);
+    if (yylval.lref == nullptr)
+        throw std::runtime_error("SA4: failed to add new constant to table");
     return FLOAT_LITERAL;
 }
 
@@ -97,6 +102,8 @@ int SemanticActions::SA5(std::string& lexeme, const char& character)
     lexeme += character;
     constexpr LiteralTable::Type val = {.i = 0};
     yylval.lref = LITERAL_TABLE.addAndGet(lexeme, STRING_LITERAL, val);
+    if (yylval.lref == nullptr)
+        throw std::runtime_error("SA5: failed to add new constant to table");
     return STRING_LITERAL;
 }
 

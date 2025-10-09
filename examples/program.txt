@@ -1,46 +1,160 @@
-PROGRAMA {
-    uint X;
-    uint PROGRAMA.X, Y, Z;
-    uint X;
 
-    uint Y(cr uint Z cr uint P, cr uint Y) {
-        return (Y.X);
-        A := Y;
+uint X;
+uint X Y J;
+PROGRAMA {
+    unit ;
+    uint X1, , Y, Z
+    uint X Y
+    uint PROGRAMA.X Y := Z
+    uint X;
+    X := 1UI--2.1;
+    uint ;
+    uint Y(cr Z, cr uint Z, cr uint, cr, A) {
+        if (X > Y)
+            return (trunc (Y.X));
+        endif;
+        A := Y(A->Z);
         B := C;
+        X := Y(A->Z, B->P, B+2UI->Y) + Z(Y->R);
     };
 
-    Y(X->Y, PROGRAMA.P->P);
- 
+    D, A  B.B  C.C = 1UI  -1.13452345F+12  5UI, 1UI;
+    D, A  B.B  C.C = 1UI  -1.13452345F+12, 5UI, 1UI;
+    D, A  B.B  C.C = 1UI, trunc(  5UI, 1UI;
+    D, A  B.B  C.C = 1UI, -1.13452345F+12, 5UI, 1UI;
+    D, A  B.B, C.C = 1UI  -1.13452345F+12  5UI, 1UI;
+    D, A  B.B, C.C = trunc 1UI  -1.13452345F+12, 5UI, 1UI;
+    D, A  B.B, C.C = 1UI, -1.13452345F+12  5UI, 1UI;
+    D, A  B.B, C.C = 1UI, -1.13452345F+12, 5UI, 1UI;
+    D, A  B.B  C.C = 1UI  -1.13452345F+12  trunc 5UI), 1UI;
+    D, A, B.B  C.C = 1UI  -1.13452345F+12, 5UI, 1UI;
+    D, A, B.B  C.C = 1UI, -1.13452345F+12  5UI, 1UI;
+    D, A, B.B  C.C = 1UI, -1.13452345F+12, 5UI, 1UI;
+    D, A, B.B, C.C = 1UI  -1.13452345F+12  5UI, 1UI;
+    D, A, B.B, C.C = 1UI  -1.13452345F+12, 5UI, 1UI;
+    D, A, B.B, C.C = 1UI, -1.13452345F+12  5UI, 1UI
+    E, D, A, B.B, C.C = 1UI, -1.13452345F+12, 5UI, 1UI;
+
+    uint X;
+
+    do {
+        X := Y;
+        F(trunc(A - -2.1), Y->);
+    } (X =! Z);
+
+    do
+    while (X =! Z);
+
+    Y(X->Y PROGRAMA.P->P);
+    Y(uint X) { if (X > Y) return (Y.X); endif; };
+
     if (X1 =! trunc(-0.6))
         Y := trunc(2.54 * -2.3 + 2UI);
     else
-        X := Z;
+        X := Z
     endif;
 
-    print("recuérdame cuantos caracteres tiene este string que me olvido");
+    print("recuerdame cuantos caracteres tiene este string que me olvido");
     print("hola");
-
-    ## Se deberia poder? ##
 
     if (PROGRAMA.X =! Z)
         PROGRAMA.X := Y;
     endif;
 
+
+    uint PROGRAMA . X . Y ;
+
     print(X);
 
     do {
         X := Y;
-        F(trunc(-2.1)->B, Y->P);
+        F(trunc(A--2.1)->B, Y->P);
     } while (X =! Z);
 
-    A, F.B, F.C = 1UI, -1.13452345F+12, 5UI;
-    X, Y = 1UI, 0.25F-2, 2UI;
+    A F.B F.C = 1UI -1.13452345F+12 5UI;
+    X, Y = :==, F(X->) 2UI
     X = 1UI, 0.25F-2, trunc(-2.54);
 
     MIVARIABLESUPERLARGAQUESETIENE := 2UI;
 
-    (uint PARAMETER) { if (X = Y) { print("a"); } endif; } (trunc(PROGRAMA.X));
-    (uint PARAMETER) { if (X =! Y) { print("a"); } endif; } (PROGRAMA.X);
-    (uint PARAMETER) { if (X =! Y) { print("a"); } endif; } (trunc(2.3));
+    (uint PARAMETER) { if (X =! Y) { print("a"); } endif;(trunc(PROGRAMA.X));
+    (uint PARAMETER)  if (X =! Y) { print("a"); } endif; } (PROGRAMA.X);
+    (uint PARAMETER)  if (X =! Y) { print("a"); } endif;  (trunc 2.3);
+
+    if X =! Y(A->Z)
+        print("hola");
+    endif;
+
+    X := trunc -2UI;
+    X := -X(Y->Z);
+    X :=  + + 2UI  3UI - - - 2UI + ;
+    X := * * / * ;
+    X := * 2UI * / * ;
+    X := - -2UI - - 3UI + + 2UI - ;
+    X := - - -2.1 - ;
+    X := - - 3UI - - 3UI - - 3UI - -2.1;
+    X := - + 2.5 * 1.7 + 3.8 - ;
+    X := + 2.1 -2.1 -2.1;
+
+
+    X := 3UI + 4UI (uint PARAMETER) { if (X =! Y) { print("a"); } endif; } (trunc3.X));
+
+    if X = X
+        (uint PARAMETER) { if (X =! Y) { print("a"); } endif; } (trunc(3e.X;
+    endif;
+
+    {
+        uint X
+    }
+
+    if (X > Y);
+
+    if (X > Y)
+        return (trunc (Y.X));
+    else
+
+    ;
+
+    if (X > Y)
+
+    else
+
+    endif;
+
+    if (X > Y)
+
+    ;
+
+    if (X > Y)
+
+    else
+        return (trunc (Y.X));
+    ;
+
+    if (X > Y)
+
+    else
+        return (trunc (Y.X));
+    endif;
+
+    PROGRAMA3 {
+        uint X;
+        X := 2UI;
+        print(X);
+    }
+
+    print( trunc X)
+
+    print();
+
+    2.1F;
 }
-X:= 1 2;
+
+uint F(cr uint A, cr uint B) {
+    uint X Y;
+    return (A + B);
+};
+
+PROGRAMA2 {
+    uint X;
+}

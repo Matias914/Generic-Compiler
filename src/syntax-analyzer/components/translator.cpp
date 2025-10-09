@@ -7,9 +7,9 @@ std::string Translator::translate(const int& token) {
     switch (token)
     {
     case YYEMPTY:
-        return "No Value";
+        return "";
     case YYEOF:
-        return "EOF";
+        return "End of File";
     case YYerror:
         return "ERROR";
     case YYUNDEF:

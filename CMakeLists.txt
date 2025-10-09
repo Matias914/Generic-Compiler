@@ -16,10 +16,10 @@ add_executable(TPE
         src/utils/LiteralTable.cpp
         src/utils/LogHandler.cpp
         src/utils/ErrorHandler.cpp
+        src/utils/resources/dispatcher.cpp
         src/utils/resources/string_table_builders.cpp
         src/utils/resources/string_error_builders.cpp
         src/utils/resources/string_report_builders.cpp
-        src/utils/resources/string_builder_dispatcher.cpp
         # Syntax Analyzer
         src/syntax-analyzer/syntax_analyzer.cpp
         src/syntax-analyzer/components/parser.cpp
@@ -33,6 +33,7 @@ add_executable(TPE
         src/lexical-analyzer/components/StateMachine.cpp
         src/lexical-analyzer/components/reserved_words.cpp
         src/lexical-analyzer/components/semantic_actions.cpp
+        src/syntax-analyzer/components/traps.cpp
 )
 
 # =========================================================
@@ -60,10 +61,10 @@ add_executable(my_tests
         src/utils/LiteralTable.cpp
         src/utils/LogHandler.cpp
         src/utils/ErrorHandler.cpp
+        src/utils/resources/dispatcher.cpp
         src/utils/resources/string_table_builders.cpp
         src/utils/resources/string_error_builders.cpp
         src/utils/resources/string_report_builders.cpp
-        src/utils/resources/string_builder_dispatcher.cpp
         # Syntax Analyzer
         src/syntax-analyzer/syntax_analyzer.cpp
         src/syntax-analyzer/components/parser.cpp
@@ -85,6 +86,8 @@ add_executable(my_tests
         tests/unit/lexical-analyzer/components/states_test.cpp
         tests/unit/lexical-analyzer/components/translator_test.cpp
         tests/unit/lexical-analyzer/components/semantic_actions_test.cpp
+        tests/unit/utils/LogHandler_test.cpp
+        src/syntax-analyzer/components/traps.cpp
 )
 
 # Vincular las bibliotecas necesarias. GTest::gtest y GTest::gtest_main

@@ -2,7 +2,7 @@
 #include "utils/LiteralTable.h"
 #include "utils/SymbolTable.h"
 #include "utils/resources/macros.h"
-#include "utils/resources/string_builder_dispatcher.h"
+#include "utils/resources/dispatcher.h"
 
 extern SymbolTable SYMBOL_TABLE;
 extern LiteralTable LITERAL_TABLE;
@@ -26,15 +26,15 @@ void LogHandler::add(const Log& log)
 
 bool LogHandler::validOutput() const
 {
-    std::ofstream archivo_salida(this->output);
-    if (!archivo_salida.is_open()) return false;
-    archivo_salida.close();
+    std::ofstream file(this->output);
+    if (!file.is_open()) return false;
+    file.close();
     return true;
 }
 
 void LogHandler::generateReport() const
 {
-    std::ofstream archivo_salida(this->output);
+    std::ofstream file(this->output);
     std::string mssg = "";
     using namespace StringBuilderDispatcher;
     bool first = true;
@@ -43,10 +43,10 @@ void LogHandler::generateReport() const
         first = false;
         const StringBuilder builder = getStringBuilder(type, code);
         mssg.append("Line ").append(std::to_string(line));
-        mssg.append("\t\t- ").append(builder(content));
+        mssg.append(" - ").append(builder(content));
     }
-    archivo_salida << mssg << "\n\n";
-    archivo_salida << SYMBOL_TABLE.toString() << "\n\n";
-    archivo_salida << LITERAL_TABLE.toString() << "\n\n";
-    archivo_salida.close();
+    file << mssg << "\n\n";
+    file << SYMBOL_TABLE.toString() << "\n\n";
+    file << LITERAL_TABLE.toString() << "\n\n";
+    file.close();
 }

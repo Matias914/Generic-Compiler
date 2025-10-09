@@ -7,7 +7,8 @@ namespace SyntaxAnalyzer::SemanticActions
 
     /* Traps */
     void announceSyntaxError();
-    void specifyExpectedError(const std::string& expected);
+    void specifySyntaxError(const int& code);
+    void announceSpecificError(const int& code);
 
     /* Logs */
     void logStructure(const std::string& structure);

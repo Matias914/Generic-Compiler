@@ -3,6 +3,13 @@
 
 #include "utils/ErrorBuffer.h"
 
+/*
+ * @brief representa el analizador sintactico de un compilador.
+ *
+ * Su rol es la generacion de reglas que permitan identificar
+ * la gramatica del lenguaje. El parser fue realizado con la
+ * herramienta de Bison.
+ */
 namespace SyntaxAnalyzer
 {
     extern ErrorBuffer BUFFER;
