@@ -10,13 +10,6 @@ extern ErrorHandler ERROR_HANDLER;
 
 using namespace LexicalAnalyzer;
 
-/*
- * @brief estas acciones semanticas fueron hechas para tratar
- * errores.
- *
- * Conceptualmente, son las acciones semanticas asociadas a las
- * transiciones que llevan al estado de error.
- */
 int SemanticActions::UnexpectedCharTrap(std::string& lexeme, const char& character)
 {
     Log log;

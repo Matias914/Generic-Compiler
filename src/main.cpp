@@ -1,6 +1,6 @@
 #include "utils/SymbolTable.h"
 #include "utils/LiteralTable.h"
-#include "utils/LogHandler.h"
+#include "utils/ReportHandler.h"
 #include "utils/ErrorHandler.h"
 #include "syntax-analyzer/syntax_analyzer.h"
 #include "lexical-analyzer/lexical_analyzer.h"
@@ -12,9 +12,8 @@ bool VERBOSE_OPTION = false;
 
 SymbolTable SYMBOL_TABLE;
 LiteralTable LITERAL_TABLE;
-
-LogHandler LOG_HANDLER;
 ErrorHandler ERROR_HANDLER;
+ReportHandler REPORT_HANDLER;
 
 int main(const int argc, char* argv[])
 {
@@ -33,8 +32,8 @@ int main(const int argc, char* argv[])
                 VERBOSE_OPTION = true;
             else if (!outfile && VERBOSE_OPTION)
             {
-                LOG_HANDLER = LogHandler(argv[i]);
-                if (!LOG_HANDLER.validOutput())
+                REPORT_HANDLER = ReportHandler(argv[i]);
+                if (!REPORT_HANDLER.validOutput())
                     throw std::runtime_error("\nCouldn't generate report");
                 outfile = true;
             }
@@ -55,7 +54,7 @@ int main(const int argc, char* argv[])
         // Calls Parser
         SyntaxAnalyzer::yyparsewrapper();
         if (VERBOSE_OPTION)
-            LOG_HANDLER.generateReport();
+            REPORT_HANDLER.generateReport();
 
         // Compilation Errors Handling
         std::string mssg = ERROR_HANDLER.getLogs();

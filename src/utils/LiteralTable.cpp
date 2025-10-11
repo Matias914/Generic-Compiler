@@ -35,7 +35,6 @@ const LiteralTable::Entry* LiteralTable::get(const std::string& constant) const
 {
     const auto it = mapping.find(constant);
     if (it == mapping.end()) return nullptr;
-    it->second->refcount++;
     return it->second;
 }
 

@@ -1,12 +1,13 @@
 #include "utils/Log.h"
+#include "utils/ReportHandler.h"
 #include "utils/resources/macros.h"
 #include "lexical-analyzer/lexical_analyzer.h"
 #include "lexical-analyzer/components/macros.h"
 #include "lexical-analyzer/components/translator.h"
 #include "lexical-analyzer/components/StateMachine.h"
-#include "utils/LogHandler.h"
 
-extern LogHandler LOG_HANDLER;
+extern bool VERBOSE_OPTION;
+extern ReportHandler REPORT_HANDLER;
 
 namespace LexicalAnalyzer
 {
@@ -33,12 +34,15 @@ namespace LexicalAnalyzer
             token = SA(lexeme, character);
         }
         // Logs the token and lexeme found
-        Log log;
-        log.type = TOKEN;
-        log.code = token;
-        log.line = YYLINENO;
-        log.content = {lexeme};
-        LOG_HANDLER.add(log);
+        if (VERBOSE_OPTION)
+        {
+            Log log;
+            log.type = TOKEN;
+            log.code = token;
+            log.line = YYLINENO;
+            log.content = {lexeme};
+            REPORT_HANDLER.add(log);
+        }
         return token;
     }
 

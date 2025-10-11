@@ -1,4 +1,4 @@
-#include "utils/LogHandler.h"
+#include "utils/ReportHandler.h"
 #include "utils/LiteralTable.h"
 #include "utils/SymbolTable.h"
 #include "utils/resources/macros.h"
@@ -7,21 +7,21 @@
 extern SymbolTable SYMBOL_TABLE;
 extern LiteralTable LITERAL_TABLE;
 
-LogHandler::LogHandler()
+ReportHandler::ReportHandler()
 {
     this->output = "output.txt";
     this->logs = std::list<Log>();
     this->last_token = this->logs.end();
 }
 
-LogHandler::LogHandler(const std::string& output)
+ReportHandler::ReportHandler(const std::string& output)
 {
     this->output = output;
     this->logs = std::list<Log>();
     this->last_token = this->logs.end();
 }
 
-void LogHandler::add(const Log& log)
+void ReportHandler::add(const Log& log)
 {
     if (log.type != TOKEN)
         this->logs.push_back(log);
@@ -31,7 +31,7 @@ void LogHandler::add(const Log& log)
         last_token = this->logs.insert(std::next(last_token), log);
 }
 
-bool LogHandler::validOutput() const
+bool ReportHandler::validOutput() const
 {
     std::ofstream file(this->output);
     if (!file.is_open()) return false;
@@ -39,7 +39,7 @@ bool LogHandler::validOutput() const
     return true;
 }
 
-void LogHandler::generateReport() const
+void ReportHandler::generateReport() const
 {
     std::ofstream file(this->output);
     std::string mssg = "";

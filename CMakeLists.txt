@@ -14,7 +14,7 @@ add_executable(gc
         src/utils/ErrorBuffer.cpp
         src/utils/SymbolTable.cpp
         src/utils/LiteralTable.cpp
-        src/utils/LogHandler.cpp
+        src/utils/ReportHandler.cpp
         src/utils/ErrorHandler.cpp
         src/utils/resources/dispatcher.cpp
         src/utils/resources/string_table_builders.cpp
@@ -59,7 +59,7 @@ add_executable(gc_tests
         src/utils/ErrorBuffer.cpp
         src/utils/SymbolTable.cpp
         src/utils/LiteralTable.cpp
-        src/utils/LogHandler.cpp
+        src/utils/ReportHandler.cpp
         src/utils/ErrorHandler.cpp
         src/utils/resources/dispatcher.cpp
         src/utils/resources/string_table_builders.cpp
@@ -86,7 +86,7 @@ add_executable(gc_tests
         tests/unit/lexical-analyzer/components/states_test.cpp
         tests/unit/lexical-analyzer/components/translator_test.cpp
         tests/unit/lexical-analyzer/components/semantic_actions_test.cpp
-        tests/unit/utils/LogHandler_test.cpp
+        tests/unit/utils/ReportHandler_test.cpp
         src/syntax-analyzer/components/traps.cpp
 )
 

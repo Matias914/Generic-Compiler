@@ -1,4 +1,4 @@
-#include "utils/LogHandler.h"
+#include "utils/ReportHandler.h"
 #include "utils/ErrorHandler.h"
 #include "utils/LiteralTable.h"
 #include "utils/resources/macros.h"
@@ -10,19 +10,23 @@
 // Usada por Bison, guarda el token obtenido del lexico.
 extern int yychar;
 
-extern LogHandler   LOG_HANDLER;
+extern bool VERBOSE_OPTION;
+extern ReportHandler REPORT_HANDLER;
 extern LiteralTable LITERAL_TABLE;
 
 using namespace SyntaxAnalyzer;
 
 void SemanticActions::logStructure(const std::string& structure)
 {
-    Log log;
-    log.type = STRUCTURE;
-    log.code = yychar;
-    log.line = LexicalAnalyzer::YYLINENO;
-    log.content = {structure};
-    LOG_HANDLER.add(log);
+    if (VERBOSE_OPTION)
+    {
+        Log log;
+        log.type = STRUCTURE;
+        log.code = yychar;
+        log.line = LexicalAnalyzer::YYLINENO;
+        log.content = {structure};
+        REPORT_HANDLER.add(log);
+    }
 }
 
 void SemanticActions::addNegativeFloatToTable()

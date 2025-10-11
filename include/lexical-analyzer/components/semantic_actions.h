@@ -36,7 +36,13 @@ namespace LexicalAnalyzer
         int DoNothing(std::string& lexeme, const char& character);
         int EndOfFile(std::string& lexeme, const char& character);
 
-        /* Traps */
+        /*
+         * @brief estas acciones semanticas fueron hechas para tratar
+         * errores.
+         *
+         * Conceptualmente, son las acciones semanticas asociadas a las
+         * transiciones que llevan al estado de error.
+         */
         int UnexpectedCharTrap(std::string& lexeme, const char& character);
         int ExpectedUITrap(std::string& lexeme, const char& character);
         int ExpectedSignTrap(std::string& lexeme, const char& character);

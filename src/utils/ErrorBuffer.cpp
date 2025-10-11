@@ -2,30 +2,30 @@
 
 ErrorBuffer::ErrorBuffer(ErrorHandler* handler)
 {
-    this->buffer_ocupied = false;
+    this->ocupied = false;
     this->handler = handler;
     this->buffered = Log();
 }
 
 bool ErrorBuffer::buffer(const Log& log)
 {
-    if (this->buffer_ocupied) return false;
+    if (this->ocupied) return false;
     this->position = --this->handler->logs.end();
     this->buffered = log;
-    this->buffer_ocupied = true;
+    this->ocupied = true;
     return true;
 }
 
 Log* ErrorBuffer::get()
 {
-    if (!this->buffer_ocupied) return nullptr;
+    if (!this->ocupied) return nullptr;
     return &this->buffered;
 }
 
 bool ErrorBuffer::commit()
 {
-    if (!this->buffer_ocupied) return false;
+    if (!this->ocupied) return false;
     this->handler->logs.insert(std::next(position), buffered);
-    this->buffer_ocupied = false;
+    this->ocupied = false;
     return true;
 }

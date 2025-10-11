@@ -16,7 +16,7 @@ public:
 
 private:
     Log buffered;
-    bool buffer_ocupied;
+    bool ocupied;
 
     ErrorHandler* handler;
     std::_List_iterator<Log> position;
