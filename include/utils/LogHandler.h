@@ -9,6 +9,7 @@
 class LogHandler
 {
 public:
+    LogHandler();
     explicit LogHandler(const std::string& output);
 
     void add(const Log& log);
@@ -19,6 +20,7 @@ private:
     std::string output;
     std::list<Log> logs;
 
+    // Mantiene un registro del ultimo token utilizado
     std::list<Log>::iterator last_token;
 };
 

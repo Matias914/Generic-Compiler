@@ -7,6 +7,13 @@
 extern SymbolTable SYMBOL_TABLE;
 extern LiteralTable LITERAL_TABLE;
 
+LogHandler::LogHandler()
+{
+    this->output = "output.txt";
+    this->logs = std::list<Log>();
+    this->last_token = this->logs.end();
+}
+
 LogHandler::LogHandler(const std::string& output)
 {
     this->output = output;

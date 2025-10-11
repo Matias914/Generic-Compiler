@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22.1)
-project(TPE)
+project(gc)
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -8,7 +8,7 @@ include_directories(src)
 include_directories(include)
 
 # Ejecutable principal
-add_executable(TPE
+add_executable(gc
         src/main.cpp
         # Utils
         src/utils/ErrorBuffer.cpp
@@ -54,7 +54,7 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(googletest)
 
 # Definir un ejecutable para tus tests
-add_executable(my_tests
+add_executable(gc_tests
         # Utils
         src/utils/ErrorBuffer.cpp
         src/utils/SymbolTable.cpp
@@ -92,7 +92,7 @@ add_executable(my_tests
 
 # Vincular las bibliotecas necesarias. GTest::gtest y GTest::gtest_main
 # son targets definidos automáticamente por el proceso de FetchContent.
-target_link_libraries(my_tests
+target_link_libraries(gc_tests
         PRIVATE
         GTest::gtest
         GTest::gtest_main
@@ -102,4 +102,4 @@ target_link_libraries(my_tests
 # Descubrir y registrar los tests para CTest/CLion
 # Esto le dice a CLion que el ejecutable 'my_tests' contiene tests.
 include(GoogleTest)
-gtest_discover_tests(my_tests)
+gtest_discover_tests(gc_tests)

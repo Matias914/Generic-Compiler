@@ -13,47 +13,51 @@ bool VERBOSE_OPTION = false;
 SymbolTable SYMBOL_TABLE;
 LiteralTable LITERAL_TABLE;
 
-LogHandler LOG_HANDLER("../examples/output.txt");
+LogHandler LOG_HANDLER;
 ErrorHandler ERROR_HANDLER;
 
 int main(const int argc, char* argv[])
 {
     try
     {
-        if (argc == 0)
+        if (argc == 1)
             throw std::runtime_error("\nNo arguments were found");
-        if (argc > 3)
+        if (argc >= 5)
             throw std::runtime_error("\nToo many arguments were passed!");
 
-        auto file = "";
-        bool file_given = false;
+        // Parsing Arguments
+        auto target = "";
+        bool infile, outfile = false;
         for (int i = 1; i < argc; ++i)
             if (!std::strcmp(argv[i], "-v"))
                 VERBOSE_OPTION = true;
-            else if (!file_given)
+            else if (!outfile && VERBOSE_OPTION)
             {
-                file = argv[i];
-                file_given = true;
+                LOG_HANDLER = LogHandler(argv[i]);
+                if (!LOG_HANDLER.validOutput())
+                    throw std::runtime_error("\nCouldn't generate report");
+                outfile = true;
+            }
+            else if (!infile)
+            {
+                target = argv[i];
+                infile = true;
             }
             else
                 throw std::runtime_error("\nMore than one file was given");
 
-        if (!file_given)
+        if (!infile)
             throw std::runtime_error("\nNo file was given");
 
-        if (!LexicalAnalyzer::open(file))
+        if (!LexicalAnalyzer::open(target))
             throw std::runtime_error("\nThe file could not be opened");
 
+        // Calls Parser
+        SyntaxAnalyzer::yyparsewrapper();
         if (VERBOSE_OPTION)
-        {
-            if (!LOG_HANDLER.validOutput())
-                throw std::runtime_error("\nCouldn't generate report");
-            SyntaxAnalyzer::yyparsewrapper();
             LOG_HANDLER.generateReport();
-        } else
-            SyntaxAnalyzer::yyparsewrapper();
 
-        // Compilation Errors Handling (non fatal)
+        // Compilation Errors Handling
         std::string mssg = ERROR_HANDLER.getLogs();
         if (ERROR_HANDLER.errorCount() != 0)
         {
