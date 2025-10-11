@@ -20,5 +20,13 @@ sudo docker build -t <nombre_imagen> .
 ```
 Finalmente, para ejecutar el proyecto:         
 ```    
-sudo docker run --rm -v "$(pwd)":/generic_compiler -w /generic_compiler <nombre_imagen> bash -c "cmake . && make && ./TPE"
+sudo docker run --rm   -v "$(pwd)":/generic_compiler   -w /generic_compiler <nombre_imagen> bash -c "
+    mkdir -p /tmp/build &&
+    cd /tmp/build &&
+    cmake /generic_compiler &&
+    make &&
+    mkdir -p /generic_compiler/bin &&
+    cp /tmp/build/gc /generic_compiler/bin/ &&
+    cp /tmp/build/gc_tests /generic_compiler/bin/
+  "
 ``` 
