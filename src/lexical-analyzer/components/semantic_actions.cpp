@@ -55,7 +55,7 @@ int SemanticActions::SA3(std::string& lexeme, const char& character)
         ERROR_HANDLER.add(log);
         return INVALID_TOKEN;
     }
-    const LiteralTable::Type val = {.i = value};
+    const LiteralTable::TypeValue val = {.i = value};
     yylval.lref = LITERAL_TABLE.addAndGet(lexeme, UINTEGER_LITERAL, val);
     if (yylval.lref == nullptr)
         throw std::runtime_error("SA3: failed to add new constant to table");
@@ -79,28 +79,29 @@ int SemanticActions::SA4(std::string& lexeme, const char& character)
     // Se usa long double para evitar problemas de precision
     long double ldvalue = stold(lexeme.substr(0, end_base));
     ldvalue *= std::pow(10.0L, exponent);
-    if (ldvalue > std::numeric_limits<float>::max() || ldvalue < std::numeric_limits<float>::min())
+    if (ldvalue == 0.0L || (std::numeric_limits<float>::min() < ldvalue && ldvalue < std::numeric_limits<float>::max()))
     {
-        Log log;
-        log.type = ERROR;
-        log.line = YYLINENO;
-        log.code = FLOAT_OUT_OF_RANGE;
-        log.content = {lexeme};
-        ERROR_HANDLER.add(log);
-        return INVALID_TOKEN;
+        const float value = static_cast<float>(ldvalue);
+        const LiteralTable::TypeValue val = {.f = value};
+        yylval.lref = LITERAL_TABLE.addAndGet(lexeme, FLOAT_LITERAL, val);
+        if (yylval.lref == nullptr)
+            throw std::runtime_error("SA4: failed to add new constant to table");
+        return FLOAT_LITERAL;
     }
-    const float value = static_cast<float>(ldvalue);
-    const LiteralTable::Type val = {.f = value};
-    yylval.lref = LITERAL_TABLE.addAndGet(lexeme, FLOAT_LITERAL, val);
-    if (yylval.lref == nullptr)
-        throw std::runtime_error("SA4: failed to add new constant to table");
-    return FLOAT_LITERAL;
+    Log log;
+    log.type = ERROR;
+    log.line = YYLINENO;
+    log.code = FLOAT_OUT_OF_RANGE;
+    log.content = {lexeme};
+    ERROR_HANDLER.add(log);
+    return INVALID_TOKEN;
+
 }
 
 int SemanticActions::SA5(std::string& lexeme, const char& character)
 {
     lexeme += character;
-    constexpr LiteralTable::Type val = {.i = 0};
+    constexpr LiteralTable::TypeValue val = {.i = 0};
     yylval.lref = LITERAL_TABLE.addAndGet(lexeme, STRING_LITERAL, val);
     if (yylval.lref == nullptr)
         throw std::runtime_error("SA5: failed to add new constant to table");

@@ -2,4 +2,3 @@
 
 #include "gtest/gtest.h"
 
-LiteralTable LITERAL_TABLE;

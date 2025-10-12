@@ -43,6 +43,7 @@ namespace StringBuilders
     std::string missingBothParenthesisCall(const std::vector<std::string>& content);
     std::string missingBothParenthesisTrunc(const std::vector<std::string>& content);
     std::string missingBothParenthesisPrint(const std::vector<std::string>& content);
+    std::string missingBothParenthesisReturn(const std::vector<std::string>& content);
     std::string missingArgument(const std::vector<std::string>& content);
     std::string missingRightSideValues(const std::vector<std::string>& content);
     std::string missingPointedParameter(const std::vector<std::string>& content);
@@ -62,6 +63,7 @@ namespace StringBuilders
     std::string missingLeftFactor(const std::vector<std::string>& content);
     std::string missingRightFactor(const std::vector<std::string>& content);
     std::string missingBothFactors(const std::vector<std::string>& content);
+    std::string notYetImplemented(const std::vector<std::string>& content);
     std::string genericSyntaxError(const std::vector<std::string>& content);
 
     // Warnings

@@ -17,12 +17,14 @@ class ReportHandler
 {
 public:
     ReportHandler();
-    explicit ReportHandler(const std::string& output);
 
     void add(const Log& log);
+    void setOutput(const std::string& output);
     void generateReport() const;
 
     bool validOutput() const;
+
+    void clear();
     
 private:
     std::string output;

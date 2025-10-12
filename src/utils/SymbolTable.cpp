@@ -21,12 +21,6 @@ const SymbolTable::Entry* SymbolTable::addAndGet(const std::string& symbol)
     return it->second;
 }
 
-// TODO: hacer algo a futuro XD
-int SymbolTable::addScope(const std::string& symbol, const Entry& entry) const
-{
-    return this->entries.size();
-}
-
 const SymbolTable::Entry* SymbolTable::get(const std::string& symbol) const
 {
 
@@ -35,12 +29,10 @@ const SymbolTable::Entry* SymbolTable::get(const std::string& symbol) const
     return nullptr;
 }
 
-bool SymbolTable::updateValue(const std::string& symbol, const unsigned int& value)
+void SymbolTable::clear()
 {
-    const auto it = mapping.find(symbol);
-    if (it == mapping.end()) return false;
-    it->second->value = value;
-    return true;
+    this->entries.clear();
+    this->mapping.clear();
 }
 
 std::string SymbolTable::toString() const
@@ -52,7 +44,7 @@ std::string SymbolTable::toString() const
     mssg.append(builder({})).append("\n");
     builder = getStringBuilder(TABLE, SYMBOL_ENTRY);
     bool first = true;
-    for (const auto& [symbol, value] : entries) {
+    for (const auto& [symbol] : entries) {
         if (!first) mssg.append("\n");
         first = false;
         mssg.append(builder({symbol}));

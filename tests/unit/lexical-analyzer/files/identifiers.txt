@@ -1,0 +1,32 @@
+## ----------------------------------------------- ##
+##  Prueba de casos validos del analizador léxico  ##
+## ----------------------------------------------- ##
+
+## Identificadores:
+    Se prueba los siguientes casos posibles y válidos:
+    - Variable compuesta de letras mayúsculas
+    - Variable compuesta de letras y números
+    - Variable compuesta de letras y porcentajes
+    - Variable compuesta de letras números y porcentajes
+    - Variables de cantidad de caracteres extendidas
+##
+
+IDENTIF
+I1D2N3T4I5F6
+I%D%N%T%I%F%
+I1%D2%N3%T4%I5%F6%
+I1%D2%N3%T4%I5%F6%EXTENDIDA
+
+## Errores Léxicos:
+    Si bien no pueden tener errores léxicos sí que puede
+    ser confusa la tokenización. Se proponen los siguientes casos:
+    - Entero Sin Signo + Variable
+    - Caracter Inesperado + Variable
+    - Variable + Palabra Reservada
+    - Variable "." Variable
+##
+
+1ERA%VARIABLE
+%MIVARIABLE%
+Mivariable
+VARIA.BLE

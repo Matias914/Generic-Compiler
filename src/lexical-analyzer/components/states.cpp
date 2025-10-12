@@ -209,7 +209,7 @@ SemanticAction  States::state9(StateMachine* s, const unsigned int& value)
         s->state = state10;
         return SemanticActions::DoNothing;
     default:
-        s->state = state0;
+        s->state = fstate;
         return SemanticActions::ExpectedNumeralTrap;
     }
 }
@@ -226,7 +226,7 @@ SemanticAction States::state10(StateMachine* s, const unsigned int& value)
         s->state = state10;
         return SemanticActions::SA7;
     case END_OF_FILE:
-        s->state = fstate;
+        s->state = state0;
         return SemanticActions::ExpectedCommentEndTrap;
     default:
         s->state = state10;
@@ -245,7 +245,7 @@ SemanticAction States::state11(StateMachine* s, const unsigned int& value)
         s->state = state10;
         return SemanticActions::SA7;
     case END_OF_FILE:
-        s->state = fstate;
+        s->state = state0;
         return SemanticActions::ExpectedCommentEndTrap;
     default:
         s->state = state10;

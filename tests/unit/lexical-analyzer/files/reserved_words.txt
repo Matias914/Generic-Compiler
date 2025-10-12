@@ -1,0 +1,62 @@
+## ----------------------------------------------- ##
+##  Prueba de casos validos del analizador léxico  ##
+## ----------------------------------------------- ##
+
+## Palabras Reservadas:
+    Se prueba que las palabras reservadas escritas en minúsculas sean reconocidas. Aquellas
+    escritas en mayúsculas deben ser tomadas como identificadores. Por último se verifica
+    que las palabras reservadas inexistentes no sean reconocidas.
+##
+
+if
+else
+endif
+do
+while
+return
+print
+trunc
+uint
+float
+cr
+
+IF
+ELSE
+ENDIF
+DO
+WHILE
+RETURN
+PRINT
+TRUNC
+UINT
+FLOAT
+CR
+
+## Errores Léxicos:
+    A continuación, algunos ejemplos de palabras reservadas inexistentes. Pueden agregarse más.
+##
+
+i
+ele
+edif
+d
+whil
+reurn
+prnt
+trun
+uin
+flat
+rc
+ife
+elsse
+endiff
+doa
+whifle
+retugrn
+printj
+trunck
+uintl
+floaft
+crh
+
+

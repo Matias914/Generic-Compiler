@@ -71,6 +71,8 @@ StringBuilder getBuilderForErrors(const int& code)
         return missingBothParenthesisCall;
     case MISSING_BOTH_PARENTHESIS_TRUNC:
         return missingBothParenthesisTrunc;
+    case MISSING_BOTH_PARENTHESIS_RETURN:
+        return missingBothParenthesisReturn;
     case MISSING_ARGUMENT:
         return missingArgument;
     case MISSING_RIGHT_SIDE_VALUES:
@@ -109,6 +111,8 @@ StringBuilder getBuilderForErrors(const int& code)
         return missingLeftFactor;
     case MISSING_BOTH_FACTORS:
         return missingBothFactors;
+    case NOT_YET_IMPLEMENTED:
+        return notYetImplemented;
     case SYNTAX_ERROR:
         return genericSyntaxError;
     default:

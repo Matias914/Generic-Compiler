@@ -1,0 +1,73 @@
+## ----------------------------------------------- ##
+##  Prueba de casos validos del analizador léxico  ##
+## ----------------------------------------------- ##
+
+## Entero sin signo (16 bits):
+    Se prueba el valor mínimo, máximo y un valor intermedio. Todos deben
+    ser reconocidos como válidos.
+##
+
+0UI
+65535UI
+15UI
+
+## Punto Flotante (32 bits):
+    Se prueba el valor mínimo, máximo y un valor intermedio, tanto para
+    valores positivos como negativos, más el caso del 0. Todos deben
+    ser reconocidos como válidos. En el caso de los negativos, la tokeni-
+    zación no debe reconocer como parte del lexema el signo menos '-'.
+##
+
+1.17549436F-38
+3.40282346F+38
+
+-1.17549436F-38
+-3.40282346F+38
+
+0.0
+
+## Se prueban todos las combinaciones de parte entera y flotante>
+    - parte entera sin decimal
+    - parte entera con decimal
+    - parte decimal con envalidtera
+    - parte entera sin decimal más exponente positivo
+    - parte entera con decimal más exponente positivo
+    - parte decimal con entera más exponente positivo
+    - parte entera sin decimal más exponente negativo
+    - parte entera con decimal más exponente negativo
+    - parte decimal con entera más exponente negativo
+##
+
+3.
+3.40282346
+.40282346
+3.F+38
+3.40282346F+38
+ .40282346F+38
+3.F-38
+3.40282346F-38
+ .40282346F-37
+
+## Errores Léxicos:
+    Finalmente, se prueban los siguientes casos de error que
+    el analizador léxico debería contemplar
+    - Entero fuera de rango
+    - Entero sin sufijo
+    - Entero con sufijo parcialmente completo
+    - Flotante fuera de rango
+    - Flotante sin signo de exponente
+    - Flotante sin exponente
+
+    Nota: el ";" se usa como resincronización porque
+    después de la F sin signo, 383.40 ... es un entero fuera
+    de rango.
+##
+
+65536UI
+16
+16U
+16I
+1.17549435F-38
+3.40282347F+38
+3.40282346F38;
+3.40282346F

@@ -1,0 +1,50 @@
+## ----------------------------------------------- ##
+##  Prueba de casos validos del analizador léxico  ##
+## ----------------------------------------------- ##
+
+## Operadores Compuestos:
+    Se prueban que aquellos operadores compuestos de caracteres
+    especiales sean válidos.
+##
+
+==
+=!
+<=
+>=
+:=
+->
+
+## Caracteres Especiales:
+    Se prueban que los caracteres individuales sean válidos
+##
+
+>
+<
+=
++
+-
+/
+*
+.
+;
+(
+)
+{
+}
+,
+
+## Errores Léxicos:
+    Cuando hay operadores compuestos que no resultan en ninguno
+    de los anteriores mostrados, se tokenizan como distintos. Los
+    errores están asociados con los caracteres especiales que no
+    tienen sentido por sí solos.
+##
+
+:
+#
+%
+!
+$
+[
+]
+\

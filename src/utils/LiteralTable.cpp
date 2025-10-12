@@ -12,7 +12,7 @@ LiteralTable::LiteralTable()
     this->entries = std::list<Entry>();
 }
 
-const LiteralTable::Entry* LiteralTable::addAndGet(const std::string& constant, const int& type, const Type& value)
+const LiteralTable::Entry* LiteralTable::addAndGet(const std::string& constant, const int& type, const TypeValue& value)
 {
     const auto it = this->mapping.find(constant);
     if (it == this->mapping.end()) {
@@ -55,6 +55,12 @@ bool LiteralTable::decrementReferences(const std::string& constant)
         return true;
     }
     return false;
+}
+
+void LiteralTable::clear()
+{
+    this->entries.clear();
+    this->mapping.clear();
 }
 
 std::string LiteralTable::toString() const

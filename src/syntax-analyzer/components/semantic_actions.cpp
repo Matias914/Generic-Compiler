@@ -32,7 +32,7 @@ void SemanticActions::logStructure(const std::string& structure)
 void SemanticActions::addNegativeFloatToTable()
 {
     const std::string new_constant = "-" + yylval.lref->constant;
-    const LiteralTable::Type value = { .f = -yylval.lref->value.f};
+    const LiteralTable::TypeValue value = { .f = -yylval.lref->value.f};
     LITERAL_TABLE.decrementReferences(yylval.lref->constant);
     yylval.lref = LITERAL_TABLE.addAndGet(new_constant, FLOAT_LITERAL, value);
     if (yylval.lref == nullptr)

@@ -1,0 +1,20 @@
+## ----------------------------------------------- ##
+##  Prueba de casos validos del analizador léxico  ##
+## ----------------------------------------------- ##
+
+## Comentarios Multilínea:
+    Se prueba que los comentarios sean correctos. Un comentario
+    incorrecto, solo puede ser definido como incompleto, ya que un comentario
+    multilinea es válido.
+
+    Nota: en el caso de que el comentario no pueda abrirse, tiene sentido
+    que se devuelva un INVALID_TOKEN porque no queda muy clara la intención del programador
+    Caso de que el comentario esté abierto sí que no debería devolverse nada.
+##
+
+## Comentario válido # a pesar del numeral
+##
+
+# # Comentario Incorrecto
+
+## Comentario Incorrecto por no cerrarse

@@ -5,8 +5,8 @@ PROGRAMA {
     unit ;
     uint X1, , Y, Z
     uint X Y
-    uint PROGRAMA.X Y := Z
-    uint X;
+    uint PROGRAMA.X Y := Z;
+    float X;
     X := 1UI--2.1;
     uint ;
     uint Y(cr Z, cr uint Z, cr uint, cr, A) {

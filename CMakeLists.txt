@@ -55,6 +55,7 @@ FetchContent_MakeAvailable(googletest)
 
 # Definir un ejecutable para tus tests
 add_executable(gc_tests
+        tests/main.cpp
         # Utils
         src/utils/ErrorBuffer.cpp
         src/utils/SymbolTable.cpp
@@ -67,6 +68,7 @@ add_executable(gc_tests
         src/utils/resources/string_report_builders.cpp
         # Syntax Analyzer
         src/syntax-analyzer/syntax_analyzer.cpp
+        src/syntax-analyzer/components/traps.cpp
         src/syntax-analyzer/components/parser.cpp
         src/syntax-analyzer/components/translator.cpp
         src/syntax-analyzer/components/semantic_actions.cpp
@@ -82,12 +84,17 @@ add_executable(gc_tests
         tests/unit/utils/SymbolTable_test.cpp
         tests/unit/utils/ErrorHandler_test.cpp
         tests/unit/utils/LiteralTable_test.cpp
-        tests/unit/lexical-analyzer/lexical_analyzer_test.cpp
-        tests/unit/lexical-analyzer/components/states_test.cpp
-        tests/unit/lexical-analyzer/components/translator_test.cpp
-        tests/unit/lexical-analyzer/components/semantic_actions_test.cpp
         tests/unit/utils/ReportHandler_test.cpp
-        src/syntax-analyzer/components/traps.cpp
+        tests/unit/lexical-analyzer/fixture/TestLexicalAnalyzer.cpp
+        tests/unit/lexical-analyzer/test-cases/numeric_constants_test.cpp
+        tests/unit/lexical-analyzer/test-cases/reserved_words_test.cpp
+        tests/unit/lexical-analyzer/test-cases/comments_test.cpp
+        tests/unit/lexical-analyzer/test-cases/string_literals_test.cpp
+        tests/unit/lexical-analyzer/components/states_test.cpp
+        tests/unit/lexical-analyzer/components/semantic_actions_test.cpp
+        tests/unit/lexical-analyzer/components/translator_test.cpp
+        tests/unit/lexical-analyzer/test-cases/identifiers_test.cpp
+        tests/unit/lexical-analyzer/test-cases/special_characters_test.cpp
 )
 
 # Vincular las bibliotecas necesarias. GTest::gtest y GTest::gtest_main
@@ -95,11 +102,15 @@ add_executable(gc_tests
 target_link_libraries(gc_tests
         PRIVATE
         GTest::gtest
-        GTest::gtest_main
-        pthread  # Sigue siendo necesario para la ejecución de tests multihilo
+        pthread
 )
 
-# Descubrir y registrar los tests para CTest/CLion
-# Esto le dice a CLion que el ejecutable 'my_tests' contiene tests.
-include(GoogleTest)
-gtest_discover_tests(gc_tests)
+target_compile_definitions(gc_tests PRIVATE "SOURCE_PATH=\"${CMAKE_SOURCE_DIR}\"")
+
+# Define un único test llamado "RunAllWithArgs".
+# CTest ejecutará el comando: gc_tests --input=../
+add_test(
+        NAME RunAllWithArgs
+        COMMAND gc_tests --input=../
+        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+)

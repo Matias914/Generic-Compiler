@@ -1,0 +1,15 @@
+## ----------------------------------------------- ##
+##  Prueba de casos validos del analizador léxico  ##
+## ----------------------------------------------- ##
+
+## Cadena de una línea:
+    Se prueba que las cadenas estén bien escritas. En caso de que se pase
+    de una línea se devuelve un INVALID_TOKEN.
+##
+
+"Esta es una cadena válida de una línea"
+
+"Esta es una cadena inválida de más de
+ una linea
+
+"Esta es otra cadena inválida

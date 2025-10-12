@@ -227,6 +227,11 @@ namespace StringBuilders
         return ERROR_MSG("print statement without ( ) is not allowed");
     }
 
+    std::string missingBothParenthesisReturn(const std::vector<std::string>& content)
+    {
+        return ERROR_MSG("return statement without ( ) is not allowed");
+    }
+
     std::string missingArgument(const std::vector<std::string>& content)
     {
         return ERROR_MSG("A valid argument was expected inside '( )'");
@@ -332,6 +337,11 @@ namespace StringBuilders
     std::string missingBothFactors(const std::vector<std::string>& content)
     {
         return ERROR_MSG("Two operands factors are required when using * or /");
+    }
+
+    std::string notYetImplemented(const std::vector<std::string>& content)
+    {
+        return ERROR_MSG("The type specified is not yet supported");
     }
 
     std::string genericSyntaxError(const std::vector<std::string>& content)

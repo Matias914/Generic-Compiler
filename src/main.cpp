@@ -30,9 +30,9 @@ int main(const int argc, char* argv[])
         for (int i = 1; i < argc; ++i)
             if (!std::strcmp(argv[i], "-v"))
                 VERBOSE_OPTION = true;
-            else if (!outfile && VERBOSE_OPTION)
+            else if (!outfile && VERBOSE_OPTION && argc > 3)
             {
-                REPORT_HANDLER = ReportHandler(argv[i]);
+                REPORT_HANDLER.setOutput(argv[i]);
                 if (!REPORT_HANDLER.validOutput())
                     throw std::runtime_error("\nCouldn't generate report");
                 outfile = true;
@@ -46,7 +46,7 @@ int main(const int argc, char* argv[])
                 throw std::runtime_error("\nMore than one file was given");
 
         if (!infile)
-            throw std::runtime_error("\nNo file was given");
+            throw std::runtime_error("\nNo file was given to compile");
 
         if (!LexicalAnalyzer::open(target))
             throw std::runtime_error("\nThe file could not be opened");

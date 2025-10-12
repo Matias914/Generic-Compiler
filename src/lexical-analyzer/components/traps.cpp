@@ -80,6 +80,7 @@ int SemanticActions::ExpectedQuoteTrap(std::string& lexeme, const char& characte
 
 int SemanticActions::ExpectedNumeralTrap(std::string& lexeme, const char& character)
 {
+    lexeme = "#";
     SOURCE_FILE.unget();
     Log log;
     log.type = ERROR;

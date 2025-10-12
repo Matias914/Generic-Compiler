@@ -14,13 +14,6 @@ ReportHandler::ReportHandler()
     this->last_token = this->logs.end();
 }
 
-ReportHandler::ReportHandler(const std::string& output)
-{
-    this->output = output;
-    this->logs = std::list<Log>();
-    this->last_token = this->logs.end();
-}
-
 void ReportHandler::add(const Log& log)
 {
     if (log.type != TOKEN)
@@ -31,12 +24,23 @@ void ReportHandler::add(const Log& log)
         last_token = this->logs.insert(std::next(last_token), log);
 }
 
+void ReportHandler::setOutput(const std::string& output)
+{
+    this->output = output;
+}
+
 bool ReportHandler::validOutput() const
 {
     std::ofstream file(this->output);
     if (!file.is_open()) return false;
     file.close();
     return true;
+}
+
+void ReportHandler::clear()
+{
+    this->logs.clear();
+    this->last_token = this->logs.end();
 }
 
 void ReportHandler::generateReport() const

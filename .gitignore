@@ -37,6 +37,10 @@
 *.out
 *.app
 
+# Compiler
+gc
+gc_tests
+
 # debug information files
 *.dwo
 

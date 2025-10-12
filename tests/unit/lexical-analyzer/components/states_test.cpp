@@ -21,7 +21,6 @@ struct TestState
 
     void test(const int& value, const State& next, const SemanticAction& sa, const bool& fs)
     {
-        std::cout << value << "\n";
         EXPECT_EQ(state(&sm, value), sa);
         EXPECT_EQ(sm.state, next);
         EXPECT_EQ(sm.endState(), fs);
@@ -278,28 +277,28 @@ TEST(TestStates, state8)
 TEST(TestStates, state9)
 {
     TestState ts = {StateMachine(), state9};
-    ts.test(UPPER_CASE , state0 , ExpectedNumeralTrap, false);
-    ts.test(F          , state0 , ExpectedNumeralTrap, false);
-    ts.test(I          , state0 , ExpectedNumeralTrap, false);
-    ts.test(U          , state0 , ExpectedNumeralTrap, false);
-    ts.test(LOWER_CASE , state0 , ExpectedNumeralTrap, false);
-    ts.test(NUMBER     , state0 , ExpectedNumeralTrap, false);
-    ts.test(SPECIAL    , state0 , ExpectedNumeralTrap, false);
-    ts.test(PERCENTAGE , state0 , ExpectedNumeralTrap, false);
-    ts.test(QUOTE      , state0 , ExpectedNumeralTrap, false);
-    ts.test(DOT        , state0 , ExpectedNumeralTrap, false);
-    ts.test(EQUALS     , state0 , ExpectedNumeralTrap, false);
-    ts.test(EXCLAMATION, state0 , ExpectedNumeralTrap, false);
-    ts.test(GREATER    , state0 , ExpectedNumeralTrap, false);
-    ts.test(LESS       , state0 , ExpectedNumeralTrap, false);
+    ts.test(UPPER_CASE , fstate , ExpectedNumeralTrap, true );
+    ts.test(F          , fstate , ExpectedNumeralTrap, true );
+    ts.test(I          , fstate , ExpectedNumeralTrap, true );
+    ts.test(U          , fstate , ExpectedNumeralTrap, true );
+    ts.test(LOWER_CASE , fstate , ExpectedNumeralTrap, true );
+    ts.test(NUMBER     , fstate , ExpectedNumeralTrap, true );
+    ts.test(SPECIAL    , fstate , ExpectedNumeralTrap, true );
+    ts.test(PERCENTAGE , fstate , ExpectedNumeralTrap, true );
+    ts.test(QUOTE      , fstate , ExpectedNumeralTrap, true );
+    ts.test(DOT        , fstate , ExpectedNumeralTrap, true );
+    ts.test(EQUALS     , fstate , ExpectedNumeralTrap, true );
+    ts.test(EXCLAMATION, fstate , ExpectedNumeralTrap, true );
+    ts.test(GREATER    , fstate , ExpectedNumeralTrap, true );
+    ts.test(LESS       , fstate , ExpectedNumeralTrap, true );
     ts.test(NUMERAL    , state10, DoNothing          , false);
-    ts.test(COLON      , state0 , ExpectedNumeralTrap, false);
-    ts.test(MINUS      , state0 , ExpectedNumeralTrap, false);
-    ts.test(PLUS       , state0 , ExpectedNumeralTrap, false);
-    ts.test(BLANK      , state0 , ExpectedNumeralTrap, false);
-    ts.test(ENDLINE    , state0 , ExpectedNumeralTrap, false);
-    ts.test(OTHER      , state0 , ExpectedNumeralTrap, false);
-    ts.test(END_OF_FILE, state0 , ExpectedNumeralTrap, false);
+    ts.test(COLON      , fstate , ExpectedNumeralTrap, true );
+    ts.test(MINUS      , fstate , ExpectedNumeralTrap, true );
+    ts.test(PLUS       , fstate , ExpectedNumeralTrap, true );
+    ts.test(BLANK      , fstate , ExpectedNumeralTrap, true );
+    ts.test(ENDLINE    , fstate , ExpectedNumeralTrap, true );
+    ts.test(OTHER      , fstate , ExpectedNumeralTrap, true );
+    ts.test(END_OF_FILE, fstate , ExpectedNumeralTrap, true );
 }
 
 TEST(TestStates, state10)
@@ -326,7 +325,7 @@ TEST(TestStates, state10)
     ts.test(BLANK      , state10, DoNothing             , false);
     ts.test(ENDLINE    , state10,    SA7                   , false);
     ts.test(OTHER      , state10, DoNothing             , false);
-    ts.test(END_OF_FILE, fstate , ExpectedCommentEndTrap, true );
+    ts.test(END_OF_FILE, state0 , ExpectedCommentEndTrap, false);
 }
 
 TEST(TestStates, state11)
@@ -353,7 +352,7 @@ TEST(TestStates, state11)
     ts.test(BLANK      , state10, DoNothing             , false);
     ts.test(ENDLINE    , state10,    SA7                   , false);
     ts.test(OTHER      , state10, DoNothing             , false);
-    ts.test(END_OF_FILE, fstate , ExpectedCommentEndTrap, true );
+    ts.test(END_OF_FILE, state0 , ExpectedCommentEndTrap, false );
 }
 
 TEST(TestStates, state12)
