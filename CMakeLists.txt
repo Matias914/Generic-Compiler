@@ -55,7 +55,7 @@ FetchContent_MakeAvailable(googletest)
 
 # Definir un ejecutable para tus tests
 add_executable(gc_tests
-        tests/main.cpp
+        tests/main_tests.cpp
         # Utils
         src/utils/ErrorBuffer.cpp
         src/utils/SymbolTable.cpp
@@ -111,6 +111,6 @@ target_compile_definitions(gc_tests PRIVATE "SOURCE_PATH=\"${CMAKE_SOURCE_DIR}\"
 # CTest ejecutará el comando: gc_tests --input=../
 add_test(
         NAME RunAllWithArgs
-        COMMAND gc_tests --input=../
+        COMMAND gc_tests --input=../ --verbose=../outputs
         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
 )

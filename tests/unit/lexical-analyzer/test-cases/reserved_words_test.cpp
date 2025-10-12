@@ -15,7 +15,7 @@ using namespace LexicalAnalyzer;
  */
 TEST_F(TestLexicalAnalyzer, reserved_words)
 {
-    REPORT_HANDLER.setOutput(WORKING_DIRECTORY + "/reserved_words_output.txt");
+    REPORT_HANDLER.setOutput(OUTPUT_DIRECTORY + "/reserved_words.log");
 
     const std::string file = WORKING_DIRECTORY + "/tests/unit/lexical-analyzer/files/reserved_words.txt";
     assert(open(file.c_str()));

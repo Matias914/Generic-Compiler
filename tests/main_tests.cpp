@@ -8,7 +8,8 @@
 
 bool VERBOSE_OPTION = false;
 
-std::string WORKING_DIRECTORY;
+std::string OUTPUT_DIRECTORY;
+std::string WORKING_DIRECTORY = ".";
 
 SymbolTable SYMBOL_TABLE;
 LiteralTable LITERAL_TABLE;
@@ -21,17 +22,19 @@ ReportHandler REPORT_HANDLER;
  */
 int main(int argc, char** argv)
 {
+    testing::InitGoogleTest(&argc, argv);
+
     // Parsing requiere argumentos del tipo --option para diferenciarlos
     // del resto de argumentos de GoogleTest.
     for (int i = 1; i < argc; ++i) {
         if (std::string arg = argv[i]; arg.rfind("--input=", 0) == 0) {
             WORKING_DIRECTORY = arg.substr(8);
         }
-        else if (arg == "--verbose") {
+        else if (arg.rfind("--verbose=", 0) == 0) {
             VERBOSE_OPTION = true;
-        }
+            OUTPUT_DIRECTORY = arg.substr(10);
+        } else
+            std::cerr << "Invalid Arguments were given: " << arg << "\n";
     }
-
-    testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }

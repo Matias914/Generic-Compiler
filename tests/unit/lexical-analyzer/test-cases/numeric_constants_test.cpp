@@ -17,7 +17,7 @@ using namespace LexicalAnalyzer;
  */
 TEST_F(TestLexicalAnalyzer, numeric_constants)
 {
-    REPORT_HANDLER.setOutput(WORKING_DIRECTORY + "/numeric_constants_output.txt");
+    REPORT_HANDLER.setOutput(OUTPUT_DIRECTORY + "/numeric_constants.log");
 
     const std::string file = WORKING_DIRECTORY + "/tests/unit/lexical-analyzer/files/numeric_constants.txt";
     assert(open(file.c_str()));

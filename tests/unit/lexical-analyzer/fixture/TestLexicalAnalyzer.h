@@ -7,6 +7,7 @@
 #include "utils/ReportHandler.h"
 
 extern bool VERBOSE_OPTION;
+extern std::string OUTPUT_DIRECTORY;
 extern std::string WORKING_DIRECTORY;
 
 extern SymbolTable SYMBOL_TABLE;

@@ -45,7 +45,7 @@ gc_tests
 *.dwo
 
 # Log Output Files
-output.txt
+*.log
 
 # YACC
 *.y
