@@ -1,6 +1,6 @@
 # Compilador [gc]
 
-Este repositorio contiene el código fuente de un compilador simple, desarrollado en C++. El proyecto utiliza Docker para garantizar un entorno de compilación y ejecución consistente.
+Este repositorio contiene el código fuente de un compilador simple, single-threaded desarrollado en C++. El proyecto utiliza Docker para garantizar un entorno de compilación y ejecución consistente.
 
 ---
 
@@ -16,7 +16,7 @@ El proyecto está configurado para ser compilado usando una imagen de Docker. Po
 
 Parado en el directorio raíz del proyecto (donde está el `Dockerfile`), ejecutá:
 ```bash
-docker build -t mi-<nombre-imagen> .
+docker build -t <nombre-imagen> .
 ````
 
 -----
@@ -70,7 +70,7 @@ Para compilar un archivo de código fuente, utiliza el ejecutable `gc`.
 ./bin/gc examples/programa001.txt
 
 # Compilar un archivo y generar un log
-./bin/gc examples/programa001.txt -v output/compilation.log
+./bin/gc examples/programa001.txt -v outputs/compilation.log
 ```
 
 ### Ejecutar los Tests
@@ -80,15 +80,15 @@ Para verificar la integridad y el correcto funcionamiento de los componentes del
 **Sintaxis:**
 
 ```bash
-./bin/gc_tests [--input=<ruta_proyecto>] [--verbose]
+./bin/gc_tests --input=<ruta_proyecto> [--verbose=<directorio_logs>]
 ```
 
   * `--input=<ruta_proyecto>`: especifica el directorio raíz del proyecto. Es necesario para que los tests puedan encontrar sus archivos de datos. Generalmente se usa `.` para indicar el directorio actual.
-  * `--verbose`: activa la generación de reportes en archivos de texto con los resultados de los tests.
+  * `--verbose=<directorio_logs>`: activa la generación de reportes en archivos de texto con los resultados de los tests. Los reportes se guardarán en el directorio especificado. **Se recomienda usar `--verbose=outputs`** para mantener los resultados organizados.
 
 **Ejemplo:**
 
 ```bash
-# Ejecutar todos los tests y generar los logs de salida
-./bin/gc_tests --input=. --verbose
+# Ejecutar todos los tests y generar los logs de salida en la carpeta 'outputs'
+./bin/gc_tests --input=. --verbose=outputs
 ```
