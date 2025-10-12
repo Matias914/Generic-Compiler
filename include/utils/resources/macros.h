@@ -9,7 +9,6 @@
 #define ERROR     1
 #define TOKEN     2
 #define STRUCTURE 3
-#define TABLE     4
 
 // ================================= //
 //               Codes               //
@@ -73,11 +72,5 @@
 #define MISSING_BOTH_FACTORS            51
 #define NOT_YET_IMPLEMENTED             52
 #define SYNTAX_ERROR                    53
-
-// ------------- Tables ------------ //
-#define SYMBOL_ENTRY   0
-#define SYMBOL_HEADER  1
-#define LITERAL_ENTRY  2
-#define LITERAL_HEADER 3
 
 #endif //TPE_UTILS_MACROS_H

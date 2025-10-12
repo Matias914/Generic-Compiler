@@ -1,9 +1,5 @@
 #include "utils/LiteralTable.h"
-
-#include <stdexcept>
-
-#include "utils/resources/macros.h"
-#include "utils/resources/dispatcher.h"
+#include "utils/resources/builders.h"
 #include "syntax-analyzer/components/parser.h"
 
 LiteralTable::LiteralTable()
@@ -65,27 +61,13 @@ void LiteralTable::clear()
 
 std::string LiteralTable::toString() const
 {
+    using namespace  StringBuilders::TableBuilders;
     std::string mssg;
     mssg.reserve(256 * entries.size());
-    using namespace StringBuilderDispatcher;
-    StringBuilder builder = getStringBuilder(TABLE, LITERAL_HEADER);
-    mssg.append(builder({})).append("\n");
-    builder = getStringBuilder(TABLE, LITERAL_ENTRY);
-    bool first = true;
+    literalTableHeader(mssg);
     for (const auto& entry : entries) {
-        if (!first) mssg.append("\n");
-        first = false;
-        switch (entry.type)
-        {
-        case STRING_LITERAL:
-            mssg.append(builder({entry.constant, "   String   ", std::to_string(entry.refcount)}));
-            break;
-        case UINTEGER_LITERAL:
-            mssg.append(builder({entry.constant, "Unsigned Int", std::to_string(entry.refcount)}));
-            break;
-        default:
-            mssg.append(builder({entry.constant, "    Float   ", std::to_string(entry.refcount)}));
-        }
+        mssg.append("\n");
+        literalTableEntry(mssg, entry);
     }
     return mssg;
 }

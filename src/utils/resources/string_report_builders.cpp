@@ -1,6 +1,6 @@
 #include "utils/resources/builders.h"
 
-namespace StringBuilders
+namespace StringBuilders::LogBuilders
 {
     std::string reportToken(const std::vector<std::string>& content)
     {

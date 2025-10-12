@@ -5,7 +5,7 @@
 #define   ERROR_MSG(x) "Error: " x "."
 #define WARNING_MSG(x) "Warning: " x "."
 
-namespace StringBuilders
+namespace StringBuilders::LogBuilders
 {
     // -------------------------------------- Warnings -------------------------------------- //
 

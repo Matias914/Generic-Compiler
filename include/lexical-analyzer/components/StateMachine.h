@@ -6,7 +6,7 @@
 /*
  * @brief clase que representa una State Machine.
  *
- * Implementa el State Pattern pero con Closures. Tiene la misma funcion que
+ * Implementa el State Pattern pero con funciones. Tiene la misma funcion que
  * la matriz de transicion de estados.
  */
 namespace LexicalAnalyzer

@@ -1,6 +1,5 @@
 #include "utils/SymbolTable.h"
-#include "utils/resources/macros.h"
-#include "utils/resources/dispatcher.h"
+#include "utils/resources/builders.h"
 
 SymbolTable::SymbolTable()
 {
@@ -37,17 +36,13 @@ void SymbolTable::clear()
 
 std::string SymbolTable::toString() const
 {
+    using namespace StringBuilders::TableBuilders;
     std::string mssg;
-    mssg.reserve(32 * entries.size());
-    using namespace StringBuilderDispatcher;
-    StringBuilder builder = getStringBuilder(TABLE, SYMBOL_HEADER);
-    mssg.append(builder({})).append("\n");
-    builder = getStringBuilder(TABLE, SYMBOL_ENTRY);
-    bool first = true;
-    for (const auto& [symbol] : entries) {
-        if (!first) mssg.append("\n");
-        first = false;
-        mssg.append(builder({symbol}));
+    mssg.reserve(256 * entries.size());
+    symbolTableHeader(mssg);
+    for (const auto& entry : entries) {
+        mssg.append("\n");
+        symbolTableEntry(mssg, entry);
     }
     return mssg;
 }

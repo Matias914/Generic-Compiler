@@ -1,32 +1,44 @@
+#include "utils/LiteralTable.h"
+#include "utils/SymbolTable.h"
 #include "utils/resources/builders.h"
+#include "syntax-analyzer/components/parser.h"
 
-namespace StringBuilders
+namespace StringBuilders::TableBuilders
 {
-    std::string symbolTableEntry(const std::vector<std::string>& content)
+    void symbolTableEntry(std::string& mssg, const SymbolTable::Entry& entry)
     {
-        std::string mssg;
-        mssg.reserve(32);
-        mssg.append("Symbol: ").append(content[0]);
-        return mssg;
+        mssg.append("Symbol: ").append(entry.symbol);
     }
 
-    std::string symbolTableHeader(const std::vector<std::string>& content)
+    void symbolTableHeader(std::string& mssg)
     {
-        return "================== Symbol Table ==================";
+        mssg.append("=========================================== Symbol Table ============================================");
     }
 
-    std::string literalTableEntry(const std::vector<std::string>& content)
+    void literalTableEntry(std::string& mssg, const LiteralTable::Entry& entry)
     {
-        std::string mssg;
-        mssg.reserve(256);
-        mssg.append("Count: ").append(content[2]).append("\t | ");
-        mssg.append("Type:  ").append(content[1]).append(" | ");
-        mssg.append("Literal: ").append(content[0]);
-        return mssg;
+        mssg.append("Count: ")
+            .append(std::to_string(entry.refcount))
+            .append("\t | ")
+            .append("Type:  ");
+
+        switch (entry.type)
+        {
+        case STRING_LITERAL:
+            mssg.append("   String   ");
+            break;
+        case UINTEGER_LITERAL:
+            mssg.append("Unsigned Int");
+            break;
+        default:
+            mssg.append("    Float   ");
+        }
+
+        mssg.append(" | ").append("Literal: ").append(entry.constant);
     }
 
-    std::string literalTableHeader(const std::vector<std::string>& content)
+    void literalTableHeader(std::string& mssg)
     {
-        return "================== Literal Table ===================";
+        mssg.append("=========================================== Literal Table ===========================================");
     }
 }

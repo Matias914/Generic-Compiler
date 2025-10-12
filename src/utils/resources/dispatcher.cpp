@@ -3,7 +3,7 @@
 #include "utils/resources/dispatcher.h"
 #include "syntax-analyzer/components/parser.h"
 
-using namespace StringBuilders;
+using namespace StringBuilders::LogBuilders;
 
 StringBuilder getBuilderForErrors(const int& code)
 {
@@ -133,21 +133,6 @@ StringBuilder getBuilderForTokens(const int& code)
     }
 }
 
-StringBuilder getBuilderForTables(const int& code)
-{
-    switch (code)
-    {
-    case SYMBOL_ENTRY:
-        return symbolTableEntry;
-    case SYMBOL_HEADER:
-        return symbolTableHeader;
-    case LITERAL_ENTRY:
-        return literalTableEntry;
-    default:
-        return literalTableHeader;
-    }
-}
-
 namespace StringBuilderDispatcher
 {
     StringBuilder getStringBuilder(const int& type, const int& code)
@@ -162,8 +147,6 @@ namespace StringBuilderDispatcher
             return getBuilderForTokens(code);
         case STRUCTURE:
             return reportStructure;
-        case TABLE:
-            return getBuilderForTables(code);
         default:
             return defaultError;
         }
