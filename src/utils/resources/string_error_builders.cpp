@@ -5,9 +5,14 @@
 #define   ERROR_MSG(x) "Error: " x "."
 #define WARNING_MSG(x) "Warning: " x "."
 
-namespace StringBuilders::LogBuilders
+namespace StringBuilders::ErrorBuilders
 {
     // -------------------------------------- Warnings -------------------------------------- //
+
+    std::string defaultWarning(const std::vector<std::string>& content)
+    {
+        return WARNING_MSG("Unknown Warning");
+    }
 
     std::string truncatedIdentifier(const std::vector<std::string>& content)
     {
@@ -19,6 +24,18 @@ namespace StringBuilders::LogBuilders
             .append(content[0])
             .append("' was truncated to '")
             .append(content[1]).append("'. The maximum length is 20 characters");
+        return WARNING_MSG(+mssg+);
+    }
+
+    std::string statementInterpreted(const std::vector<std::string>& content)
+    {
+        if (content.size() != 1)
+            throw std::runtime_error("statementInterpreted: invalid log");
+        std::string mssg;
+        mssg.append("'")
+            .append(content[0])
+            .append("' was found after an Identifier. This was interpreted as a statement")
+            .append(" but you might have missed a {");
         return WARNING_MSG(+mssg+);
     }
 
@@ -139,7 +156,7 @@ namespace StringBuilders::LogBuilders
             throw std::runtime_error("missingClosingBrackets: invalid log");
         if (content[0].size() > 0)
             return ERROR_MSG("'" + content[0] + "' found but } was expected");
-        return ERROR_MSG("Block was opened with { but never closed");
+        return ERROR_MSG("Block was opened with '{' but never closed with }");
     }
 
     std::string missingBothBrackets(const std::vector<std::string>& content)
@@ -180,7 +197,7 @@ namespace StringBuilders::LogBuilders
     {
         if (content.size() != 1)
             throw std::runtime_error("missingParameterType: invalid log");
-        return ERROR_MSG("Formal parameter type (like uint) was expected before parameter name");
+        return ERROR_MSG("Formal parameter type was expected before '" + content[0] + "'");
     }
 
     std::string missingComma(const std::vector<std::string>& content)
@@ -245,6 +262,13 @@ namespace StringBuilders::LogBuilders
         return ERROR_MSG(+mssg+);
     }
 
+    std::string missingEquals(const std::vector<std::string>& content)
+    {
+        if (content.size() != 1)
+            throw std::runtime_error("missingEquals: invalid log");
+        return ERROR_MSG("In multiple assignments, = should be used instead of '" + content[0] + "'");
+    }
+
     std::string missingPointedParameter(const std::vector<std::string>& content)
     {
         return ERROR_MSG("A real parameter should specify the corresponding formal parameter with '->IDENTIFIER' syntax");
@@ -307,24 +331,34 @@ namespace StringBuilders::LogBuilders
         return ERROR_MSG("An operand was expected but '" + content[0] + "' was found");
     }
 
-    std::string missingLeftOperand(const std::vector<std::string>& content)
+    std::string missingLeftSumOperand(const std::vector<std::string>& content)
+    {
+        return ERROR_MSG("An operand was expected but '+' was found");
+    }
+
+    std::string missingLeftSubOperand(const std::vector<std::string>& content)
     {
         return ERROR_MSG("An operand was expected but '-' was found");
     }
 
-    std::string missingBothOperands(const std::vector<std::string>& content)
+    std::string missingBothSumOperands(const std::vector<std::string>& content)
     {
         return ERROR_MSG("Two operands were expected when '+' was used");
     }
 
     std::string missingFloatConstant(const std::vector<std::string>& content)
     {
-        return ERROR_MSG("Missing float constant after '-'");
+        return ERROR_MSG("Missing float constant after '-' or both operands");
     }
 
-    std::string missingLeftFactor(const std::vector<std::string>& content)
+    std::string missingLeftMulFactor(const std::vector<std::string>& content)
     {
-        return ERROR_MSG("Some value should be placed before * or /");
+        return ERROR_MSG("Some value should be placed before *");
+    }
+
+    std::string missingLeftDivFactor(const std::vector<std::string>& content)
+    {
+        return ERROR_MSG("Some value should be placed before /");
     }
 
     std::string missingRightFactor(const std::vector<std::string>& content)

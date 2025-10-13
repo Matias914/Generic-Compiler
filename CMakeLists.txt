@@ -82,9 +82,6 @@ add_executable(gc_tests
         src/lexical-analyzer/components/semantic_actions.cpp
         # Tests
         tests/unit/utils/SymbolTable_test.cpp
-        tests/unit/utils/ErrorHandler_test.cpp
-        tests/unit/utils/LiteralTable_test.cpp
-        tests/unit/utils/ReportHandler_test.cpp
         tests/unit/lexical-analyzer/fixture/TestLexicalAnalyzer.cpp
         tests/unit/lexical-analyzer/test-cases/numeric_constants_test.cpp
         tests/unit/lexical-analyzer/test-cases/reserved_words_test.cpp
@@ -95,6 +92,15 @@ add_executable(gc_tests
         tests/unit/lexical-analyzer/components/translator_test.cpp
         tests/unit/lexical-analyzer/test-cases/identifiers_test.cpp
         tests/unit/lexical-analyzer/test-cases/special_characters_test.cpp
+        tests/integration/parser-lexer/test-cases/do_while_test.cpp
+        tests/integration/parser-lexer/fixture/TestParserLexer.cpp
+        tests/integration/parser-lexer/fixture/TestParserLexer.h
+        tests/integration/parser-lexer/test-cases/if_else_test.cpp
+        tests/integration/parser-lexer/test-cases/expressions.cpp
+        tests/integration/parser-lexer/test-cases/assignments_test.cpp
+        tests/integration/parser-lexer/test-cases/declarations_test.cpp
+        tests/integration/parser-lexer/test-cases/invocations_test.cpp
+        tests/integration/parser-lexer/test-cases/programs_test.cpp
 )
 
 # Vincular las bibliotecas necesarias. GTest::gtest y GTest::gtest_main

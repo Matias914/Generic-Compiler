@@ -1,5 +1,5 @@
-#ifndef TPE_STATEMACHINE_H
-#define TPE_STATEMACHINE_H
+#ifndef GC_STATEMACHINE_H
+#define GC_STATEMACHINE_H
 
 #include "semantic_actions.h"
 
@@ -22,4 +22,4 @@ namespace LexicalAnalyzer
     };
 }
 
-#endif //TPE_STATEMACHINE_H
+#endif //GC_STATEMACHINE_H

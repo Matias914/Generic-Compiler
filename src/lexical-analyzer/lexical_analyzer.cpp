@@ -11,7 +11,7 @@ extern ReportHandler REPORT_HANDLER;
 
 namespace LexicalAnalyzer
 {
-    unsigned int YYLINENO = 1;
+    unsigned int YYLINENO = 0;
     std::ifstream SOURCE_FILE;
 
     int yylex()
@@ -49,6 +49,12 @@ namespace LexicalAnalyzer
     bool open(const char* filename)
     {
         SOURCE_FILE = std::ifstream(filename, std::ios::in);
-        return SOURCE_FILE.is_open();
+        if (!SOURCE_FILE.is_open())
+        {
+            YYLINENO = 0;
+            return false;
+        }
+        YYLINENO = 1;
+        return true;
     }
 }

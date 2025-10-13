@@ -3,7 +3,20 @@
 #include "utils/resources/dispatcher.h"
 #include "syntax-analyzer/components/parser.h"
 
-using namespace StringBuilders::LogBuilders;
+using namespace StringBuilders::ErrorBuilders;
+
+StringBuilder getBuilderForWarnings(const int& code)
+{
+    switch (code)
+    {
+    case TRUNCATED_IDENTIFIER:
+        return truncatedIdentifier;
+    case STATEMENT_INTERPRETED:
+        return statementInterpreted;
+    default:
+        return defaultWarning;
+    }
+}
 
 StringBuilder getBuilderForErrors(const int& code)
 {
@@ -77,6 +90,8 @@ StringBuilder getBuilderForErrors(const int& code)
         return missingArgument;
     case MISSING_RIGHT_SIDE_VALUES:
         return missingRightSideValues;
+    case MISSING_EQUALS:
+        return missingEquals;
     case MISSING_POINTED_PARAMETER:
         return missingPointedParameter;
     case MISSING_ENDIF:
@@ -99,16 +114,20 @@ StringBuilder getBuilderForErrors(const int& code)
         return missingExpressionOperator;
     case MISSING_RIGHT_OPERAND:
         return missingRightOperand;
-    case MISSING_LEFT_OPERAND:
-        return missingLeftOperand;
-    case MISSING_BOTH_OPERANDS:
-        return missingBothOperands;
+    case MISSING_LEFT_SUM_OPERAND:
+        return missingLeftSumOperand;
+    case MISSING_LEFT_SUB_OPERAND:
+        return missingLeftSubOperand;
+    case MISSING_BOTH_SUM_OPERANDS:
+        return missingBothSumOperands;
     case MISSING_FLOAT_CONSTANT:
         return missingFloatConstant;
     case MISSING_RIGHT_FACTOR:
         return missingRightFactor;
-    case MISSING_LEFT_FACTOR:
-        return missingLeftFactor;
+    case MISSING_LEFT_MUL_FACTOR:
+        return missingLeftMulFactor;
+    case MISSING_LEFT_DIV_FACTOR:
+        return missingLeftDivFactor;
     case MISSING_BOTH_FACTORS:
         return missingBothFactors;
     case NOT_YET_IMPLEMENTED:
@@ -120,19 +139,6 @@ StringBuilder getBuilderForErrors(const int& code)
     }
 }
 
-StringBuilder getBuilderForTokens(const int& code)
-{
-    switch (code)
-    {
-    case YYEOF:
-        return reportEndOfFile;
-    case INVALID_TOKEN:
-        return reportInvalidToken;
-    default:
-        return reportToken;
-    }
-}
-
 namespace StringBuilderDispatcher
 {
     StringBuilder getStringBuilder(const int& type, const int& code)
@@ -140,13 +146,9 @@ namespace StringBuilderDispatcher
         switch (type)
         {
         case WARNING:
-            return truncatedIdentifier;
+            return getBuilderForWarnings(code);
         case ERROR:
             return getBuilderForErrors(code);
-        case TOKEN:
-            return getBuilderForTokens(code);
-        case STRUCTURE:
-            return reportStructure;
         default:
             return defaultError;
         }

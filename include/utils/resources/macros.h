@@ -1,5 +1,5 @@
-#ifndef TPE_UTILS_MACROS_H
-#define TPE_UTILS_MACROS_H
+#ifndef GC_UTILS_MACROS_H
+#define GC_UTILS_MACROS_H
 
 // ================================= //
 //               Types               //
@@ -15,7 +15,8 @@
 // ================================= //
 
 // ------------ Warnings ----------- //
-#define TRUNCATED_VARIABLE 0
+#define TRUNCATED_IDENTIFIER  0
+#define STATEMENT_INTERPRETED 1
 
 // ------------- Errors ------------ //
 #define CUSTOM_ERROR                    0
@@ -53,24 +54,29 @@
 #define MISSING_BOTH_PARENTHESIS_RETURN 32
 #define MISSING_ARGUMENT                33
 #define MISSING_RIGHT_SIDE_VALUES       34
-#define MISSING_POINTED_PARAMETER       35
-#define MISSING_ENDIF                   36
-#define MISSING_IF_EXECUTABLE_BODY      37
-#define MISSING_ELSE_EXECUTABLE_BODY    38
-#define MISSING_BOTH_EXECUTABLE_BODY    39
-#define MISSING_IF_STATEMENT            40
-#define MISSING_WHILE                   41
-#define MISSING_WHILE_EXECUTABLE_BODY   42
-#define MISSING_COMPARISON_OPERATOR     43
-#define MISSING_EXPRESSION_OPERATOR     44
-#define MISSING_RIGHT_OPERAND           45
-#define MISSING_LEFT_OPERAND            46
-#define MISSING_BOTH_OPERANDS           47
-#define MISSING_FLOAT_CONSTANT          48
-#define MISSING_RIGHT_FACTOR            49
-#define MISSING_LEFT_FACTOR             50
-#define MISSING_BOTH_FACTORS            51
-#define NOT_YET_IMPLEMENTED             52
-#define SYNTAX_ERROR                    53
+#define MISSING_EQUALS                  35
+#define MISSING_POINTED_PARAMETER       36
+#define MISSING_ENDIF                   37
+#define MISSING_IF_EXECUTABLE_BODY      38
+#define MISSING_ELSE_EXECUTABLE_BODY    39
+#define MISSING_BOTH_EXECUTABLE_BODY    40
+#define MISSING_IF_STATEMENT            41
+#define MISSING_WHILE                   42
+#define MISSING_WHILE_EXECUTABLE_BODY   43
+#define MISSING_COMPARISON_OPERATOR     44
+#define MISSING_EXPRESSION_OPERATOR     45
+#define MISSING_RIGHT_OPERAND           46
+#define MISSING_LEFT_SUM_OPERAND        47
+#define MISSING_LEFT_SUB_OPERAND        48
+#define MISSING_BOTH_SUM_OPERANDS       49
+#define MISSING_FLOAT_CONSTANT          50
+#define MISSING_RIGHT_FACTOR            51
+#define MISSING_LEFT_MUL_FACTOR         52
+#define MISSING_LEFT_DIV_FACTOR         53
+#define MISSING_BOTH_FACTORS            54
+#define NOT_YET_IMPLEMENTED             55
+#define SYNTAX_ERROR                    56
 
-#endif //TPE_UTILS_MACROS_H
+// ------------- Structures ------------ //
+
+#endif //GC_UTILS_MACROS_H

@@ -1,23 +1,32 @@
 #include "utils/resources/builders.h"
+#include "syntax-analyzer/components/parser.h"
 
-namespace StringBuilders::LogBuilders
+namespace StringBuilders::ReportBuilders
 {
-    std::string reportToken(const std::vector<std::string>& content)
+    std::string generateTokenHeader()
     {
-        return "TOKEN found: \t\t'" + content[0] + "'.";
+        return "=============== Process Of Tokens =================";
     }
 
-    std::string reportEndOfFile(const std::vector<std::string>& content)
+    std::string generateStructureHeader()
     {
-        return "End of File was processed as a token.";
+        return "============== Process Of Structures ==============";
     }
 
-    std::string reportInvalidToken(const std::vector<std::string>& content)
+    std::string generateTokenReport(const int& code, const std::vector<std::string>& content)
     {
-        return "INVALID token found (" + content[0] + ").";
+        switch (code)
+        {
+        case YYEOF:
+            return "End of File was processed as a token.";
+        case INVALID_TOKEN:
+            return "INVALID token was processed: " + content[0] + ".";
+        default:
+            return "TOKEN found: \t\t'" + content[0] + "'.";
+        }
     }
 
-    std::string reportStructure(const std::vector<std::string>& content)
+    std::string generateStructureReport(const std::vector<std::string>& content)
     {
         return "STRUCTURE found:\t'" + content[0] + "'.";
     }

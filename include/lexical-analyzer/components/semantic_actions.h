@@ -1,5 +1,5 @@
-#ifndef TPE_SEMANTICACTION_H
-#define TPE_SEMANTICACTION_H
+#ifndef GC_SEMANTICACTION_H
+#define GC_SEMANTICACTION_H
 
 #include <string>
 
@@ -55,4 +55,4 @@ namespace LexicalAnalyzer
     }
 }
 
-#endif //TPE_SEMANTICACTION_H
+#endif //GC_SEMANTICACTION_H

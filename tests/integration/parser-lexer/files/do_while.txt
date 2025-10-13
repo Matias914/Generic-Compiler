@@ -1,0 +1,45 @@
+## --------------------------------------------------- ##
+##  Prueba de casos validos del analizador sintactico  ##
+## --------------------------------------------------- ##
+
+## Sentencias Do-While:
+    Se muestra una sentencia WHILE válida. Luego, se muestran
+    algunos errores que fueron contemplados que son:
+    - Falta ";" al final de la sentencia
+    - Falta palabra reservada "while"
+    - Falta palabra reservada "while" y ";"
+    - Falta cuerpo ejecutable
+    - Falta cuerpo ejecutable y ";"
+##
+
+PROGRAM {
+    uint X;
+    X := 0UI;
+
+    do {
+        X := X + 1UI;
+    } while (X <= 10UI);
+
+    print(X);
+
+    ## Errores Sintacticos:
+        Por cada motivo mencionado, se esperan errores en
+        las líneas: 34, 36, 40, 42, 42, 44, 45.
+    ##
+
+    do {
+        X := X + 1UI;
+    } while (X <= 10UI)
+
+    do {
+        X := X + 1UI;
+    } (X <= 10UI);
+
+    do {
+        X := X + 1UI;
+    } (X <= 10UI)
+
+    do while (X <= 10UI);
+
+    do while (X <= 10UI)
+}

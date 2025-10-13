@@ -1,5 +1,5 @@
-#ifndef TPE_DISPATCHER_H
-#define TPE_DISPATCHER_H
+#ifndef GC_DISPATCHER_H
+#define GC_DISPATCHER_H
 
 #include "utils/resources/builders.h"
 
@@ -10,4 +10,4 @@ namespace StringBuilderDispatcher
     StringBuilder getStringBuilder(const int& type, const int& code);
 }
 
-#endif //TPE_DISPATCHER_H
+#endif //GC_DISPATCHER_H

@@ -53,12 +53,6 @@ bool LiteralTable::decrementReferences(const std::string& constant)
     return false;
 }
 
-void LiteralTable::clear()
-{
-    this->entries.clear();
-    this->mapping.clear();
-}
-
 std::string LiteralTable::toString() const
 {
     using namespace  StringBuilders::TableBuilders;
@@ -70,4 +64,10 @@ std::string LiteralTable::toString() const
         literalTableEntry(mssg, entry);
     }
     return mssg;
+}
+
+void LiteralTable::clear()
+{
+    this->entries.clear();
+    this->mapping.clear();
 }

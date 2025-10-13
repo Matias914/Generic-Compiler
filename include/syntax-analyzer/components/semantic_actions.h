@@ -1,5 +1,5 @@
-#ifndef TPE_SEMANTIC_ACTIONS_H
-#define TPE_SEMANTIC_ACTIONS_H
+#ifndef GC_SEMANTIC_ACTIONS_H
+#define GC_SEMANTIC_ACTIONS_H
 
 /*
  * @brief son las acciones asociadas a cada regla
@@ -14,11 +14,13 @@ namespace SyntaxAnalyzer::SemanticActions
 
     /* Traps */
     void announceSyntaxError();
-    void specifySyntaxError(const int& code);
     void announceSpecificError(const int& code);
+    void announceSpecificErrorWithSymbol(const int& code);
+    void specifySyntaxError(const int& code);
+    void specifySyntaxWarning(const int& code);
 
     /* Logs */
     void logStructure(const std::string& structure);
 }
 
-#endif //TPE_SEMANTIC_ACTIONS_H
+#endif //GC_SEMANTIC_ACTIONS_H

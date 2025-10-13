@@ -1,5 +1,5 @@
-#ifndef TPE_BUILDERS_H
-#define TPE_BUILDERS_H
+#ifndef GC_BUILDERS_H
+#define GC_BUILDERS_H
 
 #include <string>
 #include <vector>
@@ -9,7 +9,7 @@
 
 namespace StringBuilders
 {
-    namespace LogBuilders
+    namespace ErrorBuilders
     {
         std::string customError(const std::vector<std::string>& content);
 
@@ -51,6 +51,7 @@ namespace StringBuilders
         std::string missingBothParenthesisReturn(const std::vector<std::string>& content);
         std::string missingArgument(const std::vector<std::string>& content);
         std::string missingRightSideValues(const std::vector<std::string>& content);
+        std::string missingEquals(const std::vector<std::string>& content);
         std::string missingPointedParameter(const std::vector<std::string>& content);
         std::string missingEndif(const std::vector<std::string>& content);
         std::string missingIfExecutableBody(const std::vector<std::string>& content);
@@ -62,25 +63,28 @@ namespace StringBuilders
         std::string missingComparisonOperator(const std::vector<std::string>& content);
         std::string missingExpressionOperator(const std::vector<std::string>& content);
         std::string missingRightOperand(const std::vector<std::string>& content);
-        std::string missingLeftOperand(const std::vector<std::string>& content);
-        std::string missingBothOperands(const std::vector<std::string>& content);
+        std::string missingLeftSumOperand(const std::vector<std::string>& content);
+        std::string missingLeftSubOperand(const std::vector<std::string>& content);
+        std::string missingBothSumOperands(const std::vector<std::string>& content);
         std::string missingFloatConstant(const std::vector<std::string>& content);
-        std::string missingLeftFactor(const std::vector<std::string>& content);
+        std::string missingLeftMulFactor(const std::vector<std::string>& content);
+        std::string missingLeftDivFactor(const std::vector<std::string>& content);
         std::string missingRightFactor(const std::vector<std::string>& content);
         std::string missingBothFactors(const std::vector<std::string>& content);
         std::string notYetImplemented(const std::vector<std::string>& content);
         std::string genericSyntaxError(const std::vector<std::string>& content);
 
         // Warnings
+        std::string defaultWarning(const std::vector<std::string>& content);
         std::string truncatedIdentifier(const std::vector<std::string>& content);
+        std::string statementInterpreted(const std::vector<std::string>& content);
+    }
 
-        // Tokens
-        std::string reportToken(const std::vector<std::string>& content);
-        std::string reportEndOfFile(const std::vector<std::string>& content);
-        std::string reportInvalidToken(const std::vector<std::string>& content);
-
-        // Structures
-        std::string reportStructure(const std::vector<std::string>& content);
+    namespace ReportBuilders {
+        std::string generateTokenHeader();
+        std::string generateStructureHeader();
+        std::string generateTokenReport(const int& code, const std::vector<std::string>& content);
+        std::string generateStructureReport(const std::vector<std::string>& content);
     }
 
     namespace TableBuilders
@@ -93,4 +97,4 @@ namespace StringBuilders
     }
 }
 
-#endif //TPE_BUILDERS_H
+#endif //GC_BUILDERS_H

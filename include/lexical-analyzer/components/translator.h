@@ -1,5 +1,5 @@
-#ifndef TPE_LEXICAL_ANALYZER_TRANSLATOR_H
-#define TPE_LEXICAL_ANALYZER_TRANSLATOR_H
+#ifndef GC_LEXICAL_ANALYZER_TRANSLATOR_H
+#define GC_LEXICAL_ANALYZER_TRANSLATOR_H
 
 /*
  * @brief define como se traduce un caracter a entero.
@@ -12,4 +12,4 @@ namespace LexicalAnalyzer::Translator
     unsigned int translate(const char& c);
 }
 
-#endif //TPE_LEXICAL_ANALYZER_TRANSLATOR_H
+#endif //GC_LEXICAL_ANALYZER_TRANSLATOR_H

@@ -1,5 +1,5 @@
-#ifndef TPE_RESERVEDWORDS_H
-#define TPE_RESERVEDWORDS_H
+#ifndef GC_RESERVEDWORDS_H
+#define GC_RESERVEDWORDS_H
 
 #include <string>
 
@@ -12,4 +12,4 @@ namespace LexicalAnalyzer::ReservedWordsTable
     int token(const std::string& word);
 }
 
-#endif //TPE_RESERVEDWORDS_H
+#endif //GC_RESERVEDWORDS_H

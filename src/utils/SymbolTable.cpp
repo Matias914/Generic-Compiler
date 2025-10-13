@@ -28,12 +28,6 @@ const SymbolTable::Entry* SymbolTable::get(const std::string& symbol) const
     return nullptr;
 }
 
-void SymbolTable::clear()
-{
-    this->entries.clear();
-    this->mapping.clear();
-}
-
 std::string SymbolTable::toString() const
 {
     using namespace StringBuilders::TableBuilders;
@@ -45,4 +39,10 @@ std::string SymbolTable::toString() const
         symbolTableEntry(mssg, entry);
     }
     return mssg;
+}
+
+void SymbolTable::clear()
+{
+    this->entries.clear();
+    this->mapping.clear();
 }

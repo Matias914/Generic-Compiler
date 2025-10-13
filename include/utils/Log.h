@@ -1,5 +1,5 @@
-#ifndef TPE_LOG_H
-#define TPE_LOG_H
+#ifndef GC_LOG_H
+#define GC_LOG_H
 
 #include <string>
 #include <vector>
@@ -19,6 +19,14 @@ struct Log
     int code;
     unsigned int line;
     std::vector<std::string> content;
+
+    // Util para los tests
+    bool operator==(const Log& other) const {
+        return type == other.type
+            && code == other.code
+            && line == other.line
+            && content == other.content;
+    }
 };
 
-#endif //TPE_LOG_H
+#endif //GC_LOG_H

@@ -1,0 +1,84 @@
+## --------------------------------------------------- ##
+##  Prueba de casos validos del analizador sintactico  ##
+## --------------------------------------------------- ##
+
+## Sentencias If-Else:
+    Se muestra una sentencia if e if-else válida
+##
+
+PROGRAM
+{
+    uint X;
+
+    X := 1UI;
+
+    do {
+        if (X < 5UI)
+            print("Menor a 5");
+        else if (X == 5UI)
+            print("Igual a 5");
+        else
+            print("Mayor a 5");
+        endif; endif;
+    } while (X <= 10UI);
+
+    if (X > 10UI) {
+        print("No es posible");
+    } endif;
+}
+
+## Errores Sintácticos:
+    Algunos errores sintácticos considerados son:
+    - Falta ";" en un IF
+    - Falta ";" en un IF-ELSE
+    - Falta ENDIF en un IF
+    - Falta ENDIF en un IF-ELSE
+    - Falta cuerpo ejecutable en un IF
+    - Falta cuerpo ejecutable en un IF y ENDIF
+    - Falta cuerpo ejecutable en un ELSE
+    - Falta cuerpo ejecutable en un ELSE y ENDIF
+    - Falta cuerpo ejecutable en un IF y, por tanto, el
+    ELSE queda anidado, pero ELSE no es una sentencia IF
+
+    Se espera error en las líneas: 52 58 61 66 67 69 69 74 78 78 83 84
+##
+
+PROGRAM {
+    if (X <= Y) {
+        print(X);
+    }
+    endif
+
+    if (X <= Y)
+        print(X);
+    else
+        print(X);
+    endif
+
+    if (X <= Y)
+        print(X);
+
+    if (X <= Y)
+        print(X);
+    else
+        print(X);
+
+    if (X <= Y)
+    endif;
+
+    if (X <= Y);
+
+    if (X <= Y)
+        print(X);
+    else
+    endif;
+
+    if (X <= Y)
+        print(X);
+    else;
+
+    if (X <= Y)
+    else
+        print(Z);
+    endif;
+}

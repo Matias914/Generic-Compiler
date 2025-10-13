@@ -2,7 +2,9 @@
 #include "utils/LiteralTable.h"
 #include "utils/SymbolTable.h"
 #include "utils/resources/macros.h"
-#include "utils/resources/dispatcher.h"
+#include "utils/resources/builders.h"
+
+#include <algorithm>
 
 extern SymbolTable SYMBOL_TABLE;
 extern LiteralTable LITERAL_TABLE;
@@ -37,27 +39,44 @@ bool ReportHandler::validOutput() const
     return true;
 }
 
+void ReportHandler::generateReport() const
+{
+    std::ofstream file(this->output);
+    std::string mssg = "";
+    mssg.reserve(256 * this->logs.size());
+    using namespace StringBuilders::ReportBuilders;
+    mssg.append(generateTokenHeader());
+    // Se recorren los tokens
+    for (auto it = this->logs.begin(); it != this->last_token; ++it) {
+        mssg.append("\n")
+            .append("Line ")
+            .append(std::to_string(it->line))
+            .append(" - ")
+            .append(generateTokenReport(it->code, it->content));
+    }
+    // Se recorren Estructuras
+    mssg.append("\n\n").append(generateStructureHeader());
+    for (auto it = std::next(this->last_token); it != this->logs.end(); ++it) {
+        mssg.append("\n")
+            .append("Line ")
+            .append(std::to_string(it->line))
+            .append(" - ")
+            .append(generateStructureReport(it->content));
+    }
+    file << mssg << "\n\n"
+         << SYMBOL_TABLE.toString()  << "\n\n"
+         << LITERAL_TABLE.toString() << "\n\n";
+    file.close();
+}
+
 void ReportHandler::clear()
 {
     this->logs.clear();
     this->last_token = this->logs.end();
 }
 
-void ReportHandler::generateReport() const
+bool ReportHandler::contains(const Log& log)
 {
-    std::ofstream file(this->output);
-    std::string mssg = "";
-    using namespace StringBuilderDispatcher;
-    bool first = true;
-    for (const auto& [type, code, line, content] : this->logs) {
-        if (!first) mssg.append("\n");
-        first = false;
-        const StringBuilder builder = getStringBuilder(type, code);
-        mssg.append("Line ").append(std::to_string(line));
-        mssg.append(" - ").append(builder(content));
-    }
-    file << mssg << "\n\n";
-    file << SYMBOL_TABLE.toString() << "\n\n";
-    file << LITERAL_TABLE.toString() << "\n\n";
-    file.close();
+    const auto it = std::find(this->logs.begin(), this->logs.end(), log);
+    return (it != this->logs.end());
 }

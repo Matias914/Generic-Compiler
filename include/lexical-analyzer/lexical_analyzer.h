@@ -1,5 +1,5 @@
-#ifndef TPE_LEXICAL_ANALYZER_H
-#define TPE_LEXICAL_ANALYZER_H
+#ifndef GC_LEXICAL_ANALYZER_H
+#define GC_LEXICAL_ANALYZER_H
 
 #include <fstream>
 
@@ -19,4 +19,4 @@ namespace LexicalAnalyzer
     bool open(const char* filename);
 }
 
-#endif //TPE_LEXICAL_ANALYZER_H
+#endif //GC_LEXICAL_ANALYZER_H

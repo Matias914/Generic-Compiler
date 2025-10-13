@@ -1,5 +1,5 @@
-#ifndef TPE_STATES_H
-#define TPE_STATES_H
+#ifndef GC_STATES_H
+#define GC_STATES_H
 
 #include "StateMachine.h"
 
@@ -34,4 +34,4 @@ namespace LexicalAnalyzer::States
     SemanticAction state17(StateMachine* s, const unsigned int& value);
     SemanticAction state18(StateMachine* s, const unsigned int& value);
 }
-#endif //TPE_STATES_H
+#endif //GC_STATES_H

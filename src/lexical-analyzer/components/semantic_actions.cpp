@@ -117,7 +117,7 @@ int SemanticActions::SA6(std::string& lexeme, const char& character)
         Log log;
         log.type = WARNING;
         log.line = YYLINENO;
-        log.code = TRUNCATED_VARIABLE;
+        log.code = TRUNCATED_IDENTIFIER;
         log.content = {lexeme, new_lexeme};
         ERROR_HANDLER.add(log);
         lexeme = new_lexeme;

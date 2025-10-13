@@ -164,7 +164,7 @@ TEST(TestSemanticActions, WarningInSA6)
     SA6(lexeme, character);
     const auto log = ERROR_HANDLER.getLastestLog();
     EXPECT_EQ(log->type, WARNING);
-    EXPECT_EQ(log->code, TRUNCATED_VARIABLE);
+    EXPECT_EQ(log->code, TRUNCATED_IDENTIFIER);
 }
 
 TEST(TestSemanticActions, SA7)

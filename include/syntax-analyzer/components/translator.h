@@ -1,5 +1,5 @@
-#ifndef TPE_SYNTAX_ANALYZER_TRANSLATOR_H
-#define TPE_SYNTAX_ANALYZER_TRANSLATOR_H
+#ifndef GC_SYNTAX_ANALYZER_TRANSLATOR_H
+#define GC_SYNTAX_ANALYZER_TRANSLATOR_H
 
 #include <string>
 
@@ -14,4 +14,4 @@ namespace SyntaxAnalyzer::Translator
     std::string translate(const int& token);
 }
 
-#endif //TPE_SYNTAX_ANALYZER_TRANSLATOR_H
+#endif //GC_SYNTAX_ANALYZER_TRANSLATOR_H

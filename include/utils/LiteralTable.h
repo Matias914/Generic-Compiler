@@ -1,10 +1,20 @@
-#ifndef TPE_LITERALTABLE_H
-#define TPE_LITERALTABLE_H
+#ifndef GC_LITERALTABLE_H
+#define GC_LITERALTABLE_H
 
 #include <map>
 #include <list>
 #include <bitset>
 
+/*
+ * @brief colecciona las constantes literales halladas durante
+ * el análisis léxico y sus metadatos.
+ *
+ * Una de sus responsabilidades la de saber convertirse a String,
+ * además, claras funciones de búsquedas y agregados de constantes.
+ * Debe manejar un contador de referencias que le permita saber si
+ * una constante está siendo usada (existe en el programa) con el fin
+ * de poder liberar memoria en caso contrario.
+ */
 class LiteralTable
 {
 public:
@@ -29,13 +39,14 @@ public:
 
     bool decrementReferences(const std::string& constant);
 
-    void clear();
-
     std::string toString() const;
+
+    // Útil para Testing
+    void clear();
 
 private:
     std::map<std::string_view, Entry*> mapping;
     std::list<Entry> entries;
 };
 
-#endif //TPE_LITERALTABLE_H
+#endif //GC_LITERALTABLE_H

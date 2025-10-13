@@ -11,6 +11,7 @@
 extern int yychar;
 
 extern bool VERBOSE_OPTION;
+
 extern ReportHandler REPORT_HANDLER;
 extern LiteralTable LITERAL_TABLE;
 

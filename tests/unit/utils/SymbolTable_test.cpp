@@ -1,7 +1,9 @@
 #include "gtest/gtest.h"
 #include "utils/SymbolTable.h"
 
-
+/*
+ * @brief son pruebas muy simples de la tabla de simbolos
+ */
 TEST(TestSymbolTable, addAndGet)
 {
     SymbolTable table;

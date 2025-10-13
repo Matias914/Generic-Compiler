@@ -1,0 +1,92 @@
+## --------------------------------------------------- ##
+##  Prueba de casos validos del analizador sintactico  ##
+## --------------------------------------------------- ##
+
+## Sentencia trunc:
+    Se muestra una sentencia trunc válida tanto. Luego, se muestran
+    algunos errores que fueron contemplados que son:
+    - Falta algún paréntesis
+
+    Se espera error en las líneas: 17 18 19
+##
+
+PROGRAM {
+    X := trunc(2UI);
+    X = trunc(-2.1), 2UI;
+
+    X := trunc(2UI;
+    X := trunc2UI);
+    X := trunc2UI;
+}
+
+## Sentencia print:
+    Se muestra una sentencia print válida tanto. Luego, se muestran
+    algunos errores que fueron contemplados que son:
+    - Falta ";" al final de la sentencia
+    - Falta argumento
+
+    Se espera error en las líneas: 36 37 38 39
+##
+
+PROGRAM {
+    print("invalid");
+    print(2UI);
+
+    print("invalid")
+    print(2UI)
+    print();
+    print()
+}
+
+## Expresiones:
+    Se muestran ejemplos de expresiones válidas.
+##
+
+PROGRAM {
+    uint X1, X2;
+    uint F(cr uint A)
+    {
+        return (2UI);
+    };
+
+    X1 := X2 + X2 - X2 * F(X2*X2->A) / X2;
+    print(X2+X2);
+}
+
+## Expresiones:
+    Se muestran algunos errores sintácticos contemplados:
+    - Falta ";" al final de la sentencia
+    - Falta operando en una suma o resta
+    - Falta dos operando en una suma
+    - Cuando aparece el "-" solo, se indica que falta una
+    constante flotante (estilo -2.1) o que faltan dos
+    operandos (estilo 3UI - 3UI)
+    - Falta factor en una multiplicación o división
+    - Faltan ambos factores
+    - Falta operador de expresión
+
+    Se espera error en las líneas: 78 78 78 78 78 80 80 82 82 82 82 82 82 83 84 85 86 87
+##
+
+PROGRAM {
+     uint X1, X2;
+     uint F(cr uint A)
+     {
+        return (2UI);
+     };
+
+     X2 := X1 + + X1 * + X1 / / X1 + X1 + + - - -
+
+     print(X1);
+
+     X2 := X1 - - 1UI / - -2.1 * * (uint X) { return (X); } (PROGRAMA.X1) - X1 - - + + + F(X1->A);
+     X2 := -F(X1->A);
+     X2 := - - 2.1;
+     X2 := + 2.1;
+     X2 := * 2.1;
+     X2 := / 2.1;
+
+     X2 := 2.1 3UI 4UI F(X1->A);
+
+     X2 := 2UI (uint X) { return (2UI); } (X1);
+}

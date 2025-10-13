@@ -1,0 +1,41 @@
+## --------------------------------------------------- ##
+##  Prueba de casos validos del analizador sintactico  ##
+## --------------------------------------------------- ##
+
+## Sentencias de Asignaciones:
+    Se muestran sentencias de asignaciones válidas tanto simples
+    como multiples. Luego, se muestran algunos errores que fueron
+    contemplados.
+##
+
+PROGRAM {
+    uint X;
+
+    X := 0UI;
+    Y := -2.1;
+    Z := trunc(-2.1);
+    W := (uint X) { return (0UI); } (Z);
+
+    X, Y = 2UI, 3UI;
+    X = 2UI, trunc(-2.1);
+}
+
+## Errores Sintacticos:
+    Dentro de la lista de errores se hallan:
+    - Falta ";" en una asignacion
+    - Falta ";" en una asignación multiple
+    - Faltan "," en las asignaciones multiples
+    - Hay más variables del lado izquierdo que derecho.
+
+    Se espera error en las líneas: 36 38 38 38 38 38 38 39 39 39 39 39 40 40 41 41 41
+##
+
+PROGRAM {
+    X := 2UI
+
+    print(X);
+
+    X Y Z = 2UI 3UI 4UI 5UI 6UI
+    X, Y = 2UI 3UI 4UI 5UI 6UI
+    X Y = 2UI
+}

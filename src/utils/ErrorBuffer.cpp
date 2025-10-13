@@ -1,4 +1,5 @@
 #include "utils/ErrorBuffer.h"
+#include "utils/resources/macros.h"
 
 ErrorBuffer::ErrorBuffer(ErrorHandler* handler)
 {
@@ -26,6 +27,8 @@ bool ErrorBuffer::commit()
 {
     if (!this->ocupied) return false;
     this->handler->logs.insert(std::next(position), buffered);
+    if (this->buffered.type == ERROR)
+        this->handler->error_count++;
     this->ocupied = false;
     return true;
 }

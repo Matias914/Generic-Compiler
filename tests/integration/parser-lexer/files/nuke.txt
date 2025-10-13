@@ -1,3 +1,11 @@
+## --------------------------------------------------- ##
+##              Programa Totalmente Inválido           ##
+## --------------------------------------------------- ##
+
+## Miscelánea:
+    Proponemos este ejemplo para analizar el comportamiento
+    del parser en situaciones de múltiples errores en simultáneo
+##
 
 uint X;
 uint X Y J;
@@ -18,7 +26,7 @@ PROGRAMA {
         X := Y(A->Z, B->P, B+2UI->Y) + Z(Y->R);
     };
 
-    D, A  B.B  C.C = 1UI  -1.13452345F+12  5UI, 1UI;
+    D, A  B.B  C.C = 1UI  -1.13452345F+12  5UI 1UI;
     D, A  B.B  C.C = 1UI  -1.13452345F+12, 5UI, 1UI;
     D, A  B.B  C.C = 1UI, trunc(  5UI, 1UI;
     D, A  B.B  C.C = 1UI, -1.13452345F+12, 5UI, 1UI;
@@ -58,7 +66,7 @@ PROGRAMA {
     print("hola");
 
     if (PROGRAMA.X =! Z)
-        PROGRAMA.X := Y;
+        PROGRAMA.X :lk= Y;
     endif;
 
 
@@ -87,7 +95,7 @@ PROGRAMA {
 
     X := trunc -2UI;
     X := -X(Y->Z);
-    X :=  + + 2UI  3UI - - - 2UI + ;
+    X :=  + + 2UI  3UI - - - 2UI adfs + ;
     X := * * / * ;
     X := * 2UI * / * ;
     X := - -2UI - - 3UI + + 2UI - ;
@@ -110,7 +118,7 @@ PROGRAMA {
     if (X > Y);
 
     if (X > Y)
-        return (trunc (Y.X));
+        return (trdasfunc (Y.X));
     else
 
     ;
@@ -155,6 +163,14 @@ uint F(cr uint A, cr uint B) {
     return (A + B);
 };
 
-PROGRAMA2 {
-    uint X;
+PROGRAMA2
+    uint X
 }
+
+uint F(cr uint A, cr uint B) {
+    uint uint F(cr uint A, cr uint B) {
+             uint X Y;
+             return (A + B);
+         }; X Y;
+    return (A + B);
+};

@@ -1,0 +1,55 @@
+## --------------------------------------------------- ##
+##  Prueba de casos validos del analizador sintactico  ##
+## --------------------------------------------------- ##
+
+## Declaración de Programa:
+    Se muestra un ejemplo de programa válido, para luego,
+    dar lugar a los errores sintácticos
+##
+
+PROGRAM {
+    uint X;
+    X := 0UI;
+    X, Y = trunc(78UI), 6UI;
+}
+
+## Errores Sintácticos:
+    Algunos de los considerados son los siguientes:
+    - Sentencia Inválida por ser Global
+    - Programa sin identificador
+    - Anidamiento de Programas
+    - Anidamiento de Unidades Anónimas
+    - Programa sin llave de inicio
+    - Programa sin llave de cierre
+
+    Nota: es importante la aclaración de que si el programa
+    no tiene una llave de inicio, no se puede diferenciar de una
+    sentencia global. Más bien, detectamos la llave de cierre,
+    por lo que, se toma que el programa no tenía nombre
+
+    Se espera error en las líneas: 33, 37, 42, 46, 50, 51, 55, 55
+##
+
+uint GLOBAL;
+
+{
+    print("Programa Sin Nombre");
+}
+
+PROGRAMA%COMPUESTO  {
+    ANIDADO {
+        uint X;
+    }
+
+    {
+        print("Unidad Anonima");
+    }
+}
+
+PROGRAMA%SIN%ABRIR
+    print("x2");
+}
+
+{
+    uint X;
+    print("Programa sin cerrar");

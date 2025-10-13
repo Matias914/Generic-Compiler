@@ -1,11 +1,20 @@
-#ifndef TPE_ERRORHANDLER_H
-#define TPE_ERRORHANDLER_H
+#ifndef GC_ERRORHANDLER_H
+#define GC_ERRORHANDLER_H
 
 #include "Log.h"
 #include "resources/builders.h"
 
 #include <list>
 
+/*
+ * @brief maneja logs relacionados con los Errores y Warnings
+ *
+ * Mantiene una colección de Logs. Estos podrían tratarse de un
+ * error o warning. Debe también manejar la salida generada, aunque
+ * no conoce los detalles de Impresion. Se divide en una subclase
+ * ErrorBuffer que maneja el buffering de errores necesario para
+ * tratar ciertos errores sintacticos.
+ */
 class ErrorHandler
 {
 public:
@@ -20,12 +29,17 @@ public:
 
     std::string getLogs() const;
 
+    // Útiles para Testing
+    void clear();
+    bool contains(const Log& log);
+
 private:
     std::list<Log> logs;
     int error_count;
 
+    // ErrorBuffer no es mas que una extension de ErrorHandler
     friend class ErrorBuffer;
 };
 
 
-#endif //TPE_ERRORHANDLER_H
+#endif //GC_ERRORHANDLER_H

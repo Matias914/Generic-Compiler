@@ -3,6 +3,7 @@
 #include "utils/resources/dispatcher.h"
 
 #include <iostream>
+#include <algorithm>
 
 ErrorHandler::ErrorHandler()
 {
@@ -49,4 +50,16 @@ std::string ErrorHandler::getLogs() const
         mssg.append(builder(content));
     }
     return mssg;
+}
+
+void ErrorHandler::clear()
+{
+    this->logs.clear();
+    this->error_count = 0;
+}
+
+bool ErrorHandler::contains(const Log& log)
+{
+    const auto it = std::find(this->logs.begin(), this->logs.end(), log);
+    return (it != this->logs.end());
 }

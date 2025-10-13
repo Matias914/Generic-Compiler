@@ -1,5 +1,5 @@
-#ifndef TPE_REPORTHANDLER_H
-#define TPE_REPORTHANDLER_H
+#ifndef GC_REPORTHANDLER_H
+#define GC_REPORTHANDLER_H
 
 #include "utils/Log.h"
 
@@ -24,7 +24,9 @@ public:
 
     bool validOutput() const;
 
+    // Útiles para Testing
     void clear();
+    bool contains(const Log& log);
     
 private:
     std::string output;
@@ -34,4 +36,4 @@ private:
     std::list<Log>::iterator last_token;
 };
 
-#endif //TPE_REPORTHANDLER_H
+#endif //GC_REPORTHANDLER_H
