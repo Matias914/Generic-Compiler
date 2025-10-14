@@ -26,7 +26,7 @@ int main(const int argc, char* argv[])
 
         // Parsing Arguments
         auto target = "";
-        bool infile, outfile = false;
+        bool infile = false, outfile = false;
         for (int i = 1; i < argc; ++i)
             if (!std::strcmp(argv[i], "-v"))
                 VERBOSE_OPTION = true;
