@@ -67,10 +67,11 @@ Para compilar un archivo de código fuente, utiliza el ejecutable `gc`.
 
 ```bash
 # Compilar un archivo
-./bin/gc examples/programa001.txt
+./bin/gc examples/program001.txt
 
 # Compilar un archivo y generar un log
-./bin/gc examples/programa001.txt -v outputs/compilation.log
+mkdir outputs
+./bin/gc examples/program001.txt -v outputs/compilation.log
 ```
 
 ### Ejecutar los Tests

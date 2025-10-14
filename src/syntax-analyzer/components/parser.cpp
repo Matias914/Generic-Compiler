@@ -594,28 +594,28 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,    61,    61,    62,    63,    67,    71,    75,    79,    80,
-      84,    89,    93,   101,   105,   112,   113,   117,   118,   119,
-     120,   124,   128,   133,   142,   146,   151,   156,   160,   164,
-     169,   179,   180,   182,   181,   185,   193,   194,   203,   204,
-     206,   205,   212,   213,   218,   222,   223,   228,   234,   241,
-     245,   246,   254,   255,   259,   260,   264,   265,   270,   276,
-     281,   287,   291,   295,   304,   305,   306,   307,   308,   309,
-     313,   317,   325,   329,   334,   338,   344,   343,   352,   354,
-     363,   367,   372,   376,   382,   390,   391,   392,   397,   396,
-     400,   404,   411,   412,   419,   421,   423,   422,   431,   432,
-     437,   438,   446,   450,   458,   459,   461,   460,   467,   468,
-     478,   482,   486,   490,   497,   498,   504,   508,   513,   517,
-     522,   527,   532,   537,   543,   548,   554,   559,   565,   573,
-     574,   579,   583,   584,   590,   594,   600,   599,   605,   604,
-     612,   613,   623,   624,   625,   630,   634,   642,   643,   644,
-     649,   653,   661,   662,   663,   668,   672,   682,   683,   688,
-     692,   700,   701,   709,   710,   711,   712,   713,   714,   718,
-     719,   720,   722,   721,   725,   730,   735,   739,   747,   748,
-     752,   753,   754,   755,   760,   768,   769,   770,   771,   776,
-     781,   785,   789,   794,   802,   803,   807,   808,   809,   813,
-     814,   815,   819,   823,   827,   831,   839,   840,   844,   845,
-     849,   856,   857
+       0,    59,    59,    60,    61,    65,    69,    73,    77,    78,
+      82,    87,    91,    99,   103,   110,   111,   115,   116,   117,
+     118,   122,   126,   131,   140,   144,   149,   154,   158,   162,
+     167,   177,   178,   180,   179,   183,   191,   192,   201,   202,
+     204,   203,   210,   211,   216,   220,   221,   226,   232,   239,
+     243,   244,   252,   253,   257,   258,   262,   263,   268,   274,
+     279,   285,   289,   293,   302,   303,   304,   305,   306,   307,
+     311,   315,   323,   327,   332,   336,   342,   341,   350,   352,
+     361,   365,   370,   374,   380,   388,   389,   390,   395,   394,
+     399,   403,   410,   411,   418,   420,   422,   421,   430,   431,
+     436,   437,   445,   449,   457,   458,   460,   459,   466,   467,
+     477,   481,   485,   489,   496,   497,   503,   507,   512,   516,
+     521,   526,   531,   536,   542,   547,   553,   558,   564,   572,
+     573,   578,   582,   583,   589,   593,   599,   598,   604,   603,
+     611,   612,   622,   623,   624,   629,   633,   641,   642,   643,
+     648,   652,   660,   661,   662,   667,   671,   681,   682,   687,
+     691,   699,   700,   708,   709,   710,   711,   712,   713,   717,
+     718,   719,   721,   720,   724,   729,   734,   738,   746,   747,
+     751,   752,   753,   754,   759,   767,   768,   769,   770,   775,
+     780,   784,   788,   793,   801,   802,   806,   807,   808,   812,
+     813,   814,   818,   822,   826,   830,   838,   839,   843,   844,
+     848,   855,   856
 };
 #endif
 
@@ -1511,7 +1511,7 @@ yyreduce:
   switch (yyn)
     {
   case 5: /* global_statement: declarative_stmt  */
-#line 68 "include/syntax-analyzer/components/yacc.y"
+#line 66 "include/syntax-analyzer/components/yacc.y"
     {
         announceSpecificError(GLOBAL_SCOPE_STATEMENT);
     }
@@ -1519,7 +1519,7 @@ yyreduce:
     break;
 
   case 6: /* global_statement: executable_stmt  */
-#line 72 "include/syntax-analyzer/components/yacc.y"
+#line 70 "include/syntax-analyzer/components/yacc.y"
     {
         announceSpecificError(GLOBAL_SCOPE_STATEMENT);
     }
@@ -1527,7 +1527,7 @@ yyreduce:
     break;
 
   case 7: /* global_statement: control_stmt  */
-#line 76 "include/syntax-analyzer/components/yacc.y"
+#line 74 "include/syntax-analyzer/components/yacc.y"
     {
         announceSpecificError(GLOBAL_SCOPE_STATEMENT);
     }
@@ -1535,7 +1535,7 @@ yyreduce:
     break;
 
   case 9: /* global_statement: '{' program_statements '}'  */
-#line 81 "include/syntax-analyzer/components/yacc.y"
+#line 79 "include/syntax-analyzer/components/yacc.y"
     {
         announceSpecificError(MISSING_PROGRAM_NAME);
     }
@@ -1543,7 +1543,7 @@ yyreduce:
     break;
 
   case 10: /* global_statement: '{' program_statements $end  */
-#line 85 "include/syntax-analyzer/components/yacc.y"
+#line 83 "include/syntax-analyzer/components/yacc.y"
     {
         announceSpecificError(MISSING_PROGRAM_NAME);
         announceSpecificError(MISSING_CLOSING_BRACKET);
@@ -1552,7 +1552,7 @@ yyreduce:
     break;
 
   case 11: /* global_statement: '}'  */
-#line 90 "include/syntax-analyzer/components/yacc.y"
+#line 88 "include/syntax-analyzer/components/yacc.y"
     {
         announceSpecificError(MISSING_OPENING_BRACKET);
     }
@@ -1560,7 +1560,7 @@ yyreduce:
     break;
 
   case 12: /* global_statement: error ';'  */
-#line 94 "include/syntax-analyzer/components/yacc.y"
+#line 92 "include/syntax-analyzer/components/yacc.y"
     {
         announceSpecificError(GLOBAL_SCOPE_STATEMENT);
         yyerrok;
@@ -1569,7 +1569,7 @@ yyreduce:
     break;
 
   case 13: /* program: IDENTIFIER '{' program_statements '}'  */
-#line 102 "include/syntax-analyzer/components/yacc.y"
+#line 100 "include/syntax-analyzer/components/yacc.y"
     {
         logStructure("PROGRAM");
     }
@@ -1577,7 +1577,7 @@ yyreduce:
     break;
 
   case 14: /* program: IDENTIFIER '{' program_statements $end  */
-#line 106 "include/syntax-analyzer/components/yacc.y"
+#line 104 "include/syntax-analyzer/components/yacc.y"
     {
         announceSpecificError(MISSING_CLOSING_BRACKET);
     }
@@ -1585,7 +1585,7 @@ yyreduce:
     break;
 
   case 20: /* program_statement: program  */
-#line 121 "include/syntax-analyzer/components/yacc.y"
+#line 119 "include/syntax-analyzer/components/yacc.y"
     {
        announceSpecificError(INVALID_PROGRAM_NESTING);
     }
@@ -1593,7 +1593,7 @@ yyreduce:
     break;
 
   case 21: /* program_statement: '{' program_statements '}'  */
-#line 125 "include/syntax-analyzer/components/yacc.y"
+#line 123 "include/syntax-analyzer/components/yacc.y"
     {
         announceSpecificError(INVALID_COMPOUND_NESTING);
     }
@@ -1601,7 +1601,7 @@ yyreduce:
     break;
 
   case 22: /* program_statement: '{' program_statements $end  */
-#line 129 "include/syntax-analyzer/components/yacc.y"
+#line 127 "include/syntax-analyzer/components/yacc.y"
     {
         announceSpecificError(MISSING_CLOSING_BRACKET);
         announceSpecificError(INVALID_COMPOUND_NESTING);
@@ -1610,7 +1610,7 @@ yyreduce:
     break;
 
   case 23: /* program_statement: error ';'  */
-#line 134 "include/syntax-analyzer/components/yacc.y"
+#line 132 "include/syntax-analyzer/components/yacc.y"
     {
         yyerrok;
     }
@@ -1618,7 +1618,7 @@ yyreduce:
     break;
 
   case 24: /* declarative_stmt: type variable_list ';'  */
-#line 143 "include/syntax-analyzer/components/yacc.y"
+#line 141 "include/syntax-analyzer/components/yacc.y"
     {
         logStructure("VARIABLE DECLARATION");
     }
@@ -1626,7 +1626,7 @@ yyreduce:
     break;
 
   case 25: /* declarative_stmt: type error ';'  */
-#line 147 "include/syntax-analyzer/components/yacc.y"
+#line 145 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_VARIABLE);
         yyerrok;
@@ -1635,7 +1635,7 @@ yyreduce:
     break;
 
   case 26: /* declarative_stmt: type variable_list error  */
-#line 152 "include/syntax-analyzer/components/yacc.y"
+#line 150 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_SEMICOLON);
         yyerrok;
@@ -1644,7 +1644,7 @@ yyreduce:
     break;
 
   case 27: /* declarative_stmt: type IDENTIFIER '(' formal_parameter_list ')' function_body ';'  */
-#line 157 "include/syntax-analyzer/components/yacc.y"
+#line 155 "include/syntax-analyzer/components/yacc.y"
     {
         logStructure("FUNCTION DECLARATION");
     }
@@ -1652,7 +1652,7 @@ yyreduce:
     break;
 
   case 28: /* declarative_stmt: type '(' formal_parameter_list ')' function_body ';'  */
-#line 161 "include/syntax-analyzer/components/yacc.y"
+#line 159 "include/syntax-analyzer/components/yacc.y"
     {
         announceSpecificError(MISSING_FUNCTION_NAME);
     }
@@ -1660,7 +1660,7 @@ yyreduce:
     break;
 
   case 29: /* declarative_stmt: type IDENTIFIER '(' formal_parameter_list ')' function_body error  */
-#line 165 "include/syntax-analyzer/components/yacc.y"
+#line 163 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_SEMICOLON);
         yyerrok;
@@ -1669,7 +1669,7 @@ yyreduce:
     break;
 
   case 30: /* declarative_stmt: type '(' formal_parameter_list ')' function_body error  */
-#line 170 "include/syntax-analyzer/components/yacc.y"
+#line 168 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_SEMICOLON);
         yyerrok;
@@ -1678,7 +1678,7 @@ yyreduce:
     break;
 
   case 33: /* $@1: %empty  */
-#line 182 "include/syntax-analyzer/components/yacc.y"
+#line 180 "include/syntax-analyzer/components/yacc.y"
     {
         announceSpecificError(MISSING_COMMA);
     }
@@ -1686,7 +1686,7 @@ yyreduce:
     break;
 
   case 35: /* variable_list: variable_list ',' error  */
-#line 186 "include/syntax-analyzer/components/yacc.y"
+#line 184 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_VARIABLE);
         yyerrok;
@@ -1695,7 +1695,7 @@ yyreduce:
     break;
 
   case 37: /* type: FLOAT  */
-#line 195 "include/syntax-analyzer/components/yacc.y"
+#line 193 "include/syntax-analyzer/components/yacc.y"
     {
         announceSpecificError(NOT_YET_IMPLEMENTED);
     }
@@ -1703,7 +1703,7 @@ yyreduce:
     break;
 
   case 40: /* $@2: %empty  */
-#line 206 "include/syntax-analyzer/components/yacc.y"
+#line 204 "include/syntax-analyzer/components/yacc.y"
     {
         announceSpecificError(MISSING_COMMA);
     }
@@ -1711,7 +1711,7 @@ yyreduce:
     break;
 
   case 43: /* formal_parameter: type error  */
-#line 214 "include/syntax-analyzer/components/yacc.y"
+#line 212 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_PARAMETER_NAME);
         yyerrok;
@@ -1720,7 +1720,7 @@ yyreduce:
     break;
 
   case 44: /* formal_parameter: IDENTIFIER  */
-#line 219 "include/syntax-analyzer/components/yacc.y"
+#line 217 "include/syntax-analyzer/components/yacc.y"
     {
         announceSpecificErrorWithSymbol(MISSING_PARAMETER_TYPE);
     }
@@ -1728,7 +1728,7 @@ yyreduce:
     break;
 
   case 46: /* formal_parameter: parameter_semantics type error  */
-#line 224 "include/syntax-analyzer/components/yacc.y"
+#line 222 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_PARAMETER_NAME);
         yyerrok;
@@ -1737,7 +1737,7 @@ yyreduce:
     break;
 
   case 47: /* formal_parameter: parameter_semantics error  */
-#line 229 "include/syntax-analyzer/components/yacc.y"
+#line 227 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_PARAMETER_NAME);
         announceSpecificError(MISSING_PARAMETER_TYPE);
@@ -1747,7 +1747,7 @@ yyreduce:
     break;
 
   case 48: /* formal_parameter: parameter_semantics IDENTIFIER  */
-#line 235 "include/syntax-analyzer/components/yacc.y"
+#line 233 "include/syntax-analyzer/components/yacc.y"
     {
         announceSpecificErrorWithSymbol(MISSING_PARAMETER_TYPE);
     }
@@ -1755,7 +1755,7 @@ yyreduce:
     break;
 
   case 51: /* function_body: '{' function_statements error  */
-#line 247 "include/syntax-analyzer/components/yacc.y"
+#line 245 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_CLOSING_BRACKET);
         yyerrok;
@@ -1764,7 +1764,7 @@ yyreduce:
     break;
 
   case 57: /* return: RETURN '(' opt_trunc_expression ')' error  */
-#line 266 "include/syntax-analyzer/components/yacc.y"
+#line 264 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_SEMICOLON);
         yyerrok;
@@ -1773,7 +1773,7 @@ yyreduce:
     break;
 
   case 58: /* return: RETURN '(' opt_trunc_expression error  */
-#line 271 "include/syntax-analyzer/components/yacc.y"
+#line 269 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_CLOSING_PARENTHESIS);
         announceSpecificError(MISSING_SEMICOLON);
@@ -1783,7 +1783,7 @@ yyreduce:
     break;
 
   case 59: /* return: RETURN opt_trunc_expression ')'  */
-#line 277 "include/syntax-analyzer/components/yacc.y"
+#line 275 "include/syntax-analyzer/components/yacc.y"
     {
         announceSpecificError(MISSING_OPENING_PARENTHESIS);
         announceSpecificError(MISSING_SEMICOLON);
@@ -1792,7 +1792,7 @@ yyreduce:
     break;
 
   case 60: /* return: RETURN opt_trunc_expression error  */
-#line 282 "include/syntax-analyzer/components/yacc.y"
+#line 280 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_BOTH_PARENTHESIS_RETURN);
         announceSpecificError(MISSING_SEMICOLON);
@@ -1802,7 +1802,7 @@ yyreduce:
     break;
 
   case 61: /* return: RETURN '(' opt_trunc_expression ';'  */
-#line 288 "include/syntax-analyzer/components/yacc.y"
+#line 286 "include/syntax-analyzer/components/yacc.y"
     {
         announceSpecificError(MISSING_CLOSING_PARENTHESIS);
     }
@@ -1810,7 +1810,7 @@ yyreduce:
     break;
 
   case 62: /* return: RETURN opt_trunc_expression ')' ';'  */
-#line 292 "include/syntax-analyzer/components/yacc.y"
+#line 290 "include/syntax-analyzer/components/yacc.y"
     {
         announceSpecificError(MISSING_OPENING_PARENTHESIS);
     }
@@ -1818,7 +1818,7 @@ yyreduce:
     break;
 
   case 63: /* return: RETURN opt_trunc_expression ';'  */
-#line 296 "include/syntax-analyzer/components/yacc.y"
+#line 294 "include/syntax-analyzer/components/yacc.y"
     {
         announceSpecificError(MISSING_BOTH_PARENTHESIS_RETURN);
     }
@@ -1826,7 +1826,7 @@ yyreduce:
     break;
 
   case 70: /* assignment: variable ASSIGN_OP opt_trunc_expression ';'  */
-#line 314 "include/syntax-analyzer/components/yacc.y"
+#line 312 "include/syntax-analyzer/components/yacc.y"
     {
         logStructure("ASSIGNMENT");
     }
@@ -1834,7 +1834,7 @@ yyreduce:
     break;
 
   case 71: /* assignment: variable ASSIGN_OP opt_trunc_expression error  */
-#line 318 "include/syntax-analyzer/components/yacc.y"
+#line 316 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_SEMICOLON);
         yyerrok;
@@ -1843,7 +1843,7 @@ yyreduce:
     break;
 
   case 72: /* print: PRINT '(' STRING_LITERAL ')' ';'  */
-#line 326 "include/syntax-analyzer/components/yacc.y"
+#line 324 "include/syntax-analyzer/components/yacc.y"
     {
         logStructure("PRINT");
     }
@@ -1851,7 +1851,7 @@ yyreduce:
     break;
 
   case 73: /* print: PRINT '(' STRING_LITERAL ')' error  */
-#line 330 "include/syntax-analyzer/components/yacc.y"
+#line 328 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_SEMICOLON);
         yyerrok;
@@ -1860,7 +1860,7 @@ yyreduce:
     break;
 
   case 74: /* print: PRINT '(' opt_trunc_expression ')' ';'  */
-#line 335 "include/syntax-analyzer/components/yacc.y"
+#line 333 "include/syntax-analyzer/components/yacc.y"
     {
         logStructure("PRINT");
     }
@@ -1868,7 +1868,7 @@ yyreduce:
     break;
 
   case 75: /* print: PRINT '(' opt_trunc_expression ')' error  */
-#line 339 "include/syntax-analyzer/components/yacc.y"
+#line 337 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_SEMICOLON);
         yyerrok;
@@ -1877,7 +1877,7 @@ yyreduce:
     break;
 
   case 76: /* $@3: %empty  */
-#line 344 "include/syntax-analyzer/components/yacc.y"
+#line 342 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_ARGUMENT);
         yyerrok;
@@ -1886,7 +1886,7 @@ yyreduce:
     break;
 
   case 79: /* print_end: %empty  */
-#line 354 "include/syntax-analyzer/components/yacc.y"
+#line 352 "include/syntax-analyzer/components/yacc.y"
     {
         announceSpecificError(MISSING_SEMICOLON);
     }
@@ -1894,7 +1894,7 @@ yyreduce:
     break;
 
   case 80: /* multiple_assignments: variable assignment_list opt_trunc_constant extra_numeric_constants ';'  */
-#line 364 "include/syntax-analyzer/components/yacc.y"
+#line 362 "include/syntax-analyzer/components/yacc.y"
     {
         logStructure("MULTIPLE ASSIGNMENT");
     }
@@ -1902,7 +1902,7 @@ yyreduce:
     break;
 
   case 81: /* multiple_assignments: variable assignment_list opt_trunc_constant extra_numeric_constants error  */
-#line 368 "include/syntax-analyzer/components/yacc.y"
+#line 366 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_SEMICOLON);
         yyerrok;
@@ -1911,7 +1911,7 @@ yyreduce:
     break;
 
   case 82: /* multiple_assignments: variable assignment_list ';'  */
-#line 373 "include/syntax-analyzer/components/yacc.y"
+#line 371 "include/syntax-analyzer/components/yacc.y"
     {
         announceSpecificError(MISSING_RIGHT_SIDE_VALUES);
     }
@@ -1919,7 +1919,7 @@ yyreduce:
     break;
 
   case 83: /* multiple_assignments: variable assignment_list error  */
-#line 377 "include/syntax-analyzer/components/yacc.y"
+#line 375 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_RIGHT_SIDE_VALUES);
         announceSpecificError(MISSING_SEMICOLON);
@@ -1929,7 +1929,7 @@ yyreduce:
     break;
 
   case 84: /* multiple_assignments: variable error ';'  */
-#line 383 "include/syntax-analyzer/components/yacc.y"
+#line 381 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxWarning(STATEMENT_INTERPRETED);
         yyerrok;
@@ -1938,7 +1938,7 @@ yyreduce:
     break;
 
   case 87: /* assignment_list: ',' variable error opt_trunc_constant ','  */
-#line 393 "include/syntax-analyzer/components/yacc.y"
+#line 391 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_EQUALS);
     }
@@ -1946,7 +1946,7 @@ yyreduce:
     break;
 
   case 88: /* $@4: %empty  */
-#line 397 "include/syntax-analyzer/components/yacc.y"
+#line 395 "include/syntax-analyzer/components/yacc.y"
     {
         announceSpecificErrorWithSymbol(MISSING_COMMA);
     }
@@ -1954,7 +1954,7 @@ yyreduce:
     break;
 
   case 90: /* assignment_list: ',' variable assignment_list opt_trunc_constant  */
-#line 401 "include/syntax-analyzer/components/yacc.y"
+#line 400 "include/syntax-analyzer/components/yacc.y"
     {
         announceSpecificError(MISSING_COMMA);
     }
@@ -1962,7 +1962,7 @@ yyreduce:
     break;
 
   case 91: /* assignment_list: ',' variable assignment_list error  */
-#line 405 "include/syntax-analyzer/components/yacc.y"
+#line 404 "include/syntax-analyzer/components/yacc.y"
     {
         yyerrok;
     }
@@ -1970,7 +1970,7 @@ yyreduce:
     break;
 
   case 93: /* assignment_end: opt_trunc_constant error  */
-#line 413 "include/syntax-analyzer/components/yacc.y"
+#line 412 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_COMMA);
         yyerrok;
@@ -1979,7 +1979,7 @@ yyreduce:
     break;
 
   case 96: /* $@5: %empty  */
-#line 423 "include/syntax-analyzer/components/yacc.y"
+#line 422 "include/syntax-analyzer/components/yacc.y"
     {
         announceSpecificError(MISSING_COMMA);
     }
@@ -1987,7 +1987,7 @@ yyreduce:
     break;
 
   case 99: /* invocation: function_invocation error  */
-#line 433 "include/syntax-analyzer/components/yacc.y"
+#line 432 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_SEMICOLON);
         yyerrok;
@@ -1996,7 +1996,7 @@ yyreduce:
     break;
 
   case 101: /* invocation: lambda_invocation error  */
-#line 439 "include/syntax-analyzer/components/yacc.y"
+#line 438 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_SEMICOLON);
         yyerrok;
@@ -2005,7 +2005,7 @@ yyreduce:
     break;
 
   case 102: /* function_invocation: IDENTIFIER '(' real_parameter_list ')'  */
-#line 447 "include/syntax-analyzer/components/yacc.y"
+#line 446 "include/syntax-analyzer/components/yacc.y"
     {
         logStructure("FUNCTION INVOCATION");
     }
@@ -2013,7 +2013,7 @@ yyreduce:
     break;
 
   case 103: /* function_invocation: IDENTIFIER '(' error ')'  */
-#line 451 "include/syntax-analyzer/components/yacc.y"
+#line 450 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_ARGUMENT);
         yyerrok;
@@ -2022,7 +2022,7 @@ yyreduce:
     break;
 
   case 106: /* $@6: %empty  */
-#line 461 "include/syntax-analyzer/components/yacc.y"
+#line 460 "include/syntax-analyzer/components/yacc.y"
     {
         announceSpecificError(MISSING_COMMA);
     }
@@ -2030,7 +2030,7 @@ yyreduce:
     break;
 
   case 109: /* real_parameter: opt_trunc_expression error  */
-#line 469 "include/syntax-analyzer/components/yacc.y"
+#line 468 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_POINTED_PARAMETER);
         yyerrok;
@@ -2039,7 +2039,7 @@ yyreduce:
     break;
 
   case 110: /* lambda_invocation: '(' type IDENTIFIER ')' '{' executable_statements '}' '(' lambda_real_parameter ')'  */
-#line 479 "include/syntax-analyzer/components/yacc.y"
+#line 478 "include/syntax-analyzer/components/yacc.y"
     {
         logStructure("LAMBDA");
     }
@@ -2047,7 +2047,7 @@ yyreduce:
     break;
 
   case 111: /* lambda_invocation: '(' type IDENTIFIER ')' executable_statements '}' '(' lambda_real_parameter ')'  */
-#line 483 "include/syntax-analyzer/components/yacc.y"
+#line 482 "include/syntax-analyzer/components/yacc.y"
     {
         announceSpecificError(MISSING_OPENING_BRACKET);
     }
@@ -2055,7 +2055,7 @@ yyreduce:
     break;
 
   case 112: /* lambda_invocation: '(' type IDENTIFIER ')' '{' executable_statements '(' lambda_real_parameter ')'  */
-#line 487 "include/syntax-analyzer/components/yacc.y"
+#line 486 "include/syntax-analyzer/components/yacc.y"
     {
         announceSpecificError(MISSING_CLOSING_BRACKET);
     }
@@ -2063,7 +2063,7 @@ yyreduce:
     break;
 
   case 113: /* lambda_invocation: '(' type IDENTIFIER ')' executable_statements '(' lambda_real_parameter ')'  */
-#line 491 "include/syntax-analyzer/components/yacc.y"
+#line 490 "include/syntax-analyzer/components/yacc.y"
     {
         announceSpecificError(MISSING_BOTH_BRACKETS);
     }
@@ -2071,7 +2071,7 @@ yyreduce:
     break;
 
   case 116: /* if: IF condition executable_body ENDIF ';'  */
-#line 505 "include/syntax-analyzer/components/yacc.y"
+#line 504 "include/syntax-analyzer/components/yacc.y"
     {
         logStructure("IF");
     }
@@ -2079,7 +2079,7 @@ yyreduce:
     break;
 
   case 117: /* if: IF condition executable_body ENDIF error  */
-#line 509 "include/syntax-analyzer/components/yacc.y"
+#line 508 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_SEMICOLON);
         yyerrok;
@@ -2088,7 +2088,7 @@ yyreduce:
     break;
 
   case 118: /* if: IF condition executable_body ELSE executable_body ENDIF ';'  */
-#line 514 "include/syntax-analyzer/components/yacc.y"
+#line 513 "include/syntax-analyzer/components/yacc.y"
     {
         logStructure("IF-ELSE");
     }
@@ -2096,7 +2096,7 @@ yyreduce:
     break;
 
   case 119: /* if: IF condition executable_body ELSE executable_body ENDIF error  */
-#line 518 "include/syntax-analyzer/components/yacc.y"
+#line 517 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_SEMICOLON);
         yyerrok;
@@ -2105,7 +2105,7 @@ yyreduce:
     break;
 
   case 120: /* if: IF condition executable_body error  */
-#line 523 "include/syntax-analyzer/components/yacc.y"
+#line 522 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_ENDIF);
         yyerrok;
@@ -2114,7 +2114,7 @@ yyreduce:
     break;
 
   case 121: /* if: IF condition executable_body ELSE executable_body error  */
-#line 528 "include/syntax-analyzer/components/yacc.y"
+#line 527 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_ENDIF);
         yyerrok;
@@ -2123,7 +2123,7 @@ yyreduce:
     break;
 
   case 122: /* if: IF condition error ENDIF ';'  */
-#line 533 "include/syntax-analyzer/components/yacc.y"
+#line 532 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_IF_EXECUTABLE_BODY);
         yyerrok;
@@ -2132,7 +2132,7 @@ yyreduce:
     break;
 
   case 123: /* if: IF condition error ';'  */
-#line 538 "include/syntax-analyzer/components/yacc.y"
+#line 537 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_IF_EXECUTABLE_BODY);
         announceSpecificError(MISSING_ENDIF);
@@ -2142,7 +2142,7 @@ yyreduce:
     break;
 
   case 124: /* if: IF condition error ELSE ENDIF ';'  */
-#line 544 "include/syntax-analyzer/components/yacc.y"
+#line 543 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_BOTH_EXECUTABLE_BODY);
         yyerrok;
@@ -2151,7 +2151,7 @@ yyreduce:
     break;
 
   case 125: /* if: IF condition error ELSE ';'  */
-#line 549 "include/syntax-analyzer/components/yacc.y"
+#line 548 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_BOTH_EXECUTABLE_BODY);
         announceSpecificError(MISSING_ENDIF);
@@ -2161,7 +2161,7 @@ yyreduce:
     break;
 
   case 126: /* if: IF condition executable_body ELSE error ENDIF ';'  */
-#line 555 "include/syntax-analyzer/components/yacc.y"
+#line 554 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_ELSE_EXECUTABLE_BODY);
         yyerrok;
@@ -2170,7 +2170,7 @@ yyreduce:
     break;
 
   case 127: /* if: IF condition executable_body ELSE error ';'  */
-#line 560 "include/syntax-analyzer/components/yacc.y"
+#line 559 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_ELSE_EXECUTABLE_BODY);
         announceSpecificError(MISSING_ENDIF);
@@ -2180,7 +2180,7 @@ yyreduce:
     break;
 
   case 128: /* if: ELSE executable_body ENDIF ';'  */
-#line 566 "include/syntax-analyzer/components/yacc.y"
+#line 565 "include/syntax-analyzer/components/yacc.y"
     {
         announceSpecificError(MISSING_IF_STATEMENT);
         yyerrok;
@@ -2189,7 +2189,7 @@ yyreduce:
     break;
 
   case 130: /* executable_body: '{' executable_statements error ';'  */
-#line 575 "include/syntax-analyzer/components/yacc.y"
+#line 574 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_CLOSING_BRACKET);
         yyerrok;
@@ -2198,7 +2198,7 @@ yyreduce:
     break;
 
   case 134: /* control_stmt: DO executable_body WHILE condition ';'  */
-#line 591 "include/syntax-analyzer/components/yacc.y"
+#line 590 "include/syntax-analyzer/components/yacc.y"
     {
         logStructure("DO-WHILE");
     }
@@ -2206,7 +2206,7 @@ yyreduce:
     break;
 
   case 135: /* control_stmt: DO executable_body WHILE condition error  */
-#line 595 "include/syntax-analyzer/components/yacc.y"
+#line 594 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_SEMICOLON);
         yyerrok;
@@ -2215,7 +2215,7 @@ yyreduce:
     break;
 
   case 136: /* $@7: %empty  */
-#line 600 "include/syntax-analyzer/components/yacc.y"
+#line 599 "include/syntax-analyzer/components/yacc.y"
     {
         announceSpecificError(MISSING_WHILE);
     }
@@ -2223,7 +2223,7 @@ yyreduce:
     break;
 
   case 138: /* $@8: %empty  */
-#line 605 "include/syntax-analyzer/components/yacc.y"
+#line 604 "include/syntax-analyzer/components/yacc.y"
     {
         announceSpecificError(MISSING_WHILE_EXECUTABLE_BODY);
     }
@@ -2231,7 +2231,7 @@ yyreduce:
     break;
 
   case 141: /* end_while_statement: condition error  */
-#line 614 "include/syntax-analyzer/components/yacc.y"
+#line 613 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_SEMICOLON);
         yyerrok;
@@ -2240,7 +2240,7 @@ yyreduce:
     break;
 
   case 144: /* opt_trunc_constant: TRUNC '(' numeric_constant error  */
-#line 626 "include/syntax-analyzer/components/yacc.y"
+#line 625 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_CLOSING_PARENTHESIS);
         yyerrok;
@@ -2249,7 +2249,7 @@ yyreduce:
     break;
 
   case 145: /* opt_trunc_constant: TRUNC numeric_constant ')'  */
-#line 631 "include/syntax-analyzer/components/yacc.y"
+#line 630 "include/syntax-analyzer/components/yacc.y"
     {
         announceSpecificError(MISSING_OPENING_PARENTHESIS);
     }
@@ -2257,7 +2257,7 @@ yyreduce:
     break;
 
   case 146: /* opt_trunc_constant: TRUNC numeric_constant error  */
-#line 635 "include/syntax-analyzer/components/yacc.y"
+#line 634 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_BOTH_PARENTHESIS_TRUNC);
         yyerrok;
@@ -2266,7 +2266,7 @@ yyreduce:
     break;
 
   case 149: /* opt_trunc_variable: TRUNC '(' variable error  */
-#line 645 "include/syntax-analyzer/components/yacc.y"
+#line 644 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_CLOSING_PARENTHESIS);
         yyerrok;
@@ -2275,7 +2275,7 @@ yyreduce:
     break;
 
   case 150: /* opt_trunc_variable: TRUNC variable ')'  */
-#line 650 "include/syntax-analyzer/components/yacc.y"
+#line 649 "include/syntax-analyzer/components/yacc.y"
     {
         announceSpecificError(MISSING_OPENING_PARENTHESIS);
     }
@@ -2283,7 +2283,7 @@ yyreduce:
     break;
 
   case 151: /* opt_trunc_variable: TRUNC variable error  */
-#line 654 "include/syntax-analyzer/components/yacc.y"
+#line 653 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_BOTH_PARENTHESIS_TRUNC);
         yyerrok;
@@ -2292,7 +2292,7 @@ yyreduce:
     break;
 
   case 154: /* opt_trunc_expression: TRUNC '(' expression error  */
-#line 664 "include/syntax-analyzer/components/yacc.y"
+#line 663 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_CLOSING_PARENTHESIS);
         yyerrok;
@@ -2301,7 +2301,7 @@ yyreduce:
     break;
 
   case 155: /* opt_trunc_expression: TRUNC expression ')'  */
-#line 669 "include/syntax-analyzer/components/yacc.y"
+#line 668 "include/syntax-analyzer/components/yacc.y"
     {
         announceSpecificError(MISSING_OPENING_PARENTHESIS);
     }
@@ -2309,7 +2309,7 @@ yyreduce:
     break;
 
   case 156: /* opt_trunc_expression: TRUNC expression error  */
-#line 673 "include/syntax-analyzer/components/yacc.y"
+#line 672 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_BOTH_PARENTHESIS_TRUNC);
         yyerrok;
@@ -2318,7 +2318,7 @@ yyreduce:
     break;
 
   case 158: /* condition: '(' comparison error  */
-#line 684 "include/syntax-analyzer/components/yacc.y"
+#line 683 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_CLOSING_PARENTHESIS);
         yyerrok;
@@ -2327,7 +2327,7 @@ yyreduce:
     break;
 
   case 159: /* condition: comparison ')'  */
-#line 689 "include/syntax-analyzer/components/yacc.y"
+#line 688 "include/syntax-analyzer/components/yacc.y"
     {
         announceSpecificError(MISSING_OPENING_PARENTHESIS);
     }
@@ -2335,7 +2335,7 @@ yyreduce:
     break;
 
   case 160: /* condition: comparison error  */
-#line 693 "include/syntax-analyzer/components/yacc.y"
+#line 692 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_BOTH_PARENTHESIS);
         yyerrok;
@@ -2344,7 +2344,7 @@ yyreduce:
     break;
 
   case 162: /* comparison: opt_trunc_expression error  */
-#line 702 "include/syntax-analyzer/components/yacc.y"
+#line 701 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_COMPARISON_OPERATOR);
         yyerrok;
@@ -2353,7 +2353,7 @@ yyreduce:
     break;
 
   case 172: /* $@9: %empty  */
-#line 722 "include/syntax-analyzer/components/yacc.y"
+#line 721 "include/syntax-analyzer/components/yacc.y"
     {
         announceSpecificError(MISSING_EXPRESSION_OPERATOR);
     }
@@ -2361,7 +2361,7 @@ yyreduce:
     break;
 
   case 174: /* expression: expression '+' error  */
-#line 726 "include/syntax-analyzer/components/yacc.y"
+#line 725 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_RIGHT_OPERAND);
         yyerrok;
@@ -2370,7 +2370,7 @@ yyreduce:
     break;
 
   case 175: /* expression: expression '-' error  */
-#line 731 "include/syntax-analyzer/components/yacc.y"
+#line 730 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_RIGHT_OPERAND);
         yyerrok;
@@ -2379,7 +2379,7 @@ yyreduce:
     break;
 
   case 176: /* expression: '+' term  */
-#line 736 "include/syntax-analyzer/components/yacc.y"
+#line 735 "include/syntax-analyzer/components/yacc.y"
     {
         announceSpecificError(MISSING_LEFT_SUM_OPERAND);
     }
@@ -2387,7 +2387,7 @@ yyreduce:
     break;
 
   case 177: /* expression: '+' error  */
-#line 740 "include/syntax-analyzer/components/yacc.y"
+#line 739 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_BOTH_SUM_OPERANDS);
         yyerrok;
@@ -2396,7 +2396,7 @@ yyreduce:
     break;
 
   case 183: /* positive_term: positive_term '*' error  */
-#line 756 "include/syntax-analyzer/components/yacc.y"
+#line 755 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_RIGHT_FACTOR);
         yyerrok;
@@ -2405,7 +2405,7 @@ yyreduce:
     break;
 
   case 184: /* positive_term: positive_term '/' error  */
-#line 761 "include/syntax-analyzer/components/yacc.y"
+#line 760 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_RIGHT_FACTOR);
         yyerrok;
@@ -2414,7 +2414,7 @@ yyreduce:
     break;
 
   case 188: /* negative_term: negative_term '*' error  */
-#line 772 "include/syntax-analyzer/components/yacc.y"
+#line 771 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_RIGHT_FACTOR);
         yyerrok;
@@ -2423,7 +2423,7 @@ yyreduce:
     break;
 
   case 189: /* negative_term: negative_term '/' error  */
-#line 777 "include/syntax-analyzer/components/yacc.y"
+#line 776 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_RIGHT_FACTOR);
         yyerrok;
@@ -2432,7 +2432,7 @@ yyreduce:
     break;
 
   case 190: /* negative_term: '*' factor  */
-#line 782 "include/syntax-analyzer/components/yacc.y"
+#line 781 "include/syntax-analyzer/components/yacc.y"
     {
         announceSpecificError(MISSING_LEFT_MUL_FACTOR);
     }
@@ -2440,7 +2440,7 @@ yyreduce:
     break;
 
   case 191: /* negative_term: '/' factor  */
-#line 786 "include/syntax-analyzer/components/yacc.y"
+#line 785 "include/syntax-analyzer/components/yacc.y"
     {
         announceSpecificError(MISSING_LEFT_DIV_FACTOR);
     }
@@ -2448,7 +2448,7 @@ yyreduce:
     break;
 
   case 192: /* negative_term: '*' error  */
-#line 790 "include/syntax-analyzer/components/yacc.y"
+#line 789 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_BOTH_FACTORS);
         yyerrok;
@@ -2457,7 +2457,7 @@ yyreduce:
     break;
 
   case 193: /* negative_term: '/' error  */
-#line 795 "include/syntax-analyzer/components/yacc.y"
+#line 794 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_BOTH_FACTORS);
         yyerrok;
@@ -2466,7 +2466,7 @@ yyreduce:
     break;
 
   case 201: /* negative_factor: '-' UINTEGER_LITERAL  */
-#line 816 "include/syntax-analyzer/components/yacc.y"
+#line 815 "include/syntax-analyzer/components/yacc.y"
     {
         announceSpecificError(MISSING_LEFT_SUB_OPERAND);
     }
@@ -2474,7 +2474,7 @@ yyreduce:
     break;
 
   case 202: /* negative_factor: '-' function_invocation  */
-#line 820 "include/syntax-analyzer/components/yacc.y"
+#line 819 "include/syntax-analyzer/components/yacc.y"
     {
         announceSpecificError(MISSING_LEFT_SUB_OPERAND);
     }
@@ -2482,7 +2482,7 @@ yyreduce:
     break;
 
   case 203: /* negative_factor: '-' variable  */
-#line 824 "include/syntax-analyzer/components/yacc.y"
+#line 823 "include/syntax-analyzer/components/yacc.y"
     {
         announceSpecificError(MISSING_LEFT_SUB_OPERAND);
     }
@@ -2490,7 +2490,7 @@ yyreduce:
     break;
 
   case 204: /* negative_factor: '-' lambda_invocation  */
-#line 828 "include/syntax-analyzer/components/yacc.y"
+#line 827 "include/syntax-analyzer/components/yacc.y"
     {
         announceSpecificError(MISSING_LEFT_SUB_OPERAND);
     }
@@ -2498,7 +2498,7 @@ yyreduce:
     break;
 
   case 205: /* negative_factor: '-' error  */
-#line 832 "include/syntax-analyzer/components/yacc.y"
+#line 831 "include/syntax-analyzer/components/yacc.y"
     {
         specifySyntaxError(MISSING_FLOAT_CONSTANT);
         yyerrok;
@@ -2507,7 +2507,7 @@ yyreduce:
     break;
 
   case 210: /* negative_constant: '-' FLOAT_LITERAL  */
-#line 850 "include/syntax-analyzer/components/yacc.y"
+#line 849 "include/syntax-analyzer/components/yacc.y"
     {
         addNegativeFloatToTable();
     }
@@ -2708,7 +2708,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 860 "include/syntax-analyzer/components/yacc.y"
+#line 859 "include/syntax-analyzer/components/yacc.y"
 
 
 void yyerror(const char* s)
