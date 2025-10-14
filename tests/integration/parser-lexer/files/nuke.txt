@@ -164,7 +164,7 @@ uint F(cr uint A, cr uint B) {
 };
 
 PROGRAMA2
-    uint X
+    uint X;
 }
 
 uint F(cr uint A, cr uint B) {

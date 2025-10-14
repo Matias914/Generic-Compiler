@@ -70,6 +70,7 @@ Para compilar un archivo de código fuente, utiliza el ejecutable `gc`.
 ./bin/gc examples/program001.txt
 
 # Compilar un archivo y generar un log
+mkdir outputs
 ./bin/gc examples/program001.txt -v outputs/compilation.log
 ```
 
