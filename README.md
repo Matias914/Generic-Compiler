@@ -49,8 +49,7 @@ sudo docker run --rm \
 
 ```bash
 sudo docker run --rm \                                                                                   
-  -v "$(pwd)":/generic_compiler \
-  clion-dev \
+  -v "$(pwd)":/generic_compiler <nombre-imagen> \
   bash -c "  
     set -e &&
     mkdir -p /tmp/build &&
