@@ -27,11 +27,14 @@ Todo el proceso de compilación se maneja a través de Docker para evitar proble
 
 Para compilar el proyecto, clona este repositorio, abre una terminal en el directorio raíz del proyecto y ejecuta el siguiente comando (usando el nombre de la imagen que corresponda):
 
+#### Para Linux:
+
 ```bash
 sudo docker run --rm \
   -v "$(pwd)":/generic_compiler \
   -w /generic_compiler <nombre-imagen> \
   bash -c "
+    set -e &&
     mkdir -p /tmp/build &&
     cd /tmp/build &&
     cmake /generic_compiler &&
@@ -42,7 +45,26 @@ sudo docker run --rm \
   "
 ```
 
-Este comando compilará el proyecto completo y dejará los ejecutables `gc` y `gc_tests` en una nueva carpeta llamada `bin/` en la raíz del proyecto.
+#### Para Windows:
+
+```bash
+sudo docker run --rm \                                                                                   
+  -v "$(pwd)":/generic_compiler \
+  clion-dev \
+  bash -c "  
+    set -e &&
+    mkdir -p /tmp/build &&
+    cd /tmp/build &&
+    cmake -DCMAKE_TOOLCHAIN_FILE=/generic_compiler/windows-toolchain.cmake /generic_compiler &&
+    make &&
+    mkdir -p /generic_compiler/bin &&
+    cp gc.exe /generic_compiler/bin/ &&
+    cp gc_tests.exe /generic_compiler/bin/
+  "
+
+```
+
+Este comando compilará el proyecto completo y dejará los ejecutables `gc` y `gc_tests` en una nueva carpeta llamada `bin/` en la raíz del proyecto. Si son generados para Windows, tendrán la extensión `.exe`.
 
 -----
 

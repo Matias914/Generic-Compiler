@@ -106,10 +106,14 @@ add_executable(gc_tests
 # Vincular las bibliotecas necesarias. GTest::gtest y GTest::gtest_main
 # son targets definidos automáticamente por el proceso de FetchContent.
 target_link_libraries(gc_tests
-        PRIVATE
-        GTest::gtest
-        pthread
+      PRIVATE
+      GTest::gtest
 )
+
+# Enlazar pthread solo en sistemas tipo UNIX (Linux, etc.)
+if(UNIX AND NOT APPLE)
+    target_link_libraries(gc_tests PRIVATE pthread)
+endif()
 
 target_compile_definitions(gc_tests PRIVATE "SOURCE_PATH=\"${CMAKE_SOURCE_DIR}\"")
 

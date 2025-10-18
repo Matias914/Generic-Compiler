@@ -33,7 +33,13 @@ RUN apt-get update && apt-get install -y \
     rsync \
     tar \
     zsh \
-    && rm -rf /var/lib/apt/lists/*
+    mingw-w64 \
+    && \
+    # Le dice al sistema que use la versión POSIX (con soporte para hilos)
+    # de los compiladores de MinGW como la opción por defecto.
+    update-alternatives --set x86_64-w64-mingw32-g++ /usr/bin/x86_64-w64-mingw32-g++-posix && \
+    update-alternatives --set x86_64-w64-mingw32-gcc /usr/bin/x86_64-w64-mingw32-gcc-posix && \
+    rm -rf /var/lib/apt/lists/*
 
 # Se define un nombre para el directorio
 WORKDIR /generic_compiler
