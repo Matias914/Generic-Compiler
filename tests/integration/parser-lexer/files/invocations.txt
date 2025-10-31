@@ -16,27 +16,27 @@ PROGRAM {
 
     X1 := F(X1->A, X1->B);
     (uint X) { print(X); } (X1);
-}
 
-## Errores Sintácticos:
-    Algunos de los errores sintácticos que consideramos
-    para las funciones son:
-    - Falta ";" después de la invocación
-    - Falta "," entre parámetros reales
-    - Falta referencia al parámetro formal
-    - Faltan argumentos en la invocación
-    Para las funciones anónimas son:
-    - Falta ";" después de la invocación
-    - Falta alguna llave del cuerpo
+    ## Errores Sintácticos:
+        Algunos de los errores sintácticos que consideramos
+        para las funciones son:
+        - Falta ";" después de la invocación
+        - Falta "," entre parámetros reales
+        - Falta referencia al parámetro formal
+        - Faltan argumentos en la invocación
+        Para las funciones anónimas son:
+        - Falta ";" después de la invocación
+        - Falta alguna llave del cuerpo
 
-    Se espera error en las líneas:
-##
+        Se espera error en las líneas:
+    ##
 
-PROGRAM {
-    uint X1;
-    uint F(cr uint A, uint B) {
+
+    uint X2;
+    uint F2(cr uint A, uint B) {
         return (0UI);
     };
+
 
     F(X1->A  X1->B)
     F(X1-> , X1->B)

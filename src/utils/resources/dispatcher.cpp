@@ -134,6 +134,16 @@ StringBuilder getBuilderForErrors(const int& code)
         return notYetImplemented;
     case SYNTAX_ERROR:
         return genericSyntaxError;
+    case FUNCTION_REDECLARATION:
+        return functionRedeclaration;
+    case VARIABLE_REDECLARATION:
+        return variableRedeclaration;
+    case VARIABLE_PREFIX_IN_DECLARATION:
+        return variablePrefixInDeclaration;
+    case UNDECLARED_VARIABLE:
+        return undeclaredVariable;
+    case MULTIPLE_PROGRAMS_DECLARED:
+        return multipleProgramsDeclared;
     default:
         return defaultError;
     }

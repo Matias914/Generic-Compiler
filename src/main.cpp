@@ -44,15 +44,13 @@ int main(const int argc, char* argv[])
             }
             else
                 throw std::runtime_error("\nMore than one file was given");
-
         if (!infile)
             throw std::runtime_error("\nNo file was given to compile");
-
         if (!LexicalAnalyzer::open(target))
             throw std::runtime_error("\nThe file could not be opened");
 
-        // Calls Parser
-        SyntaxAnalyzer::yyparsewrapper();
+        // Calls Syntax Analyzer
+        SyntaxAnalyzer::analyze();
         if (VERBOSE_OPTION)
             REPORT_HANDLER.generateReport();
 

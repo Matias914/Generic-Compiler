@@ -34,6 +34,8 @@ add_executable(gc
         src/lexical-analyzer/components/reserved_words.cpp
         src/lexical-analyzer/components/semantic_actions.cpp
         src/syntax-analyzer/components/traps.cpp
+        src/intermediate-code/Triples.cpp
+        src/semantic-analyzer/semantic_analyzer.cpp
 )
 
 # =========================================================
@@ -80,6 +82,8 @@ add_executable(gc_tests
         src/lexical-analyzer/components/StateMachine.cpp
         src/lexical-analyzer/components/reserved_words.cpp
         src/lexical-analyzer/components/semantic_actions.cpp
+        #
+        src/semantic-analyzer/semantic_analyzer.cpp
         # Tests
         tests/unit/utils/SymbolTable_test.cpp
         tests/unit/lexical-analyzer/fixture/TestLexicalAnalyzer.cpp
@@ -96,7 +100,7 @@ add_executable(gc_tests
         tests/integration/parser-lexer/fixture/TestParserLexer.cpp
         tests/integration/parser-lexer/fixture/TestParserLexer.h
         tests/integration/parser-lexer/test-cases/if_else_test.cpp
-        tests/integration/parser-lexer/test-cases/expressions.cpp
+        tests/integration/parser-lexer/test-cases/expressions_test.cpp
         tests/integration/parser-lexer/test-cases/assignments_test.cpp
         tests/integration/parser-lexer/test-cases/declarations_test.cpp
         tests/integration/parser-lexer/test-cases/invocations_test.cpp

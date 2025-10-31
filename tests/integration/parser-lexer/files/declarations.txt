@@ -10,7 +10,7 @@
 
 PROGRAM {
     uint X;
-    uint Y, PROGRAMA.Z, W;
+    uint Y, Z2, W;
     uint T;
 
     uint FUNCTION(cr uint A, uint B, uint C) {
@@ -21,30 +21,30 @@ PROGRAM {
         ANIDADA(A+C->D);
         return (A);
     };
-}
 
-## Errores Sintácticos:
-    Dentro de la lista de errores se hallan:
-    - Declaración sin Variable
-    - Declaración de Variable sin ":"
-    - Declaración de Variables sin ","
-    - Declaración de Variables sin Variables
-    - Declaración de Función sin Nombre
-    - Declaración de Función sin ";"
-    - Parámetros Formales sin tipo
-    - Parámetros Formales sin nombre
-    - Función sin llave de cierre
-    - Return con paréntesis faltantes
-    - ...
 
-    Se esperan errores en las líneas: 44, 45, 47, 47, 48, 48, 48, 49, 49, 49, 49, 50, 51, 51, 51
-##
 
-PROGRAMA {
+    ## Errores Sintácticos:
+        Dentro de la lista de errores se hallan:
+        - Declaración sin Variable
+        - Declaración de Variable sin ":"
+        - Declaración de Variables sin ","
+        - Declaración de Variables sin Variables
+        - Declaración de Función sin Nombre
+        - Declaración de Función sin ";"
+        - Parámetros Formales sin tipo
+        - Parámetros Formales sin nombre
+        - Función sin llave de cierre
+        - Return con paréntesis faltantes
+        - ...
+
+        Se esperan errores en las líneas: 44, 45, 47, 47, 48, 48, 48, 49, 49, 49, 49, 50, 51, 51, 51
+    ##
+
     uint ;
     uint 1UI;
-    uint X
-    uint Y Z;
-    uint Y , , , ;
+    uint X2
+    uint Y2 Z;
+    uint W2 , , , ;
     uint (uint A, B, cr, cr B) {
         return trunc(3UI));

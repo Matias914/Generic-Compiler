@@ -1,6 +1,8 @@
 #ifndef GC_SEMANTIC_ACTIONS_H
 #define GC_SEMANTIC_ACTIONS_H
 
+#include "utils/LiteralTable.h"
+
 /*
  * @brief son las acciones asociadas a cada regla
  * detectada.
@@ -10,7 +12,7 @@
  */
 namespace SyntaxAnalyzer::SemanticActions
 {
-    void addNegativeFloatToTable();
+    const LiteralTable::Entry* turnNegative(const LiteralTable::Entry* lref);
 
     /* Traps */
     void announceSyntaxError();

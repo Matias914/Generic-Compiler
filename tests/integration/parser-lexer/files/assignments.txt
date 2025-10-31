@@ -18,19 +18,19 @@ PROGRAM {
 
     X, Y = 2UI, 3UI;
     X = 2UI, trunc(-2.1);
-}
 
-## Errores Sintacticos:
-    Dentro de la lista de errores se hallan:
-    - Falta ";" en una asignacion
-    - Falta ";" en una asignación multiple
-    - Faltan "," en las asignaciones multiples
-    - Hay más variables del lado izquierdo que derecho.
 
-    Se espera error en las líneas: 36 38 38 38 38 38 38 39 39 39 39 39 40 40 41 41 41
-##
 
-PROGRAM {
+    ## Errores Sintacticos:
+        Dentro de la lista de errores se hallan:
+        - Falta ";" en una asignacion
+        - Falta ";" en una asignación multiple
+        - Faltan "," en las asignaciones multiples
+        - Hay más variables del lado izquierdo que derecho.
+
+        Se espera error en las líneas: 36 38 38 38 38 38 38 39 39 39 39 39 40 40 41 41 41
+    ##
+
     X := 2UI
 
     print(X);

@@ -14,7 +14,7 @@ namespace SyntaxAnalyzer
 {
     extern ErrorBuffer BUFFER;
 
-    void yyparsewrapper();
+    void analyze();
 }
 
 #endif //TPE_SYNTAX_ANALYZER_H

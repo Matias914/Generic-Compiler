@@ -73,6 +73,11 @@ namespace StringBuilders
         std::string missingBothFactors(const std::vector<std::string>& content);
         std::string notYetImplemented(const std::vector<std::string>& content);
         std::string genericSyntaxError(const std::vector<std::string>& content);
+        std::string functionRedeclaration(const std::vector<std::string>& content);
+        std::string variableRedeclaration(const std::vector<std::string>& content);
+        std::string variablePrefixInDeclaration(const std::vector<std::string>& content);
+        std::string undeclaredVariable(const std::vector<std::string>& content);
+        std::string multipleProgramsDeclared(const std::vector<std::string>& content);
 
         // Warnings
         std::string defaultWarning(const std::vector<std::string>& content);

@@ -7,7 +7,7 @@ namespace SyntaxAnalyzer
 {
     ErrorBuffer BUFFER(&ERROR_HANDLER);
 
-    void yyparsewrapper()
+    void analyze()
     {
         if (yyparse() != 0)
             BUFFER.commit();

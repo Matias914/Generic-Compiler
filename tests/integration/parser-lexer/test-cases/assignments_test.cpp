@@ -13,7 +13,7 @@ TEST_F(TestParserLexer, assignments)
     const std::string file = WORKING_DIRECTORY + "/tests/integration/parser-lexer/files/assignments.txt";
     assert(LexicalAnalyzer::open(file.c_str()));
 
-    SyntaxAnalyzer::yyparsewrapper();
+    SyntaxAnalyzer::analyze();
 
     // Se espera error en las líneas: 36 38 38 38 38 38 38 39 39 39 39 39 40 40 41 41 41
 

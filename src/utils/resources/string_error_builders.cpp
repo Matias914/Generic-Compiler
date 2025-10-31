@@ -17,7 +17,7 @@ namespace StringBuilders::ErrorBuilders
     std::string truncatedIdentifier(const std::vector<std::string>& content)
     {
         if (content.size() != 2)
-            throw std::runtime_error("truncatedIdentifier: invalid log");
+            throw std::runtime_error("\ntruncatedIdentifier: invalid log");
         std::string mssg;
         mssg.reserve(256);
         mssg.append("Identifier '")
@@ -30,7 +30,7 @@ namespace StringBuilders::ErrorBuilders
     std::string statementInterpreted(const std::vector<std::string>& content)
     {
         if (content.size() != 1)
-            throw std::runtime_error("statementInterpreted: invalid log");
+            throw std::runtime_error("\nstatementInterpreted: invalid log");
         std::string mssg;
         mssg.append("'")
             .append(content[0])
@@ -56,14 +56,14 @@ namespace StringBuilders::ErrorBuilders
     std::string integerOutOfRange(const std::vector<std::string>& content)
     {
         if (content.size() != 1)
-            throw std::runtime_error("integerOutOfRange: invalid log");
+            throw std::runtime_error("\nintegerOutOfRange: invalid log");
         return ERROR_MSG("Integer literal '" + content[0] + "' is out of range [0, 65535]");
     }
 
     std::string floatOutOfRange(const std::vector<std::string>& content)
     {
         if (content.size() != 1)
-            throw std::runtime_error("floatOutOfRange: invalid log");
+            throw std::runtime_error("\nfloatOutOfRange: invalid log");
         std::string mssg;
         mssg.reserve(256);
         mssg.append("Float literal '")
@@ -78,21 +78,21 @@ namespace StringBuilders::ErrorBuilders
     std::string invalidReservedWord(const std::vector<std::string>& content)
     {
         if (content.size() != 1)
-            throw std::runtime_error("invalidReservedWord: invalid log");
+            throw std::runtime_error("\ninvalidReservedWord: invalid log");
         return ERROR_MSG("'" + content[0] + "' is not a reserved word");
     }
 
     std::string unexpectedCharacter(const std::vector<std::string>& content)
     {
         if (content.size() != 1)
-            throw std::runtime_error("unexpectedCharacter: invalid log");
+            throw std::runtime_error("\nunexpectedCharacter: invalid log");
         return ERROR_MSG("Unexpected character '" + content[0] + "' was found");
     }
 
     std::string integerWithoutSuffix(const std::vector<std::string>& content)
     {
         if (content.size() != 1)
-            throw std::runtime_error("integerWithoutSuffix: invalid log");
+            throw std::runtime_error("\nintegerWithoutSuffix: invalid log");
         return ERROR_MSG("Integer literal '" + content[0] + "' doesnt end with UI");
     }
 
@@ -104,7 +104,7 @@ namespace StringBuilders::ErrorBuilders
     std::string floatWithoutNumbers(const std::vector<std::string>& content)
     {
         if (content.size() != 1)
-            throw std::runtime_error("floatWithoutNumbers: invalid log");
+            throw std::runtime_error("\nfloatWithoutNumbers: invalid log");
         return ERROR_MSG("A number was expected after '" + content[0] + "'. Did you mean to write a float literal?");
     }
 
@@ -142,7 +142,7 @@ namespace StringBuilders::ErrorBuilders
 
     std::string missingProgramName(const std::vector<std::string>& content)
     {
-        return ERROR_MSG("Program without name was closed but it must be defined as IDENTIFIER { ... }");
+        return ERROR_MSG("Program without name was opened but it must be defined as IDENTIFIER { ... }");
     }
 
     std::string missingOpeningBracket(const std::vector<std::string>& content)
@@ -153,7 +153,7 @@ namespace StringBuilders::ErrorBuilders
     std::string missingClosingBracket(const std::vector<std::string>& content)
     {
         if (content.size() != 1)
-            throw std::runtime_error("missingClosingBrackets: invalid log");
+            throw std::runtime_error("\nmissingClosingBrackets: invalid log");
         if (content[0].size() > 0)
             return ERROR_MSG("'" + content[0] + "' found but } was expected");
         return ERROR_MSG("Block was opened with '{' but never closed with }");
@@ -177,7 +177,7 @@ namespace StringBuilders::ErrorBuilders
     std::string missingVariable(const std::vector<std::string>& content)
     {
         if (content.size() != 1)
-            throw std::runtime_error("missingVariable: invalid log");
+            throw std::runtime_error("\nmissingVariable: invalid log");
         return ERROR_MSG("Variable was expected as IDENTIFIER instead '" + content[0] + "' was found");
     }
 
@@ -189,28 +189,28 @@ namespace StringBuilders::ErrorBuilders
     std::string missingParameterName(const std::vector<std::string>& content)
     {
         if (content.size() != 1)
-            throw std::runtime_error("missingParameterName: invalid log");
+            throw std::runtime_error("\nmissingParameterName: invalid log");
         return ERROR_MSG("Formal parameter name was expected but '" + content[0] + "' was found");
     }
 
     std::string missingParameterType(const std::vector<std::string>& content)
     {
         if (content.size() != 1)
-            throw std::runtime_error("missingParameterType: invalid log");
+            throw std::runtime_error("\nmissingParameterType: invalid log");
         return ERROR_MSG("Formal parameter type was expected before '" + content[0] + "'");
     }
 
     std::string missingComma(const std::vector<std::string>& content)
     {
         if (content.size() != 1)
-            throw std::runtime_error("missingComma: invalid log");
+            throw std::runtime_error("\nmissingComma: invalid log");
         return ERROR_MSG(", was expected but '" + content[0] + "' was found");
     }
 
     std::string missingSemicolon(const std::vector<std::string>& content)
     {
         if (content.size() != 1)
-            throw std::runtime_error("missingSemicolon: invalid log");
+            throw std::runtime_error("\nmissingSemicolon: invalid log");
         return ERROR_MSG("; was expected but '" + content[0] + "' was found");
     }
 
@@ -265,7 +265,7 @@ namespace StringBuilders::ErrorBuilders
     std::string missingEquals(const std::vector<std::string>& content)
     {
         if (content.size() != 1)
-            throw std::runtime_error("missingEquals: invalid log");
+            throw std::runtime_error("\nmissingEquals: invalid log");
         return ERROR_MSG("In multiple assignments, = should be used instead of '" + content[0] + "'");
     }
 
@@ -317,7 +317,7 @@ namespace StringBuilders::ErrorBuilders
     std::string missingExpressionOperator(const std::vector<std::string>& content)
     {
         if (content.size() != 1)
-            throw std::runtime_error("missingExpressionOperator: invalid log");
+            throw std::runtime_error("\nmissingExpressionOperator: invalid log");
         std::string mssg;
         mssg.append("'").append(content[0]).append("' was found but two expressions ")
             .append("should have an arithmetic operator in between");
@@ -327,7 +327,7 @@ namespace StringBuilders::ErrorBuilders
     std::string missingRightOperand(const std::vector<std::string>& content)
     {
         if (content.size() != 1)
-            throw std::runtime_error("missingRightOperand: invalid log");
+            throw std::runtime_error("\nmissingRightOperand: invalid log");
         return ERROR_MSG("An operand was expected but '" + content[0] + "' was found");
     }
 
@@ -348,7 +348,7 @@ namespace StringBuilders::ErrorBuilders
 
     std::string missingFloatConstant(const std::vector<std::string>& content)
     {
-        return ERROR_MSG("Missing float constant after '-' or both operands");
+        return ERROR_MSG("missing float constant after '-' or both operands");
     }
 
     std::string missingLeftMulFactor(const std::vector<std::string>& content)
@@ -364,7 +364,7 @@ namespace StringBuilders::ErrorBuilders
     std::string missingRightFactor(const std::vector<std::string>& content)
     {
         if (content.size() != 1)
-            throw std::runtime_error("missingRightFactor: invalid log");
+            throw std::runtime_error("\nmissingRightFactor: invalid log");
         return ERROR_MSG("A factor was expected but '" + content[0] + "' was found");
     }
 
@@ -380,6 +380,46 @@ namespace StringBuilders::ErrorBuilders
 
     std::string genericSyntaxError(const std::vector<std::string>& content)
     {
-        return ERROR_MSG("Syntax Error. No structure was recognize");
+        return ERROR_MSG("Syntax Error. No structure was recognized");
+    }
+
+    std::string functionRedeclaration(const std::vector<std::string>& content)
+    {
+        if (content.size() != 1)
+            throw std::runtime_error("\nfunctionRedeclaration: invalid log");
+        return ERROR_MSG("Function name '" + content[0] + "' was already used in other declaration");
+    }
+
+    std::string variableRedeclaration(const std::vector<std::string>& content)
+    {
+        if (content.size() != 1)
+            throw std::runtime_error("\nvariableRedeclaration: invalid log");
+        return ERROR_MSG("Variable name '" + content[0] + "' was already used in other declaration");
+    }
+
+    std::string variablePrefixInDeclaration(const std::vector<std::string>& content)
+    {
+        if (content.size() != 1)
+            throw std::runtime_error("\nvariablePrefixInDeclaration: invalid log");
+        std::string prefix;
+        for (int i = 1; i < content[0].size(); ++i)
+            prefix += (content[0][i] == ':') ? '.' : content[0][i];
+        return ERROR_MSG("Prefix '" + prefix + "' was found in declaration");
+    }
+
+    std::string undeclaredVariable(const std::vector<std::string>& content)
+    {
+        if (content.size() != 1)
+            throw std::runtime_error("\nundeclaredVariable: invalid log");
+        return ERROR_MSG("Variable '" + content[0] + "' was not declared");
+    }
+
+    std::string multipleProgramsDeclared(const std::vector<std::string>& content)
+    {
+        if (content.size() != 1)
+            throw std::runtime_error("\numultipleProgramsDeclared: invalid log");
+        if (content[0].size() != 0)
+            return ERROR_MSG("'" + content[0] + "' was declared, but having multiple programs is not valid");
+        return ERROR_MSG("An unnamed program was declared, but having multiple programs is not valid");
     }
 }

@@ -76,6 +76,11 @@
 #define MISSING_BOTH_FACTORS            54
 #define NOT_YET_IMPLEMENTED             55
 #define SYNTAX_ERROR                    56
+#define FUNCTION_REDECLARATION          57
+#define VARIABLE_REDECLARATION          58
+#define VARIABLE_PREFIX_IN_DECLARATION  59
+#define UNDECLARED_VARIABLE             60
+#define MULTIPLE_PROGRAMS_DECLARED      61
 
 // ------------- Structures ------------ //
 

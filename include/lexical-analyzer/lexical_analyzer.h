@@ -7,7 +7,7 @@
  * @brief representa el analizador lexico de un compilador.
  *
  * Su rol es la tokenizacion. Identifica los lexemas de un
- * archivo dado como fuente con filename(). El analizador
+ * archivo dado como fuente con open(). El analizador
  * sintactico le pide tokens a demanda con yylex().
  */
 namespace LexicalAnalyzer

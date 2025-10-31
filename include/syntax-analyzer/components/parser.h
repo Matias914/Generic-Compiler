@@ -45,12 +45,23 @@
 extern int yydebug;
 #endif
 /* "%code requires" blocks.  */
-#line 19 "include/syntax-analyzer/components/yacc.y"
+#line 3 "include/syntax-analyzer/components/yacc.y"
 
     #include "utils/SymbolTable.h"
     #include "utils/LiteralTable.h"
+    #include "intermediate-code/Triples.h"
 
-#line 54 "include/syntax-analyzer/components/parser.h"
+    #define SYMBOL  0
+    #define LITERAL 1
+    #define TRIPLE  2
+
+    struct Metadata
+    {
+        int type;
+        Triples::Value val;
+    };
+
+#line 65 "include/syntax-analyzer/components/parser.h"
 
 /* Token kinds.  */
 #ifndef YYTOKENTYPE
@@ -91,12 +102,13 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 25 "include/syntax-analyzer/components/yacc.y"
+#line 38 "include/syntax-analyzer/components/yacc.y"
 
     const SymbolTable::Entry*  sref;
     const LiteralTable::Entry* lref;
+    Metadata metadata;
 
-#line 100 "include/syntax-analyzer/components/parser.h"
+#line 112 "include/syntax-analyzer/components/parser.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

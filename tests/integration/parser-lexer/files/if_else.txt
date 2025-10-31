@@ -25,25 +25,25 @@ PROGRAM
     if (X > 10UI) {
         print("No es posible");
     } endif;
-}
 
-## Errores Sintácticos:
-    Algunos errores sintácticos considerados son:
-    - Falta ";" en un IF
-    - Falta ";" en un IF-ELSE
-    - Falta ENDIF en un IF
-    - Falta ENDIF en un IF-ELSE
-    - Falta cuerpo ejecutable en un IF
-    - Falta cuerpo ejecutable en un IF y ENDIF
-    - Falta cuerpo ejecutable en un ELSE
-    - Falta cuerpo ejecutable en un ELSE y ENDIF
-    - Falta cuerpo ejecutable en un IF y, por tanto, el
-    ELSE queda anidado, pero ELSE no es una sentencia IF
 
-    Se espera error en las líneas: 52 58 61 66 67 69 69 74 78 78 83 84
-##
 
-PROGRAM {
+    ## Errores Sintácticos:
+        Algunos errores sintácticos considerados son:
+        - Falta ";" en un IF
+        - Falta ";" en un IF-ELSE
+        - Falta ENDIF en un IF
+        - Falta ENDIF en un IF-ELSE
+        - Falta cuerpo ejecutable en un IF
+        - Falta cuerpo ejecutable en un IF y ENDIF
+        - Falta cuerpo ejecutable en un ELSE
+        - Falta cuerpo ejecutable en un ELSE y ENDIF
+        - Falta cuerpo ejecutable en un IF y, por tanto, el
+        ELSE queda anidado, pero ELSE no es una sentencia IF
+
+        Se espera error en las líneas: 52 58 61 66 67 69 69 74 78 78 83 84
+    ##
+
     if (X <= Y) {
         print(X);
     }

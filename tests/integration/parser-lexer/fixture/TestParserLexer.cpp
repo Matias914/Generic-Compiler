@@ -1,5 +1,7 @@
 #include "TestParserLexer.h"
 
+#include "semantic-analyzer/semantic_analyzer.h"
+
 void TestParserLexer::SetUp()
 {
     SYMBOL_TABLE.clear();
@@ -8,6 +10,9 @@ void TestParserLexer::SetUp()
 
     if (VERBOSE_OPTION)
         REPORT_HANDLER.clear();
+
+    SemanticAnalyzer::SERIAL = 1;
+    SemanticAnalyzer::EXISTS_PROGRAM = false;
 }
 
 void TestParserLexer::TearDown()

@@ -13,7 +13,7 @@ TEST_F(TestParserLexer, invocations)
     const std::string file = WORKING_DIRECTORY + "/tests/integration/parser-lexer/files/invocations.txt";
     assert(LexicalAnalyzer::open(file.c_str()));
 
-    SyntaxAnalyzer::yyparsewrapper();
+    SyntaxAnalyzer::analyze();
 
     // Dentro del campo del contenido debe aparecer aquello encontrado
 

@@ -13,7 +13,7 @@ TEST_F(TestParserLexer, expressions)
     const std::string file = WORKING_DIRECTORY + "/tests/integration/parser-lexer/files/expressions.txt";
     assert(LexicalAnalyzer::open(file.c_str()));
 
-    SyntaxAnalyzer::yyparsewrapper();
+    SyntaxAnalyzer::analyze();
 
     // Dentro del campo del contenido debe aparecer aquello encontrado
 
@@ -29,7 +29,7 @@ TEST_F(TestParserLexer, expressions)
     EXPECT_TRUE(ERROR_HANDLER.contains({ERROR, MISSING_SEMICOLON, 37, {"print"}}));
     // Se espera ")" porque se uso el token error para el argumento
     EXPECT_TRUE(ERROR_HANDLER.contains({ERROR, MISSING_ARGUMENT , 38, {")"}}));
-    EXPECT_TRUE(ERROR_HANDLER.contains({ERROR, MISSING_SEMICOLON, 39, {"}"}}));
+    EXPECT_TRUE(ERROR_HANDLER.contains({ERROR, MISSING_SEMICOLON, 46, {"uint"}}));
 
     /* ------------ Expressions ------------ */
     EXPECT_TRUE(ERROR_HANDLER.contains({ERROR, MISSING_RIGHT_OPERAND , 78, {"+"}}));

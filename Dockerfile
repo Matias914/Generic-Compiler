@@ -2,13 +2,11 @@ FROM ubuntu:22.04
 
 # ------- apt-get update
 # Actualiza la lista de paquetes disponibles
-# Es como "refrescar" el catálogo de software disponible
-# Siempre hazlo antes de instalar paquetes
+# "Refresca" el catálogo de software disponible
 #
-# ------- && apt-get install -y \
+# ------- && apt-get install -y
 # && = "y si el comando anterior fue exitoso, entonces..."
 # install -y = instalar paquetes sin preguntar (parametro "yes")
-# \ = continúa el comando en la siguiente línea
 #
 # Los paquetes:
 #
@@ -35,8 +33,8 @@ RUN apt-get update && apt-get install -y \
     zsh \
     mingw-w64 \
     && \
-    # Le dice al sistema que use la versión POSIX (con soporte para hilos)
-    # de los compiladores de MinGW como la opción por defecto.
+    # Le dice al sistema que use la versión POSIX (con soporte para hilos) \
+    # de los compiladores de MinGW como la opción por defecto \
     update-alternatives --set x86_64-w64-mingw32-g++ /usr/bin/x86_64-w64-mingw32-g++-posix && \
     update-alternatives --set x86_64-w64-mingw32-gcc /usr/bin/x86_64-w64-mingw32-gcc-posix && \
     rm -rf /var/lib/apt/lists/*

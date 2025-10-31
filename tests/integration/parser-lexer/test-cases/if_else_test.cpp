@@ -13,7 +13,7 @@ TEST_F(TestParserLexer, if_else)
     const std::string file = WORKING_DIRECTORY + "/tests/integration/parser-lexer/files/if_else.txt";
     assert(LexicalAnalyzer::open(file.c_str()));
 
-    SyntaxAnalyzer::yyparsewrapper();
+    SyntaxAnalyzer::analyze();
 
     // Dentro del campo del contenido debe aparecer aquello encontrado
     EXPECT_TRUE(ERROR_HANDLER.contains({ERROR, MISSING_SEMICOLON  , 52, {"if"}}));

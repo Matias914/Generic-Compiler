@@ -6,6 +6,11 @@
 #include <string>
 #include <list>
 
+#define PROGRAM   0
+#define VARIABLE  1
+#define FUNCTION  2
+#define PARAMETER 3
+
 /*
  * @brief colecciona los símbolos hallados durante el análisis
  * léxico y sus metadatos.
@@ -19,15 +24,20 @@ public:
     struct Entry
     {
         std::string symbol;
+        int type;
+        int use;
     };
 
     SymbolTable();
     const Entry* addAndGet(const std::string& symbol);
     const Entry* get(const std::string& symbol) const;
+    const Entry* update(const std::string& symbol, const int& type, const int& use);
+    const Entry* upsert(const std::string& symbol, const std::string& new_symbol, const int& type, const int& use);
+    bool remove(const std::string& symbol);
 
     std::string toString() const;
 
-    // útil para Testint
+    // útil para Testing
     void clear();
 
 private:
