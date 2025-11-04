@@ -134,16 +134,28 @@ StringBuilder getBuilderForErrors(const int& code)
         return notYetImplemented;
     case SYNTAX_ERROR:
         return genericSyntaxError;
+    case MULTIPLE_PROGRAMS_DECLARED:
+        return multipleProgramsDeclared;
     case FUNCTION_REDECLARATION:
         return functionRedeclaration;
     case VARIABLE_REDECLARATION:
         return variableRedeclaration;
+    case PARAMETER_REDECLARATION:
+        return parameterRedeclaration;
     case VARIABLE_PREFIX_IN_DECLARATION:
         return variablePrefixInDeclaration;
     case UNDECLARED_VARIABLE:
         return undeclaredVariable;
-    case MULTIPLE_PROGRAMS_DECLARED:
-        return multipleProgramsDeclared;
+    case UNDECLARED_FUNCTION:
+        return undeclaredFunction;
+    case UNDECLARED_PARAMETER:
+        return undeclaredParameter;
+    case PARAMETERS_LIMIT_EXCEEDED:
+        return parameterLimitExceeded;
+    case PARAMETER_ALREADY_INSTANTIATED:
+        return parameterAlreadyInstantiated;
+    case INVALID_ARGUMENTS_NUMBER:
+        return invalidArgumentsNumber;
     default:
         return defaultError;
     }

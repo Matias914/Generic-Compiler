@@ -36,6 +36,11 @@ add_executable(gc
         src/syntax-analyzer/components/traps.cpp
         src/intermediate-code/Triples.cpp
         src/semantic-analyzer/semantic_analyzer.cpp
+        src/semantic-analyzer/functions.cpp
+        src/semantic-analyzer/variables.cpp
+        src/semantic-analyzer/programs.cpp
+        src/semantic-analyzer/components/CoertionChecker.cpp
+        include/semantic-analyzer/components/CoertionChecker.h
 )
 
 # =========================================================

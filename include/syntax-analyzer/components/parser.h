@@ -51,17 +51,21 @@ extern int yydebug;
     #include "utils/LiteralTable.h"
     #include "intermediate-code/Triples.h"
 
-    #define SYMBOL  0
-    #define LITERAL 1
-    #define TRIPLE  2
+    #define NOTHING  (-1)
+    #define SYMBOL    0
+    #define LITERAL   1
+    #define TRIPLE    2
 
     struct Metadata
     {
         int type;
-        Triples::Value val;
+        union {
+            const SymbolTable::Entry*  sref;
+            const LiteralTable::Entry* lref;
+        };
     };
 
-#line 65 "include/syntax-analyzer/components/parser.h"
+#line 69 "include/syntax-analyzer/components/parser.h"
 
 /* Token kinds.  */
 #ifndef YYTOKENTYPE
@@ -102,13 +106,13 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 38 "include/syntax-analyzer/components/yacc.y"
+#line 42 "include/syntax-analyzer/components/yacc.y"
 
     const SymbolTable::Entry*  sref;
     const LiteralTable::Entry* lref;
     Metadata metadata;
 
-#line 112 "include/syntax-analyzer/components/parser.h"
+#line 116 "include/syntax-analyzer/components/parser.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

@@ -6,10 +6,12 @@
 #include <string>
 #include <list>
 
-#define PROGRAM   0
-#define VARIABLE  1
-#define FUNCTION  2
-#define PARAMETER 3
+#define UNSUPPORTED (-1)
+#define PROGRAM       0
+#define VARIABLE      1
+#define FUNCTION      2
+#define PARAMETER     3
+#define CV            4
 
 /*
  * @brief colecciona los símbolos hallados durante el análisis
@@ -23,16 +25,18 @@ class SymbolTable
 public:
     struct Entry
     {
-        std::string symbol;
-        int type;
-        int use;
+        std::string symbol = "";
+        int type      = UNSUPPORTED;
+        int use       = UNSUPPORTED;
+        int semantics = UNSUPPORTED;
+        int params    = UNSUPPORTED;
     };
 
     SymbolTable();
     const Entry* addAndGet(const std::string& symbol);
     const Entry* get(const std::string& symbol) const;
-    const Entry* update(const std::string& symbol, const int& type, const int& use);
-    const Entry* upsert(const std::string& symbol, const std::string& new_symbol, const int& type, const int& use);
+    const Entry* update(const std::string& symbol, const Entry* entry);
+    const Entry* upsert(const std::string& symbol, const Entry* entry);
     bool remove(const std::string& symbol);
 
     std::string toString() const;

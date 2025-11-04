@@ -46,5 +46,5 @@ PROGRAM {
     uint X2
     uint Y2 Z;
     uint W2 , , , ;
-    uint (uint A, B, cr, cr B) {
+    uint (uint A B, cr, cr B) {
         return trunc(3UI));

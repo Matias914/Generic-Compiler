@@ -1,0 +1,5 @@
+PROGRAMA {
+    ## Asignaciones ##
+    XN := 25UI;
+    Y3 := Y4 Y5;
+}

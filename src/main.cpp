@@ -15,6 +15,8 @@ LiteralTable LITERAL_TABLE;
 ErrorHandler ERROR_HANDLER;
 ReportHandler REPORT_HANDLER;
 
+extern int yydebug;
+
 int main(const int argc, char* argv[])
 {
     try

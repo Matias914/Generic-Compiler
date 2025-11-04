@@ -383,6 +383,15 @@ namespace StringBuilders::ErrorBuilders
         return ERROR_MSG("Syntax Error. No structure was recognized");
     }
 
+    std::string multipleProgramsDeclared(const std::vector<std::string>& content)
+    {
+        if (content.size() != 1)
+            throw std::runtime_error("\numultipleProgramsDeclared: invalid log");
+        if (content[0].size() != 0)
+            return ERROR_MSG("'" + content[0] + "' was declared, but having multiple programs is not valid");
+        return ERROR_MSG("An unnamed program was declared, but having multiple programs is not valid");
+    }
+
     std::string functionRedeclaration(const std::vector<std::string>& content)
     {
         if (content.size() != 1)
@@ -395,6 +404,13 @@ namespace StringBuilders::ErrorBuilders
         if (content.size() != 1)
             throw std::runtime_error("\nvariableRedeclaration: invalid log");
         return ERROR_MSG("Variable name '" + content[0] + "' was already used in other declaration");
+    }
+
+    std::string parameterRedeclaration(const std::vector<std::string>& content)
+    {
+        if (content.size() != 1)
+            throw std::runtime_error("\nparameterRedeclaration: invalid log");
+        return ERROR_MSG("Parameter name '" + content[0] + "' was already used in the defined scope");
     }
 
     std::string variablePrefixInDeclaration(const std::vector<std::string>& content)
@@ -414,12 +430,36 @@ namespace StringBuilders::ErrorBuilders
         return ERROR_MSG("Variable '" + content[0] + "' was not declared");
     }
 
-    std::string multipleProgramsDeclared(const std::vector<std::string>& content)
+    std::string undeclaredFunction(const std::vector<std::string>& content)
     {
         if (content.size() != 1)
-            throw std::runtime_error("\numultipleProgramsDeclared: invalid log");
-        if (content[0].size() != 0)
-            return ERROR_MSG("'" + content[0] + "' was declared, but having multiple programs is not valid");
-        return ERROR_MSG("An unnamed program was declared, but having multiple programs is not valid");
+            throw std::runtime_error("\nundeclaredFunction: invalid log");
+        return ERROR_MSG("Funtion '" + content[0] + "' was not declared");
+    }
+
+    std::string undeclaredParameter(const std::vector<std::string>& content)
+    {
+        if (content.size() != 2)
+            throw std::runtime_error("\nundeclaredParameter: invalid log");
+        return ERROR_MSG("'" + content[0] + "' is not a valid argument for '" + content[1] + "'");
+    }
+
+    std::string parameterLimitExceeded(const std::vector<std::string>& content)
+    {
+        return "";
+    }
+
+    std::string parameterAlreadyInstantiated(const std::vector<std::string>& content)
+    {
+        if (content.size() != 1)
+            throw std::runtime_error("\nparameterAlreadyInstantiated: invalid log");
+        return ERROR_MSG("Parameter " + content[0] + " was already used");
+    }
+
+    std::string invalidArgumentsNumber(const std::vector<std::string>& content)
+    {
+        if (content.size() != 2)
+            throw std::runtime_error("\ninvalidArgumentsNumber: invalid log");
+        return ERROR_MSG(+content[0] + " arguments were found but " + content[1] + " parameters were declared");
     }
 }

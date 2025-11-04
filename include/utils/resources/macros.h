@@ -17,6 +17,7 @@
 // ------------ Warnings ----------- //
 #define TRUNCATED_IDENTIFIER  0
 #define STATEMENT_INTERPRETED 1
+#define TRUNC_USELESS         2
 
 // ------------- Errors ------------ //
 #define CUSTOM_ERROR                    0
@@ -76,11 +77,17 @@
 #define MISSING_BOTH_FACTORS            54
 #define NOT_YET_IMPLEMENTED             55
 #define SYNTAX_ERROR                    56
-#define FUNCTION_REDECLARATION          57
-#define VARIABLE_REDECLARATION          58
-#define VARIABLE_PREFIX_IN_DECLARATION  59
-#define UNDECLARED_VARIABLE             60
-#define MULTIPLE_PROGRAMS_DECLARED      61
+#define MULTIPLE_PROGRAMS_DECLARED      57
+#define FUNCTION_REDECLARATION          58
+#define VARIABLE_REDECLARATION          59
+#define PARAMETER_REDECLARATION         60
+#define VARIABLE_PREFIX_IN_DECLARATION  61
+#define UNDECLARED_VARIABLE             62
+#define UNDECLARED_FUNCTION             63
+#define UNDECLARED_PARAMETER            64
+#define PARAMETERS_LIMIT_EXCEEDED       65
+#define PARAMETER_ALREADY_INSTANTIATED  66
+#define INVALID_ARGUMENTS_NUMBER        67
 
 // ------------- Structures ------------ //
 

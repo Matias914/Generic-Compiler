@@ -34,6 +34,18 @@ namespace StringBuilders::TableBuilders
         default:
             mssg.append(" Unsupported ");
         }
+        mssg.append(" | ").append("Semantics: ");
+        switch (entry.semantics)
+        {
+        case CR:
+            mssg.append("    CR     ");
+            break;
+        case CV:
+            mssg.append("    CV     ");
+            break;
+        default:
+            mssg.append("Unsupported");
+        }
         mssg.append(" | ").append("Symbol: ").append(entry.symbol);
     }
 
