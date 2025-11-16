@@ -49,23 +49,39 @@ extern int yydebug;
 
     #include "utils/SymbolTable.h"
     #include "utils/LiteralTable.h"
-    #include "intermediate-code/Triples.h"
 
-    #define NOTHING  (-1)
-    #define SYMBOL    0
-    #define LITERAL   1
-    #define TRIPLE    2
+    #define PR_NULL    (-1)
+    #define PR_SYMBOL    0
+    #define PR_LITERAL   1
+    #define PR_TRIPLE    2
+
+    struct Operator
+    {
+        char tid;
+        int  pid;
+    };
 
     struct Metadata
     {
-        int type;
-        union {
-            const SymbolTable::Entry*  sref;
-            const LiteralTable::Entry* lref;
-        };
+        struct Expression
+        {
+            int type;
+            int pid;
+            bool assignable;
+        } expression;
+        struct Reference
+        {
+            int type;
+            union
+            {
+                const SymbolTable::Entry*  sref;
+                const LiteralTable::Entry* lref;
+                int tref;
+            };
+        } reference;
     };
 
-#line 69 "include/syntax-analyzer/components/parser.h"
+#line 85 "include/syntax-analyzer/components/parser.h"
 
 /* Token kinds.  */
 #ifndef YYTOKENTYPE
@@ -106,13 +122,15 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 42 "include/syntax-analyzer/components/yacc.y"
+#line 71 "include/syntax-analyzer/components/yacc.y"
 
     const SymbolTable::Entry*  sref;
     const LiteralTable::Entry* lref;
     Metadata metadata;
+    int pid;
+    Operator op;
 
-#line 116 "include/syntax-analyzer/components/parser.h"
+#line 134 "include/syntax-analyzer/components/parser.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

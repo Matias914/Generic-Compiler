@@ -3,19 +3,18 @@
 #include "utils/LiteralTable.h"
 #include "utils/resources/macros.h"
 #include "lexical-analyzer/lexical_analyzer.h"
-#include "syntax-analyzer/components/parser.h"
 #include "syntax-analyzer/components/translator.h"
 #include "syntax-analyzer/components/semantic_actions.h"
 
-#include <iostream>
+#define RUNTIME_E1 "\naddNegativeFloatToTable: failed to add new constant to table"
 
 // Usada por Bison, guarda el token obtenido del lexico.
 extern int yychar;
 
 extern bool VERBOSE_OPTION;
 
-extern ReportHandler REPORT_HANDLER;
 extern LiteralTable LITERAL_TABLE;
+extern ReportHandler REPORT_HANDLER;
 
 namespace SyntaxAnalyzer::SemanticActions
 {
@@ -24,9 +23,9 @@ namespace SyntaxAnalyzer::SemanticActions
         const std::string new_constant = "-" + lref->constant;
         const LiteralTable::TypeValue value = { .f = -lref->value.f };
         LITERAL_TABLE.decrementReferences(lref->constant);
-        const auto ref = LITERAL_TABLE.addAndGet(new_constant, FLOAT_LITERAL, value);
-        if (lref == nullptr)
-            throw std::runtime_error("addNegativeFloatToTable: failed to add new constant to table");
+        const auto ref = LITERAL_TABLE.addAndGet(new_constant, lref->type, value);
+        if (ref == nullptr)
+            throw std::runtime_error(RUNTIME_E1);
         return ref;
     }
 
@@ -34,11 +33,7 @@ namespace SyntaxAnalyzer::SemanticActions
     {
         if (VERBOSE_OPTION)
         {
-            Log log;
-            log.type = STRUCTURE;
-            log.code = yychar;
-            log.line = LexicalAnalyzer::YYLINENO;
-            log.content = {structure};
+            const Log log(STRUCTURE, yychar, LexicalAnalyzer::YYLINENO, {structure});
             REPORT_HANDLER.add(log);
         }
     }

@@ -20,6 +20,11 @@ struct Log
     unsigned int line;
     std::vector<std::string> content;
 
+    Log() = default;
+
+    Log(const int t, const int c, const unsigned int l, std::vector<std::string> v = {})
+        : type(t), code(c), line(l), content(std::move(v)) {}
+
     // Util para los tests
     bool operator==(const Log& other) const {
         return type == other.type

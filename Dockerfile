@@ -39,14 +39,10 @@ RUN apt-get update && apt-get install -y \
     update-alternatives --set x86_64-w64-mingw32-gcc /usr/bin/x86_64-w64-mingw32-gcc-posix && \
     rm -rf /var/lib/apt/lists/*
 
-# Se define un nombre para el directorio
 WORKDIR /generic_compiler
 
-# Usuario no-root (para que CLion no corra como root)
 RUN useradd -m -s /bin/zsh appuser
 
-# Se cambian los permisos a los de usuario
 RUN chown -R appuser:appuser /generic_compiler
 
-# Se cambia al usuario appuser
 USER appuser

@@ -3,7 +3,7 @@
 
 using namespace SyntaxAnalyzer;
 
-std::string Translator::translate(const int& token) {
+std::string Translator::translate(const int token) {
     switch (token)
     {
     case YYEMPTY:

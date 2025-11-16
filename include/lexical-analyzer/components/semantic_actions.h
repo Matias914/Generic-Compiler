@@ -12,29 +12,29 @@
  */
 namespace LexicalAnalyzer
 {
-    using SemanticAction = int(*) (std::string&, const char& character);
+    using SemanticAction = int(*) (std::string&, char character);
 
     namespace SemanticActions
     {
-        int  SA1(std::string& lexeme, const char& character);
-        int  SA2(std::string& lexeme, const char& character);
-        int  SA3(std::string& lexeme, const char& character);
-        int  SA4(std::string& lexeme, const char& character);
-        int  SA5(std::string& lexeme, const char& character);
-        int  SA6(std::string& lexeme, const char& character);
-        int  SA7(std::string& lexeme, const char& character);
-        int  SA8(std::string& lexeme, const char& character);
-        int  SA9(std::string& lexeme, const char& character);
-        int SA10(std::string& lexeme, const char& character);
-        int SA11(std::string& lexeme, const char& character);
-        int SA12(std::string& lexeme, const char& character);
-        int SA13(std::string& lexeme, const char& character);
-        int SA14(std::string& lexeme, const char& character);
-        int SA15(std::string& lexeme, const char& character);
-        int SA16(std::string& lexeme, const char& character);
+        int  SA1(std::string& lexeme, char character);
+        int  SA2(std::string& lexeme, char character);
+        int  SA3(std::string& lexeme, char character);
+        int  SA4(std::string& lexeme, char character);
+        int  SA5(std::string& lexeme, char character);
+        int  SA6(std::string& lexeme, char character);
+        int  SA7(std::string& lexeme, char character);
+        int  SA8(std::string& lexeme, char character);
+        int  SA9(std::string& lexeme, char character);
+        int SA10(std::string& lexeme, char character);
+        int SA11(std::string& lexeme, char character);
+        int SA12(std::string& lexeme, char character);
+        int SA13(std::string& lexeme, char character);
+        int SA14(std::string& lexeme, char character);
+        int SA15(std::string& lexeme, char character);
+        int SA16(std::string& lexeme, char character);
 
-        int DoNothing(std::string& lexeme, const char& character);
-        int EndOfFile(std::string& lexeme, const char& character);
+        int DoNothing(std::string& lexeme, char character);
+        int EndOfFile(std::string& lexeme, char character);
 
         /*
          * @brief estas acciones semanticas fueron hechas para tratar
@@ -43,15 +43,15 @@ namespace LexicalAnalyzer
          * Conceptualmente, son las acciones semanticas asociadas a las
          * transiciones que llevan al estado de error.
          */
-        int UnexpectedCharTrap(std::string& lexeme, const char& character);
-        int ExpectedUITrap(std::string& lexeme, const char& character);
-        int ExpectedSignTrap(std::string& lexeme, const char& character);
-        int ExpectedNumberTrap(std::string& lexeme, const char& character);
-        int ExpectedNoEndlTrap(std::string& lexeme, const char& character);
-        int ExpectedQuoteTrap(std::string& lexeme, const char& character);
-        int ExpectedNumeralTrap(std::string& lexeme, const char& character);
-        int ExpectedCommentEndTrap(std::string& lexeme, const char& character);
-        int ExpectedEqualsTrap(std::string& lexeme, const char& character);
+        int UnexpectedCharTrap(std::string& lexeme, char character);
+        int ExpectedUITrap(std::string& lexeme, char character);
+        int ExpectedSignTrap(std::string& lexeme, char character);
+        int ExpectedNumberTrap(std::string& lexeme, char character);
+        int ExpectedNoEndlTrap(std::string& lexeme, char character);
+        int ExpectedQuoteTrap(std::string& lexeme, char character);
+        int ExpectedNumeralTrap(std::string& lexeme, char character);
+        int ExpectedCommentEndTrap(std::string& lexeme, char character);
+        int ExpectedEqualsTrap(std::string& lexeme, char character);
     }
 }
 

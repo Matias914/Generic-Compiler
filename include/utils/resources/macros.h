@@ -70,25 +70,30 @@
 #define MISSING_LEFT_SUM_OPERAND        47
 #define MISSING_LEFT_SUB_OPERAND        48
 #define MISSING_BOTH_SUM_OPERANDS       49
-#define MISSING_FLOAT_CONSTANT          50
+#define MISSING_BOTH_SUB_OPERANDS       50
 #define MISSING_RIGHT_FACTOR            51
 #define MISSING_LEFT_MUL_FACTOR         52
 #define MISSING_LEFT_DIV_FACTOR         53
 #define MISSING_BOTH_FACTORS            54
 #define NOT_YET_IMPLEMENTED             55
-#define SYNTAX_ERROR                    56
-#define MULTIPLE_PROGRAMS_DECLARED      57
-#define FUNCTION_REDECLARATION          58
-#define VARIABLE_REDECLARATION          59
-#define PARAMETER_REDECLARATION         60
-#define VARIABLE_PREFIX_IN_DECLARATION  61
-#define UNDECLARED_VARIABLE             62
-#define UNDECLARED_FUNCTION             63
-#define UNDECLARED_PARAMETER            64
-#define PARAMETERS_LIMIT_EXCEEDED       65
-#define PARAMETER_ALREADY_INSTANTIATED  66
-#define INVALID_ARGUMENTS_NUMBER        67
-
-// ------------- Structures ------------ //
+#define INVALID_LAMBDA_USE              56
+#define PRINT_SYNTAX_ERROR              57
+#define TRUNC_SYNTAX_ERROR              58
+#define IF_SYNTAX_ERROR                 59
+#define RETURN_SYNTAX_ERROR             60
+#define DO_SYNTAX_ERROR                 61
+#define SYNTAX_ERROR                    62
+#define MULTIPLE_PROGRAMS_DECLARED      63
+#define FUNCTION_REDECLARATION          64
+#define VARIABLE_REDECLARATION          65
+#define PARAMETER_REDECLARATION         66
+#define VARIABLE_PREFIX_IN_DECLARATION  67
+#define UNDECLARED_VARIABLE             68
+#define UNDECLARED_FUNCTION             69
+#define UNDECLARED_PARAMETER            70
+#define PARAMETERS_LIMIT_EXCEEDED       71
+#define PARAMETER_ALREADY_INSTANTIATED  72
+#define INVALID_ARGUMENTS_NUMBER        73
+#define INCOMPATIBLE_TYPES              74
 
 #endif //GC_UTILS_MACROS_H

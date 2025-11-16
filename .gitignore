@@ -47,8 +47,6 @@ gc_tests
 # Log Output Files
 *.log
 
-# YACC
-*.y
 *.output
 
 .idea/

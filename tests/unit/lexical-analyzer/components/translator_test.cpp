@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "lexical-analyzer/components/macros.h"
+#include "lexical-analyzer/components/lexical_tokens.h"
 #include "lexical-analyzer/components/translator.h"
 
 using namespace LexicalAnalyzer::Translator;

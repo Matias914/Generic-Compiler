@@ -9,7 +9,7 @@
  */
 namespace LexicalAnalyzer::Translator
 {
-    unsigned int translate(const char& c);
+    unsigned int translate(char c);
 }
 
 #endif //GC_LEXICAL_ANALYZER_TRANSLATOR_H

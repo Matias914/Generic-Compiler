@@ -1,5 +1,5 @@
 #include "lexical-analyzer/components/states.h"
-#include "lexical-analyzer/components/macros.h"
+#include "lexical-analyzer/components/lexical_tokens.h"
 #include "lexical-analyzer/components/semantic_actions.h"
 
 using namespace LexicalAnalyzer;
@@ -14,7 +14,7 @@ using namespace LexicalAnalyzer;
  * Al entrar en este estado final, la máquina queda inutilizable hasta
  * que se reinicialice para volver a usarse.
  */
-SemanticAction States::fstate(StateMachine* s, const unsigned int& value)
+SemanticAction States::fstate(StateMachine* s, const unsigned int value)
 {
     s->state = fstate;
     return SemanticActions::DoNothing;
@@ -22,7 +22,7 @@ SemanticAction States::fstate(StateMachine* s, const unsigned int& value)
 
 /* ------------------------------ STATES ------------------------------ */
 
-SemanticAction  States::state0(StateMachine* s, const unsigned int& value)
+SemanticAction  States::state0(StateMachine* s, const unsigned int value)
 {
     switch(value)
     {
@@ -81,7 +81,7 @@ SemanticAction  States::state0(StateMachine* s, const unsigned int& value)
     }
 }
 
-SemanticAction  States::state1(StateMachine* s, const unsigned int& value)
+SemanticAction  States::state1(StateMachine* s, const unsigned int value)
 {
     switch (value)
     {
@@ -100,7 +100,7 @@ SemanticAction  States::state1(StateMachine* s, const unsigned int& value)
     }
 }
 
-SemanticAction  States::state2(StateMachine* s, const unsigned int& value)
+SemanticAction  States::state2(StateMachine* s, const unsigned int value)
 {
     switch (value)
     {
@@ -113,7 +113,7 @@ SemanticAction  States::state2(StateMachine* s, const unsigned int& value)
     }
 }
 
-SemanticAction  States::state3(StateMachine* s, const unsigned int& value)
+SemanticAction  States::state3(StateMachine* s, const unsigned int value)
 {
     switch (value)
     {
@@ -129,7 +129,7 @@ SemanticAction  States::state3(StateMachine* s, const unsigned int& value)
     }
 }
 
-SemanticAction  States::state4(StateMachine* s, const unsigned int& value)
+SemanticAction  States::state4(StateMachine* s, const unsigned int value)
 {
     switch (value)
     {
@@ -142,7 +142,7 @@ SemanticAction  States::state4(StateMachine* s, const unsigned int& value)
     }
 }
 
-SemanticAction  States::state5(StateMachine* s, const unsigned int& value)
+SemanticAction  States::state5(StateMachine* s, const unsigned int value)
 {
     switch (value)
     {
@@ -156,7 +156,7 @@ SemanticAction  States::state5(StateMachine* s, const unsigned int& value)
     }
 }
 
-SemanticAction  States::state6(StateMachine* s, const unsigned int& value)
+SemanticAction  States::state6(StateMachine* s, const unsigned int value)
 {
     switch (value)
     {
@@ -169,7 +169,7 @@ SemanticAction  States::state6(StateMachine* s, const unsigned int& value)
     }
 }
 
-SemanticAction  States::state7(StateMachine* s, const unsigned int& value)
+SemanticAction  States::state7(StateMachine* s, const unsigned int value)
 {
     switch (value)
     {
@@ -182,7 +182,7 @@ SemanticAction  States::state7(StateMachine* s, const unsigned int& value)
     }
 }
 
-SemanticAction  States::state8(StateMachine* s, const unsigned int& value)
+SemanticAction  States::state8(StateMachine* s, const unsigned int value)
 {
     switch (value)
     {
@@ -201,7 +201,7 @@ SemanticAction  States::state8(StateMachine* s, const unsigned int& value)
     }
 }
 
-SemanticAction  States::state9(StateMachine* s, const unsigned int& value)
+SemanticAction  States::state9(StateMachine* s, const unsigned int value)
 {
     switch (value)
     {
@@ -214,7 +214,7 @@ SemanticAction  States::state9(StateMachine* s, const unsigned int& value)
     }
 }
 
-SemanticAction States::state10(StateMachine* s, const unsigned int& value)
+SemanticAction States::state10(StateMachine* s, const unsigned int value)
 {
 
     switch (value)
@@ -234,7 +234,7 @@ SemanticAction States::state10(StateMachine* s, const unsigned int& value)
     }
 }
 
-SemanticAction States::state11(StateMachine* s, const unsigned int& value)
+SemanticAction States::state11(StateMachine* s, const unsigned int value)
 {
     switch (value)
     {
@@ -253,7 +253,7 @@ SemanticAction States::state11(StateMachine* s, const unsigned int& value)
     }
 }
 
-SemanticAction States::state12(StateMachine* s, const unsigned int& value)
+SemanticAction States::state12(StateMachine* s, const unsigned int value)
 {
     switch (value)
     {
@@ -271,7 +271,7 @@ SemanticAction States::state12(StateMachine* s, const unsigned int& value)
     }
 }
 
-SemanticAction States::state13(StateMachine* s, const unsigned int& value)
+SemanticAction States::state13(StateMachine* s, const unsigned int value)
 {
     switch (value)
     {
@@ -284,7 +284,7 @@ SemanticAction States::state13(StateMachine* s, const unsigned int& value)
     }
 }
 
-SemanticAction States::state14(StateMachine* s, const unsigned int& value)
+SemanticAction States::state14(StateMachine* s, const unsigned int value)
 {
     s->state = fstate;
     switch (value)
@@ -298,7 +298,7 @@ SemanticAction States::state14(StateMachine* s, const unsigned int& value)
     }
 }
 
-SemanticAction States::state15(StateMachine* s, const unsigned int& value)
+SemanticAction States::state15(StateMachine* s, const unsigned int value)
 {
     switch (value)
     {
@@ -311,7 +311,7 @@ SemanticAction States::state15(StateMachine* s, const unsigned int& value)
     }
 }
 
-SemanticAction States::state16(StateMachine* s, const unsigned int& value)
+SemanticAction States::state16(StateMachine* s, const unsigned int value)
 {
     s->state = fstate;
     switch (value)
@@ -323,7 +323,7 @@ SemanticAction States::state16(StateMachine* s, const unsigned int& value)
     }
 }
 
-SemanticAction States::state17(StateMachine* s, const unsigned int& value)
+SemanticAction States::state17(StateMachine* s, const unsigned int value)
 {
     s->state = fstate;
     switch (value)
@@ -335,7 +335,7 @@ SemanticAction States::state17(StateMachine* s, const unsigned int& value)
     }
 }
 
-SemanticAction States::state18(StateMachine* s, const unsigned int& value)
+SemanticAction States::state18(StateMachine* s, const unsigned int value)
 {
     s->state = fstate;
     switch (value)

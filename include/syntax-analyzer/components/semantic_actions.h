@@ -1,6 +1,7 @@
 #ifndef GC_SEMANTIC_ACTIONS_H
 #define GC_SEMANTIC_ACTIONS_H
 
+#include "utils/ErrorBuffer.h"
 #include "utils/LiteralTable.h"
 
 /*
@@ -12,14 +13,16 @@
  */
 namespace SyntaxAnalyzer::SemanticActions
 {
+    extern ErrorBuffer BUFFER;
+
     const LiteralTable::Entry* turnNegative(const LiteralTable::Entry* lref);
 
     /* Traps */
     void announceSyntaxError();
-    void announceSpecificError(const int& code);
-    void announceSpecificErrorWithSymbol(const int& code);
-    void specifySyntaxError(const int& code);
-    void specifySyntaxWarning(const int& code);
+    void announceSpecificError(int code);
+    void announceSpecificErrorWithSymbol(int code);
+    void specifySyntaxError(int code);
+    void specifySyntaxWarning(int code);
 
     /* Logs */
     void logStructure(const std::string& structure);

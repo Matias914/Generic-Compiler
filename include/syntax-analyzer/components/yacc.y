@@ -3,19 +3,25 @@
 {
     #include "utils/SymbolTable.h"
     #include "utils/LiteralTable.h"
-    #include "intermediate-code/Triples.h"
 
-    #define NOTHING  (-1)
-    #define SYMBOL    0
-    #define LITERAL   1
-    #define TRIPLE    2
+    #define PR_NULL    (-1)
+    #define PR_SYMBOL    0
+    #define PR_LITERAL   1
+    #define PR_TRIPLE    2
+
+    struct Operator
+    {
+        char tid;
+        int  pid;
+    };
 
     struct Metadata
     {
         struct Expression
         {
             int type;
-            std::string* representation;
+            int pid;
+            bool assignable;
         } expression;
         struct Reference
         {
@@ -24,6 +30,7 @@
             {
                 const SymbolTable::Entry*  sref;
                 const LiteralTable::Entry* lref;
+                int tref;
             };
         } reference;
     };
@@ -31,17 +38,30 @@
 
 // Importa y declara lo necesario para el .cpp
 %{
+#include "syntax-analyzer/components/parser.h"
+#include "syntax-analyzer/components/translator.h"
+#include "syntax-analyzer/components/string_pool.h"
+#include "syntax-analyzer/components/semantic_actions.h"
+
 #include "utils/resources/macros.h"
 #include "lexical-analyzer/lexical_analyzer.h"
-#include "syntax-analyzer/components/semantic_actions.h"
 #include "semantic-analyzer/semantic_analyzer.h"
-
-void yyerror(const char* s);
-
-using namespace SemanticAnalyzer;
-using namespace SyntaxAnalyzer::SemanticActions;
+#include "code-generator/code-generator.h"
 
 #define yylex LexicalAnalyzer::yylex
+
+using namespace SyntaxAnalyzer;
+
+// Parser Functions
+
+void yyerror(const char* s);
+int mapWithCheckerType(const int type);
+char mapWithTripleOperator(const int op);
+Triples::Operand mapWithOperand(const Metadata::Reference& ref);
+
+// Avoids Code Repetition
+void createArithmeticTriple(Metadata& r, const Metadata& o1, const Metadata& o2, const char op);
+
 %}
 
 // Corrige la ruta del header en el .cpp
@@ -52,6 +72,8 @@ using namespace SyntaxAnalyzer::SemanticActions;
     const SymbolTable::Entry*  sref;
     const LiteralTable::Entry* lref;
     Metadata metadata;
+    int pid;
+    Operator op;
 }
 
 %token INVALID_TOKEN
@@ -79,23 +101,33 @@ using namespace SyntaxAnalyzer::SemanticActions;
 
 %start global
 
-%type <metadata> comparison
 %type <metadata> function_invocation_head
 %type <metadata> invocation_setup
 %type <metadata> function_invocation_tail
 %type <metadata> real_parameter_list
+%type <metadata> real_parameter_list_setup
 %type <metadata> real_parameter
-%type <metadata> trunc_expression
+%type <metadata> comparison
+/* TODO: ver si es necesario que sea metadata */
+%type <metadata> trunc_constant
+%type <metadata> trunc_variable
+/* */
 %type <metadata> expression
-%type <metadata> negative_constant
-%type <metadata> positive_constant
-%type <metadata> numeric_constant
+%type <metadata> expression_setup
+%type <metadata> trunc_expression
+%type <metadata> term
+%type <metadata> positive_term
+%type <metadata> negative_term
+%type <metadata> factor
 %type <metadata> positive_factor
 %type <metadata> negative_factor
-%type <metadata> factor
-%type <metadata> negative_term
-%type <metadata> positive_term
-%type <metadata> term
+%type <metadata> numeric_constant
+%type <metadata> positive_constant
+%type <metadata> negative_constant
+
+%type <pid> variable
+
+%type <op> comparison_operator
 
 %% // Rules ------------------------------------------
 
@@ -110,27 +142,29 @@ global:
 global_statement:
     declarative_stmt
     {
-        announceSpecificError(GLOBAL_SCOPE_STATEMENT);
+        SemanticActions::announceSpecificError(GLOBAL_SCOPE_STATEMENT);
     } // Error: Global Scope Statement
     | executable_stmt
     {
-        announceSpecificError(GLOBAL_SCOPE_STATEMENT);
+        SemanticActions::announceSpecificError(GLOBAL_SCOPE_STATEMENT);
     } // Error: Global Scope Statement
     | program_head
     | '{'
     {
-        addInvalidScope();
-        announceSpecificError(MISSING_PROGRAM_NAME);
-        checkProgramRedeclaration("");
-    } // Action: addInvalidScope + checkProgramRedeclaration + Error: Missing Program Name
+        SemanticAnalyzer::addInvalidScope();
+        SemanticActions::announceSpecificError(MISSING_PROGRAM_NAME);
+
+        SemanticAnalyzer::CHK_PROGRAMS.checkProgramDeclaration("");
+
+    } // Action: SemanticAnalyzer::addInvalidScope + SemanticAnalyzer::checkProgramRedeclaration + Error: Missing Program Name
     unnamed_program_tail
     | '}'
     {
-        announceSpecificError(MISSING_OPENING_BRACKET);
+        SemanticActions::announceSpecificError(MISSING_OPENING_BRACKET);
     } // Error: Missing Opening Bracket and Program Name
     | error ';'
     {
-        announceSpecificError(GLOBAL_SCOPE_STATEMENT);
+        SemanticActions::announceSpecificError(GLOBAL_SCOPE_STATEMENT);
         yyerrok;
     } // Error: General Error and Global Scope Statement
 ;
@@ -138,17 +172,17 @@ global_statement:
 unnamed_program_tail:
     program_statements '}'
     {
-        removeScope();
-    } // Action: removeScope()
+        SemanticAnalyzer::removeScope();
+    } // Action: SemanticAnalyzer::removeScope()
     | '}'
     {
-        removeScope();
-    } // Action: removeScope()
+        SemanticAnalyzer::removeScope();
+    } // Action: SemanticAnalyzer::removeScope()
     | program_statements YYEOF
     {
-        removeScope();
-        announceSpecificError(MISSING_CLOSING_BRACKET);
-    } // Action: removeScope() + Error: Missing Closing Bracket and Program Name
+        SemanticAnalyzer::removeScope();
+        SemanticActions::announceSpecificError(MISSING_CLOSING_BRACKET);
+    } // Action: SemanticAnalyzer::removeScope() + Error: Missing Closing Bracket and Program Name
 ;
 
 // =============================== Program Declaration ============================= //
@@ -157,31 +191,33 @@ program_head:
     IDENTIFIER '{'
     {
         const std::string s = $1->symbol;
-        checkProgramRedeclaration(s);
-        if (updateSymbolAsProgram(s) == nullptr)
-            addInvalidScope();
+        if (SemanticAnalyzer::CHK_PROGRAMS.checkProgramDeclaration(s) != nullptr)
+        {
+            SemanticAnalyzer::addScope(s);
+            CodeGenerator::addIntermediateCodeBlock(s);
+        }
         else
-            addScope(s);
-    } // Action: updateProgramSymbol() + checkProgramRedeclaration() + addScope()
+            SemanticAnalyzer::addInvalidScope();
+    } // Action: updateProgramSymbol() + SemanticAnalyzer::checkProgramRedeclaration() + SemanticAnalyzer::addScope()
     program_tail
 ;
 
 program_tail:
     program_statements '}'
     {
-        logStructure("PROGRAM");
-        removeScope();
-    } // Action: removeScope() + Log  : Program Structure
+        SemanticActions::logStructure("PROGRAM");
+        SemanticAnalyzer::removeScope();
+    } // Action: SemanticAnalyzer::removeScope() + Log  : Program Structure
     | program_statements YYEOF
     {
-        announceSpecificError(MISSING_CLOSING_BRACKET);
-        removeScope();
+        SemanticActions::announceSpecificError(MISSING_CLOSING_BRACKET);
+        SemanticAnalyzer::removeScope();
     } // Error: Missing Closing Bracket
     | '}'
     {
-        logStructure("PROGRAM");
-        removeScope();
-    } // Action: removeScope() + Log  : Program Structure
+        SemanticActions::logStructure("PROGRAM");
+        SemanticAnalyzer::removeScope();
+    } // Action: SemanticAnalyzer::removeScope() + Log  : Program Structure
 ;
 
 // ================================ Program Statement ============================== //
@@ -196,20 +232,20 @@ program_statement:
     | executable_stmt
     | program_head
     {
-       announceSpecificError(INVALID_PROGRAM_NESTING);
+       SemanticActions::announceSpecificError(INVALID_PROGRAM_NESTING);
     } // Error: Invalid Nesting of Programs
     | '{' '}'
     {
-        announceSpecificError(INVALID_COMPOUND_NESTING);
+        SemanticActions::announceSpecificError(INVALID_COMPOUND_NESTING);
     } // Error: Invalid Nesting of Compounds Statements
     | '{' program_statements '}'
     {
-        announceSpecificError(INVALID_COMPOUND_NESTING);
+        SemanticActions::announceSpecificError(INVALID_COMPOUND_NESTING);
     } // Error: Invalid Nesting of Compounds Statements
     | '{' program_statements YYEOF
     {
-        announceSpecificError(MISSING_CLOSING_BRACKET);
-        announceSpecificError(INVALID_COMPOUND_NESTING);
+        SemanticActions::announceSpecificError(MISSING_CLOSING_BRACKET);
+        SemanticActions::announceSpecificError(INVALID_COMPOUND_NESTING);
     } // Error: Missing Closing Bracket and Invalid Nesting of Compounds Statements
     | error ';'
     {
@@ -222,27 +258,27 @@ program_statement:
 declarative_stmt:
     type variable_list ';'
     {
-        logStructure("VARIABLE DECLARATION");
+        SemanticActions::logStructure("VARIABLE DECLARATION");
     } // Log  : Variable Declaration Structure
     | type error ';'
     {
-        specifySyntaxError(MISSING_VARIABLE);
+        SemanticActions::specifySyntaxError(MISSING_VARIABLE);
         yyerrok;
     } // Error: Missing Variable
     | type variable_list error
     {
-        specifySyntaxError(MISSING_SEMICOLON);
+        SemanticActions::specifySyntaxError(MISSING_SEMICOLON);
         yyerrok;
     } // Error: Missing Semicolon
     | type IDENTIFIER '('
     {
-        CHK_FUNCTIONS.notifyFunctionName($2->symbol);
+        SemanticAnalyzer::CHK_FUNCTIONS.notifyFunctionName($2->symbol);
     } // Action: notifyFunctionName()
     function_declaration_middle
     | type '('
     {
-        CHK_FUNCTIONS.notifyFunctionWithoutName();
-        announceSpecificError(MISSING_FUNCTION_NAME);
+        SemanticAnalyzer::CHK_FUNCTIONS.notifyFunctionWithoutName();
+        SemanticActions::announceSpecificError(MISSING_FUNCTION_NAME);
     } // Action: notifyUnnamedFunctionDeclaration() + Error: Missing Function Name
     unnamed_function_declaration_middle
 ;
@@ -252,23 +288,23 @@ declarative_stmt:
 variable_list:
     variable
     {
-        upsertVariableScope();
-    } // Action: upsertVariableScope()
+        SemanticAnalyzer::CHK_VARIABLES.checkVariableDeclaration();
+    } // Action: SemanticAnalyzer::CHK_VARIABLES.checkVariableDeclaration()
     | variable_list ',' variable
     {
-        upsertVariableScope();
-    } // Action: upsertVariableScope()
+        SemanticAnalyzer::CHK_VARIABLES.checkVariableDeclaration();
+    } // Action: SemanticAnalyzer::CHK_VARIABLES.checkVariableDeclaration()
     | variable_list
     {
-        announceSpecificError(MISSING_COMMA);
-    } // Action: upsertVariableScope + Error: Missing Comma
+        SemanticActions::announceSpecificError(MISSING_COMMA);
+    } // Action: SemanticAnalyzer::CHK_VARIABLES.checkVariableDeclaration + Error: Missing Comma
     variable
     {
-        upsertVariableScope();
+        SemanticAnalyzer::CHK_VARIABLES.checkVariableDeclaration();
     }
     | variable_list ',' error
     {
-        specifySyntaxError(MISSING_VARIABLE);
+        SemanticActions::specifySyntaxError(MISSING_VARIABLE);
         yyerrok;
     } // Error: Missing Variable
 ;
@@ -276,12 +312,12 @@ variable_list:
 type:
     UINT
     {
-        CURRENT_TYPE = ST_UINT;
+        SemanticAnalyzer::TYPE = ST_UINT;
     } // Build: Current Type
     | FLOAT
     {
-        CURRENT_TYPE = ST_FLOAT;
-        announceSpecificError(NOT_YET_IMPLEMENTED);
+        SemanticAnalyzer::TYPE = ST_FLOAT;
+        SemanticActions::announceSpecificError(NOT_YET_IMPLEMENTED);
     } // Error: Type not yet implemented + Build: Current Type
 ;
 
@@ -290,7 +326,7 @@ type:
 unnamed_function_declaration_middle:
     formal_parameter_list ')'
     {
-        CHK_FUNCTIONS.checkFunctionDeclaration();
+        SemanticAnalyzer::CHK_FUNCTIONS.checkFunctionDeclaration();
     } // Action: checkFunctionDeclaration()
     unnamed_function_declaration_tail
 ;
@@ -298,20 +334,20 @@ unnamed_function_declaration_middle:
 unnamed_function_declaration_tail:
     function_body ';'
     {
-        removeScope();
-    } // Action: removeScope()
+        SemanticAnalyzer::removeScope();
+    } // Action: SemanticAnalyzer::removeScope()
     | function_body error
     {
-        removeScope();
-        specifySyntaxError(MISSING_SEMICOLON);
+        SemanticAnalyzer::removeScope();
+        SemanticActions::specifySyntaxError(MISSING_SEMICOLON);
         yyerrok;
-    } // Action: removeScope() + Error: Missing Semicolon
+    } // Action: SemanticAnalyzer::removeScope() + Error: Missing Semicolon
 ;
 
 function_declaration_middle:
     formal_parameter_list ')'
     {
-        CHK_FUNCTIONS.checkFunctionDeclaration();
+        SemanticAnalyzer::CHK_FUNCTIONS.checkFunctionDeclaration();
     } // Action: checkFunctionDeclaration()
     function_declaration_tail
 ;
@@ -319,15 +355,15 @@ function_declaration_middle:
 function_declaration_tail:
     function_body ';'
     {
-        logStructure("FUNCTION DECLARATION");
-        removeScope();
-    } // Action: removeScope() + Log  : Function Declaration Structure
+        SemanticActions::logStructure("FUNCTION DECLARATION");
+        SemanticAnalyzer::removeScope();
+    } // Action: SemanticAnalyzer::removeScope() + Log  : Function Declaration Structure
     | function_body error
     {
-        specifySyntaxError(MISSING_SEMICOLON);
+        SemanticActions::specifySyntaxError(MISSING_SEMICOLON);
         yyerrok;
-        removeScope();
-    } // Action: removeScope() + Error: Missing Semicolon
+        SemanticAnalyzer::removeScope();
+    } // Action: SemanticAnalyzer::removeScope() + Error: Missing Semicolon
 ;
 
 formal_parameter_list:
@@ -335,7 +371,7 @@ formal_parameter_list:
     | formal_parameter_list ',' formal_parameter
     | formal_parameter_list
     {
-        announceSpecificError(MISSING_COMMA);
+        SemanticActions::announceSpecificError(MISSING_COMMA);
     } // Error: Missing Comma
     formal_parameter
 ;
@@ -343,48 +379,48 @@ formal_parameter_list:
 formal_parameter:
     type IDENTIFIER
     {
-        CHK_FUNCTIONS.notifyParameterSemantic(ST_CV);
-        CHK_FUNCTIONS.checkParameterDeclaration($2->symbol);
+        SemanticAnalyzer::CHK_FUNCTIONS.notifyParameterSemantic(ST_CV);
+        SemanticAnalyzer::CHK_FUNCTIONS.checkParameterDeclaration($2->symbol);
     } // Build: Current Semantic + Action: checkParameterDeclaration()
     | type error
     {
-        specifySyntaxError(MISSING_PARAMETER_NAME);
+        SemanticActions::specifySyntaxError(MISSING_PARAMETER_NAME);
         yyerrok;
     } // Error: Missing Parameter Name
     | IDENTIFIER
     {
-        CURRENT_TYPE = ST_UNSUPPORTED;
-        CHK_FUNCTIONS.notifyParameterSemantic(ST_CV);
-        CHK_FUNCTIONS.checkParameterDeclaration($1->symbol);
-        announceSpecificErrorWithSymbol(MISSING_PARAMETER_TYPE);
+        SemanticAnalyzer::TYPE = ST_UNSUPPORTED;
+        SemanticAnalyzer::CHK_FUNCTIONS.notifyParameterSemantic(ST_CV);
+        SemanticAnalyzer::CHK_FUNCTIONS.checkParameterDeclaration($1->symbol);
+        SemanticActions::announceSpecificErrorWithSymbol(MISSING_PARAMETER_TYPE);
     } // Build: Current Type + Current Semantic + Action: checkParameterDeclaration() + Error: Missing Parameter Type
     | parameter_semantics type IDENTIFIER
     {
-        CHK_FUNCTIONS.checkParameterDeclaration($3->symbol);
+        SemanticAnalyzer::CHK_FUNCTIONS.checkParameterDeclaration($3->symbol);
     } // Action: checkParameterDeclaration()
     | parameter_semantics type error
     {
-        specifySyntaxError(MISSING_PARAMETER_NAME);
+        SemanticActions::specifySyntaxError(MISSING_PARAMETER_NAME);
         yyerrok;
     } // Error: Missing Parameter Name
     | parameter_semantics error
     {
-        specifySyntaxError(MISSING_PARAMETER_NAME);
-        announceSpecificError(MISSING_PARAMETER_TYPE);
+        SemanticActions::specifySyntaxError(MISSING_PARAMETER_NAME);
+        SemanticActions::announceSpecificError(MISSING_PARAMETER_TYPE);
         yyerrok;
     } // Error: Missing Parameter Type and Name
     | parameter_semantics IDENTIFIER
     {
-        CURRENT_TYPE = ST_UNSUPPORTED;
-        CHK_FUNCTIONS.checkParameterDeclaration($2->symbol);
-        announceSpecificErrorWithSymbol(MISSING_PARAMETER_TYPE);
+        SemanticAnalyzer::TYPE = ST_UNSUPPORTED;
+        SemanticAnalyzer::CHK_FUNCTIONS.checkParameterDeclaration($2->symbol);
+        SemanticActions::announceSpecificErrorWithSymbol(MISSING_PARAMETER_TYPE);
     } // Action: checkParameterDeclaration() + Error: Missing Parameter Type
 ;
 
 parameter_semantics:
     CR
     {
-        CHK_FUNCTIONS.notifyParameterSemantic(ST_CR);
+        SemanticAnalyzer::CHK_FUNCTIONS.notifyParameterSemantic(ST_CR);
     } // Build: Current Semantic
 ;
 
@@ -394,7 +430,7 @@ function_body:
     '{' program_statements '}'
     | '{' program_statements YYEOF
     {
-        announceSpecificError(MISSING_CLOSING_BRACKET);
+        SemanticActions::announceSpecificError(MISSING_CLOSING_BRACKET);
     } // Error: Missing Closing Bracket
 ;
 
@@ -404,41 +440,41 @@ return:
     RETURN '(' expression ')' ';'
     | RETURN '(' expression ')' error
     {
-        specifySyntaxError(MISSING_SEMICOLON);
+        SemanticActions::specifySyntaxError(MISSING_SEMICOLON);
         yyerrok;
     } // Error: Missing Semicolon
     | RETURN '(' expression error
     {
-        specifySyntaxError(MISSING_CLOSING_PARENTHESIS);
-        announceSpecificError(MISSING_SEMICOLON);
+        SemanticActions::specifySyntaxError(MISSING_CLOSING_PARENTHESIS);
+        SemanticActions::announceSpecificError(MISSING_SEMICOLON);
         yyerrok;
     } // Error: Missing Closing Parenthesis and Semicolon
     | RETURN expression ')'
     {
-        announceSpecificError(MISSING_OPENING_PARENTHESIS);
-        announceSpecificError(MISSING_SEMICOLON);
+        SemanticActions::announceSpecificError(MISSING_OPENING_PARENTHESIS);
+        SemanticActions::announceSpecificError(MISSING_SEMICOLON);
     } // Error: Missing Opening Parenthesis and Semicolon
     | RETURN expression error
     {
-        specifySyntaxError(MISSING_BOTH_PARENTHESIS_RETURN);
-        announceSpecificError(MISSING_SEMICOLON);
+        SemanticActions::specifySyntaxError(MISSING_BOTH_PARENTHESIS_RETURN);
+        SemanticActions::announceSpecificError(MISSING_SEMICOLON);
         yyerrok;
     } // Error: Missing Both Parenthesis and Semicolon
     | RETURN '(' expression ';'
     {
-        announceSpecificError(MISSING_CLOSING_PARENTHESIS);
+        SemanticActions::announceSpecificError(MISSING_CLOSING_PARENTHESIS);
     } // Error: Missing Closing Parenthesis
     | RETURN expression ')' ';'
     {
-        announceSpecificError(MISSING_OPENING_PARENTHESIS);
+        SemanticActions::announceSpecificError(MISSING_OPENING_PARENTHESIS);
     } // Error: Missing Opening Parenthesis
     | RETURN expression ';'
     {
-        announceSpecificError(MISSING_BOTH_PARENTHESIS_RETURN);
+        SemanticActions::announceSpecificError(MISSING_BOTH_PARENTHESIS_RETURN);
     } // Error: Missing Both Parenthesis
     | RETURN error ';'
     {
-        specifySyntaxError(RETURN_SYNTAX_ERROR);
+        SemanticActions::specifySyntaxError(RETURN_SYNTAX_ERROR);
         yyerrok;
     } // Error: Return General Error
 ;
@@ -460,24 +496,24 @@ executable_stmt:
 assignment_head:
     variable ASSIGN_OP
     {
-        checkVariableExistanceInScope();
-    } // Action: checkVariableExistanceInScope()
+        SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
+    } // Action: SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope()
     assignment_tail
     | variable ASSIGN_OP error ';'
     {
-        checkVariableExistanceInScope();
+        SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
         yyerrok;
-    } // Action: checkVariableExistanceInScope() + Error: General Error
+    } // Action: SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope() + Error: General Error
 ;
 
 assignment_tail:
     expression ';'
     {
-        logStructure("ASSIGNMENT");
+        SemanticActions::logStructure("ASSIGNMENT");
     } // Log  : Assignment Structure
     | expression error
     {
-        specifySyntaxError(MISSING_SEMICOLON);
+        SemanticActions::specifySyntaxError(MISSING_SEMICOLON);
         yyerrok;
     } // Error: Missing Semicolon
 ;
@@ -487,31 +523,31 @@ assignment_tail:
 print:
     PRINT '(' STRING_LITERAL ')' ';'
     {
-        logStructure("PRINT");
+        SemanticActions::logStructure("PRINT");
     } // Log  : Print Structure
     | PRINT '(' STRING_LITERAL ')' error
     {
-        specifySyntaxError(MISSING_SEMICOLON);
+        SemanticActions::specifySyntaxError(MISSING_SEMICOLON);
         yyerrok;
     } // Error: Missing Semicolon
     | PRINT '(' expression ')' ';'
     {
-        logStructure("PRINT");
+        SemanticActions::logStructure("PRINT");
     } // Log  : Print
     | PRINT '(' expression ')' error
     {
-        specifySyntaxError(MISSING_SEMICOLON);
+        SemanticActions::specifySyntaxError(MISSING_SEMICOLON);
         yyerrok;
     } // Error: Missing Semicolon
     | PRINT '(' error ')'
     {
-        specifySyntaxError(MISSING_ARGUMENT);
+        SemanticActions::specifySyntaxError(MISSING_ARGUMENT);
         yyerrok;
     } // Error: Missing Argument
     print_end
     | PRINT error ';'
     {
-        specifySyntaxError(PRINT_SYNTAX_ERROR);
+        SemanticActions::specifySyntaxError(PRINT_SYNTAX_ERROR);
         yyerrok;
     } // Error: Print General Error
 ;
@@ -520,7 +556,7 @@ print_end:
     ';'
     | /* empty */
     {
-        announceSpecificError(MISSING_SEMICOLON);
+        SemanticActions::announceSpecificError(MISSING_SEMICOLON);
     } // Error: Missing Argument and Semicolon
 ;
 
@@ -529,26 +565,26 @@ print_end:
 multiple_assignments:
     variable assignment_list opt_trunc_constant extra_numeric_constants ';'
     {
-        logStructure("MULTIPLE ASSIGNMENT");
+        SemanticActions::logStructure("MULTIPLE ASSIGNMENT");
     } // Log  : Multiple Assignment Structure
     | variable assignment_list opt_trunc_constant extra_numeric_constants error
     {
-        specifySyntaxError(MISSING_SEMICOLON);
+        SemanticActions::specifySyntaxError(MISSING_SEMICOLON);
         yyerrok;
     } // Error: Missing Semicolon
     | variable assignment_list ';'
     {
-        announceSpecificError(MISSING_RIGHT_SIDE_VALUES);
+        SemanticActions::announceSpecificError(MISSING_RIGHT_SIDE_VALUES);
     } // Error: Missing Right Side Values
     | variable assignment_list error
     {
-        specifySyntaxError(MISSING_RIGHT_SIDE_VALUES);
-        announceSpecificError(MISSING_SEMICOLON);
+        SemanticActions::specifySyntaxError(MISSING_RIGHT_SIDE_VALUES);
+        SemanticActions::announceSpecificError(MISSING_SEMICOLON);
         yyerrok;
     } // Error: Missing Right Side Values and Semicolon
     | variable error ';'
     {
-        specifySyntaxWarning(STATEMENT_INTERPRETED);
+        SemanticActions::specifySyntaxWarning(STATEMENT_INTERPRETED);
         yyerrok;
     } // Warning: Statement Interpreted
 ;
@@ -558,16 +594,16 @@ assignment_list:
     | ',' variable assignment_list opt_trunc_constant ','
     | ',' variable error opt_trunc_constant ','
     {
-        specifySyntaxError(MISSING_EQUALS);
+        SemanticActions::specifySyntaxError(MISSING_EQUALS);
     } // Error: Missing Equals Operator
     | IDENTIFIER
     {
-        announceSpecificErrorWithSymbol(MISSING_COMMA);
+        SemanticActions::announceSpecificErrorWithSymbol(MISSING_COMMA);
     } // Error: Missing Comma
     assignment_list assignment_end
     | ',' variable assignment_list opt_trunc_constant
     {
-        announceSpecificError(MISSING_COMMA);
+        SemanticActions::announceSpecificError(MISSING_COMMA);
     } // Error: Missing Right Side Comma
     | ',' variable assignment_list error
     {
@@ -579,7 +615,7 @@ assignment_end:
     opt_trunc_constant ','
     | opt_trunc_constant error
     {
-        specifySyntaxError(MISSING_COMMA);
+        SemanticActions::specifySyntaxError(MISSING_COMMA);
         yyerrok;
     } // Error: Missing Comma
 ;
@@ -589,7 +625,7 @@ extra_numeric_constants:
     | extra_numeric_constants ',' opt_trunc_constant
     | extra_numeric_constants
     {
-        announceSpecificError(MISSING_COMMA);
+        SemanticActions::announceSpecificError(MISSING_COMMA);
     } // Error: Missing Comma
     opt_trunc_constant
 ;
@@ -600,13 +636,13 @@ invocation:
     function_invocation_head ';'
     | function_invocation_head error
     {
-        specifySyntaxError(MISSING_SEMICOLON);
+        SemanticActions::specifySyntaxError(MISSING_SEMICOLON);
         yyerrok;
     } // Error: Missing Semicolon
     | lambda_invocation_head ';'
     | lambda_invocation_head error
     {
-        specifySyntaxError(MISSING_SEMICOLON);
+        SemanticActions::specifySyntaxError(MISSING_SEMICOLON);
         yyerrok;
     } // Error: Missing Semicolon
 ;
@@ -617,18 +653,26 @@ function_invocation_head:
     invocation_setup function_invocation_tail
     {
         $$ = $1;
-        $$.expression.representation->append($2.expression.representation);
-        logStructure("FUNCTION INVOCATION");
+        StringPool::append($$.expression.pid, *StringPool::get($2.expression.pid));
+
+        SemanticActions::logStructure("FUNCTION INVOCATION");
     }
     | IDENTIFIER '(' error ')'
     {
-        $$.expression.representation = new std::string;
-        $$.expression.representation->append($1->symbol)
-                                    .append("(...)");
-        $$.reference.sref = CHK_INVOCATIONS.checkFunctionInScope($1->symbol);
-        loadSymbolMetadata($$);
+        $$.expression.pid = StringPool::create($1->symbol + "(...)");
+        $$.reference.sref = SemanticAnalyzer::CHK_INVOCATIONS.checkFunctionInScope($1->symbol);
+        if ($$.reference.sref != nullptr)
+        {
+            $$.reference.type = PR_SYMBOL;
+            $$.expression.type = mapWithCheckerType($$.reference.sref->type);
+        }
+        else
+        {
+            $$.reference.type = PR_NULL;
+            $$.expression.type = TC_UNSUPPORTED;
+        }
 
-        specifySyntaxError(MISSING_ARGUMENT);
+        SemanticActions::specifySyntaxError(MISSING_ARGUMENT);
         yyerrok;
     }
 ;
@@ -636,28 +680,36 @@ function_invocation_head:
 invocation_setup:
     IDENTIFIER '('
     {
-        $$.expression.representation = new std::string;
-        $$.expression.representation->append($1->symbol)
-                                    .append("(");
-        $$.reference.sref = CHK_INVOCATIONS.checkFunctionInScope($1->symbol);
-        loadSymbolMetadata($$);
+        $$.expression.pid = StringPool::create($1->symbol + "(");
+        $$.reference.sref = SemanticAnalyzer::CHK_INVOCATIONS.checkFunctionInScope($1->symbol);
+        if ($$.reference.sref != nullptr)
+        {
+            $$.reference.type = PR_SYMBOL;
+            $$.expression.type = mapWithCheckerType($$.reference.sref->type);
+        }
+        else
+        {
+            $$.reference.type = PR_NULL;
+            $$.expression.type = TC_UNSUPPORTED;
+        }
     }
 ;
 
 function_invocation_tail:
     real_parameter_list ')'
     {
-        $$.expression.representation = $1.expression.representation
-        $$.expression.representation->append(")");
+        StringPool::append($1.expression.pid, ")");
         $$.expression.type = TC_UNSUPPORTED;
-        CHK_INVOCATIONS.notifyInvocationEnd();
+        $$.expression.pid = $1.expression.pid;
+
+        SemanticAnalyzer::CHK_INVOCATIONS.notifyInvocationEnd();
     }
     | ')'
     {
-        $$.expression.representation = ")";
-        $$.expression.type = TC_UNSUPPORTED;
-        CHK_INVOCATIONS.notifyInvocationEnd();
-        announceSpecificError(MISSING_ARGUMENT);
+        $$.expression = { TC_UNSUPPORTED, StringPool::create(")") };
+
+        SemanticAnalyzer::CHK_INVOCATIONS.notifyInvocationEnd();
+        SemanticActions::announceSpecificError(MISSING_ARGUMENT);
     }
 ;
 
@@ -668,23 +720,42 @@ real_parameter_list:
     }
     | real_parameter_list ',' real_parameter
     {
-        $$.expression.representation = $1.expression.representation + ", " + $3.expression.representation;
+        StringPool::append($1.expression.pid, ", " + *StringPool::get($3.expression.pid));
         $$.expression.type = TC_UNSUPPORTED;
+        $$.expression.pid = $1.expression.pid;
+    }
+    | real_parameter_list_setup real_parameter
+    {
+        StringPool::append($1.expression.pid, " " + *StringPool::get($2.expression.pid));
+        $$.expression.type = TC_UNSUPPORTED;
+        $$.expression.pid = $1.expression.pid;
+
+    } // Error: Missing Comma
+;
+
+real_parameter_list_setup:
+    real_parameter_list
+    {
+        $$ = $1;
+        SemanticActions::announceSpecificError(MISSING_COMMA);
     }
 ;
 
 real_parameter:
     expression POINTER_OP IDENTIFIER
     {
-        $$.expression.representation = $1.expression.representation + "->" + $3->symbol;
-        $$.expression.type = TC_UNSUPPORTED; // Type is validated by the checker
-        CHK_INVOCATIONS.checkParameterInScope($3->symbol);
+        StringPool::append($1.expression.pid, "->" + $3->symbol);
+        $$.expression.type = TC_UNSUPPORTED;
+        $$.expression.pid = $1.expression.pid;
+
+        SemanticAnalyzer::CHK_INVOCATIONS.checkParameterInScope($3->symbol);
     }
-    | expression
+    | expression error
     {
         $$ = $1;
 
-        announceSpecificError(MISSING_POINTED_PARAMETER);
+        SemanticActions::specifySyntaxError(MISSING_POINTED_PARAMETER);
+        yyerrok;
     }
 ;
 
@@ -693,33 +764,33 @@ real_parameter:
 lambda_invocation_head:
     '(' type IDENTIFIER ')'
     {
-        addLambdaScope();
-        CHK_FUNCTIONS.checkParameterDeclaration($3->symbol);
-    } // Action: addScope()
+        SemanticAnalyzer::addLambdaScope();
+        SemanticAnalyzer::CHK_FUNCTIONS.checkParameterDeclaration($3->symbol);
+    } // Action: SemanticAnalyzer::addScope()
     lambda_invocation_tail
 ;
 
 lambda_invocation_tail:
     '{' executable_statements '}' '(' lambda_real_parameter ')'
     {
-        removeScope();
-        logStructure("LAMBDA");
-    } // Action: addScope() + Log   : Lambda Structure
+        SemanticAnalyzer::removeScope();
+        SemanticActions::logStructure("LAMBDA");
+    } // Action: SemanticAnalyzer::addScope() + Log   : Lambda Structure
     | executable_statements '}' '(' lambda_real_parameter ')'
     {
-        removeScope();
-        announceSpecificError(MISSING_OPENING_BRACKET);
-    } // Action: addScope() + Error: Missing Opening Bracket
+        SemanticAnalyzer::removeScope();
+        SemanticActions::announceSpecificError(MISSING_OPENING_BRACKET);
+    } // Action: SemanticAnalyzer::addScope() + Error: Missing Opening Bracket
     | '{' executable_statements '(' lambda_real_parameter ')'
     {
-        removeScope();
-        announceSpecificError(MISSING_CLOSING_BRACKET);
-    } // Action: addScope() + Error: Missing Closing Bracket
+        SemanticAnalyzer::removeScope();
+        SemanticActions::announceSpecificError(MISSING_CLOSING_BRACKET);
+    } // Action: SemanticAnalyzer::addScope() + Error: Missing Closing Bracket
     | executable_statements '(' lambda_real_parameter ')'
     {
-        removeScope();
-        announceSpecificError(MISSING_BOTH_BRACKETS);
-    } // Action: addScope() + Error: Missing Both Brackets
+        SemanticAnalyzer::removeScope();
+        SemanticActions::announceSpecificError(MISSING_BOTH_BRACKETS);
+    } // Action: SemanticAnalyzer::addScope() + Error: Missing Both Brackets
 ;
 
 lambda_real_parameter:
@@ -732,73 +803,73 @@ lambda_real_parameter:
 if:
     IF condition executable_body ENDIF ';'
     {
-        logStructure("IF");
+        SemanticActions::logStructure("IF");
     } // Log  : If
     | IF condition executable_body ENDIF error
     {
-        specifySyntaxError(MISSING_SEMICOLON);
+        SemanticActions::specifySyntaxError(MISSING_SEMICOLON);
         yyerrok;
     } // Error: Missing Semicolon
     | IF condition executable_body ELSE executable_body ENDIF ';'
     {
-        logStructure("IF-ELSE");
+        SemanticActions::logStructure("IF-ELSE");
     } // Log  : If-Else
     | IF condition executable_body ELSE executable_body ENDIF error
     {
-        specifySyntaxError(MISSING_SEMICOLON);
+        SemanticActions::specifySyntaxError(MISSING_SEMICOLON);
         yyerrok;
     } // Error: Missing Semicolon
     | IF condition executable_body error
     {
-        specifySyntaxError(MISSING_ENDIF);
+        SemanticActions::specifySyntaxError(MISSING_ENDIF);
         yyerrok;
     } // Error: Missing ENDIF in IF
     | IF condition executable_body ELSE executable_body error
     {
-        specifySyntaxError(MISSING_ENDIF);
+        SemanticActions::specifySyntaxError(MISSING_ENDIF);
         yyerrok;
     } // Error: Missing ENDIF in IF-ELSE
     | IF condition error ENDIF ';'
     {
-        specifySyntaxError(MISSING_IF_EXECUTABLE_BODY);
+        SemanticActions::specifySyntaxError(MISSING_IF_EXECUTABLE_BODY);
         yyerrok;
     } // Error: Missing Executable Body in IF
     | IF condition error ';'
     {
-        specifySyntaxError(MISSING_IF_EXECUTABLE_BODY);
-        announceSpecificError(MISSING_ENDIF);
+        SemanticActions::specifySyntaxError(MISSING_IF_EXECUTABLE_BODY);
+        SemanticActions::announceSpecificError(MISSING_ENDIF);
         yyerrok;
     } // Error: Missing Exutable Body and ENDIF in IF
     | IF condition error ELSE ENDIF ';'
     {
-        specifySyntaxError(MISSING_BOTH_EXECUTABLE_BODY);
+        SemanticActions::specifySyntaxError(MISSING_BOTH_EXECUTABLE_BODY);
         yyerrok;
     } // Error: Missing Both Executable Body in IF-ELSE
     | IF condition error ELSE ';'
     {
-        specifySyntaxError(MISSING_BOTH_EXECUTABLE_BODY);
-        announceSpecificError(MISSING_ENDIF);
+        SemanticActions::specifySyntaxError(MISSING_BOTH_EXECUTABLE_BODY);
+        SemanticActions::announceSpecificError(MISSING_ENDIF);
         yyerrok;
     } // Error: Missing Both Executable Body and ENDIF in IF-ELSE
     | IF condition executable_body ELSE error ENDIF ';'
     {
-        specifySyntaxError(MISSING_ELSE_EXECUTABLE_BODY);
+        SemanticActions::specifySyntaxError(MISSING_ELSE_EXECUTABLE_BODY);
         yyerrok;
     } // Error: Missing Executable Body in ELSE
     | IF condition executable_body ELSE error ';'
     {
-        specifySyntaxError(MISSING_ELSE_EXECUTABLE_BODY);
-        announceSpecificError(MISSING_ENDIF);
+        SemanticActions::specifySyntaxError(MISSING_ELSE_EXECUTABLE_BODY);
+        SemanticActions::announceSpecificError(MISSING_ENDIF);
         yyerrok;
     } // Error: Missing Executable Body in ELSE and ENDIF
     | ELSE executable_body ENDIF ';'
     {
-        announceSpecificError(MISSING_IF_STATEMENT);
+        SemanticActions::announceSpecificError(MISSING_IF_STATEMENT);
         yyerrok;
     } // Error: Missing IF Statement
     | IF error ';'
     {
-        specifySyntaxError(IF_SYNTAX_ERROR);
+        SemanticActions::specifySyntaxError(IF_SYNTAX_ERROR);
         yyerrok;
     } // Error: If General Error
 ;
@@ -808,26 +879,26 @@ if:
 do_while_head:
     DO executable_body WHILE condition ';'
     {
-        logStructure("DO-WHILE");
+        SemanticActions::logStructure("DO-WHILE");
     } // Log  : DO-WHILE
     | DO executable_body WHILE condition error
     {
-        specifySyntaxError(MISSING_SEMICOLON);
+        SemanticActions::specifySyntaxError(MISSING_SEMICOLON);
         yyerrok;
     } // Error: Missing Semicolon
     | DO executable_body
     {
-        announceSpecificError(MISSING_WHILE);
+        SemanticActions::announceSpecificError(MISSING_WHILE);
     } // Error: Missing WHILE word
     do_while_tail
     | DO
     {
-        announceSpecificError(MISSING_WHILE_EXECUTABLE_BODY);
+        SemanticActions::announceSpecificError(MISSING_WHILE_EXECUTABLE_BODY);
     } // Error: Missing Executable Body
     WHILE do_while_tail
     | DO error ';'
     {
-        specifySyntaxError(DO_SYNTAX_ERROR);
+        SemanticActions::specifySyntaxError(DO_SYNTAX_ERROR);
         yyerrok;
     } // Error: Do-While General Error
 ;
@@ -836,7 +907,7 @@ do_while_tail:
     condition ';'
     | condition error
     {
-        specifySyntaxError(MISSING_SEMICOLON);
+        SemanticActions::specifySyntaxError(MISSING_SEMICOLON);
         yyerrok;
     } // Error: Missing Semicolon
 ;
@@ -847,7 +918,7 @@ executable_body:
     '{' executable_statements '}'
     | '{' executable_statements error
     {
-        specifySyntaxError(MISSING_CLOSING_BRACKET);
+        SemanticActions::specifySyntaxError(MISSING_CLOSING_BRACKET);
         yyerrok;
     } // Missing Closing Bracket
     | '{' error '}'
@@ -872,85 +943,236 @@ opt_trunc_constant:
 trunc_constant:
     TRUNC '(' numeric_constant ')'
     {
-        CHK_COERTIONS.truncable($3.reference.lref->type);
+        SemanticAnalyzer::TypeChecker::Expression e = { $3.expression.type, *StringPool::get($3.expression.pid) };
+        SemanticAnalyzer::CHK_TYPES.checkTruncate(e);
+
+         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
+         {
+             $$.reference.tref = CodeGenerator::INTERMEDIATE_CODE->addTriple(
+                 {TR_FTOI, mapWithOperand($3.reference), mapWithOperand({ PR_NULL, nullptr })}
+             );
+             $$.reference.type = PR_TRIPLE;
+         }
+
+
     } // Action: truncable()
     | TRUNC '(' numeric_constant error
     {
-        CHK_COERTIONS.truncable($3.reference.lref->type);
+        SemanticAnalyzer::TypeChecker::Expression e = { $3.expression.type, *StringPool::get($3.expression.pid) };
+        SemanticAnalyzer::CHK_TYPES.checkTruncate(e);
 
-        specifySyntaxError(MISSING_CLOSING_PARENTHESIS);
+         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
+         {
+             $$.reference.tref = CodeGenerator::INTERMEDIATE_CODE->addTriple(
+                 {TR_FTOI, mapWithOperand($3.reference), mapWithOperand({ PR_NULL, nullptr })}
+             );
+             $$.reference.type = PR_TRIPLE;
+         }
+
+        SemanticActions::specifySyntaxError(MISSING_CLOSING_PARENTHESIS);
         yyerrok;
+
     } // Action: truncable() + Error: Missing Closing Parenthesis
     | TRUNC numeric_constant ')'
     {
-        CHK_COERTIONS.truncable($2.reference.lref->type);
+        SemanticAnalyzer::TypeChecker::Expression e = { $2.expression.type, *StringPool::get($2.expression.pid) };
+        SemanticAnalyzer::CHK_TYPES.checkTruncate(e);
 
-        announceSpecificError(MISSING_OPENING_PARENTHESIS);
+        if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
+        {
+            $$.reference.tref = CodeGenerator::INTERMEDIATE_CODE->addTriple(
+                {TR_FTOI, mapWithOperand($2.reference), mapWithOperand({ PR_NULL, nullptr })}
+            );
+            $$.reference.type = PR_TRIPLE;
+        }
+
+        SemanticActions::announceSpecificError(MISSING_OPENING_PARENTHESIS);
+
     } // Action: truncable() + Error: Missing Opening Parenthesis
     | TRUNC numeric_constant error
     {
-        CHK_COERTIONS.truncable($2.reference.lref->type);
+        SemanticAnalyzer::TypeChecker::Expression e = { $2.expression.type, *StringPool::get($2.expression.pid) };
+        SemanticAnalyzer::CHK_TYPES.checkTruncate(e);
 
-        specifySyntaxError(MISSING_BOTH_PARENTHESIS_TRUNC);
+        if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
+        {
+            $$.reference.tref = CodeGenerator::INTERMEDIATE_CODE->addTriple(
+                {TR_FTOI, mapWithOperand($2.reference), mapWithOperand({ PR_NULL, nullptr })}
+            );
+            $$.reference.type = PR_TRIPLE;
+        }
+
+        SemanticActions::specifySyntaxError(MISSING_BOTH_PARENTHESIS_TRUNC);
         yyerrok;
+
     } // Action: truncable() + Error: Missing Both Parenthesis
 ;
 
 opt_trunc_variable:
     variable
     {
-        checkVariableExistanceInScope();
-    } // Action: checkVariableExistanceInScope()
+        SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
+
+    } // Action: SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope()
     | trunc_variable
 ;
 
 trunc_variable:
     TRUNC '(' variable ')'
     {
-        checkVariableExistanceInScope();
-    } // Action: checkVariableExistanceInScope()
+        auto entry = SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
+        if (entry != nullptr)
+        {
+            SemanticAnalyzer::TypeChecker::Expression e = { mapWithCheckerType(entry->type), *StringPool::get($3) };
+            SemanticAnalyzer::CHK_TYPES.checkTruncate(e);
+
+            if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
+            {
+                $$.reference.tref = CodeGenerator::INTERMEDIATE_CODE->addTriple(
+                    {TR_FTOI, mapWithOperand({ PR_SYMBOL, entry }), mapWithOperand({ PR_NULL, nullptr })}
+                );
+                $$.reference.type = PR_TRIPLE;
+            }
+        }
+
+    } // Action: SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope()
     | TRUNC '(' variable error
     {
-        checkVariableExistanceInScope();
-        specifySyntaxError(MISSING_CLOSING_PARENTHESIS);
+        auto entry = SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
+        if (entry != nullptr)
+        {
+            SemanticAnalyzer::TypeChecker::Expression e = { mapWithCheckerType(entry->type), *StringPool::get($3) };
+            SemanticAnalyzer::CHK_TYPES.checkTruncate(e);
+
+            if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
+            {
+                $$.reference.tref = CodeGenerator::INTERMEDIATE_CODE->addTriple(
+                    {TR_FTOI, mapWithOperand({ PR_SYMBOL, entry }), mapWithOperand({ PR_NULL, nullptr })}
+                );
+                $$.reference.type = PR_TRIPLE;
+            }
+        }
+
+        SemanticActions::specifySyntaxError(MISSING_CLOSING_PARENTHESIS);
         yyerrok;
-    } // Action: checkVariableExistanceInScope() + Error: Missing Closing Parenthesis
+
+    } // Action: SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope() + Error: Missing Closing Parenthesis
     | TRUNC variable ')'
     {
-        checkVariableExistanceInScope();
-        announceSpecificError(MISSING_OPENING_PARENTHESIS);
-    } // Action: checkVariableExistanceInScope() + Error: Missing Opening Parenthesis
+        auto entry = SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
+        if (entry != nullptr)
+        {
+            SemanticAnalyzer::TypeChecker::Expression e = { mapWithCheckerType(entry->type), *StringPool::get($2) };
+            SemanticAnalyzer::CHK_TYPES.checkTruncate(e);
+
+            if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
+            {
+                $$.reference.tref = CodeGenerator::INTERMEDIATE_CODE->addTriple(
+                    {TR_FTOI, mapWithOperand({ PR_SYMBOL, entry }), mapWithOperand({ PR_NULL, nullptr })}
+                );
+                $$.reference.type = PR_TRIPLE;
+            }
+        }
+
+        SemanticActions::announceSpecificError(MISSING_OPENING_PARENTHESIS);
+
+    } // Action: SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope() + Error: Missing Opening Parenthesis
     | TRUNC variable error
     {
-        checkVariableExistanceInScope();
-        specifySyntaxError(MISSING_BOTH_PARENTHESIS_TRUNC);
+        auto entry = SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
+        if (entry != nullptr)
+        {
+            SemanticAnalyzer::TypeChecker::Expression e = { mapWithCheckerType(entry->type), *StringPool::get($2) };
+            SemanticAnalyzer::CHK_TYPES.checkTruncate(e);
+
+            if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
+            {
+                $$.reference.tref = CodeGenerator::INTERMEDIATE_CODE->addTriple(
+                    {TR_FTOI, mapWithOperand({ PR_SYMBOL, entry }), mapWithOperand({ PR_NULL, nullptr })}
+                );
+                $$.reference.type = PR_TRIPLE;
+            }
+        }
+
+        SemanticActions::specifySyntaxError(MISSING_BOTH_PARENTHESIS_TRUNC);
         yyerrok;
-    } // Action: checkVariableExistanceInScope() + Error: Missing Both Parenthesis
+
+    } // Action: SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope() + Error: Missing Both Parenthesis
     | TRUNC error ';'
     {
-        specifySyntaxError(TRUNC_SYNTAX_ERROR);
+        SemanticActions::specifySyntaxError(TRUNC_SYNTAX_ERROR);
         yyerrok;
+
     } // Error: Trunc General Error
 ;
 
 trunc_expression:
     TRUNC '(' expression ')'
     {
-        $$.expression = $3.expression;
+        SemanticAnalyzer::TypeChecker::Expression e = { $3.expression.type, *StringPool::get($3.expression.pid) };
+        $$.expression.type = SemanticAnalyzer::CHK_TYPES.checkTruncate(e);
+        $$.expression.pid = StringPool::create("trunc(" + *StringPool::get($3.expression.pid) + ")");
+
+        if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
+        {
+            $$.reference.tref = CodeGenerator::INTERMEDIATE_CODE->addTriple(
+                {TR_FTOI, mapWithOperand($3.reference), mapWithOperand({ PR_NULL, nullptr })}
+            );
+            $$.reference.type = PR_TRIPLE;
+        }
     }
     | TRUNC '(' expression error
     {
-        specifySyntaxError(MISSING_CLOSING_PARENTHESIS);
+        SemanticAnalyzer::TypeChecker::Expression e = { $3.expression.type, *StringPool::get($3.expression.pid) };
+        $$.expression.type = SemanticAnalyzer::CHK_TYPES.checkTruncate(e);
+        $$.expression.pid = StringPool::create("trunc(" + *StringPool::get($3.expression.pid));
+
+        if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
+        {
+            $$.reference.tref = CodeGenerator::INTERMEDIATE_CODE->addTriple(
+                {TR_FTOI, mapWithOperand($3.reference), mapWithOperand({ PR_NULL, nullptr })}
+            );
+            $$.reference.type = PR_TRIPLE;
+        }
+
+        SemanticActions::specifySyntaxError(MISSING_CLOSING_PARENTHESIS);
         yyerrok;
+
     } // Error: Missing Closing Parenthesis
     | TRUNC expression ')'
     {
-        announceSpecificError(MISSING_OPENING_PARENTHESIS);
+        SemanticAnalyzer::TypeChecker::Expression e = { $2.expression.type, *StringPool::get($2.expression.pid) };
+        $$.expression.type = SemanticAnalyzer::CHK_TYPES.checkTruncate(e);
+        $$.expression.pid = StringPool::create("trunc " + *StringPool::get($2.expression.pid) + ")");
+
+        if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
+        {
+            $$.reference.tref = CodeGenerator::INTERMEDIATE_CODE->addTriple(
+                {TR_FTOI, mapWithOperand($2.reference), mapWithOperand({ PR_NULL, nullptr })}
+            );
+            $$.reference.type = PR_TRIPLE;
+        }
+
+        SemanticActions::announceSpecificError(MISSING_OPENING_PARENTHESIS);
+
     } // Error: Missing Opening Parenthesis
     | TRUNC expression error
     {
-        specifySyntaxError(MISSING_BOTH_PARENTHESIS_TRUNC);
+        SemanticAnalyzer::TypeChecker::Expression e = { $2.expression.type, *StringPool::get($2.expression.pid) };
+        $$.expression.type = SemanticAnalyzer::CHK_TYPES.checkTruncate(e);
+        $$.expression.pid = StringPool::create("trunc " + *StringPool::get($2.expression.pid));
+
+        if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
+        {
+            $$.reference.tref = CodeGenerator::INTERMEDIATE_CODE->addTriple(
+                {TR_FTOI, mapWithOperand($2.reference), mapWithOperand({ PR_NULL, nullptr })}
+            );
+            $$.reference.type = PR_TRIPLE;
+        }
+
+        SemanticActions::specifySyntaxError(MISSING_BOTH_PARENTHESIS_TRUNC);
         yyerrok;
+
     } // Error: Missing Both Parenthesis
 ;
 
@@ -960,16 +1182,16 @@ condition:
     '(' comparison ')'
     | '(' comparison error
     {
-        specifySyntaxError(MISSING_CLOSING_PARENTHESIS);
+        SemanticActions::specifySyntaxError(MISSING_CLOSING_PARENTHESIS);
         yyerrok;
     } // Error: Missing Closing Parenthesis
     | comparison ')'
     {
-        announceSpecificError(MISSING_OPENING_PARENTHESIS);
+        SemanticActions::announceSpecificError(MISSING_OPENING_PARENTHESIS);
     } // Error: Missing Opening Parenthesis
     | comparison error
     {
-        specifySyntaxError(MISSING_BOTH_PARENTHESIS);
+        SemanticActions::specifySyntaxError(MISSING_BOTH_PARENTHESIS);
         yyerrok;
     } // Error: Missing Both Parenthesis
 ;
@@ -977,26 +1199,56 @@ condition:
 comparison:
     expression comparison_operator expression
     {
-        $$.expression.representation = "comparison(" + $1.expression.representation + ", " + $3.expression.representation + ")";
-        $$.expression.type = CHK_TYPES.check($1.expression, $3.expression);
-        if ($$.expression.type != TC_UNSUPPORTED) {
-            $$.expression.type = TC_UINT; // Result of a comparison is a boolean-like integer.
+        SemanticAnalyzer::TypeChecker::Expression e1 = { $1.expression.type, *StringPool::get($1.expression.pid) };
+        SemanticAnalyzer::TypeChecker::Expression e2 = { $3.expression.type, *StringPool::get($3.expression.pid) };
+        $$.expression.type = SemanticAnalyzer::CHK_TYPES.checkOperation(e1, e2);
+
+        $$.expression.pid = $1.expression.pid;
+        StringPool::append($1.expression.pid, *StringPool::get($2.pid) + *StringPool::get($3.expression.pid));
+
+        if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
+        {
+            $$.reference.tref = CodeGenerator::INTERMEDIATE_CODE->addTriple(
+                {$2.tid, mapWithOperand($1.reference), mapWithOperand($3.reference)}
+            );
+            $$.reference.type = PR_TRIPLE;
         }
     }
     | expression error
     {
-        specifySyntaxError(MISSING_COMPARISON_OPERATOR);
+        $$ = $1;
+
+        SemanticActions::specifySyntaxError(MISSING_COMPARISON_OPERATOR);
         yyerrok;
+
     } // Error: Missing Comparison Operator
 ;
 
 comparison_operator:
     EQUAL_OP
+    {
+        $$ = { mapWithTripleOperator(EQUAL_OP), StringPool::create(Translator::translate(EQUAL_OP)) };
+    }
     | NOT_EQUAL_OP
+    {
+        $$ = { mapWithTripleOperator(NOT_EQUAL_OP), StringPool::create(Translator::translate(NOT_EQUAL_OP)) };
+    }
     | GE_OP
+    {
+        $$ = { mapWithTripleOperator(GE_OP), StringPool::create(Translator::translate(GE_OP)) };
+    }
     | LE_OP
+    {
+        $$ = { mapWithTripleOperator(LE_OP), StringPool::create(Translator::translate(LE_OP)) };
+    }
     | '>'
+    {
+        $$ = { mapWithTripleOperator('>'), StringPool::create(">") };
+    }
     | '<'
+    {
+        $$ = { mapWithTripleOperator('<'), StringPool::create("<") };
+    }
 ;
 
 // =================================== Expression ================================== //
@@ -1006,43 +1258,77 @@ expression:
     {
         $$ = $1;
     }
-    | expression
+    | expression_setup positive_term
     {
-        announceSpecificError(MISSING_EXPRESSION_OPERATOR);
-    } // Error: Missing Expression Operator
-    positive_term
+        SemanticAnalyzer::TypeChecker::Expression e1 = { $1.expression.type, *StringPool::get($1.expression.pid) };
+        SemanticAnalyzer::TypeChecker::Expression e2 = { $2.expression.type, *StringPool::get($2.expression.pid) };
+        $$.expression.type = SemanticAnalyzer::CHK_TYPES.checkOperation(e1, e2);
+
+        StringPool::append($1.expression.pid, " " + *StringPool::get($2.expression.pid));
+        $$.expression.pid = $1.expression.pid;
+        $$.reference = $1.reference;
+    }
     | '+' term
     {
-        announceSpecificError(MISSING_LEFT_SUM_OPERAND);
+        $$ = $2;
+
+        SemanticActions::announceSpecificError(MISSING_LEFT_SUM_OPERAND);
+
     } // Error: Missing Left Operand
     | '+' error
     {
-        specifySyntaxError(MISSING_BOTH_SUM_OPERANDS);
+        $$.reference  = { PR_NULL , nullptr };
+        $$.expression = { TC_UNSUPPORTED, StringPool::create("...") };
+
+        SemanticActions::specifySyntaxError(MISSING_BOTH_SUM_OPERANDS);
         yyerrok;
+
     } // Error: Missing Both Operands
     | expression '+' term
     {
-        $$.expression.representation = $1.expression.representation + " + " + $3.expression.representation;
-        $$.expression.type = CHK_TYPES.check($1.expression, $3.expression);
+        createArithmeticTriple($$, $1, $3, '+');
     }
     | expression '+' error
     {
-        specifySyntaxError(MISSING_RIGHT_OPERAND);
+        $$ = $1;
+
+        SemanticActions::specifySyntaxError(MISSING_RIGHT_OPERAND);
         yyerrok;
+
     } // Error: Missing Right Operand
     | expression '-' term
     {
-        $$.expression.representation = $1.expression.representation + " - " + $3.expression.representation;
-        $$.expression.type = CHK_TYPES.check($1.expression, $3.expression);
+        createArithmeticTriple($$, $1, $3, '-');
     }
     | expression '-' error
     {
-        specifySyntaxError(MISSING_RIGHT_OPERAND);
+        $$ = $1;
+
+        SemanticActions::specifySyntaxError(MISSING_RIGHT_OPERAND);
         yyerrok;
+
     } // Error: Missing Right Operand
     | trunc_expression
+    {
+        $$ = $1;
+    }
     | expression '+' trunc_expression
+    {
+        createArithmeticTriple($$, $1, $3, '+');
+    }
     | expression '-' trunc_expression
+    {
+        createArithmeticTriple($$, $1, $3, '-');
+    }
+;
+
+expression_setup:
+    expression
+    {
+        $$ = $1;
+
+        SemanticActions::announceSpecificError(MISSING_EXPRESSION_OPERATOR);
+    } // Error: Missing Expression Operator
 ;
 
 // ====================================== Term ===================================== //
@@ -1061,37 +1347,74 @@ term:
 positive_term:
     positive_term '*' factor
     {
-        $$.expression.representation = $1.expression.representation + " * " + $3.expression.representation;
-        $$.expression.type = CHK_TYPES.check($1.expression, $3.expression);
+        createArithmeticTriple($$, $1, $3, '*');
     }
     | positive_term '/' factor
     {
-        $$.expression.representation = $1.expression.representation + " / " + $3.expression.representation;
-        $$.expression.type = CHK_TYPES.check($1.expression, $3.expression);
+        createArithmeticTriple($$, $1, $3, '/');
+    }
+    | trunc_expression '/' factor
+    {
+        createArithmeticTriple($$, $1, $3, '/');
+    }
+    | trunc_expression '*' factor
+    {
+        createArithmeticTriple($$, $1, $3, '*');
+    }
+    | trunc_expression '/' trunc_expression
+    {
+        createArithmeticTriple($$, $1, $3, '/');
+    }
+    | trunc_expression '*' trunc_expression
+    {
+        createArithmeticTriple($$, $1, $3, '*');
+    }
+    | positive_term '/' trunc_expression
+    {
+        createArithmeticTriple($$, $1, $3, '/');
+    }
+    | positive_term '*' trunc_expression
+    {
+        createArithmeticTriple($$, $1, $3, '*');
     }
     | positive_factor
+    {
+        $$ = $1;
+    }
     | positive_term '*' error
     {
-        specifySyntaxError(MISSING_RIGHT_FACTOR);
+        $$ = $1;
+
+        SemanticActions::specifySyntaxError(MISSING_RIGHT_FACTOR);
         yyerrok;
+
     } // Error: Missing Right Factor
     | positive_term '/' error
     {
-        specifySyntaxError(MISSING_RIGHT_FACTOR);
+        $$ = $1;
+
+        SemanticActions::specifySyntaxError(MISSING_RIGHT_FACTOR);
         yyerrok;
+
     } // Error: Missing Right Factor
 ;
 
 negative_term:
     negative_term '*' factor
     {
-        $$.expression.representation = $1.expression.representation + " * " + $3.expression.representation;
-        $$.expression.type = CHK_TYPES.check($1.expression, $3.expression);
+        createArithmeticTriple($$, $1, $3, '*');
     }
     | negative_term '/' factor
     {
-        $$.expression.representation = $1.expression.representation + " / " + $3.expression.representation;
-        $$.expression.type = CHK_TYPES.check($1.expression, $3.expression);
+        createArithmeticTriple($$, $1, $3, '/');
+    }
+    | negative_term '/' trunc_expression
+    {
+        createArithmeticTriple($$, $1, $3, '/');
+    }
+    | negative_term '*' trunc_expression
+    {
+        createArithmeticTriple($$, $1, $3, '*');
     }
     | negative_factor
     {
@@ -1101,43 +1424,49 @@ negative_term:
     {
         $$ = $1;
 
-        specifySyntaxError(MISSING_RIGHT_FACTOR);
+        SemanticActions::specifySyntaxError(MISSING_RIGHT_FACTOR);
         yyerrok;
+
     } // Error: Missing Right Factor
     | negative_term '/' error
     {
         $$ = $1;
 
-        specifySyntaxError(MISSING_RIGHT_FACTOR);
+        SemanticActions::specifySyntaxError(MISSING_RIGHT_FACTOR);
         yyerrok;
+
     } // Error: Missing Right Factor
     | '*' factor
     {
         $$ = $2;
 
-        announceSpecificError(MISSING_LEFT_MUL_FACTOR);
+        SemanticActions::announceSpecificError(MISSING_LEFT_MUL_FACTOR);
+
     } // Error: Missing Left Factor
     | '/' factor
     {
         $$ = $2;
 
-        announceSpecificError(MISSING_LEFT_DIV_FACTOR);
+        SemanticActions::announceSpecificError(MISSING_LEFT_DIV_FACTOR);
+
     } // Error: Missing Left Factor
     | '*' error
     {
-        $$.reference.type = NOTHING;
-        $$.expression.type = TC_UNSUPPORTED;
+        $$.reference  = { PR_NULL , nullptr };
+        $$.expression = { TC_UNSUPPORTED, StringPool::create("...") };
 
-        specifySyntaxError(MISSING_BOTH_FACTORS);
+        SemanticActions::specifySyntaxError(MISSING_BOTH_FACTORS);
         yyerrok;
+
     } // Error: Missing Left and Right Factor
     | '/' error
     {
-        $$.reference.type = NOTHING;
-        $$.expression.type = TC_UNSUPPORTED;
+        $$.reference  = { PR_NULL , nullptr };
+        $$.expression = { TC_UNSUPPORTED, StringPool::create("...") };
 
-        specifySyntaxError(MISSING_BOTH_FACTORS);
+        SemanticActions::specifySyntaxError(MISSING_BOTH_FACTORS);
         yyerrok;
+
     } // Error: Missing Left and Right Factor
 ;
 
@@ -1157,10 +1486,19 @@ factor:
 positive_factor:
     variable
     {
-        $$.expression.representation = CURRENT_VARIABLE.name;
-        $$.reference.sref = checkVariableExistanceInScope();
-        loadSymbolMetadata($$);
-    } // Action: checkVariableExistanceInScope()
+        $$.reference.sref = SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
+        if ($$.reference.sref != nullptr)
+        {
+            $$.reference.type = PR_SYMBOL;
+            $$.expression = { mapWithCheckerType($$.reference.sref->type), $1 };
+        }
+        else
+        {
+            $$.reference.type = PR_NULL;
+            $$.expression = { TC_UNSUPPORTED, $1 };
+        }
+
+    } // Action: SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope()
     | positive_constant
     {
         $$ = $1;
@@ -1178,49 +1516,59 @@ negative_factor:
     }
     | lambda_invocation_head
     {
-        $$.reference.type  = NOTHING;
-        $$.expression.type = TC_UNSUPPORTED;
+        $$.reference  = { PR_NULL , nullptr };
+        $$.expression = { TC_UNSUPPORTED, StringPool::create("...") };
         
-        announceSpecificError(INVALID_LAMBDA_USE);
+        SemanticActions::announceSpecificError(INVALID_LAMBDA_USE);
     } // Error: Invalid Lambda Use
     | '-' UINTEGER_LITERAL
     {
-        $$.reference.type  = LITERAL;
-        $$.reference.lref  = $2;
-        $$.expression.type = TC_UINT;
-        $$.expression.representation = $2->constant;
+        $$.reference  = { PR_LITERAL, .lref = $2 };
+        $$.expression = { TC_UINT, StringPool::create($2->constant) };
 
-        announceSpecificError(MISSING_LEFT_SUB_OPERAND);
+        SemanticActions::announceSpecificError(MISSING_LEFT_SUB_OPERAND);
+
     } // Error: Missing Left Operand
     | '-' function_invocation_head
     {
         $$ = $2;
 
-        announceSpecificError(MISSING_LEFT_SUB_OPERAND);
+        SemanticActions::announceSpecificError(MISSING_LEFT_SUB_OPERAND);
+
     } // Error: Missing Left Operand
     | '-' variable
     {
-        $$.expression.representation = CURRENT_VARIABLE.name;
-        $$.reference.sref = checkVariableExistanceInScope();
-        loadSymbolMetadata($$);
+        $$.reference.sref = SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
+        if ($$.reference.sref != nullptr)
+        {
+            $$.reference.type = PR_SYMBOL;
+            $$.expression = { mapWithCheckerType($$.reference.sref->type), $2 };
+        }
+        else
+        {
+            $$.reference.type = PR_NULL;
+            $$.expression = { TC_UNSUPPORTED, $2 };
+        }
+        SemanticActions::announceSpecificError(MISSING_LEFT_SUB_OPERAND);
 
-        announceSpecificError(MISSING_LEFT_SUB_OPERAND);
-    } // Action: checkVariableExistanceInScope() + Error: Missing Left Operand
+    } // Action: SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope() + Error: Missing Left Operand
     | '-' lambda_invocation_head
     {
-        $$.reference.type = NOTHING;
-        $$.expression.type = TC_UNSUPPORTED;
+        $$.reference  = { PR_NULL , nullptr };
+        $$.expression = { TC_UNSUPPORTED, StringPool::create("...") };
 
-        announceSpecificError(MISSING_BOTH_SUB_OPERANDS);
-        announceSpecificError(INVALID_LAMBDA_USE);
+        SemanticActions::announceSpecificError(MISSING_BOTH_SUB_OPERANDS);
+        SemanticActions::announceSpecificError(INVALID_LAMBDA_USE);
+
     } // Error: Missing Both Operands
     | '-' error
     {
-        $$.reference.type  = NOTHING;
-        $$.expression.type = TC_UNSUPPORTED;
+        $$.reference  = { PR_NULL , nullptr };
+        $$.expression = { TC_UNSUPPORTED, StringPool::create("...") };
 
-        specifySyntaxError(MISSING_BOTH_SUB_OPERANDS);
+        SemanticActions::specifySyntaxError(MISSING_BOTH_SUB_OPERANDS);
         yyerrok;
+
     } // Error: Missing Both Operands
 ;
 
@@ -1240,27 +1588,22 @@ numeric_constant:
 positive_constant:
     UINTEGER_LITERAL
     {
-        $$.reference.type = LITERAL;
-        $$.reference.lref = $1;
-        $$.expression.type = TC_UINT;
-        $$.expression.representation = $$.reference.lref->constant;
+        $$.reference  = { PR_LITERAL, .lref = $1 };
+        $$.expression = { TC_UINT, StringPool::create($1->constant) };
     }
     | FLOAT_LITERAL
     {
-        $$.reference.type = LITERAL;
-        $$.reference.lref = $1;
-        $$.expression.type = TC_FLOAT;
-        $$.expression.representation = $$.reference.lref->constant;
+        $$.reference  = { PR_LITERAL, .lref = $1 };
+        $$.expression = { TC_FLOAT, StringPool::create($1->constant) };
     }
 ;
 
 negative_constant:
     '-' FLOAT_LITERAL
     {
-        $$.reference.type = LITERAL;
-        $$.reference.lref = turnNegative($2);
-        $$.expression.type = TC_FLOAT;
-        $$.expression.representation = $$.reference.lref->constant;
+        $$.reference  = { PR_LITERAL , .lref = SemanticActions::turnNegative($2) };
+        $$.expression = { TC_FLOAT, StringPool::create($2->constant) };
+
     } // Action: turnNegative()
 ;
 
@@ -1269,43 +1612,87 @@ negative_constant:
 variable:
     IDENTIFIER
     {
-        CURRENT_VARIABLE.prefix.clear();
-        CURRENT_VARIABLE.name = $1->symbol;
-    } // Build: Variable Name
+        $$ = StringPool::create($1->symbol);
+
+        SemanticAnalyzer::CHK_VARIABLES.notifyVariableName($1->symbol);
+
+    } // Action: notifyVariableName()
     | variable '.' IDENTIFIER
     {
-        CURRENT_VARIABLE.prefix.append(":").append(CURRENT_VARIABLE.name);
-        CURRENT_VARIABLE.name = $3->symbol;
-    } // Build: Variable Prefix
+        StringPool::append($1, "." + $3->symbol);
+        $$ = $1;
+
+        SemanticAnalyzer::CHK_VARIABLES.notifyVariablePrefix($3->symbol);
+
+    } // Action: notifyVariablePrefix()
 ;
 
 %% // Codes ------------------------------------------
 
 void yyerror(const char* s)
 {
-    announceSyntaxError();
+    SemanticActions::announceSyntaxError();
 }
 
-void loadSymbolMetadata(Metadata& m)
+int mapWithCheckerType(const int type)
 {
-    if (m.reference.lref == nullptr)
+    switch (type)
     {
-        m.reference.type = NOTHING;
-        m.expression.type = TC_UNSUPPORTED;
+    case ST_UINT:
+        return TC_UINT;
+    case ST_FLOAT:
+        return TC_FLOAT;
+    default:
+        return TC_UNSUPPORTED;
     }
-    else
+}
+
+char mapWithTripleOperator(const int op)
+{
+    switch (op)
     {
-        m.reference.type = SYMBOL;
-        switch (m.reference.lref->type)
-        {
-        case ST_UINT:
-            m.expression.type = TC_UINT;
-            break;
-        case ST_FLOAT:
-            m.expression.type = TC_FLOAT;
-            break;
-        default:
-            m.expression.type = TC_UNSUPPORTED;
-        }
+    case EQUAL_OP:
+        return TR_EQUAL_OP;
+    case NOT_EQUAL_OP:
+        return TR_NOT_EQUAL_OP;
+    case GE_OP:
+        return TR_GE_OP;
+    case LE_OP:
+        return TR_LE_OP;
+    default:
+        return op;
+    }
+}
+
+Triples::Operand mapWithOperand(const Metadata::Reference& ref)
+{
+    switch (ref.type)
+    {
+    case PR_SYMBOL:
+        return { TR_SYMBOL , { .sref = ref.sref } };
+    case PR_LITERAL:
+        return { TR_LITERAL, { .lref = ref.lref } };
+    case PR_TRIPLE:
+        return { TR_TRIPLE , { .tref = ref.tref } };
+    default:
+        return { TR_NULL   , { .sref = nullptr  } };
+    }
+}
+
+void createArithmeticTriple(Metadata& r, const Metadata& o1, const Metadata& o2, const char op)
+{
+    SemanticAnalyzer::TypeChecker::Expression e1 = { o1.expression.type, *StringPool::get(o1.expression.pid) };
+    SemanticAnalyzer::TypeChecker::Expression e2 = { o2.expression.type, *StringPool::get(o2.expression.pid) };
+    r.expression.type = SemanticAnalyzer::CHK_TYPES.checkOperation(e1, e2);
+
+    r.expression.pid = o1.expression.pid;
+    StringPool::append(o1.expression.pid, " " + std::string(1, op) + " " + *StringPool::get(o2.expression.pid));
+
+    if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
+    {
+        r.reference.tref = CodeGenerator::INTERMEDIATE_CODE->addTriple(
+            {op, mapWithOperand(o1.reference), mapWithOperand(o2.reference)}
+        );
+        r.reference.type = PR_TRIPLE;
     }
 }

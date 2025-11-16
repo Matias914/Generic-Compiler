@@ -1,5 +1,4 @@
 #include "utils/ErrorHandler.h"
-#include "utils/resources/macros.h"
 #include "lexical-analyzer/lexical_analyzer.h"
 #include "semantic-analyzer/semantic_analyzer.h"
 
@@ -8,22 +7,22 @@ extern ErrorHandler ERROR_HANDLER;
 
 namespace SemanticAnalyzer
 {
+    TypeChecker       CHK_TYPES;
+    ProgramChecker    CHK_PROGRAMS;
+    FunctionChecker   CHK_FUNCTIONS;
+    VariableChecker   CHK_VARIABLES;
+    InvocationChecker CHK_INVOCATIONS;
+
     std::string SCOPE = "";
 
-    int INVALID_SERIAL = 0;
-    int LAMBDA_SERIAL = 0;
+    int TYPE = ST_UNSUPPORTED;
 
-    int CURRENT_TYPE = UNSUPPORTED;
-    int CURRENT_SEMANTIC = UNSUPPORTED;
+    static int INVALID_SERIAL = 0;
+    static int LAMBDA_SERIAL = 0;
 
     void addScope(const std::string& scope)
     {
         SCOPE.append(":").append(scope);
-    }
-
-    void addLambdaScope()
-    {
-        SCOPE.append(":").append("lambda").append(std::to_string(INVALID_SERIAL++));
     }
 
     void removeScope()
@@ -32,6 +31,11 @@ namespace SemanticAnalyzer
             SCOPE = SCOPE.substr(0, pos);
         else
             SCOPE.clear();
+    }
+
+    void addLambdaScope()
+    {
+        SCOPE.append(":").append("lambda").append(std::to_string(LAMBDA_SERIAL++));
     }
 
     void addInvalidScope()

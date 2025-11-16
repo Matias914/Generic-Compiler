@@ -7,14 +7,20 @@ PROGRAMA {
     uint X1, X2;
     uint Y1, Z1, W1;
 
-    X1 := trunc(trunc(X1) + trunc(Z1));
+    X1 := trunc(trunc(2UI) + trunc(Z1));
 
     uint Y(cr uint A, cr uint B, uint C) {
         uint D;
-        if (A > B)
-            return (trunc(PROGRAMA.X1 + X1 + X2));
+        if (A > B) {
+            do {
+                do {
+                    B := B + 1UI + 1.0 - 1UI;
+                } while (B > 5UI);
+                A := A + 1UI;
+            } while (A > 10UI);
+        }
         endif;
-        return (Y(A + 1UI->A, B->B, 0UI->C, B->D));
+        return (Y(A + 1UI->A, B->B, 0UI->C, 1UI->D));
 
         uint H1(cr uint B, uint C) {
             uint X4;
@@ -68,6 +74,7 @@ PROGRAMA {
 
     ## Miscelánea ##
 
+    uint MASLARGAQUELAFILADELSUPERMERCADOCUANDOESTASAPURADO;
     MASLARGAQUELAFILADELSUPERMERCADOCUANDOESTASAPURADO := 2UI;
 
     if (X1 =! Y(X1->A, X2->B, Y2->C)) {

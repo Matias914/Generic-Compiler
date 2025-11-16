@@ -1,16 +1,22 @@
 #include "utils/LiteralTable.h"
 #include "utils/SymbolTable.h"
 #include "utils/resources/builders.h"
-#include "syntax-analyzer/components/parser.h"
 
 namespace StringBuilders::TableBuilders
 {
+    void symbolTableHeader(std::string& mssg)
+    {
+        mssg.append("================================================")
+            .append(" Symbol Table ")
+            .append("================================================");
+    }
+
     void symbolTableEntry(std::string& mssg, const SymbolTable::Entry& entry)
     {
         mssg.append("Type: ");
         switch (entry.type)
         {
-        case UINT:
+        case ST_UINT:
             mssg.append("Unsigned Int");
             break;
         default:
@@ -19,16 +25,16 @@ namespace StringBuilders::TableBuilders
         mssg.append(" | ").append("Use: ");
         switch (entry.use)
         {
-        case PROGRAM:
+        case ST_PROGRAM:
             mssg.append("  Program    ");
             break;
-        case VARIABLE:
+        case ST_VARIABLE:
             mssg.append("  Variable   ");
             break;
-        case FUNCTION:
+        case ST_FUNCTION:
             mssg.append("  Function   ");
             break;
-        case PARAMETER:
+        case ST_PARAMETER:
             mssg.append("  Parameter  ");
             break;
         default:
@@ -37,21 +43,29 @@ namespace StringBuilders::TableBuilders
         mssg.append(" | ").append("Semantics: ");
         switch (entry.semantics)
         {
-        case CR:
+        case ST_CR:
             mssg.append("    CR     ");
             break;
-        case CV:
+        case ST_CV:
             mssg.append("    CV     ");
             break;
         default:
             mssg.append("Unsupported");
         }
-        mssg.append(" | ").append("Symbol: ").append(entry.symbol);
+        mssg.append(" | ")
+            .append("Parameters: ")
+            .append(std::to_string(entry.params))
+            .append("\t")
+            .append(" | ")
+            .append("Symbol: ")
+            .append(entry.symbol);
     }
 
-    void symbolTableHeader(std::string& mssg)
+    void literalTableHeader(std::string& mssg)
     {
-        mssg.append("=========================================== Symbol Table ============================================");
+        mssg.append("================================================")
+            .append(" Literal Table ")
+            .append("================================================");
     }
 
     void literalTableEntry(std::string& mssg, const LiteralTable::Entry& entry)
@@ -59,13 +73,13 @@ namespace StringBuilders::TableBuilders
         mssg.append("Type: ");
         switch (entry.type)
         {
-        case STRING_LITERAL:
+        case LT_STRING:
             mssg.append("   String   ");
             break;
-        case UINTEGER_LITERAL:
+        case LT_UINT:
             mssg.append("Unsigned Int");
             break;
-        case FLOAT_LITERAL:
+        case LT_FLOAT:
             mssg.append("   Float    ");
             break;
         default:
@@ -76,10 +90,5 @@ namespace StringBuilders::TableBuilders
             .append(std::to_string(entry.refcount))
             .append("\t | ")
             .append("Literal: ").append(entry.constant);
-    }
-
-    void literalTableHeader(std::string& mssg)
-    {
-        mssg.append("=========================================== Literal Table ===========================================");
     }
 }

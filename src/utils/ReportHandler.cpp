@@ -6,6 +6,8 @@
 
 #include <algorithm>
 
+#include "code-generator/code-generator.h"
+
 extern SymbolTable SYMBOL_TABLE;
 extern LiteralTable LITERAL_TABLE;
 
@@ -65,7 +67,8 @@ void ReportHandler::generateReport() const
     }
     file << mssg << "\n\n"
          << SYMBOL_TABLE.toString()  << "\n\n"
-         << LITERAL_TABLE.toString() << "\n\n";
+         << LITERAL_TABLE.toString() << "\n\n"
+         << CodeGenerator::getIntermediateCode();
     file.close();
 }
 

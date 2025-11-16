@@ -3,12 +3,10 @@
 
 using namespace LexicalAnalyzer;
 
-StateMachine::StateMachine()
-{
-    state = States::state0;
-}
+StateMachine::StateMachine() :
+    state(States::state0) {}
 
-SemanticAction StateMachine::getSemanticAction(const unsigned int& value)
+SemanticAction StateMachine::getSemanticAction(const unsigned int value)
 {
     return state(this, value);
 }

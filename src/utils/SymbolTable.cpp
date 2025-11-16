@@ -1,37 +1,38 @@
 #include "utils/SymbolTable.h"
+#include "utils/resources/builders.h"
 
 #include <algorithm>
 
-#include "utils/resources/builders.h"
-
-SymbolTable::SymbolTable()
-{
-    this->mapping = std::unordered_map<std::string_view, Entry*>();
-    this->entries = std::list<Entry>();
-}
+SymbolTable::SymbolTable() : mapping(), entries() {}
 
 const SymbolTable::Entry* SymbolTable::addAndGet(const std::string& symbol)
 {
-    const auto it = this->mapping.find(symbol);
-    if (it == this->mapping.end()) {
-        Entry& ref = entries.emplace_back(Entry({
-            symbol,
-            UNSUPPORTED,
-            UNSUPPORTED,
-            UNSUPPORTED,
-            UNSUPPORTED
-        }));
-        this->mapping.insert({std::string_view(ref.symbol), &ref});
-        return &ref;
-    }
-    return it->second;
+    if (const auto it = mapping.find(symbol); it != mapping.end())
+        return it->second;
+    Entry& ref = entries.emplace_back(symbol, ST_UNSUPPORTED, ST_UNSUPPORTED);
+    mapping.emplace(std::string_view(ref.symbol), &ref);
+    return &ref;
 }
 
 const SymbolTable::Entry* SymbolTable::get(const std::string& symbol) const
 {
-    if (const auto it = this->mapping.find(symbol); it != mapping.end())
-        return it->second;
-    return nullptr;
+    const auto it = mapping.find(symbol);
+    return (it != mapping.end()) ? it->second : nullptr;
+}
+
+void SymbolTable::updateFields(Entry* target, const Entry& source)
+{
+    target->type = source.type;
+    target->use = source.use;
+    target->semantics = source.semantics;
+    target->params = source.params;
+}
+
+void SymbolTable::removeFromList(const Entry* entryPtr)
+{
+    entries.remove_if([entryPtr](const Entry& e) {
+            return &e == entryPtr;
+    });
 }
 
 /*
@@ -42,25 +43,22 @@ const SymbolTable::Entry* SymbolTable::get(const std::string& symbol) const
  * - Si la nueva clave cambia borra la entrada vieja y agrega una nueva, de lo contrario,
  * modifica los campos
  */
-const SymbolTable::Entry* SymbolTable::update(const std::string& symbol, const Entry* entry)
+const SymbolTable::Entry* SymbolTable::update(const std::string& symbol, const Entry& entry)
 {
-    const auto row = this->mapping.find(symbol);
-    if (row == this->mapping.end())
+    const auto row = mapping.find(symbol);
+    if (row == mapping.end())
         return nullptr;
-    if (symbol == entry->symbol)
+    if (symbol == entry.symbol)
     {
-        row->second->type = entry->type;
-        row->second->use = entry->use;
-        row->second->semantics = entry->semantics;
-        row->second->params = entry->params;
+        updateFields(row->second, entry);
         return row->second;
     }
-    if (const auto it = this->mapping.find(entry->symbol); it != this->mapping.end())
+    if (mapping.find(entry.symbol) != mapping.end())
         return nullptr;
-    this->mapping.erase(row);
-    this->entries.remove_if([&](const auto& e){ return e.symbol == symbol; });
-    Entry& ref = entries.emplace_back(*entry);
-    this->mapping.insert({std::string_view(ref.symbol), &ref});
+    mapping.erase(row);
+    removeFromList(row->second);
+    Entry& ref = entries.emplace_back(entry);
+    mapping.emplace(std::string_view(ref.symbol), &ref);
     return &ref;
 }
 
@@ -72,37 +70,34 @@ const SymbolTable::Entry* SymbolTable::update(const std::string& symbol, const E
  * Caso contrario, se actualiza la entrada.
  * - Si no existe, entonces, la nueva fila se inserta y si la fila a actualizar existe, se borra.
  */
-const SymbolTable::Entry* SymbolTable::upsert(const std::string& symbol, const Entry* entry)
+const SymbolTable::Entry* SymbolTable::upsert(const std::string& symbol, const Entry& entry)
 {
-    if (const auto it = this->mapping.find(entry->symbol); it != this->mapping.end())
+    if (const auto newIt = mapping.find(entry.symbol); newIt != mapping.end())
     {
-        if (entry->symbol == symbol)
-        {
-            it->second->type = entry->type;
-            it->second->use = entry->use;
-            it->second->semantics = entry->semantics;
-            it->second->params = entry->params;
-            return it->second;
-        }
-        return nullptr;
+        if (entry.symbol != symbol)
+            return nullptr;
+        updateFields(newIt->second, entry);
+        return newIt->second;
     }
-    Entry& ref = entries.emplace_back(*entry);
-    this->mapping.insert({std::string_view(ref.symbol), &ref});
-    if (const auto it = this->mapping.find(symbol); it != this->mapping.end())
+    if (const auto oldIt = mapping.find(symbol); oldIt != mapping.end())
     {
-        this->mapping.erase(it);
-        this->entries.remove_if([&](const auto& e){ return e.symbol == symbol; });
+        mapping.erase(oldIt);
+        removeFromList(oldIt->second);
     }
+    Entry& ref = entries.emplace_back(entry);
+    mapping.emplace(std::string_view(ref.symbol), &ref);
     return &ref;
 }
 
 bool SymbolTable::remove(const std::string& symbol)
 {
-    const int n = this->mapping.erase(symbol);
-    this->entries.remove_if([&](const auto& e){ return e.symbol == symbol; });
-    if (n != 0)
-        return true;
-    return false;
+    const auto it = mapping.find(symbol);
+    if (it == mapping.end()) {
+        return false;
+    }
+    removeFromList(it->second);
+    mapping.erase(it);
+    return true;
 }
 
 std::string SymbolTable::toString() const
@@ -120,6 +115,6 @@ std::string SymbolTable::toString() const
 
 void SymbolTable::clear()
 {
-    this->entries.clear();
-    this->mapping.clear();
+    entries.clear();
+    mapping.clear();
 }

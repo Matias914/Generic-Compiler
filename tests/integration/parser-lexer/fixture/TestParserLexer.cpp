@@ -10,10 +10,6 @@ void TestParserLexer::SetUp()
 
     if (VERBOSE_OPTION)
         REPORT_HANDLER.clear();
-
-    SemanticAnalyzer::INVALID_SERIAL = 1;
-    SemanticAnalyzer::LAMBDA_SERIAL = 1;
-    SemanticAnalyzer::EXISTS_PROGRAM = false;
 }
 
 void TestParserLexer::TearDown()

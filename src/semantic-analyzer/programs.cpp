@@ -15,14 +15,11 @@ namespace SemanticAnalyzer
     {
         if (EXISTS_PROGRAM)
         {
-            Log l;
-            l.type = ERROR;
-            l.code = MULTIPLE_PROGRAMS_DECLARED;
-            l.line = LexicalAnalyzer::YYLINENO;
-            l.content = { program };
+            const Log l(ERROR, MULTIPLE_PROGRAMS_DECLARED, LexicalAnalyzer::YYLINENO, {program});
             ERROR_HANDLER.add(l);
-        } else
-            EXISTS_PROGRAM = true;
+            return;
+        }
+        EXISTS_PROGRAM = true;
     }
 
     const SymbolTable::Entry* updateSymbolAsProgram(const std::string& program)
@@ -30,9 +27,9 @@ namespace SemanticAnalyzer
         const auto entry = SYMBOL_TABLE.get(program);
         if (entry == nullptr)
             throw std::runtime_error("\nupdateSymbolAsProgram: failed to get program");
-        if (entry->use == PROGRAM)
+        if (entry->use == ST_PROGRAM)
             return nullptr;
-        const auto newentry = SymbolTable::Entry({program, -1, PROGRAM});
-        return SYMBOL_TABLE.update(program, &newentry);
+        const auto newEntry = SymbolTable::Entry({program, ST_UNSUPPORTED, ST_PROGRAM});
+        return SYMBOL_TABLE.update(program, newEntry);
     }
 }

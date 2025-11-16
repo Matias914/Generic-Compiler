@@ -14,11 +14,11 @@ namespace LexicalAnalyzer
     class StateMachine
     {
     public:
-        SemanticAction (*state) (StateMachine* s, const unsigned int& value);
+        SemanticAction (*state) (StateMachine* s, unsigned int value);
 
         StateMachine();
         bool endState() const;
-        SemanticAction getSemanticAction(const unsigned int& value);
+        SemanticAction getSemanticAction(unsigned int value);
     };
 }
 

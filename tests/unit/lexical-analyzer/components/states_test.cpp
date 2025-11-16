@@ -1,12 +1,12 @@
 #include "gtest/gtest.h"
-#include "lexical-analyzer/components/macros.h"
+#include "lexical-analyzer/components/lexical_tokens.h"
 #include "lexical-analyzer/components/states.h"
 
 using namespace LexicalAnalyzer;
 using namespace LexicalAnalyzer::States;
 using namespace LexicalAnalyzer::SemanticActions;
 
-using State = SemanticAction (*) (StateMachine* s, const unsigned int& value);
+using State = SemanticAction (*) (StateMachine* s, unsigned int value);
 
 /*
  * @brief struct que ahorra repeticion de codigo.
@@ -19,7 +19,7 @@ struct TestState
     StateMachine sm;
     State state;
 
-    void test(const int& value, const State& next, const SemanticAction& sa, const bool& fs)
+    void test(const int value, const State& next, const SemanticAction& sa, const bool fs)
     {
         EXPECT_EQ(state(&sm, value), sa);
         EXPECT_EQ(sm.state, next);

@@ -2,7 +2,7 @@
 #include "utils/ReportHandler.h"
 #include "utils/resources/macros.h"
 #include "lexical-analyzer/lexical_analyzer.h"
-#include "lexical-analyzer/components/macros.h"
+#include "lexical-analyzer/components/lexical_tokens.h"
 #include "lexical-analyzer/components/translator.h"
 #include "lexical-analyzer/components/StateMachine.h"
 
@@ -36,11 +36,7 @@ namespace LexicalAnalyzer
         // Logs the token and lexeme found
         if (VERBOSE_OPTION)
         {
-            Log log;
-            log.type = TOKEN;
-            log.code = token;
-            log.line = YYLINENO;
-            log.content = {lexeme};
+            const Log log(TOKEN, token, YYLINENO, {lexeme});
             REPORT_HANDLER.add(log);
         }
         return token;

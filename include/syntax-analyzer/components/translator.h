@@ -11,7 +11,7 @@
  */
 namespace SyntaxAnalyzer::Translator
 {
-    std::string translate(const int& token);
+    std::string translate(int token);
 }
 
 #endif //GC_SYNTAX_ANALYZER_TRANSLATOR_H

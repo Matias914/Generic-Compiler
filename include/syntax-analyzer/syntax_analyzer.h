@@ -1,8 +1,6 @@
 #ifndef TPE_SYNTAX_ANALYZER_H
 #define TPE_SYNTAX_ANALYZER_H
 
-#include "utils/ErrorBuffer.h"
-
 /*
  * @brief representa el analizador sintactico de un compilador.
  *
@@ -12,8 +10,6 @@
  */
 namespace SyntaxAnalyzer
 {
-    extern ErrorBuffer BUFFER;
-
     void analyze();
 }
 

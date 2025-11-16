@@ -39,6 +39,13 @@ namespace StringBuilders::ErrorBuilders
         return WARNING_MSG(+mssg+);
     }
 
+    std::string truncUseless(const std::vector<std::string>& content)
+    {
+        if (content.size() != 1)
+            throw std::runtime_error("\ntruncUseless: invalid log");
+        return WARNING_MSG("Useless trunc found. '" + content[0] + "' is already an integer");
+    }
+
     // --------------------------------------- Errors --------------------------------------- //
 
     std::string customError(const std::vector<std::string>& content)
@@ -346,9 +353,9 @@ namespace StringBuilders::ErrorBuilders
         return ERROR_MSG("Two operands were expected when '+' was used");
     }
 
-    std::string missingFloatConstant(const std::vector<std::string>& content)
+    std::string missingBothSubOperands(const std::vector<std::string>& content)
     {
-        return ERROR_MSG("missing float constant after '-' or both operands");
+        return ERROR_MSG("Two operands were expected when '-' was used");
     }
 
     std::string missingLeftMulFactor(const std::vector<std::string>& content)
@@ -376,6 +383,36 @@ namespace StringBuilders::ErrorBuilders
     std::string notYetImplemented(const std::vector<std::string>& content)
     {
         return ERROR_MSG("The type specified is not yet supported");
+    }
+
+    std::string invalidLambdaUse(const std::vector<std::string>& content)
+    {
+        return ERROR_MSG("Lambda function cannot return a value. It does not specify a type");
+    }
+
+    std::string printSyntaxError(const std::vector<std::string>& content)
+    {
+        return ERROR_MSG("Syntax Error. Invalid print statement");
+    }
+
+    std::string truncSyntaxError(const std::vector<std::string>& content)
+    {
+        return ERROR_MSG("Syntax Error. Invalid trunc statement");
+    }
+
+    std::string ifSyntaxError(const std::vector<std::string>& content)
+    {
+        return ERROR_MSG("Syntax Error. Invalid if statement");
+    }
+
+    std::string returnSyntaxError(const std::vector<std::string>& content)
+    {
+        return ERROR_MSG("Syntax Error. Invalid return statement");
+    }
+
+    std::string doSyntaxError(const std::vector<std::string>& content)
+    {
+        return ERROR_MSG("Syntax Error. Invalid do-while statement");
     }
 
     std::string genericSyntaxError(const std::vector<std::string>& content)
@@ -461,5 +498,19 @@ namespace StringBuilders::ErrorBuilders
         if (content.size() != 2)
             throw std::runtime_error("\ninvalidArgumentsNumber: invalid log");
         return ERROR_MSG(+content[0] + " arguments were found but " + content[1] + " parameters were declared");
+    }
+
+    std::string incompatibleTypes(const std::vector<std::string>& content)
+    {
+        if (content.size() != 2)
+            throw std::runtime_error("\nincompatibleTypes: invalid log");
+        std::string mssg;
+        mssg.clear();
+        mssg.append("Incompatible types in operation. Left side: '")
+            .append(content[0])
+            .append("', Right side: '")
+            .append(content[1])
+            .append("'");
+        return ERROR_MSG(+mssg+);
     }
 }

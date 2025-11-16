@@ -1,9 +1,9 @@
-#include "lexical-analyzer/components/macros.h"
+#include "lexical-analyzer/components/lexical_tokens.h"
 #include "lexical-analyzer/components/translator.h"
 
 using namespace LexicalAnalyzer;
 
-unsigned int Translator::translate(const char& c)
+unsigned int Translator::translate(const char c)
 {
     const unsigned int asc = static_cast<unsigned int>(c);
     if (asc == 70)

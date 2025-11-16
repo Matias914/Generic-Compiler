@@ -5,6 +5,12 @@
 #include <list>
 #include <bitset>
 
+#define LT_UNSUPPORTED (-1)
+
+#define LT_FLOAT         0
+#define LT_UINT          1
+#define LT_STRING        2
+
 /*
  * @brief colecciona las constantes literales halladas durante
  * el análisis léxico y sus metadatos.

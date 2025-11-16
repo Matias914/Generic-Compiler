@@ -1,11 +1,12 @@
 #ifndef GC_BUILDERS_H
 #define GC_BUILDERS_H
 
+#include "utils/SymbolTable.h"
+#include "utils/LiteralTable.h"
+#include "code-generator/components/Triples.h"
+
 #include <string>
 #include <vector>
-
-#include "utils/LiteralTable.h"
-#include "utils/SymbolTable.h"
 
 namespace StringBuilders
 {
@@ -66,12 +67,18 @@ namespace StringBuilders
         std::string missingLeftSumOperand(const std::vector<std::string>& content);
         std::string missingLeftSubOperand(const std::vector<std::string>& content);
         std::string missingBothSumOperands(const std::vector<std::string>& content);
-        std::string missingFloatConstant(const std::vector<std::string>& content);
+        std::string missingBothSubOperands(const std::vector<std::string>& content);
         std::string missingLeftMulFactor(const std::vector<std::string>& content);
         std::string missingLeftDivFactor(const std::vector<std::string>& content);
         std::string missingRightFactor(const std::vector<std::string>& content);
         std::string missingBothFactors(const std::vector<std::string>& content);
         std::string notYetImplemented(const std::vector<std::string>& content);
+        std::string invalidLambdaUse(const std::vector<std::string>& content);
+        std::string printSyntaxError(const std::vector<std::string>& content);
+        std::string truncSyntaxError(const std::vector<std::string>& content);
+        std::string ifSyntaxError(const std::vector<std::string>& content);
+        std::string doSyntaxError(const std::vector<std::string>& content);
+        std::string returnSyntaxError(const std::vector<std::string>& content);
         std::string genericSyntaxError(const std::vector<std::string>& content);
         std::string multipleProgramsDeclared(const std::vector<std::string>& content);
         std::string functionRedeclaration(const std::vector<std::string>& content);
@@ -84,17 +91,19 @@ namespace StringBuilders
         std::string parameterLimitExceeded(const std::vector<std::string>& content);
         std::string parameterAlreadyInstantiated(const std::vector<std::string>& content);
         std::string invalidArgumentsNumber(const std::vector<std::string>& content);
+        std::string incompatibleTypes(const std::vector<std::string>& content);
 
         // Warnings
         std::string defaultWarning(const std::vector<std::string>& content);
         std::string truncatedIdentifier(const std::vector<std::string>& content);
         std::string statementInterpreted(const std::vector<std::string>& content);
+        std::string truncUseless(const std::vector<std::string>& content);
     }
 
     namespace ReportBuilders {
         std::string generateTokenHeader();
         std::string generateStructureHeader();
-        std::string generateTokenReport(const int& code, const std::vector<std::string>& content);
+        std::string generateTokenReport(int code, const std::vector<std::string>& content);
         std::string generateStructureReport(const std::vector<std::string>& content);
     }
 
@@ -105,6 +114,19 @@ namespace StringBuilders
         void symbolTableEntry(std::string& mssg, const SymbolTable::Entry& entry);
         void literalTableHeader(std::string& mssg);
         void literalTableEntry(std::string& mssg, const LiteralTable::Entry& entry);
+    }
+
+    namespace CodeBuilders
+    {
+        // Codes
+        void intermediateCodeHeader(std::string& mssg);
+        void intermediateCodeBlock(std::string& mssg, const std::string& name, const Triples* t, int& line);
+    }
+
+    namespace TripleBuilders
+    {
+        // Triples
+        void triple(std::string& mssg, const Triples::Triple& t, int line);
     }
 }
 

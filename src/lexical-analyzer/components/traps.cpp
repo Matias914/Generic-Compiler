@@ -10,104 +10,74 @@ extern ErrorHandler ERROR_HANDLER;
 
 using namespace LexicalAnalyzer;
 
-int SemanticActions::UnexpectedCharTrap(std::string& lexeme, const char& character)
+int SemanticActions::UnexpectedCharTrap(std::string& lexeme, const char character)
 {
-    Log log;
-    log.type = ERROR;
-    log.line = YYLINENO;
-    log.code = UNEXPECTED_CHARACTER;
-    log.content = {std::string(1, character)};
+    const Log log(ERROR, UNEXPECTED_CHARACTER, YYLINENO, {std::string(1, character)});
     ERROR_HANDLER.add(log);
     return INVALID_TOKEN;
 }
 
-int SemanticActions::ExpectedUITrap(std::string& lexeme, const char& character)
+int SemanticActions::ExpectedUITrap(std::string& lexeme, const char character)
 {
     SOURCE_FILE.unget();
-    Log log;
-    log.type = ERROR;
-    log.line = YYLINENO;
-    log.code = INTEGER_WITHOUT_SUFFIX;
-    log.content = {lexeme};
+    const Log log(ERROR, INTEGER_WITHOUT_SUFFIX, YYLINENO, {lexeme});
     ERROR_HANDLER.add(log);
     return INVALID_TOKEN;
 }
 
-int SemanticActions::ExpectedSignTrap(std::string& lexeme, const char& character)
+int SemanticActions::ExpectedSignTrap(std::string& lexeme, const char character)
 {
     SOURCE_FILE.unget();
-    Log log;
-    log.type = ERROR;
-    log.line = YYLINENO;
-    log.code = EXPONENT_WITHOUT_SIGN;
+    const Log log(ERROR, EXPONENT_WITHOUT_SIGN, YYLINENO);
     ERROR_HANDLER.add(log);
     return INVALID_TOKEN;
 }
 
-int SemanticActions::ExpectedNumberTrap(std::string& lexeme, const char& character)
+int SemanticActions::ExpectedNumberTrap(std::string& lexeme, const char character)
 {
     SOURCE_FILE.unget();
-    Log log;
-    log.type = ERROR;
-    log.line = YYLINENO;
-    log.code = FLOAT_WITHOUT_NUMBERS;
-    log.content.push_back(lexeme);
+    const Log log(ERROR, FLOAT_WITHOUT_NUMBERS, YYLINENO, {lexeme});
     ERROR_HANDLER.add(log);
     return INVALID_TOKEN;
 }
 
-int SemanticActions::ExpectedNoEndlTrap(std::string& lexeme, const char& character)
+int SemanticActions::ExpectedNoEndlTrap(std::string& lexeme, const char character)
 {
     SOURCE_FILE.unget();
-    Log log;
-    log.type = ERROR;
-    log.line = YYLINENO;
-    log.code = STRING_LITERAL_WITH_ENDL;
+    const Log log(ERROR, STRING_LITERAL_WITH_ENDL, YYLINENO);
     ERROR_HANDLER.add(log);
     return INVALID_TOKEN;
 }
 
-int SemanticActions::ExpectedQuoteTrap(std::string& lexeme, const char& character)
+int SemanticActions::ExpectedQuoteTrap(std::string& lexeme, const char character)
 {
     SOURCE_FILE.unget();
-    Log log;
-    log.type = ERROR;
-    log.line = YYLINENO;
-    log.code = UNCLOSED_STRING_LITERAL;
+    const Log log(ERROR, UNCLOSED_STRING_LITERAL, YYLINENO);
     ERROR_HANDLER.add(log);
     return INVALID_TOKEN;
 }
 
-int SemanticActions::ExpectedNumeralTrap(std::string& lexeme, const char& character)
+int SemanticActions::ExpectedNumeralTrap(std::string& lexeme, const char character)
 {
     lexeme = "#";
     SOURCE_FILE.unget();
-    Log log;
-    log.type = ERROR;
-    log.line = YYLINENO;
-    log.code = UNOPENED_COMMENT;
+    const Log log(ERROR, UNOPENED_COMMENT, YYLINENO);
     ERROR_HANDLER.add(log);
     return INVALID_TOKEN;
 }
 
-int SemanticActions::ExpectedCommentEndTrap(std::string& lexeme, const char& character)
+int SemanticActions::ExpectedCommentEndTrap(std::string& lexeme, const char character)
 {
     SOURCE_FILE.unget();
-    Log log;
-    log.type = ERROR;
-    log.line = YYLINENO;
-    log.code = UNCLOSED_COMMENT;
+    const Log log(ERROR, UNCLOSED_COMMENT, YYLINENO);
     ERROR_HANDLER.add(log);
     return INVALID_TOKEN;
 }
 
-int SemanticActions::ExpectedEqualsTrap(std::string& lexeme, const char& character)
+int SemanticActions::ExpectedEqualsTrap(std::string& lexeme, const char character)
 {
     SOURCE_FILE.unget();
-    Log log;
-    log.type = ERROR;
-    log.line = YYLINENO;
-    log.code = INVALID_COLON;
+    const Log log(ERROR, INVALID_COLON, YYLINENO);
     ERROR_HANDLER.add(log);
     return INVALID_TOKEN;
 }

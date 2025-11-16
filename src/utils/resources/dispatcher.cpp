@@ -13,6 +13,8 @@ StringBuilder getBuilderForWarnings(const int& code)
         return truncatedIdentifier;
     case STATEMENT_INTERPRETED:
         return statementInterpreted;
+    case TRUNC_USELESS:
+        return truncUseless;
     default:
         return defaultWarning;
     }
@@ -120,8 +122,8 @@ StringBuilder getBuilderForErrors(const int& code)
         return missingLeftSubOperand;
     case MISSING_BOTH_SUM_OPERANDS:
         return missingBothSumOperands;
-    case MISSING_FLOAT_CONSTANT:
-        return missingFloatConstant;
+    case MISSING_BOTH_SUB_OPERANDS:
+        return missingBothSubOperands;
     case MISSING_RIGHT_FACTOR:
         return missingRightFactor;
     case MISSING_LEFT_MUL_FACTOR:
@@ -132,6 +134,18 @@ StringBuilder getBuilderForErrors(const int& code)
         return missingBothFactors;
     case NOT_YET_IMPLEMENTED:
         return notYetImplemented;
+    case INVALID_LAMBDA_USE:
+        return invalidLambdaUse;
+    case PRINT_SYNTAX_ERROR:
+        return printSyntaxError;
+    case TRUNC_SYNTAX_ERROR:
+        return truncSyntaxError;
+    case IF_SYNTAX_ERROR:
+        return ifSyntaxError;
+    case RETURN_SYNTAX_ERROR:
+        return returnSyntaxError;
+    case DO_SYNTAX_ERROR:
+        return doSyntaxError;
     case SYNTAX_ERROR:
         return genericSyntaxError;
     case MULTIPLE_PROGRAMS_DECLARED:
@@ -156,6 +170,8 @@ StringBuilder getBuilderForErrors(const int& code)
         return parameterAlreadyInstantiated;
     case INVALID_ARGUMENTS_NUMBER:
         return invalidArgumentsNumber;
+    case INCOMPATIBLE_TYPES:
+        return incompatibleTypes;
     default:
         return defaultError;
     }

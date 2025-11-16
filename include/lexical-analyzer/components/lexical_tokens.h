@@ -1,5 +1,5 @@
-#ifndef GC_LEXICAL_ANALYZER_MACROS_H
-#define GC_LEXICAL_ANALYZER_MACROS_H
+#ifndef GC_LEXICAL_TOKENS_H
+#define GC_LEXICAL_TOKENS_H
 
 #define UPPER_CASE   0
 #define F            1
@@ -24,4 +24,4 @@
 #define OTHER       20
 #define END_OF_FILE 21
 
-#endif //GC_LEXICAL_ANALYZER_MACROS_H
+#endif //GC_LEXICAL_TOKENS_H

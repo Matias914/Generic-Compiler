@@ -13,7 +13,7 @@ namespace StringBuilders::ReportBuilders
         return "============== Process Of Structures ==============";
     }
 
-    std::string generateTokenReport(const int& code, const std::vector<std::string>& content)
+    std::string generateTokenReport(const int code, const std::vector<std::string>& content)
     {
         switch (code)
         {

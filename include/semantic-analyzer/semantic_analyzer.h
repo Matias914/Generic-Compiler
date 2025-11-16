@@ -1,50 +1,32 @@
 #ifndef GC_SEMANTIC_ANALYZER_H
 #define GC_SEMANTIC_ANALYZER_H
 
-#include "utils/SymbolTable.h"
-#include "components/CoertionChecker.h"
+#include "components/TypeChecker.h"
+#include "components/ProgramChecker.h"
+#include "components/FunctionChecker.h"
+#include "components/VariableChecker.h"
+#include "components/InvocationChecker.h"
 
 #include <string>
 
 
-namespace  SemanticAnalyzer
+namespace SemanticAnalyzer
 {
     extern std::string SCOPE;
 
-    extern int CURRENT_TYPE;
-    extern int CURRENT_SEMANTIC;
+    extern int TYPE;
 
-    struct Variable
-    {
-        std::string name;
-        std::string prefix;
-    };
-    extern Variable CURRENT_VARIABLE;
-
-    extern CoertionChecker COERTIONS;
+    extern TypeChecker       CHK_TYPES;
+    extern ProgramChecker    CHK_PROGRAMS;
+    extern FunctionChecker   CHK_FUNCTIONS;
+    extern VariableChecker   CHK_VARIABLES;
+    extern InvocationChecker CHK_INVOCATIONS;
 
     void addScope(const std::string& scope);
     void removeScope();
     void addLambdaScope();
     void addInvalidScope();
 
-    void checkProgramRedeclaration(const std::string& program);
-
-    const SymbolTable::Entry* updateSymbolAsProgram(const std::string& program);
-    const SymbolTable::Entry* upsertVariableScope();
-
-    void notifyFunctionDeclaration(const std::string& name);
-    void notifyUnnamedFunctionDeclaration();
-    void checkInvocationParametersNumber();
-
-    const SymbolTable::Entry* updateParameterScope(const std::string& name);
-    const SymbolTable::Entry* notifyParametersDeclarationEnd();
-    const SymbolTable::Entry* checkFunctionExistanceInScopeAndBuffer(const std::string& name);
-    const SymbolTable::Entry* checkParameterExistanceInScope(const std::string& name);
-
-    const SymbolTable::Entry* checkVariableExistanceInScope();
-    const SymbolTable::Entry* checkFunctionExistanceInScopeAndBuffer(const std::string& name);
-    const SymbolTable::Entry* checkParameterExistanceInScope(const std::string& name);
 };
 
 
