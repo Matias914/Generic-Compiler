@@ -3,6 +3,8 @@
 
 #include "utils/SymbolTable.h"
 
+#include <queue>
+
 namespace SemanticAnalyzer
 {
     class VariableChecker
@@ -11,10 +13,11 @@ namespace SemanticAnalyzer
         VariableChecker();
 
         void notifyVariableName(const std::string& name);
-        void notifyVariablePrefix(const std::string& name);
+        void notifyVariablePrefix(const std::string& new_name);
+
+        std::string getCurrentVariableName();
 
         const SymbolTable::Entry* checkVariableDeclaration();
-        // TODO: Mover a assignments pero requiere que "variable: ;" tenga representation
         const SymbolTable::Entry* checkVariableExistanceInScope();
 
     private:
@@ -23,7 +26,7 @@ namespace SemanticAnalyzer
             std::string name;
             std::string prefix;
         };
-        Variable variable;
+        std::queue<Variable> variables;
     };
 }
 

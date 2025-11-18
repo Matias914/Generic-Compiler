@@ -1,7 +1,6 @@
 #include "utils/resources/macros.h"
 #include "utils/resources/builders.h"
 #include "utils/resources/dispatcher.h"
-#include "syntax-analyzer/components/parser.h"
 
 using namespace StringBuilders::ErrorBuilders;
 
@@ -15,6 +14,8 @@ StringBuilder getBuilderForWarnings(const int& code)
         return statementInterpreted;
     case TRUNC_USELESS:
         return truncUseless;
+    case EXTRA_NUMERIC_CONSTANTS:
+        return extraNumericConstants;
     default:
         return defaultWarning;
     }
@@ -172,6 +173,14 @@ StringBuilder getBuilderForErrors(const int& code)
         return invalidArgumentsNumber;
     case INCOMPATIBLE_TYPES:
         return incompatibleTypes;
+    case INCOMPATIBLE_WITH_SEMANTIC:
+        return incompatibleWithSemantic;
+    case RETURN_INCOMPATIBLE:
+        return returnIncompatible;
+    case RETURN_WITHOUT_SCOPE:
+        return returnWithoutScope;
+    case MISSING_RETURN_STATEMENT:
+        return missingReturnStatement;
     default:
         return defaultError;
     }

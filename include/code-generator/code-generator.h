@@ -7,7 +7,7 @@ namespace CodeGenerator
 {
     extern Triples* INTERMEDIATE_CODE;
 
-    void addIntermediateCodeBlock(const std::string& name);
+    void addIntermediateCodeBlock(const SymbolTable::Entry* ref);
     void notifyEndOfBlock();
 
     std::string getIntermediateCode();

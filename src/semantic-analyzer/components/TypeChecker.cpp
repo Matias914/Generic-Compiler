@@ -4,10 +4,14 @@
 #include "lexical-analyzer/lexical_analyzer.h"
 #include "semantic-analyzer/components/TypeChecker.h"
 
+#include <iostream>
+
 extern ErrorHandler ERROR_HANDLER;
 
 namespace SemanticAnalyzer
 {
+    TypeChecker::TypeChecker() {}
+
     int TypeChecker::checkTruncate(const Expression& e)
     {
         switch (e.type)
@@ -46,5 +50,24 @@ namespace SemanticAnalyzer
             return TC_UNSUPPORTED;
         }
         return e1.type;
+    }
+
+    int TypeChecker::checkSemantics(const Expression& e1, const Expression& e2)
+    {
+        if (e1.type == TC_UNSUPPORTED || e2.type == ST_UNSUPPORTED) {
+            return TC_UNSUPPORTED;
+        }
+        if (!e1.assignable && e2.type == ST_CR)
+        {
+            const Log l (
+                ERROR,
+                INCOMPATIBLE_WITH_SEMANTIC,
+                LexicalAnalyzer::YYLINENO,
+                {e1.representation, e2.representation, " CR"}
+            );
+            ERROR_HANDLER.add(l);
+            return TC_UNSUPPORTED;
+        }
+        return e2.type;
     }
 }

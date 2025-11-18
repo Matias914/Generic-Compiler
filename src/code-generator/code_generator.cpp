@@ -1,14 +1,17 @@
 #include "code-generator/code-generator.h"
 
 #include <stack>
+#include <stdexcept>
 
 #include "utils/resources/builders.h"
+
+#define RUNTIME_E1 "\nnotifyEndOfBlock(): block was marked as ended but no block was found"
 
 namespace CodeGenerator
 {
     struct IntermediateCodeBlock
     {
-        const std::string name;
+        const SymbolTable::Entry* ref;
         Triples* code;
     };
 
@@ -17,15 +20,17 @@ namespace CodeGenerator
     static auto POSITIONS = std::stack<int>();
     static auto ICODES = std::vector<IntermediateCodeBlock>();
 
-    void addIntermediateCodeBlock(const std::string& name)
+    void addIntermediateCodeBlock(const SymbolTable::Entry* ref)
     {
         INTERMEDIATE_CODE = new Triples();
-        ICODES.push_back({name, INTERMEDIATE_CODE});
         POSITIONS.push(ICODES.size());
+        ICODES.push_back({ref, INTERMEDIATE_CODE});
     }
 
     void notifyEndOfBlock()
     {
+        if (POSITIONS.empty())
+            throw std::runtime_error(RUNTIME_E1);
         POSITIONS.pop();
         INTERMEDIATE_CODE = ICODES[POSITIONS.top()].code;
     }
@@ -40,8 +45,7 @@ namespace CodeGenerator
         for (int i = ICODES.size() - 1; i >= 0; --i)
         {
             mssg.append("\n");
-            intermediateCodeBlock(mssg, ICODES[i].name, ICODES[i].code, line);
-            line++;
+            intermediateCodeBlock(mssg, ICODES[i].ref, ICODES[i].code, line);
         }
         return mssg;
     }

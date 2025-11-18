@@ -15,9 +15,10 @@
 // ================================= //
 
 // ------------ Warnings ----------- //
-#define TRUNCATED_IDENTIFIER  0
-#define STATEMENT_INTERPRETED 1
-#define TRUNC_USELESS         2
+#define TRUNCATED_IDENTIFIER    0
+#define STATEMENT_INTERPRETED   1
+#define TRUNC_USELESS           2
+#define EXTRA_NUMERIC_CONSTANTS 3
 
 // ------------- Errors ------------ //
 #define CUSTOM_ERROR                    0
@@ -95,5 +96,9 @@
 #define PARAMETER_ALREADY_INSTANTIATED  72
 #define INVALID_ARGUMENTS_NUMBER        73
 #define INCOMPATIBLE_TYPES              74
+#define INCOMPATIBLE_WITH_SEMANTIC      75
+#define RETURN_INCOMPATIBLE             76
+#define RETURN_WITHOUT_SCOPE            77
+#define MISSING_RETURN_STATEMENT        78
 
 #endif //GC_UTILS_MACROS_H

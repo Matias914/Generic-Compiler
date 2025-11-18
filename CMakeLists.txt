@@ -18,6 +18,7 @@ set(COMPILER_SOURCES
         src/utils/ReportHandler.cpp
         src/utils/ErrorHandler.cpp
         src/utils/resources/dispatcher.cpp
+        src/utils/resources/string_builders_codes.cpp
         src/utils/resources/string_builders_errors.cpp
         src/utils/resources/string_builders_report.cpp
         src/utils/resources/string_builders_tables.cpp
@@ -40,6 +41,8 @@ set(COMPILER_SOURCES
         # Semantic Analyzer
         src/semantic-analyzer/semantic_analyzer.cpp
         src/semantic-analyzer/components/TypeChecker.cpp
+        src/semantic-analyzer/components/ReturnChecker.cpp
+        src/semantic-analyzer/components/LambdaChecker.cpp
         src/semantic-analyzer/components/ProgramChecker.cpp
         src/semantic-analyzer/components/FunctionChecker.cpp
         src/semantic-analyzer/components/VariableChecker.cpp
@@ -47,8 +50,6 @@ set(COMPILER_SOURCES
         # Intermediate Code
         src/code-generator/code_generator.cpp
         src/code-generator/components/Triples.cpp
-        src/utils/resources/string_builders_triple.cpp
-        src/utils/resources/string_builders_codes.cpp
 )
 
 set(TEST_SOURCES

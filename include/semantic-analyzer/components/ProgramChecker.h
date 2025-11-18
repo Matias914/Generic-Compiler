@@ -1,8 +1,6 @@
 #ifndef GC_PROGRAMCHECKER_H
 #define GC_PROGRAMCHECKER_H
 
-#include <bitset>
-
 #include "utils/SymbolTable.h"
 
 namespace SemanticAnalyzer

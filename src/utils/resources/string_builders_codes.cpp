@@ -2,6 +2,8 @@
 
 #include <string>
 
+using namespace CodeGenerator;
+
 namespace StringBuilders::CodeBuilders
 {
     void intermediateCodeHeader(std::string& mssg)
@@ -11,9 +13,9 @@ namespace StringBuilders::CodeBuilders
             .append("==============================================");
     }
 
-    void intermediateCodeBlock(std::string& mssg, const std::string& name, const Triples* t, int& line)
+    void intermediateCodeBlock(std::string& mssg, const SymbolTable::Entry* ref, const Triples* t, int& line)
     {
-        mssg.append(name)
+        mssg.append(ref->symbol)
             .append(":\n")
             .append(t->toString(true, line));
     }

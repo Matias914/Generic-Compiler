@@ -92,12 +92,17 @@ namespace StringBuilders
         std::string parameterAlreadyInstantiated(const std::vector<std::string>& content);
         std::string invalidArgumentsNumber(const std::vector<std::string>& content);
         std::string incompatibleTypes(const std::vector<std::string>& content);
+        std::string incompatibleWithSemantic(const std::vector<std::string>& content);
+        std::string returnIncompatible(const std::vector<std::string>& content);
+        std::string returnWithoutScope(const std::vector<std::string>& content);
+        std::string missingReturnStatement(const std::vector<std::string>& content);
 
         // Warnings
         std::string defaultWarning(const std::vector<std::string>& content);
         std::string truncatedIdentifier(const std::vector<std::string>& content);
         std::string statementInterpreted(const std::vector<std::string>& content);
         std::string truncUseless(const std::vector<std::string>& content);
+        std::string extraNumericConstants(const std::vector<std::string>& content);
     }
 
     namespace ReportBuilders {
@@ -119,14 +124,19 @@ namespace StringBuilders
     namespace CodeBuilders
     {
         // Codes
+        void intermediateCodeBlock(
+            std::string& mssg,
+            const SymbolTable::Entry* ref,
+            const CodeGenerator::Triples* t,
+            int& line
+        );
         void intermediateCodeHeader(std::string& mssg);
-        void intermediateCodeBlock(std::string& mssg, const std::string& name, const Triples* t, int& line);
     }
 
     namespace TripleBuilders
     {
         // Triples
-        void triple(std::string& mssg, const Triples::Triple& t, int line);
+        void triple(std::string& mssg, const CodeGenerator::Triples::Triple& t, int line);
     }
 }
 

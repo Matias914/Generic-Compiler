@@ -21,6 +21,7 @@ namespace SyntaxAnalyzer::SemanticActions
     void announceSyntaxError();
     void announceSpecificError(int code);
     void announceSpecificErrorWithSymbol(int code);
+    void announceSpecificWarning(int code);
     void specifySyntaxError(int code);
     void specifySyntaxWarning(int code);
 

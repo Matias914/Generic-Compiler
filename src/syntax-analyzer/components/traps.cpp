@@ -27,6 +27,12 @@ namespace SyntaxAnalyzer::SemanticActions
         ERROR_HANDLER.add(l);
     }
 
+    void announceSpecificWarning(const int code)
+    {
+        const Log l(WARNING, code, LexicalAnalyzer::YYLINENO, {Translator::translate(yychar)});
+        ERROR_HANDLER.add(l);
+    }
+
     void announceSpecificErrorWithSymbol(const int code)
     {
         if (yylval.sref == nullptr)

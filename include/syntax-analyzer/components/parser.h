@@ -122,15 +122,16 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 71 "include/syntax-analyzer/components/yacc.y"
+#line 79 "include/syntax-analyzer/components/yacc.y"
 
     const SymbolTable::Entry*  sref;
     const LiteralTable::Entry* lref;
     Metadata metadata;
     int pid;
     Operator op;
+    bool returnable;
 
-#line 134 "include/syntax-analyzer/components/parser.h"
+#line 135 "include/syntax-analyzer/components/parser.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

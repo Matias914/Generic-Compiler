@@ -1,3 +1,4 @@
+
 PROGRAMA {
     uint Y(cr uint A, cr uint B, uint C) {
         uint D;
@@ -5,15 +6,37 @@ PROGRAMA {
             do {
                 do {
                     B := -2.0 * 1.0 + 1UI - 1UI + 1.0;
-                    B := 2UI / Y(A, C->D A + B->A);
+                    B := 2UI / Y(A, C->D, A + B->A, A->C);
                 } while (B > 5UI);
                 A := A + 1UI;
             } while (A > 10UI);
         }
         endif;
+        uint Y(cr uint A, cr uint B, uint C)
+        {
+            return(2UI);
+        }
         do {
             B := 1UI - print;
         } while (B > 5UI);
         return (Y(A + 1UI->A, B->B, 0UI->C));
     };
+
+    if (A > B) {
+        do {
+            do {
+                B := -2.0 * 1.0 + 1UI - 1UI + 1.0;
+                B := 2UI / Y(A, C->D, A + B->A, A->C);
+            } while (B > 5UI);
+            A := A + 1UI;
+        } while (A > 10UI);
+    }
+
+    (uint X) {
+        X := 3UI;
+        (uint X) {
+            X := 2UI;
+            print (X);
+        } (X);
+    } (Y1);
 }

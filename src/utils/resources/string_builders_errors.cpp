@@ -46,6 +46,14 @@ namespace StringBuilders::ErrorBuilders
         return WARNING_MSG("Useless trunc found. '" + content[0] + "' is already an integer");
     }
 
+    std::string extraNumericConstants(const std::vector<std::string>& content)
+    {
+        return WARNING_MSG (
+            "In multiple assignments, both sides should have the same amount of elements. "
+            "The extra numeric constants will be ignored"
+        );
+    }
+
     // --------------------------------------- Errors --------------------------------------- //
 
     std::string customError(const std::vector<std::string>& content)
@@ -478,7 +486,7 @@ namespace StringBuilders::ErrorBuilders
     {
         if (content.size() != 2)
             throw std::runtime_error("\nundeclaredParameter: invalid log");
-        return ERROR_MSG("'" + content[0] + "' is not a valid argument for '" + content[1] + "'");
+        return ERROR_MSG("'" + content[0] + "' is not a valid parameter for '" + content[1] + "'");
     }
 
     std::string parameterLimitExceeded(const std::vector<std::string>& content)
@@ -512,5 +520,39 @@ namespace StringBuilders::ErrorBuilders
             .append(content[1])
             .append("'");
         return ERROR_MSG(+mssg+);
+    }
+
+    std::string incompatibleWithSemantic(const std::vector<std::string>& content)
+    {
+        if (content.size() != 3)
+            throw std::runtime_error("\nincompatibleWithSemantic: invalid log");
+        std::string mssg;
+        mssg.clear();
+        mssg.append("Argument not compatible with parameter semantic. Argument: '")
+            .append(content[0])
+            .append("', but Parameter: '")
+            .append(content[1])
+            .append("' with semantic ")
+            .append(content[2]);
+        return ERROR_MSG(+mssg+);
+    }
+
+    std::string returnIncompatible(const std::vector<std::string>& content)
+    {
+        if (content.size() != 2)
+            throw std::runtime_error("\nreturnIncompatible: invalid log");
+        return ERROR_MSG("Return with '" + content[0] + "' does not match '" + content[1] + "' type");
+    }
+
+    std::string returnWithoutScope(const std::vector<std::string>& content)
+    {
+        return ERROR_MSG("Return does not belong to any function scope");
+    }
+
+    std::string missingReturnStatement(const std::vector<std::string>& content)
+    {
+        if (content.size() != 1)
+            throw std::runtime_error("\nmissingReturnStatement: invalid log");
+        return ERROR_MSG("Function '" + content[0] + "' has a path without a return statemnt");
     }
 }

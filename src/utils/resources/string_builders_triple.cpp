@@ -5,6 +5,8 @@
 #include <sstream>
 #include <iomanip>
 
+using namespace CodeGenerator;
+
 // Helper function to get the string representation of an operand
 std::string getStringOperand(const Triples::Operand& o, const int line)
 {
@@ -32,8 +34,20 @@ std::string getStringOperator(const char op)
         return "BT";
     case TR_BRANCH_FALSE:
         return "BF";
-    case TR_BRANCH_FUNCTION:
-        return "JUMP";
+    case TR_CALL:
+        return "CALL";
+    case TR_RET:
+        return "RET";
+    case TR_EQUAL_OP:
+        return "==";
+    case TR_NOT_EQUAL_OP:
+        return "!=";
+    case TR_GE_OP:
+        return ">=";
+    case TR_LE_OP:
+        return "<=";
+    case TR_PRINT:
+        return "PRINT";
     default:
         return std::string(1, op);
     }
@@ -45,9 +59,9 @@ namespace StringBuilders::TripleBuilders
     {
         std::stringstream ss;
         ss << "( "
-           << std::left << std::setw(5) << getStringOperator(t.op) << ", "
-           << std::left << std::setw(15) << getStringOperand(t.o1, line) << ", "
-           << std::left << std::setw(15) << getStringOperand(t.o2, line) << " )" << "\n";
+            << std::left << std::setw(6) << getStringOperator(t.op) << ", "
+            << std::left << std::setw(30) << getStringOperand(t.o1, line) << ", "
+            << std::left << std::setw(30) << getStringOperand(t.o2, line) << " )" << "\n";
         mssg.append(ss.str());
     }
 }

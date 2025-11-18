@@ -1,27 +1,68 @@
 #include "utils/resources/builders.h"
 #include "code-generator/components/Triples.h"
 
-Triples::Triples() : triples(std::vector<Triple>()) {}
-
-int Triples::addTriple(const Triple& t)
+namespace CodeGenerator
 {
-    const int reference = triples.size();
-    triples.push_back(t);
-    return reference;
-}
+    Triples::Triples():
+        triples(std::vector<Triple>()),
+        buffer(std::vector<Triple>()) {}
 
-std::string Triples::toString(const bool withTab, int& line) const
-{
-    std::string mssg;
-    const int offset = line;
-    using namespace StringBuilders::TripleBuilders;
-    for (auto t : triples)
+    int Triples::addTriple(const Triple& t)
     {
-        if (withTab) mssg.append("\t");
-        triple(mssg, t, offset);
-        line++;
+        const int reference = triples.size();
+        triples.push_back(t);
+        return reference;
     }
-    return mssg;
+
+    int Triples::addBuffer(const Triple& t)
+    {
+        const int reference = buffer.size();
+        buffer.push_back(t);
+        return reference;
+    }
+
+    int Triples::getLastTriple() const
+    {
+        return triples.size() - 1;
+    }
+
+    bool Triples::updateTripleReference(const int id, const int ref)
+    {
+        if (id >= triples.size())
+            return false;
+        if (triples[id].o1.type == TR_NULL)
+        {
+            triples[id].o1 = { TR_TRIPLE, { .tref = ref }};
+            return true;
+        }
+        if (triples[id].o2.type == TR_NULL)
+        {
+            triples[id].o2 = { TR_TRIPLE, { .tref = ref }};
+            return true;
+        }
+        return false;
+    }
+
+    void Triples::commit()
+    {
+        if (!buffer.empty())
+        {
+            triples.insert(triples.end(), buffer.begin(), buffer.end());
+            buffer.clear();
+        }
+    }
+
+    std::string Triples::toString(const bool withTab, int& line) const
+    {
+        std::string mssg;
+        const int offset = line;
+        using namespace StringBuilders::TripleBuilders;
+        for (auto t : triples)
+        {
+            if (withTab) mssg.append("\t");
+            triple(mssg, t, offset);
+            line++;
+        }
+        return mssg;
+    }
 }
-
-
