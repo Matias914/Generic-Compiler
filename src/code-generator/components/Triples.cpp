@@ -30,14 +30,14 @@ namespace CodeGenerator
     {
         if (id >= triples.size())
             return false;
-        if (triples[id].o1.type == TR_NULL)
+        if (triples[id].o1.type == NULLREF)
         {
-            triples[id].o1 = { TR_TRIPLE, { .tref = ref }};
+            triples[id].o1 = { TRIPLE, { .tref = ref }};
             return true;
         }
-        if (triples[id].o2.type == TR_NULL)
+        if (triples[id].o2.type == NULLREF)
         {
-            triples[id].o2 = { TR_TRIPLE, { .tref = ref }};
+            triples[id].o2 = { TRIPLE, { .tref = ref }};
             return true;
         }
         return false;

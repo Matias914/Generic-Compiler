@@ -1,9 +1,11 @@
 #include "utils/Log.h"
 #include "utils/ErrorHandler.h"
-#include "utils/resources/macros.h"
+#include "utils/resources/codes.h"
 #include "lexical-analyzer/lexical_analyzer.h"
 #include "semantic-analyzer/semantic_analyzer.h"
 #include "semantic-analyzer/components/FunctionChecker.h"
+
+#define RUNTIME_E1 "\ncheckFunctionDeclaration: failed to add function"
 
 extern SymbolTable SYMBOL_TABLE;
 extern ErrorHandler ERROR_HANDLER;
@@ -11,7 +13,7 @@ extern ErrorHandler ERROR_HANDLER;
 namespace SemanticAnalyzer
 {
     FunctionChecker::FunctionChecker() :
-        semantic(ST_CV),
+        semantic(CV),
         function({"", "", 0}) {}
     
     /*
@@ -69,13 +71,13 @@ namespace SemanticAnalyzer
         const auto entry = SymbolTable::Entry({
             function.name + function.prefix,
             function.type,
-            ST_FUNCTION,
-            ST_UNSUPPORTED,
+            FUNCTION,
+            UNKNOWN,
             function.params
         });
         const auto ref = SYMBOL_TABLE.update(function.name, entry);
         if (ref == nullptr)
-            throw std::runtime_error("upsertFunctionScope: failed to add function");
+            throw std::runtime_error(RUNTIME_E1);
         return ref;
     }
 
@@ -97,7 +99,7 @@ namespace SemanticAnalyzer
         const auto entry = SymbolTable::Entry({
             name + SCOPE,
             TYPE,
-            ST_PARAMETER,
+            PARAMETER,
             semantic,
             function.params
         });

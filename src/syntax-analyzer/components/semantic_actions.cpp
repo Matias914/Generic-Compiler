@@ -1,7 +1,7 @@
 #include "utils/ReportHandler.h"
 #include "utils/ErrorHandler.h"
 #include "utils/LiteralTable.h"
-#include "utils/resources/macros.h"
+#include "utils/resources/codes.h"
 #include "lexical-analyzer/lexical_analyzer.h"
 #include "syntax-analyzer/components/translator.h"
 #include "syntax-analyzer/components/semantic_actions.h"

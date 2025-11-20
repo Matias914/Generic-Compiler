@@ -1,6 +1,6 @@
 #include "utils/Log.h"
 #include "utils/ReportHandler.h"
-#include "utils/resources/macros.h"
+#include "utils/resources/codes.h"
 #include "lexical-analyzer/lexical_analyzer.h"
 #include "lexical-analyzer/components/lexical_tokens.h"
 #include "lexical-analyzer/components/translator.h"

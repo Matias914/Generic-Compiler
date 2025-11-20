@@ -1,5 +1,5 @@
 #include "utils/ErrorHandler.h"
-#include "utils/resources/macros.h"
+#include "utils/resources/codes.h"
 #include "lexical-analyzer/lexical_analyzer.h"
 #include "syntax-analyzer/components/parser.h"
 #include "lexical-analyzer/components/reserved_words.h"
@@ -52,10 +52,10 @@ int SemanticActions::SA3(std::string& lexeme, const char character)
         return INVALID_TOKEN;
     }
     const LiteralTable::TypeValue val = {.i = value};
-    yylval.lref = LITERAL_TABLE.addAndGet(lexeme, LT_UINT, val);
+    yylval.lref = LITERAL_TABLE.addAndGet(lexeme, UINT, val);
     if (yylval.lref == nullptr)
         throw std::runtime_error("SA3: failed to add new constant to table");
-    return UINTEGER_LITERAL;
+    return LITERAL_UINT;
 }
 
 int SemanticActions::SA4(std::string& lexeme, const char character)
@@ -79,10 +79,10 @@ int SemanticActions::SA4(std::string& lexeme, const char character)
     {
         const float value = static_cast<float>(ldvalue);
         const LiteralTable::TypeValue val = {.f = value};
-        yylval.lref = LITERAL_TABLE.addAndGet(lexeme, LT_FLOAT, val);
+        yylval.lref = LITERAL_TABLE.addAndGet(lexeme, FLOAT, val);
         if (yylval.lref == nullptr)
             throw std::runtime_error("SA4: failed to add new constant to table");
-        return FLOAT_LITERAL;
+        return LITERAL_FLOAT;
     }
     const Log log(ERROR, FLOAT_OUT_OF_RANGE, YYLINENO, {lexeme});
     ERROR_HANDLER.add(log);
@@ -94,10 +94,10 @@ int SemanticActions::SA5(std::string& lexeme, const char character)
 {
     lexeme += character;
     constexpr LiteralTable::TypeValue val = {.i = 0};
-    yylval.lref = LITERAL_TABLE.addAndGet(lexeme, LT_STRING, val);
+    yylval.lref = LITERAL_TABLE.addAndGet(lexeme, STRING, val);
     if (yylval.lref == nullptr)
         throw std::runtime_error("SA5: failed to add new constant to table");
-    return STRING_LITERAL;
+    return LITERAL_STRING;
 }
 
 int SemanticActions::SA6(std::string& lexeme, const char character)
@@ -129,37 +129,37 @@ int SemanticActions::SA8(std::string& lexeme, const char character)
 int SemanticActions::SA9(std::string& lexeme, const char character)
 {
     lexeme += character;
-    return EQUAL_OP;
+    return OP_EQUAL;
 }
 
 int SemanticActions::SA10(std::string& lexeme, const char character)
 {
     lexeme += character;
-    return NOT_EQUAL_OP;
+    return OP_NOT_EQUAL;
 }
 
 int SemanticActions::SA11(std::string& lexeme, const char character)
 {
     lexeme += character;
-    return ASSIGN_OP;
+    return OP_ASSIGN;
 }
 
 int SemanticActions::SA12(std::string& lexeme, const char character)
 {
     lexeme += character;
-    return LE_OP;
+    return OP_LE;
 }
 
 int SemanticActions::SA13(std::string& lexeme, const char character)
 {
     lexeme += character;
-    return GE_OP;
+    return OP_GE;
 }
 
 int SemanticActions::SA14(std::string& lexeme, const char character)
 {
     lexeme += character;
-    return POINTER_OP;
+    return OP_POINTER;
 }
 
 int SemanticActions::SA15(std::string& lexeme, const char character)

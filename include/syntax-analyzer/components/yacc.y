@@ -4,11 +4,6 @@
     #include "utils/SymbolTable.h"
     #include "utils/LiteralTable.h"
 
-    #define PR_NULL    (-1)
-    #define PR_SYMBOL    0
-    #define PR_LITERAL   1
-    #define PR_TRIPLE    2
-
     struct Operator
     {
         char tid;
@@ -43,7 +38,7 @@
 #include "syntax-analyzer/components/string_pool.h"
 #include "syntax-analyzer/components/semantic_actions.h"
 
-#include "utils/resources/macros.h"
+#include "utils/resources/codes.h"
 #include "code-generator/code-generator.h"
 #include "lexical-analyzer/lexical_analyzer.h"
 #include "semantic-analyzer/semantic_analyzer.h"
@@ -61,14 +56,13 @@ std::stack<int> STACK;
 // Parser Functions
 
 void yyerror(const char* s);
-int mapWithCheckerType(const int type);
 char mapWithTripleOperator(const int op);
 CodeGenerator::Triples::Operand mapWithOperand(const Metadata::Reference& ref);
 
 // Avoids Code Repetition
 void createMultipleAssignmentTriple(const Metadata& m);
 void createTruncateTriple(Metadata& result, const Metadata& operand);
-void createArithmeticTriple(Metadata& r, const Metadata& o1, const Metadata& o2, const char op);
+void createArithmeticTriple(Metadata& r, const Metadata& o1, const Metadata& o2, char op);
 
 %}
 
@@ -86,27 +80,27 @@ void createArithmeticTriple(Metadata& r, const Metadata& o1, const Metadata& o2,
 }
 
 %token INVALID_TOKEN
-%token IF
-%token ELSE
-%token ENDIF
-%token DO
-%token WHILE
-%token RETURN
-%token PRINT
-%token TRUNC
-%token UINT
-%token FLOAT
-%token CR
-%token POINTER_OP
-%token EQUAL_OP
-%token GE_OP
-%token LE_OP
-%token ASSIGN_OP
-%token NOT_EQUAL_OP
+%token WORD_IF
+%token WORD_ELSE
+%token WORD_ENDIF
+%token WORD_DO
+%token WORD_WHILE
+%token WORD_RETURN
+%token WORD_PRINT
+%token WORD_TRUNC
+%token WORD_UINT
+%token WORD_FLOAT
+%token WORD_CR
+%token OP_POINTER
+%token OP_EQUAL
+%token OP_GE
+%token OP_LE
+%token OP_ASSIGN
+%token OP_NOT_EQUAL
 %token <sref> IDENTIFIER
-%token <lref> FLOAT_LITERAL
-%token <lref> UINTEGER_LITERAL
-%token <lref> STRING_LITERAL
+%token <lref> LITERAL_FLOAT
+%token <lref> LITERAL_UINT
+%token <lref> LITERAL_STRING
 
 %start global
 
@@ -123,15 +117,12 @@ void createArithmeticTriple(Metadata& r, const Metadata& o1, const Metadata& o2,
 %type <returnable> condition_body_setup
 %type <returnable> then_body_setup
 
-// For Assignments
-%type <sref> assignment_head
-
 // For Arithmetic Expressions
-%type <metadata> lambda_real_parameter assignment_tail function_invocation_head invocation_setup
+%type <metadata> lambda_real_parameter assignment_head assignment_tail function_invocation_head invocation_setup
 %type <metadata> function_invocation_tail real_parameter_list real_parameter_list_setup real_parameter comparison
 %type <metadata> opt_trunc_constant trunc_constant opt_trunc_variable trunc_variable expression expression_setup
 %type <metadata> trunc_expression term positive_term negative_term factor positive_factor negative_factor
-%type <metadata> numeric_constant positive_constant negative_constant
+%type <metadata> numeric_constant positive_constant negative_constant condition
 %type <op> comparison_operator
 %type <pid> variable
 
@@ -299,7 +290,7 @@ declarative_stmt:
     | type IDENTIFIER '('
     {
         SemanticAnalyzer::CHK_RETURNS.bufferFunction (
-            SemanticAnalyzer::ReturnChecker::Element({mapWithCheckerType(SemanticAnalyzer::TYPE), $2->symbol})
+            SemanticAnalyzer::ReturnChecker::Element({SemanticAnalyzer::TYPE, $2->symbol})
         );
         SemanticAnalyzer::CHK_FUNCTIONS.notifyFunctionName($2->symbol);
 
@@ -308,7 +299,7 @@ declarative_stmt:
     | type '('
     {
         SemanticAnalyzer::CHK_RETURNS.bufferFunction(
-            SemanticAnalyzer::ReturnChecker::Element({mapWithCheckerType(SemanticAnalyzer::TYPE), "...()"})
+            SemanticAnalyzer::ReturnChecker::Element({SemanticAnalyzer::TYPE, "...()"})
         );
         SemanticAnalyzer::CHK_FUNCTIONS.notifyFunctionWithoutName();
 
@@ -345,13 +336,13 @@ variable_list:
 ;
 
 type:
-    UINT
+    WORD_UINT
     {
-        SemanticAnalyzer::TYPE = ST_UINT;
+        SemanticAnalyzer::TYPE = UINT;
     } // Build: Current Type
-    | FLOAT
+    | WORD_FLOAT
     {
-        SemanticAnalyzer::TYPE = ST_FLOAT;
+        SemanticAnalyzer::TYPE = FLOAT;
         SemanticActions::announceSpecificError(NOT_YET_IMPLEMENTED);
     } // Error: Type not yet implemented + Build: Current Type
 ;
@@ -435,7 +426,7 @@ formal_parameter_list:
 formal_parameter:
     type IDENTIFIER
     {
-        SemanticAnalyzer::CHK_FUNCTIONS.notifyParameterSemantic(ST_CV);
+        SemanticAnalyzer::CHK_FUNCTIONS.notifyParameterSemantic(CV);
         SemanticAnalyzer::CHK_FUNCTIONS.checkParameterDeclaration($2->symbol);
 
     } // Build: Current Semantic + Action: checkParameterDeclaration()
@@ -447,8 +438,8 @@ formal_parameter:
     } // Error: Missing Parameter Name
     | IDENTIFIER
     {
-        SemanticAnalyzer::TYPE = ST_UNSUPPORTED;
-        SemanticAnalyzer::CHK_FUNCTIONS.notifyParameterSemantic(ST_CV);
+        SemanticAnalyzer::TYPE = UNKNOWN;
+        SemanticAnalyzer::CHK_FUNCTIONS.notifyParameterSemantic(CV);
         SemanticAnalyzer::CHK_FUNCTIONS.checkParameterDeclaration($1->symbol);
         SemanticActions::announceSpecificErrorWithSymbol(MISSING_PARAMETER_TYPE);
 
@@ -473,7 +464,7 @@ formal_parameter:
     } // Error: Missing Parameter Type and Name
     | parameter_semantics IDENTIFIER
     {
-        SemanticAnalyzer::TYPE = ST_UNSUPPORTED;
+        SemanticAnalyzer::TYPE = UNKNOWN;
         SemanticAnalyzer::CHK_FUNCTIONS.checkParameterDeclaration($2->symbol);
         SemanticActions::announceSpecificErrorWithSymbol(MISSING_PARAMETER_TYPE);
 
@@ -481,9 +472,9 @@ formal_parameter:
 ;
 
 parameter_semantics:
-    CR
+    WORD_CR
     {
-        SemanticAnalyzer::CHK_FUNCTIONS.notifyParameterSemantic(ST_CR);
+        SemanticAnalyzer::CHK_FUNCTIONS.notifyParameterSemantic(CR);
 
     } // Build: Current Semantic
 ;
@@ -507,115 +498,139 @@ function_body:
 // ====================================== Return =================================== //
 
 return:
-    RETURN '(' expression ')' ';'
+    WORD_RETURN '(' expression ')' ';'
     {
         SemanticAnalyzer::ReturnChecker::Element e = { $3.expression.type, *StringPool::get($3.expression.pid) };
         SemanticAnalyzer::CHK_RETURNS.checkReturnWithBuffered(e);
 
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
-            CodeGenerator::INTERMEDIATE_CODE->addTriple (
-                { TR_RET, mapWithOperand($3.reference), mapWithOperand({ PR_NULL, nullptr }) }
-            );
+            CodeGenerator::INTERMEDIATE_CODE->addTriple ({ 
+                CODEOP_RET, 
+                $3.expression.type,
+                mapWithOperand($3.reference), 
+                CodeGenerator::Triples::Operand({ NULLREF, nullptr }) 
+            });
 
     }
-    | RETURN '(' expression ')' error
+    | WORD_RETURN '(' expression ')' error
     {
         SemanticAnalyzer::ReturnChecker::Element e = { $3.expression.type, *StringPool::get($3.expression.pid) };
         SemanticAnalyzer::CHK_RETURNS.checkReturnWithBuffered(e);
 
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
-            CodeGenerator::INTERMEDIATE_CODE->addTriple (
-                { TR_RET, mapWithOperand($3.reference), mapWithOperand({ PR_NULL, nullptr }) }
-            );
+            CodeGenerator::INTERMEDIATE_CODE->addTriple ({ 
+                CODEOP_RET, 
+                $3.expression.type,
+                mapWithOperand($3.reference), 
+                CodeGenerator::Triples::Operand({ NULLREF, nullptr }) 
+            });
 
         SemanticActions::specifySyntaxError(MISSING_SEMICOLON);
         yyerrok;
 
     } // Error: Missing Semicolon
-    | RETURN '(' expression error
+    | WORD_RETURN '(' expression error
     {
         SemanticAnalyzer::ReturnChecker::Element e = { $3.expression.type, *StringPool::get($3.expression.pid) };
         SemanticAnalyzer::CHK_RETURNS.checkReturnWithBuffered(e);
 
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
-            CodeGenerator::INTERMEDIATE_CODE->addTriple (
-                { TR_RET, mapWithOperand($3.reference), mapWithOperand({ PR_NULL, nullptr }) }
-            );
+            CodeGenerator::INTERMEDIATE_CODE->addTriple ({ 
+                CODEOP_RET,
+                $3.expression.type,
+                mapWithOperand($3.reference),
+                CodeGenerator::Triples::Operand({ NULLREF, nullptr }) 
+            });
 
         SemanticActions::specifySyntaxError(MISSING_CLOSING_PARENTHESIS);
         SemanticActions::announceSpecificError(MISSING_SEMICOLON);
         yyerrok;
 
     } // Error: Missing Closing Parenthesis and Semicolon
-    | RETURN expression ')'
+    | WORD_RETURN expression ')'
     {
         SemanticAnalyzer::ReturnChecker::Element e = { $2.expression.type, *StringPool::get($2.expression.pid) };
         SemanticAnalyzer::CHK_RETURNS.checkReturnWithBuffered(e);
 
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
-            CodeGenerator::INTERMEDIATE_CODE->addTriple (
-                { TR_RET, mapWithOperand($2.reference), mapWithOperand({ PR_NULL, nullptr }) }
-            );
+            CodeGenerator::INTERMEDIATE_CODE->addTriple ({ 
+                CODEOP_RET, 
+                $2.expression.type,
+                mapWithOperand($2.reference), 
+                CodeGenerator::Triples::Operand({ NULLREF, nullptr })
+            });
 
         SemanticActions::announceSpecificError(MISSING_OPENING_PARENTHESIS);
         SemanticActions::announceSpecificError(MISSING_SEMICOLON);
 
     } // Error: Missing Opening Parenthesis and Semicolon
-    | RETURN expression error
+    | WORD_RETURN expression error
     {
         SemanticAnalyzer::ReturnChecker::Element e = { $2.expression.type, *StringPool::get($2.expression.pid) };
         SemanticAnalyzer::CHK_RETURNS.checkReturnWithBuffered(e);
 
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
-            CodeGenerator::INTERMEDIATE_CODE->addTriple (
-                { TR_RET, mapWithOperand($2.reference), mapWithOperand({ PR_NULL, nullptr }) }
-            );
+            CodeGenerator::INTERMEDIATE_CODE->addTriple ({ 
+                CODEOP_RET,
+                $2.expression.type,
+                mapWithOperand($2.reference),
+                CodeGenerator::Triples::Operand({ NULLREF, nullptr }) 
+            });
 
         SemanticActions::specifySyntaxError(MISSING_BOTH_PARENTHESIS_RETURN);
         SemanticActions::announceSpecificError(MISSING_SEMICOLON);
         yyerrok;
 
     } // Error: Missing Both Parenthesis and Semicolon
-    | RETURN '(' expression ';'
+    | WORD_RETURN '(' expression ';'
     {
         SemanticAnalyzer::ReturnChecker::Element e = { $3.expression.type, *StringPool::get($3.expression.pid) };
         SemanticAnalyzer::CHK_RETURNS.checkReturnWithBuffered(e);
 
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
-            CodeGenerator::INTERMEDIATE_CODE->addTriple (
-                { TR_RET, mapWithOperand($3.reference), mapWithOperand({ PR_NULL, nullptr }) }
-            );
+            CodeGenerator::INTERMEDIATE_CODE->addTriple ({ 
+                CODEOP_RET,
+                $3.expression.type, 
+                mapWithOperand($3.reference), 
+                CodeGenerator::Triples::Operand({ NULLREF, nullptr }) 
+            });
 
         SemanticActions::announceSpecificError(MISSING_CLOSING_PARENTHESIS);
 
     } // Error: Missing Closing Parenthesis
-    | RETURN expression ')' ';'
+    | WORD_RETURN expression ')' ';'
     {
         SemanticAnalyzer::ReturnChecker::Element e = { $2.expression.type, *StringPool::get($2.expression.pid) };
         SemanticAnalyzer::CHK_RETURNS.checkReturnWithBuffered(e);
 
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
-            CodeGenerator::INTERMEDIATE_CODE->addTriple (
-                { TR_RET, mapWithOperand($2.reference), mapWithOperand({ PR_NULL, nullptr }) }
-            );
+            CodeGenerator::INTERMEDIATE_CODE->addTriple ({ 
+                CODEOP_RET, 
+                $2.expression.type,
+                mapWithOperand($2.reference), 
+                CodeGenerator::Triples::Operand({ NULLREF, nullptr }) 
+            });
 
         SemanticActions::announceSpecificError(MISSING_OPENING_PARENTHESIS);
 
     } // Error: Missing Opening Parenthesis
-    | RETURN expression ';'
+    | WORD_RETURN expression ';'
     {
         SemanticAnalyzer::ReturnChecker::Element e = { $2.expression.type, *StringPool::get($2.expression.pid) };
         SemanticAnalyzer::CHK_RETURNS.checkReturnWithBuffered(e);
 
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
-            CodeGenerator::INTERMEDIATE_CODE->addTriple (
-                { TR_RET, mapWithOperand($2.reference), mapWithOperand({ PR_NULL, nullptr }) }
-            );
+            CodeGenerator::INTERMEDIATE_CODE->addTriple ({ 
+                CODEOP_RET,
+                $2.expression.type, 
+                mapWithOperand($2.reference), 
+                CodeGenerator::Triples::Operand({ NULLREF, nullptr }) 
+            });
 
         SemanticActions::announceSpecificError(MISSING_BOTH_PARENTHESIS_RETURN);
 
     } // Error: Missing Both Parenthesis
-    | RETURN error ';'
+    | WORD_RETURN error ';'
     {
         SemanticActions::specifySyntaxError(RETURN_SYNTAX_ERROR);
         yyerrok;
@@ -641,17 +656,27 @@ assignment:
     assignment_head assignment_tail
     {
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
-        {
-            Metadata::Reference ref;
-            if ($1 != nullptr)
-                ref = { PR_SYMBOL, $1 };
-            else
-                ref = { PR_NULL  , $1 };
+        { 
+            SemanticAnalyzer::TypeChecker::Expression e1 = {
+                $1.expression.type,
+                *StringPool::get($1.expression.pid),
+                $1.expression.assignable
+            };
+            SemanticAnalyzer::TypeChecker::Expression e2 = {
+                $2.expression.type,
+                *StringPool::get($2.expression.pid),
+                $2.expression.assignable
+            };
 
-            CodeGenerator::INTERMEDIATE_CODE->addTriple({'=', mapWithOperand(ref), mapWithOperand($2.reference)});
+            CodeGenerator::INTERMEDIATE_CODE->addTriple ({
+                CODEOP_EQUAL, 
+                SemanticAnalyzer::CHK_TYPES.checkAssignment(e1, e2),
+                mapWithOperand($1.reference),
+                mapWithOperand($2.reference)
+            });
         }
     }
-    | variable ASSIGN_OP error ';'
+    | variable OP_ASSIGN error ';'
     {
         SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
         yyerrok;
@@ -660,10 +685,19 @@ assignment:
 ;
 
 assignment_head:
-    variable ASSIGN_OP
+    variable OP_ASSIGN
     {
-        $$ = SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
-    
+        $$.reference.sref = SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
+        if ($$.reference.sref != nullptr)
+        {
+            $$.reference.type = SYMBOL;
+            $$.expression = { $$.reference.sref->type, $1, true };
+        }
+        else
+        {
+            $$.reference.type = NULLREF;
+            $$.expression = { UNKNOWN, $1, false };
+        }
     } // Action: SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope()
 ;
 
@@ -688,55 +722,67 @@ assignment_tail:
 // ==================================== Print ====================================== //
 
 print:
-    PRINT '(' STRING_LITERAL ')' ';'
+    WORD_PRINT '(' LITERAL_STRING ')' ';'
     {
-        SemanticActions::logStructure("PRINT");
+        SemanticActions::logStructure("WORD_PRINT");
 
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
-            CodeGenerator::INTERMEDIATE_CODE->addTriple({
-                TR_PRINT, mapWithOperand({ PR_LITERAL, { .lref = $3 } }), mapWithOperand({ PR_NULL, nullptr })
+            CodeGenerator::INTERMEDIATE_CODE->addTriple ({
+                CODEOP_PRINT, 
+                STRING,
+                CodeGenerator::Triples::Operand({ LITERAL, { .lref = $3 } }), 
+                CodeGenerator::Triples::Operand({ NULLREF, nullptr })
             });
 
     } // Log  : Print Structure
-    | PRINT '(' STRING_LITERAL ')' error
+    | WORD_PRINT '(' LITERAL_STRING ')' error
     {
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
-            CodeGenerator::INTERMEDIATE_CODE->addTriple({
-                TR_PRINT, mapWithOperand({ PR_LITERAL, { .lref = $3 } }), mapWithOperand({ PR_NULL, nullptr })
+            CodeGenerator::INTERMEDIATE_CODE->addTriple ({
+                CODEOP_PRINT, 
+                STRING,
+                CodeGenerator::Triples::Operand({ LITERAL, { .lref = $3 } }), 
+                CodeGenerator::Triples::Operand({ NULLREF, nullptr })
             });
 
         SemanticActions::specifySyntaxError(MISSING_SEMICOLON);
         yyerrok;
     } // Error: Missing Semicolon
-    | PRINT '(' expression ')' ';'
+    | WORD_PRINT '(' expression ')' ';'
     {
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
-            CodeGenerator::INTERMEDIATE_CODE->addTriple({
-                TR_PRINT, mapWithOperand($3.reference), mapWithOperand({ PR_NULL, nullptr })
+            CodeGenerator::INTERMEDIATE_CODE->addTriple ({
+                CODEOP_PRINT, 
+                $3.expression.type,
+                mapWithOperand($3.reference), 
+                CodeGenerator::Triples::Operand({ NULLREF, nullptr })
             });
 
-        SemanticActions::logStructure("PRINT");
+        SemanticActions::logStructure("WORD_PRINT");
 
     } // Log  : Print
-    | PRINT '(' expression ')' error
+    | WORD_PRINT '(' expression ')' error
     {
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
-            CodeGenerator::INTERMEDIATE_CODE->addTriple({
-                TR_PRINT, mapWithOperand($3.reference), mapWithOperand({ PR_NULL, nullptr })
+            CodeGenerator::INTERMEDIATE_CODE->addTriple ({
+                CODEOP_PRINT,
+                $3.expression.type, 
+                mapWithOperand($3.reference), 
+                CodeGenerator::Triples::Operand({ NULLREF, nullptr })
             });
 
         SemanticActions::specifySyntaxError(MISSING_SEMICOLON);
         yyerrok;
 
     } // Error: Missing Semicolon
-    | PRINT '(' error ')'
+    | WORD_PRINT '(' error ')'
     {
         SemanticActions::specifySyntaxError(MISSING_ARGUMENT);
         yyerrok;
 
     } // Error: Missing Argument
     print_end
-    | PRINT error ';'
+    | WORD_PRINT error ';'
     {
         SemanticActions::specifySyntaxError(PRINT_SYNTAX_ERROR);
         yyerrok;
@@ -894,13 +940,16 @@ function_invocation_head:
         $$.expression = $1.expression;
         StringPool::append($$.expression.pid, *StringPool::get($2.expression.pid));
 
-        if (CodeGenerator::INTERMEDIATE_CODE != nullptr && $1.reference.type != PR_NULL)
+        if (CodeGenerator::INTERMEDIATE_CODE != nullptr && $1.reference.type != NULLREF)
         {
-            $$.reference.tref = CodeGenerator::INTERMEDIATE_CODE->addTriple (
-                { TR_CALL, mapWithOperand($1.reference), mapWithOperand({ PR_NULL, nullptr }) }
+            $$.reference.tref = CodeGenerator::INTERMEDIATE_CODE->addTriple ({ 
+                CODEOP_CALL, 
+                $1.expression.type,
+                mapWithOperand($1.reference), 
+                CodeGenerator::Triples::Operand({ NULLREF, nullptr }) }
             );
             CodeGenerator::INTERMEDIATE_CODE->commit();
-            $$.reference.type = PR_TRIPLE;
+            $$.reference.type = TRIPLE;
         }
         else
             $$.reference = $1.reference;
@@ -913,13 +962,13 @@ function_invocation_head:
         $$.reference.sref = SemanticAnalyzer::CHK_INVOCATIONS.checkFunctionInScope($1->symbol);
         if ($$.reference.sref != nullptr)
         {
-            $$.reference.type = PR_SYMBOL;
-            $$.expression.type = mapWithCheckerType($$.reference.sref->type);
+            $$.reference.type = SYMBOL;
+            $$.expression.type = $$.reference.sref->type;
         }
         else
         {
-            $$.reference.type = PR_NULL;
-            $$.expression.type = TC_UNSUPPORTED;
+            $$.reference.type = NULLREF;
+            $$.expression.type = UNKNOWN;
         }
 
         SemanticActions::specifySyntaxError(MISSING_ARGUMENT);
@@ -934,13 +983,13 @@ invocation_setup:
         $$.reference.sref = SemanticAnalyzer::CHK_INVOCATIONS.checkFunctionInScope($1->symbol);
         if ($$.reference.sref != nullptr)
         {
-            $$.reference.type = PR_SYMBOL;
-            $$.expression.type = mapWithCheckerType($$.reference.sref->type);
+            $$.reference.type = SYMBOL;
+            $$.expression.type = $$.reference.sref->type;
         }
         else
         {
-            $$.reference.type = PR_NULL;
-            $$.expression.type = TC_UNSUPPORTED;
+            $$.reference.type = NULLREF;
+            $$.expression.type = UNKNOWN;
         }
     }
 ;
@@ -949,14 +998,14 @@ function_invocation_tail:
     real_parameter_list ')'
     {
         StringPool::append($1.expression.pid, ")");
-        $$.expression.type = TC_UNSUPPORTED;
+        $$.expression.type = UNKNOWN;
         $$.expression.pid = $1.expression.pid;
 
         SemanticAnalyzer::CHK_INVOCATIONS.notifyInvocationEnd();
     }
     | ')'
     {
-        $$.expression = { TC_UNSUPPORTED, StringPool::create(")") };
+        $$.expression = { UNKNOWN, StringPool::create(")") };
 
         SemanticAnalyzer::CHK_INVOCATIONS.notifyInvocationEnd();
         SemanticActions::announceSpecificError(MISSING_ARGUMENT);
@@ -971,13 +1020,13 @@ real_parameter_list:
     | real_parameter_list ',' real_parameter
     {
         StringPool::append($1.expression.pid, ", " + *StringPool::get($3.expression.pid));
-        $$.expression.type = TC_UNSUPPORTED;
+        $$.expression.type = UNKNOWN;
         $$.expression.pid = $1.expression.pid;
     }
     | real_parameter_list_setup real_parameter
     {
         StringPool::append($1.expression.pid, " " + *StringPool::get($2.expression.pid));
-        $$.expression.type = TC_UNSUPPORTED;
+        $$.expression.type = UNKNOWN;
         $$.expression.pid = $1.expression.pid;
 
     } // Error: Missing Comma
@@ -992,33 +1041,43 @@ real_parameter_list_setup:
 ;
 
 real_parameter:
-    expression POINTER_OP IDENTIFIER
+    expression OP_POINTER IDENTIFIER
     {
         auto entry = SemanticAnalyzer::CHK_INVOCATIONS.checkParameterInScope($3->symbol);
         if (entry != nullptr)
         {
             SemanticAnalyzer::TypeChecker::Expression e1 = {
-                mapWithCheckerType($1.expression.type),
+                $1.expression.type,
                 *StringPool::get($1.expression.pid),
                 $1.expression.assignable
             };
-            SemanticAnalyzer::TypeChecker::Expression e2 = { mapWithCheckerType($3->type), $3->symbol, true };
+            SemanticAnalyzer::TypeChecker::Expression e2 = { entry->semantics, $3->symbol, true };
+            int result = SemanticAnalyzer::CHK_TYPES.checkSemantics(e1, e2);
 
-            SemanticAnalyzer::CHK_TYPES.checkOperation(e1, e2);
-
-            e2.type = entry->semantics;
-            int result =  SemanticAnalyzer::CHK_TYPES.checkSemantics(e1, e2);
-            if (result == ST_CR && CodeGenerator::INTERMEDIATE_CODE != nullptr)
-                CodeGenerator::INTERMEDIATE_CODE->addBuffer(
-                    { '=', mapWithOperand($1.reference), mapWithOperand({ PR_SYMBOL, entry }) }
-                );
-            else if (result == ST_CV && CodeGenerator::INTERMEDIATE_CODE != nullptr)
-                CodeGenerator::INTERMEDIATE_CODE->addTriple (
-                    { '=', mapWithOperand({ PR_SYMBOL, entry }), mapWithOperand($1.reference) }
-                );
+            e2.type = entry->type;
+            if (result == CR && CodeGenerator::INTERMEDIATE_CODE != nullptr)
+            { 
+                int typeCR = SemanticAnalyzer::CHK_TYPES.checkAssignment(e1, e2);
+                CodeGenerator::INTERMEDIATE_CODE->addBuffer ({
+                    CODEOP_EQUAL,
+                    typeCR,
+                    mapWithOperand($1.reference), 
+                    CodeGenerator::Triples::Operand({ SYMBOL, entry }) 
+                });
+            }
+            else if (result == CV && CodeGenerator::INTERMEDIATE_CODE != nullptr)
+            { 
+                int typeCV = SemanticAnalyzer::CHK_TYPES.checkAssignment(e2, e1);
+                CodeGenerator::INTERMEDIATE_CODE->addTriple ({ 
+                    CODEOP_EQUAL,
+                    typeCV,
+                    CodeGenerator::Triples::Operand({ SYMBOL, entry }), 
+                    mapWithOperand($1.reference) 
+                });
+            }
         }
         StringPool::append($1.expression.pid, "->" + $3->symbol);
-        $$.expression = { TC_UNSUPPORTED, $1.expression.pid, false };
+        $$.expression = { UNKNOWN, $1.expression.pid, false };
     }
     | expression error
     {
@@ -1083,7 +1142,10 @@ lambda_invocation_tail:
 
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
             CodeGenerator::INTERMEDIATE_CODE->addTriple ({
-                TR_RET, mapWithOperand({PR_NULL, nullptr}), mapWithOperand({PR_NULL, nullptr})
+                CODEOP_RET,
+                UNKNOWN,
+                CodeGenerator::Triples::Operand({NULLREF, nullptr}),
+                CodeGenerator::Triples::Operand({NULLREF, nullptr})
             });
 
         CodeGenerator::notifyEndOfBlock();
@@ -1091,27 +1153,34 @@ lambda_invocation_tail:
         SemanticAnalyzer::LambdaChecker::Lambda l = SemanticAnalyzer::CHK_LAMBDAS.getLambda();
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
         {
-            Metadata::Reference rf;
+            CodeGenerator::Triples::Operand o1;
             SemanticAnalyzer::TypeChecker::Expression e1, e2;
             if (l.parameter != nullptr)
             {
-                e1 = { mapWithCheckerType(l.parameter->type), l.pname, true};
-                rf = { PR_SYMBOL, l.parameter };
+                e1 = { l.parameter->type, l.pname, true };
+                o1 = { SYMBOL, l.parameter };
             }
             else
             {
-                e1 = { TC_UNSUPPORTED, "...", false };
-                rf = { PR_NULL, nullptr };
+                e1 = { UNKNOWN, "...", false };
+                o1 = { NULLREF, nullptr };
             }
             e2 = { $2.expression.type, *StringPool::get($2.expression.pid), $2.expression.assignable };
-            SemanticAnalyzer::CHK_TYPES.checkOperation(e1, e2);
+            int type = SemanticAnalyzer::CHK_TYPES.checkAssignment(e1, e2);
 
             CodeGenerator::INTERMEDIATE_CODE->addTriple ({
-                '=', mapWithOperand(rf), mapWithOperand($2.reference)
+                CODEOP_EQUAL,
+                type,
+                o1,
+                mapWithOperand($2.reference)
             });
+
             if (l.function != nullptr)
                 CodeGenerator::INTERMEDIATE_CODE->addTriple ({
-                    TR_CALL, mapWithOperand({PR_SYMBOL, l.function}), mapWithOperand({PR_NULL, nullptr})
+                    CODEOP_CALL,
+                    UNKNOWN,
+                    CodeGenerator::Triples::Operand({SYMBOL, l.function}),
+                    CodeGenerator::Triples::Operand({NULLREF, nullptr})
                 });
         }
         SemanticAnalyzer::CHK_LAMBDAS.notifyDeclarationEnd();
@@ -1129,7 +1198,7 @@ lambda_real_parameter:
 // ======================================= If ====================================== //
 
 if:
-    IF condition_body_setup ENDIF ';'
+    WORD_IF condition_body_setup WORD_ENDIF ';'
     {
         $$ = $2;
 
@@ -1141,10 +1210,10 @@ if:
             STACK.pop();
         }
 
-        SemanticActions::logStructure("IF");
+        SemanticActions::logStructure("WORD_IF");
 
     } // Log  : If
-    | IF condition_body_setup ENDIF error
+    | WORD_IF condition_body_setup WORD_ENDIF error
     {
         $$ = $2;
 
@@ -1160,7 +1229,7 @@ if:
         yyerrok;
 
     } // Error: Missing Semicolon
-    | IF condition_body_setup ELSE executable_body ENDIF ';'
+    | WORD_IF condition_body_setup WORD_ELSE executable_body WORD_ENDIF ';'
     {
         $$ = $2;
 
@@ -1172,10 +1241,10 @@ if:
             STACK.pop();
         }
 
-        SemanticActions::logStructure("IF-ELSE");
+        SemanticActions::logStructure("WORD_IF-WORD_ELSE");
 
     } // Log  : If-Else
-    | IF condition_body_setup ELSE executable_body ENDIF error
+    | WORD_IF condition_body_setup WORD_ELSE executable_body WORD_ENDIF error
     {
         $$ = $2 || $4;
 
@@ -1191,7 +1260,7 @@ if:
         yyerrok;
 
     } // Error: Missing Semicolon
-    | IF condition_body_setup error
+    | WORD_IF condition_body_setup error
     {
         $$ = $2;
 
@@ -1206,8 +1275,8 @@ if:
         SemanticActions::specifySyntaxError(MISSING_ENDIF);
         yyerrok;
 
-    } // Error: Missing ENDIF in IF
-    | IF condition_body_setup ELSE executable_body error
+    } // Error: Missing WORD_ENDIF in WORD_IF
+    | WORD_IF condition_body_setup WORD_ELSE executable_body error
     {
         $$ = $2 || $4;
 
@@ -1222,16 +1291,16 @@ if:
         SemanticActions::specifySyntaxError(MISSING_ENDIF);
         yyerrok;
 
-    } // Error: Missing ENDIF in IF-ELSE
-    | IF condition error ENDIF ';'
+    } // Error: Missing WORD_ENDIF in WORD_IF-WORD_ELSE
+    | WORD_IF condition error WORD_ENDIF ';'
     {
         $$ = false;
 
         SemanticActions::specifySyntaxError(MISSING_IF_EXECUTABLE_BODY);
         yyerrok;
 
-    } // Error: Missing Executable Body in IF
-    | IF condition error ';'
+    } // Error: Missing Executable Body in WORD_IF
+    | WORD_IF condition error ';'
     {
         $$ = false;
 
@@ -1239,16 +1308,16 @@ if:
         SemanticActions::announceSpecificError(MISSING_ENDIF);
         yyerrok;
 
-    } // Error: Missing Exutable Body and ENDIF in IF
-    | IF condition error ELSE ENDIF ';'
+    } // Error: Missing Exutable Body and WORD_ENDIF in WORD_IF
+    | WORD_IF condition error WORD_ELSE WORD_ENDIF ';'
     {
         $$ = false;
 
         SemanticActions::specifySyntaxError(MISSING_BOTH_EXECUTABLE_BODY);
         yyerrok;
 
-    } // Error: Missing Both Executable Body in IF-ELSE
-    | IF condition error ELSE ';'
+    } // Error: Missing Both Executable Body in WORD_IF-WORD_ELSE
+    | WORD_IF condition error WORD_ELSE ';'
     {
         $$ = false;
 
@@ -1256,8 +1325,8 @@ if:
         SemanticActions::announceSpecificError(MISSING_ENDIF);
         yyerrok;
 
-    } // Error: Missing Both Executable Body and ENDIF in IF-ELSE
-    | IF condition_body_setup ELSE error ENDIF ';'
+    } // Error: Missing Both Executable Body and WORD_ENDIF in WORD_IF-WORD_ELSE
+    | WORD_IF condition_body_setup WORD_ELSE error WORD_ENDIF ';'
     {
         $$ = $2;
 
@@ -1272,8 +1341,8 @@ if:
         SemanticActions::specifySyntaxError(MISSING_ELSE_EXECUTABLE_BODY);
         yyerrok;
 
-    } // Error: Missing Executable Body in ELSE
-    | IF condition_body_setup ELSE error ';'
+    } // Error: Missing Executable Body in WORD_ELSE
+    | WORD_IF condition_body_setup WORD_ELSE error ';'
     {
         $$ = $2;
 
@@ -1289,16 +1358,16 @@ if:
         SemanticActions::announceSpecificError(MISSING_ENDIF);
         yyerrok;
 
-    } // Error: Missing Executable Body in ELSE and ENDIF
-    | ELSE executable_body ENDIF ';'
+    } // Error: Missing Executable Body in WORD_ELSE and WORD_ENDIF
+    | WORD_ELSE executable_body WORD_ENDIF ';'
     {
         $$ = $2;
 
         SemanticActions::announceSpecificError(MISSING_IF_STATEMENT);
         yyerrok;
 
-    } // Error: Missing IF Statement
-    | IF error ';'
+    } // Error: Missing WORD_IF Statement
+    | WORD_IF error ';'
     {
         $$ = false;
 
@@ -1321,9 +1390,10 @@ condition_setup:
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
         {
             STACK.push(CodeGenerator::INTERMEDIATE_CODE->addTriple ({
-                TR_BRANCH_FALSE,
-                mapWithOperand({PR_TRIPLE, { .tref = CodeGenerator::INTERMEDIATE_CODE->getLastTriple()}}),
-                mapWithOperand({PR_NULL, nullptr})
+                CODEOP_BRANCH_FALSE,
+                $1.expression.type,
+                mapWithOperand($1.reference),
+                CodeGenerator::Triples::Operand({NULLREF, nullptr})
             }));
         }
     }
@@ -1337,9 +1407,10 @@ then_body_setup:
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
         {
             int triple = CodeGenerator::INTERMEDIATE_CODE->addTriple ({
-                TR_BRANCH_TRUE,
-                mapWithOperand({PR_NULL, nullptr}),
-                mapWithOperand({PR_NULL, nullptr})
+                CODEOP_BRANCH_TRUE,
+                UNKNOWN,
+                CodeGenerator::Triples::Operand({NULLREF, nullptr}),
+                CodeGenerator::Triples::Operand({NULLREF, nullptr})
             });
             CodeGenerator::INTERMEDIATE_CODE->updateTripleReference(STACK.top(), triple + 1);
             STACK.pop();
@@ -1355,16 +1426,16 @@ do_while:
     {
         $$ = $2;
     }
-    | DO
+    | WORD_DO
     {
         SemanticActions::announceSpecificError(MISSING_WHILE_EXECUTABLE_BODY);
 
     } // Error: Missing Executable Body
-    WHILE do_while_tail
+    WORD_WHILE do_while_tail
     {
         $$ = false;
     }
-    | DO error ';'
+    | WORD_DO error ';'
     {
         $$ = false;
 
@@ -1375,7 +1446,7 @@ do_while:
 ;
 
 do_while_head:
-    DO
+    WORD_DO
     {
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
             STACK.push(CodeGenerator::INTERMEDIATE_CODE->getLastTriple() + 1);
@@ -1383,22 +1454,23 @@ do_while_head:
 ;
 
 do_body:
-    executable_body WHILE condition ';'
+    executable_body WORD_WHILE condition ';'
     {
         $$ = $1;
 
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
-            CodeGenerator::INTERMEDIATE_CODE->addTriple({
-                TR_BRANCH_TRUE,
-                mapWithOperand({ PR_TRIPLE, { .tref = CodeGenerator::INTERMEDIATE_CODE->getLastTriple() }}),
-                mapWithOperand({ PR_TRIPLE, { .tref = STACK.top() }})
+            CodeGenerator::INTERMEDIATE_CODE->addTriple ({
+                CODEOP_BRANCH_TRUE,
+                $3.expression.type,
+                mapWithOperand($3.reference),
+                CodeGenerator::Triples::Operand({ TRIPLE, { .tref = STACK.top() }})
             });
         STACK.pop();
 
-        SemanticActions::logStructure("DO-WHILE");
+        SemanticActions::logStructure("WORD_DO-WORD_WHILE");
 
-    } // Log  : DO-WHILE
-    | executable_body WHILE condition error
+    } // Log  : WORD_DO-WORD_WHILE
+    | executable_body WORD_WHILE condition error
     {
         $$ = $1;
 
@@ -1410,7 +1482,7 @@ do_body:
     {
         SemanticActions::announceSpecificError(MISSING_WHILE);
 
-    } // Error: Missing WHILE word
+    } // Error: Missing WORD_WHILE word
     do_while_tail
     {
         $$ = $1;
@@ -1473,14 +1545,14 @@ opt_trunc_constant:
 ;
 
 trunc_constant:
-    TRUNC '(' numeric_constant ')'
+    WORD_TRUNC '(' numeric_constant ')'
     {
         createTruncateTriple($$, $3);
 
         $$.expression.pid = StringPool::create("trunc(" + *StringPool::get($3.expression.pid) + ")");
 
     } // Action: truncable()
-    | TRUNC '(' numeric_constant error
+    | WORD_TRUNC '(' numeric_constant error
     {
         createTruncateTriple($$, $3);
 
@@ -1490,7 +1562,7 @@ trunc_constant:
         yyerrok;
 
     } // Action: truncable() + Error: Missing Closing Parenthesis
-    | TRUNC numeric_constant ')'
+    | WORD_TRUNC numeric_constant ')'
     {
         createTruncateTriple($$, $2);
 
@@ -1499,7 +1571,7 @@ trunc_constant:
         SemanticActions::announceSpecificError(MISSING_OPENING_PARENTHESIS);
 
     } // Action: truncable() + Error: Missing Opening Parenthesis
-    | TRUNC numeric_constant error
+    | WORD_TRUNC numeric_constant error
     {
         createTruncateTriple($$, $2);
 
@@ -1517,13 +1589,13 @@ opt_trunc_variable:
         $$.reference.sref = SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
         if ($$.reference.sref != nullptr)
         {
-            $$.reference.type = PR_SYMBOL;
-            $$.expression = { mapWithCheckerType($$.reference.sref->type), $1, true };
+            $$.reference.type = SYMBOL;
+            $$.expression = { $$.reference.sref->type, $1, true };
         }
         else
         {
-            $$.reference.type = PR_NULL;
-            $$.expression = { TC_UNSUPPORTED, $1, true };
+            $$.reference.type = NULLREF;
+            $$.expression = { UNKNOWN, $1, true };
         }
 
     } // Action: SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope()
@@ -1534,41 +1606,41 @@ opt_trunc_variable:
 ;
 
 trunc_variable:
-    TRUNC '(' variable ')'
+    WORD_TRUNC '(' variable ')'
     {
         auto entry = SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
         if (entry != nullptr)
         {
             Metadata m;
-            m.reference  = { PR_SYMBOL, entry };
-            m.expression = { mapWithCheckerType(entry->type), $3, true };
+            m.reference  = { SYMBOL, entry };
+            m.expression = { entry->type, $3, true };
             
             createTruncateTriple($$, m);
         }
         else
         {
-            $$.reference  = { PR_NULL, nullptr };
-            $$.expression.type = TC_UNSUPPORTED;
+            $$.reference  = { NULLREF, nullptr };
+            $$.expression.type = UNKNOWN;
             $$.expression.assignable = false;
         }
         $$.expression.pid = StringPool::create("trunc " + *StringPool::get($3) + ")");
 
     } // Action: SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope()
-    | TRUNC '(' variable error
+    | WORD_TRUNC '(' variable error
     {
         auto entry = SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
         if (entry != nullptr)
         {
             Metadata m;
-            m.reference  = { PR_SYMBOL, entry };
-            m.expression = { mapWithCheckerType(entry->type), $3, true };
+            m.reference  = { SYMBOL, entry };
+            m.expression = { entry->type, $3, true };
             
             createTruncateTriple($$, m);
         }
         else
         {
-            $$.reference  = { PR_NULL, nullptr };
-            $$.expression.type = TC_UNSUPPORTED;
+            $$.reference  = { NULLREF, nullptr };
+            $$.expression.type = UNKNOWN;
             $$.expression.assignable = false;
         }
         $$.expression.pid = StringPool::create("trunc " + *StringPool::get($3) + ")");
@@ -1577,22 +1649,22 @@ trunc_variable:
         yyerrok;
 
     } // Action: SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope() + Error: Missing Closing Parenthesis
-    | TRUNC variable ')'
+    | WORD_TRUNC variable ')'
     {
         auto entry = SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
         if (entry != nullptr)
         { 
             Metadata m;
-            m.reference  = { PR_SYMBOL, entry };
-            m.expression = { mapWithCheckerType(entry->type), $2, true };
+            m.reference  = { SYMBOL, entry };
+            m.expression = { entry->type, $2, true };
             
             createTruncateTriple($$, m);
 
         }
         else
         {
-            $$.reference  = { PR_NULL, nullptr };
-            $$.expression.type = TC_UNSUPPORTED;
+            $$.reference  = { NULLREF, nullptr };
+            $$.expression.type = UNKNOWN;
             $$.expression.assignable = false;
         }
         $$.expression.pid = StringPool::create("trunc " + *StringPool::get($2) + ")");
@@ -1600,21 +1672,21 @@ trunc_variable:
         SemanticActions::announceSpecificError(MISSING_OPENING_PARENTHESIS);
 
     } // Action: SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope() + Error: Missing Opening Parenthesis
-    | TRUNC variable error
+    | WORD_TRUNC variable error
     {
         auto entry = SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
         if (entry != nullptr)
         { 
             Metadata m;
-            m.reference  = { PR_SYMBOL, entry };
-            m.expression = { mapWithCheckerType(entry->type), $2, true };
+            m.reference  = { SYMBOL, entry };
+            m.expression = { entry->type, $2, true };
             
             createTruncateTriple($$, m);
         }
         else
         {
-            $$.reference  = { PR_NULL, nullptr };
-            $$.expression.type = TC_UNSUPPORTED;
+            $$.reference  = { NULLREF, nullptr };
+            $$.expression.type = UNKNOWN;
             $$.expression.assignable = false;
         }
         $$.expression.pid = StringPool::create("trunc " + *StringPool::get($2) + ")");
@@ -1623,10 +1695,10 @@ trunc_variable:
         yyerrok;
 
     } // Action: SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope() + Error: Missing Both Parenthesis
-    | TRUNC error ';'
+    | WORD_TRUNC error ';'
     {
-        $$.reference  = { PR_NULL , nullptr };
-        $$.expression = { TC_UNSUPPORTED, StringPool::create("trunc ..."), false };
+        $$.reference  = { NULLREF , nullptr };
+        $$.expression = { UNKNOWN, StringPool::create("trunc ..."), false };
 
         SemanticActions::specifySyntaxError(TRUNC_SYNTAX_ERROR);
         yyerrok;
@@ -1635,13 +1707,13 @@ trunc_variable:
 ;
 
 trunc_expression:
-    TRUNC '(' expression ')'
+    WORD_TRUNC '(' expression ')'
     {
         createTruncateTriple($$, $3);
         
         $$.expression.pid = StringPool::create("trunc(" + *StringPool::get($3.expression.pid) + ")");
     }
-    | TRUNC '(' expression error
+    | WORD_TRUNC '(' expression error
     {
         createTruncateTriple($$, $3);
         
@@ -1651,7 +1723,7 @@ trunc_expression:
         yyerrok;
 
     } // Error: Missing Closing Parenthesis
-    | TRUNC expression ')'
+    | WORD_TRUNC expression ')'
     {
         createTruncateTriple($$, $2);
         
@@ -1660,7 +1732,7 @@ trunc_expression:
         SemanticActions::announceSpecificError(MISSING_OPENING_PARENTHESIS);
 
     } // Error: Missing Opening Parenthesis
-    | TRUNC expression error
+    | WORD_TRUNC expression error
     {
         createTruncateTriple($$, $2);
         
@@ -1676,19 +1748,31 @@ trunc_expression:
 
 condition:
     '(' comparison ')'
+    {
+        $$ = $2;
+    }
     | '(' comparison error
     {
+        $$ = $2;
+
         SemanticActions::specifySyntaxError(MISSING_CLOSING_PARENTHESIS);
         yyerrok;
+
     } // Error: Missing Closing Parenthesis
     | comparison ')'
     {
+        $$ = $1;
+
         SemanticActions::announceSpecificError(MISSING_OPENING_PARENTHESIS);
+
     } // Error: Missing Opening Parenthesis
     | comparison error
     {
+        $$ = $1;
+
         SemanticActions::specifySyntaxError(MISSING_BOTH_PARENTHESIS);
         yyerrok;
+
     } // Error: Missing Both Parenthesis
 ;
 
@@ -1704,13 +1788,16 @@ comparison:
 
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
         {
-            $$.reference.tref = CodeGenerator::INTERMEDIATE_CODE->addTriple(
-                {$2.tid, mapWithOperand($1.reference), mapWithOperand($3.reference)}
-            );
-            $$.reference.type = PR_TRIPLE;
+            $$.reference.tref = CodeGenerator::INTERMEDIATE_CODE->addTriple ({
+                $2.tid,
+                $$.expression.type,
+                mapWithOperand($1.reference),
+                mapWithOperand($3.reference)
+            });
+            $$.reference.type = TRIPLE;
         }
         else
-            $$.reference = { PR_NULL, nullptr };
+            $$.reference = { NULLREF, nullptr };
         $$.expression.assignable = false;
     }
     | expression error
@@ -1724,29 +1811,29 @@ comparison:
 ;
 
 comparison_operator:
-    EQUAL_OP
+    OP_EQUAL
     {
-        $$ = { mapWithTripleOperator(EQUAL_OP), StringPool::create(Translator::translate(EQUAL_OP)) };
+        $$ = { CODEOP_EQUAL, StringPool::create(Translator::translate(OP_EQUAL)) };
     }
-    | NOT_EQUAL_OP
+    | OP_NOT_EQUAL
     {
-        $$ = { mapWithTripleOperator(NOT_EQUAL_OP), StringPool::create(Translator::translate(NOT_EQUAL_OP)) };
+        $$ = { CODEOP_NOT_EQUAL, StringPool::create(Translator::translate(OP_NOT_EQUAL)) };
     }
-    | GE_OP
+    | OP_GE
     {
-        $$ = { mapWithTripleOperator(GE_OP), StringPool::create(Translator::translate(GE_OP)) };
+        $$ = { CODEOP_GE, StringPool::create(Translator::translate(OP_GE)) };
     }
-    | LE_OP
+    | OP_LE
     {
-        $$ = { mapWithTripleOperator(LE_OP), StringPool::create(Translator::translate(LE_OP)) };
+        $$ = { CODEOP_LE, StringPool::create(Translator::translate(OP_LE)) };
     }
     | '>'
     {
-        $$ = { mapWithTripleOperator('>'), StringPool::create(">") };
+        $$ = { CODEOP_GT, StringPool::create(">") };
     }
     | '<'
     {
-        $$ = { mapWithTripleOperator('<'), StringPool::create("<") };
+        $$ = { CODEOP_LT, StringPool::create("<") };
     }
 ;
 
@@ -1778,8 +1865,8 @@ expression:
     } // Error: Missing Left Operand
     | '+' error
     {
-        $$.reference  = { PR_NULL , nullptr };
-        $$.expression = { TC_UNSUPPORTED, StringPool::create("..."), false };
+        $$.reference  = { NULLREF , nullptr };
+        $$.expression = { UNKNOWN, StringPool::create("..."), false };
 
         SemanticActions::specifySyntaxError(MISSING_BOTH_SUM_OPERANDS);
         yyerrok;
@@ -1953,8 +2040,8 @@ negative_term:
     } // Error: Missing Left Factor
     | '*' error
     {
-        $$.reference  = { PR_NULL , nullptr };
-        $$.expression = { TC_UNSUPPORTED, StringPool::create("..."), false };
+        $$.reference  = { NULLREF , nullptr };
+        $$.expression = { UNKNOWN, StringPool::create("..."), false };
 
         SemanticActions::specifySyntaxError(MISSING_BOTH_FACTORS);
         yyerrok;
@@ -1962,8 +2049,8 @@ negative_term:
     } // Error: Missing Left and Right Factor
     | '/' error
     {
-        $$.reference  = { PR_NULL , nullptr };
-        $$.expression = { TC_UNSUPPORTED, StringPool::create("..."), false };
+        $$.reference  = { NULLREF , nullptr };
+        $$.expression = { UNKNOWN, StringPool::create("..."), false };
 
         SemanticActions::specifySyntaxError(MISSING_BOTH_FACTORS);
         yyerrok;
@@ -1990,13 +2077,13 @@ positive_factor:
         $$.reference.sref = SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
         if ($$.reference.sref != nullptr)
         {
-            $$.reference.type = PR_SYMBOL;
-            $$.expression = { mapWithCheckerType($$.reference.sref->type), $1, true };
+            $$.reference.type = SYMBOL;
+            $$.expression = { $$.reference.sref->type, $1, true };
         }
         else
         {
-            $$.reference.type = PR_NULL;
-            $$.expression = { TC_UNSUPPORTED, $1, true };
+            $$.reference.type = NULLREF;
+            $$.expression = { UNKNOWN, $1, true };
         }
 
     } // Action: SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope()
@@ -2017,15 +2104,15 @@ negative_factor:
     }
     | lambda_invocation_head
     {
-        $$.reference  = { PR_NULL , nullptr };
-        $$.expression = { TC_UNSUPPORTED, StringPool::create("..."), false };
+        $$.reference  = { NULLREF , nullptr };
+        $$.expression = { UNKNOWN, StringPool::create("..."), false };
         
         SemanticActions::announceSpecificError(INVALID_LAMBDA_USE);
     } // Error: Invalid Lambda Use
-    | '-' UINTEGER_LITERAL
+    | '-' LITERAL_UINT
     {
-        $$.reference  = { PR_LITERAL, .lref = $2 };
-        $$.expression = { TC_UINT, StringPool::create($2->constant), false };
+        $$.reference  = { LITERAL, .lref = $2 };
+        $$.expression = { UINT, StringPool::create($2->constant), false };
 
         SemanticActions::announceSpecificError(MISSING_LEFT_SUB_OPERAND);
 
@@ -2042,21 +2129,21 @@ negative_factor:
         $$.reference.sref = SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
         if ($$.reference.sref != nullptr)
         {
-            $$.reference.type = PR_SYMBOL;
-            $$.expression = { mapWithCheckerType($$.reference.sref->type), $2, false };
+            $$.reference.type = SYMBOL;
+            $$.expression = { $$.reference.sref->type, $2, false };
         }
         else
         {
-            $$.reference = { PR_NULL, nullptr };
-            $$.expression = { TC_UNSUPPORTED, $2, false };
+            $$.reference = { NULLREF, nullptr };
+            $$.expression = { UNKNOWN, $2, false };
         }
         SemanticActions::announceSpecificError(MISSING_LEFT_SUB_OPERAND);
 
     } // Action: SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope() + Error: Missing Left Operand
     | '-' lambda_invocation_head
     {
-        $$.reference  = { PR_NULL , nullptr };
-        $$.expression = { TC_UNSUPPORTED, StringPool::create("..."), false };
+        $$.reference  = { NULLREF , nullptr };
+        $$.expression = { UNKNOWN, StringPool::create("..."), false };
 
         SemanticActions::announceSpecificError(MISSING_BOTH_SUB_OPERANDS);
         SemanticActions::announceSpecificError(INVALID_LAMBDA_USE);
@@ -2064,8 +2151,8 @@ negative_factor:
     } // Error: Missing Both Operands
     | '-' error
     {
-        $$.reference  = { PR_NULL , nullptr };
-        $$.expression = { TC_UNSUPPORTED, StringPool::create("..."), false };
+        $$.reference  = { NULLREF , nullptr };
+        $$.expression = { UNKNOWN, StringPool::create("..."), false };
 
         SemanticActions::specifySyntaxError(MISSING_BOTH_SUB_OPERANDS);
         yyerrok;
@@ -2087,23 +2174,23 @@ numeric_constant:
 ;
 
 positive_constant:
-    UINTEGER_LITERAL
+    LITERAL_UINT
     {
-        $$.reference  = { PR_LITERAL, .lref = $1 };
-        $$.expression = { TC_UINT, StringPool::create($1->constant), false };
+        $$.reference  = { LITERAL, .lref = $1 };
+        $$.expression = { UINT, StringPool::create($1->constant), false };
     }
-    | FLOAT_LITERAL
+    | LITERAL_FLOAT
     {
-        $$.reference  = { PR_LITERAL, .lref = $1 };
-        $$.expression = { TC_FLOAT, StringPool::create($1->constant), false };
+        $$.reference  = { LITERAL, .lref = $1 };
+        $$.expression = { FLOAT, StringPool::create($1->constant), false };
     }
 ;
 
 negative_constant:
-    '-' FLOAT_LITERAL
+    '-' LITERAL_FLOAT
     {
-        $$.reference  = { PR_LITERAL , .lref = SemanticActions::turnNegative($2) };
-        $$.expression = { TC_FLOAT, StringPool::create($2->constant), false };
+        $$.reference  = { LITERAL , .lref = SemanticActions::turnNegative($2) };
+        $$.expression = { FLOAT, StringPool::create($2->constant), false };
 
     } // Action: turnNegative()
 ;
@@ -2135,71 +2222,42 @@ void yyerror(const char* s)
     SemanticActions::announceSyntaxError();
 }
 
-int mapWithCheckerType(const int type)
-{
-    switch (type)
-    {
-    case ST_UINT:
-        return TC_UINT;
-    case ST_FLOAT:
-        return TC_FLOAT;
-    default:
-        return TC_UNSUPPORTED;
-    }
-}
-
-char mapWithTripleOperator(const int op)
-{
-    switch (op)
-    {
-    case EQUAL_OP:
-        return TR_EQUAL_OP;
-    case NOT_EQUAL_OP:
-        return TR_NOT_EQUAL_OP;
-    case GE_OP:
-        return TR_GE_OP;
-    case LE_OP:
-        return TR_LE_OP;
-    default:
-        return op;
-    }
-}
-
 CodeGenerator::Triples::Operand mapWithOperand(const Metadata::Reference& ref)
 {
     switch (ref.type)
     {
-    case PR_SYMBOL:
-        return { TR_SYMBOL , { .sref = ref.sref } };
-    case PR_LITERAL:
-        return { TR_LITERAL, { .lref = ref.lref } };
-    case PR_TRIPLE:
-        return { TR_TRIPLE , { .tref = ref.tref } };
+    case SYMBOL:
+        return { SYMBOL , { .sref = ref.sref } };
+    case LITERAL:
+        return { LITERAL, { .lref = ref.lref } };
+    case TRIPLE:
+        return { TRIPLE , { .tref = ref.tref } };
     default:
-        return { TR_NULL   , { .sref = nullptr  } };
+        return { NULLREF, { .sref = nullptr  }};
     }
 }
 
 void createMultipleAssignmentTriple(const Metadata& m)
 {
     SemanticAnalyzer::TypeChecker::Expression e1 = {
-        TC_UNSUPPORTED,
+        UNKNOWN,
         SemanticAnalyzer::CHK_VARIABLES.getCurrentVariableName()
     };
 
     auto entry = SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
     if (entry != nullptr)
     {
-        e1.type = mapWithCheckerType(entry->type);
+        e1.type = entry->type;
 
         SemanticAnalyzer::TypeChecker::Expression e2 = { m.expression.type, *StringPool::get(m.expression.pid) };
-        SemanticAnalyzer::CHK_TYPES.checkOperation(e1, e2);
+        int result = SemanticAnalyzer::CHK_TYPES.checkAssignment(e1, e2);
 
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
         {
             CodeGenerator::INTERMEDIATE_CODE->addTriple ({
-                '=',
-                mapWithOperand({PR_SYMBOL, entry}),
+                CODEOP_EQUAL,
+                result,
+                CodeGenerator::Triples::Operand({SYMBOL, entry}),
                 mapWithOperand(m.reference)
             });
         }
@@ -2213,13 +2271,16 @@ void createTruncateTriple(Metadata& result, const Metadata& operand)
 
     if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
     {
-        result.reference.tref = CodeGenerator::INTERMEDIATE_CODE->addTriple(
-            {TR_FTOI, mapWithOperand(operand.reference), mapWithOperand({ PR_NULL, nullptr })}
-        );
-        result.reference.type = PR_TRIPLE;
+        result.reference.tref = CodeGenerator::INTERMEDIATE_CODE->addTriple ({
+            CODEOP_FTOI,
+            result.expression.type,
+            mapWithOperand(operand.reference),
+            CodeGenerator::Triples::Operand({ NULLREF, nullptr })
+        });
+        result.reference.type = TRIPLE;
     }
     else
-        result.reference = { PR_NULL, nullptr };
+        result.reference = { NULLREF, nullptr };
     
     result.expression.assignable = false;
 }
@@ -2233,15 +2294,37 @@ void createArithmeticTriple(Metadata& r, const Metadata& o1, const Metadata& o2,
     r.expression.pid = o1.expression.pid;
     StringPool::append(o1.expression.pid, " " + std::string(1, op) + " " + *StringPool::get(o2.expression.pid));
 
+    int codeop;
+    switch (op)
+    {
+    case '+':
+        codeop = CODEOP_SUM;
+        break;
+    case '-':
+        codeop = CODEOP_SUB;
+        break;
+    case '*':
+        codeop = CODEOP_MUL;
+        break;
+    case '/':
+        codeop = CODEOP_DIV;
+        break;
+    default:
+        codeop = UNKNOWN;
+    }
+
     if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
     {
-        r.reference.tref = CodeGenerator::INTERMEDIATE_CODE->addTriple(
-            {op, mapWithOperand(o1.reference), mapWithOperand(o2.reference)}
-        );
-        r.reference.type = PR_TRIPLE;
+        r.reference.tref = CodeGenerator::INTERMEDIATE_CODE->addTriple ({
+            codeop,
+            r.expression.type,
+            mapWithOperand(o1.reference),
+            mapWithOperand(o2.reference)
+        });
+        r.reference.type = TRIPLE;
     }
     else
-        r.reference = { PR_NULL, nullptr };
+        r.reference = { NULLREF, nullptr };
     
     r.expression.assignable = false;
 }

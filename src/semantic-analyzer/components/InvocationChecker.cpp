@@ -1,6 +1,6 @@
 #include "utils/Log.h"
 #include "utils/ErrorHandler.h"
-#include "utils/resources/macros.h"
+#include "utils/resources/codes.h"
 #include "lexical-analyzer/lexical_analyzer.h"
 #include "semantic-analyzer/semantic_analyzer.h"
 #include "semantic-analyzer/components/InvocationChecker.h"
@@ -38,14 +38,11 @@ namespace SemanticAnalyzer
             }
             else break;
         }
-        if (ref == nullptr || ref->use != ST_FUNCTION)
+        if (ref == nullptr || ref->use != FUNCTION)
         {
             invocation.function.clear();
             invocation.scope.clear();
             invocation.parameters = 0;
-
-            if (!SYMBOL_TABLE.remove(name))
-                throw std::runtime_error("\ncheckFunctionExistanceInScope: failed to delete symbol");
 
             const Log l(ERROR, UNDECLARED_FUNCTION, LexicalAnalyzer::YYLINENO, {name});
             ERROR_HANDLER.add(l);
@@ -79,7 +76,7 @@ namespace SemanticAnalyzer
         args++;
         const auto temp_scope = scope;
         const auto ref = SYMBOL_TABLE.get(name + scope);
-        if (ref == nullptr || ref->use != ST_PARAMETER)
+        if (ref == nullptr || ref->use != PARAMETER)
         {
             const Log l (
                 ERROR,

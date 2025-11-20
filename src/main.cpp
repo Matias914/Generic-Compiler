@@ -8,6 +8,8 @@
 #include <iostream>
 #include <cstring>
 
+#include "code-generator/code-generator.h"
+
 bool VERBOSE_OPTION = false;
 
 SymbolTable SYMBOL_TABLE;
@@ -63,11 +65,15 @@ int main(const int argc, char* argv[])
         }
         if (ERROR_HANDLER.warningCount() != 0)
         {
+            CodeGenerator::generateWebAssembly();
             mssg = "\nCompiled with warnings:\n" + mssg;
             std::cerr << mssg << std::endl;
         }
         else
+        {
+            CodeGenerator::generateWebAssembly();
             std::cout << "\nCompilation Succesful!" << std::endl;
+        }
         return EXIT_SUCCESS;
     }
     catch (const std::exception& e)

@@ -16,45 +16,45 @@ std::string Translator::translate(const int token) {
         return "Unknown Token";
     case INVALID_TOKEN:
         return "Unknown Word";
-    case IF:
+    case WORD_IF:
         return "if";
-    case ELSE:
+    case WORD_ELSE:
         return "else";
-    case ENDIF:
+    case WORD_ENDIF:
         return "endif";
-    case DO:
+    case WORD_DO:
         return "do";
-    case WHILE:
+    case WORD_WHILE:
         return "while";
-    case RETURN:
+    case WORD_RETURN:
         return "return";
-    case PRINT:
+    case WORD_PRINT:
         return "print";
-    case TRUNC:
+    case WORD_TRUNC:
         return "trunc";
-    case UINT:
+    case WORD_UINT:
         return "uint";
-    case FLOAT:
+    case WORD_FLOAT:
         return "float";
-    case CR:
+    case WORD_CR:
         return "cr";
-    case POINTER_OP:
+    case OP_POINTER:
         return "->";
-    case EQUAL_OP:
+    case OP_EQUAL:
         return "==";
-    case GE_OP:
+    case OP_GE:
         return ">=";
-    case LE_OP:
+    case OP_LE:
         return "<=";
-    case ASSIGN_OP:
+    case OP_ASSIGN:
         return ":=";
-    case NOT_EQUAL_OP:
+    case OP_NOT_EQUAL:
         return "!=";
     case IDENTIFIER:
         return yylval.sref->symbol;
-    case FLOAT_LITERAL:
-    case UINTEGER_LITERAL:
-    case STRING_LITERAL:
+    case LITERAL_FLOAT:
+    case LITERAL_UINT:
+    case LITERAL_STRING:
         return yylval.lref->constant;
     default:
         const char c = static_cast<char>(token);

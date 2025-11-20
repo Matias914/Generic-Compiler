@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba de Compilador - WebAssembly</title>
+    <style>
+        body { font-family: monospace; padding: 20px; background-color: #f0f0f0; }
+        h1 { color: #333; }
+        #output {
+            background-color: #1e1e1e;
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 5px;
+            min-height: 200px;
+            white-space: pre-wrap; /* Respeta saltos de linea */
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        .error { color: #ff4444; }
+        button { padding: 10px 20px; font-size: 16px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Web Assembly</h1>
+    <p>Esta página muestra los resultados generados por el código en Web Assembly consecuencia de la compilación.</p>
+
+    <button onclick="loadWasm()">Ejecutar .wasm</button>
+    <br><br>
+    
+    <div id="output">Esperando...</div>
+
+    <script>
+        // ------------------------------------------------ //
+        //              Javascript de Impresión             //
+        // ------------------------------------------------ //
+
+        const WASM_FILENAME = './wa.wasm';
+
+        let wasmMemory;
+
+        // Función auxiliar para escribir en el recuadro gris de la pantalla
+        function logScreen(text) {
+            const div = document.getElementById('output');
+            div.innerHTML += text + "\n";
+            console.log("WASM Output:", text);
+        }
+
+        function clear() {
+            document.getElementById('output').innerHTML = "";
+        }
+
+        function getStringFromMem(offset) {
+            if (!wasmMemory) return "Error: Memoria no inicializada";
+
+            const buffer = new Uint8Array(wasmMemory.buffer);
+
+            let end = offset;
+            while (buffer[end] !== 0) {
+                end++;
+                // Se pone un limite por seguridad, para evitar cuelgues por falta de \0
+                if (end - offset > 10000) break;
+            }
+
+            const bytesMssg = buffer.subarray(offset, end);
+            return new TextDecoder('utf-8').decode(bytesMssg);
+        }
+
+        // Funciones que WASM puede llamar
+        const importObject = {
+            console: {
+
+                // Imprime Strings dado el offset en memoria RAM
+                print_str: (offset) => {
+                    const text = getStringFromMem(offset);
+                    logScreen(text);
+                },
+
+                print_i32: (valor) => {
+                    logScreen(valor);
+                },
+
+                print_f32: (valor) => {
+                    logScreen(valor);
+                },
+
+                log: (valor) => {
+                    logScreen(valor);
+                }
+            }
+        };
+
+        async function loadWasm() {
+            clear();
+            logScreen(`Cargando ${WASM_FILENAME}...`);
+
+            try {
+                const response = await fetch(WASM_FILENAME);
+                if (!response.ok) {
+                    throw new Error(`No se encontró el archivo .wasm (Status ${response.status})`);
+                }
+
+                const { instance } = await WebAssembly.instantiateStreaming(response, importObject);
+                wasmMemory = instance.exports.memory;
+
+                logScreen("Ejecutando función main()...\n");
+                const result = instance.exports.main();
+
+                logScreen(`\nResultado: ${result}`);
+
+            } catch (err) {
+                console.error(err);
+                const div = document.getElementById('output');
+                div.innerHTML += `<span class="error">\n[ Error ]: ${err.message}</span>`;
+                div.innerHTML += `\n\nPosibles causas:\n
+                    1. No hay un servidor levantado.\n
+                    2. El nombre del archivo .wasm está mal en el HTML.\n
+                    3. El .wat pide un import que no está definido en 'importObject'.`;
+            }
+        }
+        window.onload = loadWasm();
+
+    </script>
+</body>
+</html>

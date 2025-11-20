@@ -47,9 +47,14 @@ set(COMPILER_SOURCES
         src/semantic-analyzer/components/FunctionChecker.cpp
         src/semantic-analyzer/components/VariableChecker.cpp
         src/semantic-analyzer/components/InvocationChecker.cpp
-        # Intermediate Code
+        # Code Generation
         src/code-generator/code_generator.cpp
         src/code-generator/components/Triples.cpp
+        src/code-generator/components/wat-generation/wat_translations.cpp
+        src/code-generator/components/wat-generation/WatSegmentGenerator.cpp
+        src/code-generator/components/wat-generation/WatGlobalsGenerator.cpp
+        src/code-generator/components/wat-generation/WatCodeBlockGenerator.cpp
+        src/code-generator/components/wat-generation/builders/wat_instructions_print.cpp
 )
 
 set(TEST_SOURCES
@@ -57,7 +62,6 @@ set(TEST_SOURCES
         # Fixtures
         tests/unit/lexical-analyzer/fixture/TestLexicalAnalyzer.cpp
         tests/integration/parser-lexer/fixture/TestParserLexer.cpp
-        tests/integration/parser-lexer/fixture/TestParserLexer.h
         # Unit Tests
         tests/unit/utils/SymbolTable_test.cpp
         tests/unit/lexical-analyzer/test-cases/numeric_constants_test.cpp
@@ -77,7 +81,6 @@ set(TEST_SOURCES
         tests/integration/parser-lexer/test-cases/declarations_test.cpp
         tests/integration/parser-lexer/test-cases/invocations_test.cpp
         tests/integration/parser-lexer/test-cases/programs_test.cpp
-        include/code-generator/code-generator.h
 )
 
 # =========================================================

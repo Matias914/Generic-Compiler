@@ -1,9 +1,13 @@
 #include "utils/ErrorHandler.h"
-#include "utils/resources/macros.h"
+#include "utils/resources/codes.h"
 #include "lexical-analyzer/lexical_analyzer.h"
 #include "syntax-analyzer/components/parser.h"
 #include "syntax-analyzer/components/translator.h"
 #include "syntax-analyzer/components/semantic_actions.h"
+
+#define RUNTIME_E1 "\nannounceSpecificErrorWithSymbol: No log was buffered"
+#define RUNTIME_E2 "\nspecifySyntaxError: No log was buffered"
+#define RUNTIME_E3 "\nspecifySyntaxWarning: No log was buffered"
 
 // Usada por Bison, guarda el token obtenido del lexico.
 extern int yychar;
@@ -36,9 +40,7 @@ namespace SyntaxAnalyzer::SemanticActions
     void announceSpecificErrorWithSymbol(const int code)
     {
         if (yylval.sref == nullptr)
-            throw std::runtime_error (
-                "\nannounceSpecificErrorWithSymbol: No log was buffered"
-            );
+            throw std::runtime_error (RUNTIME_E1);
         const Log l(ERROR, code, LexicalAnalyzer::YYLINENO, {yylval.sref->symbol});
         ERROR_HANDLER.add(l);
     }
@@ -47,9 +49,7 @@ namespace SyntaxAnalyzer::SemanticActions
     {
         const auto ptr = BUFFER.get();
         if (ptr == nullptr)
-            throw std::runtime_error(
-                "\nspecifySyntaxError: No log was buffered"
-            );
+            throw std::runtime_error(RUNTIME_E2);
         ptr->code = code;
         BUFFER.commit();
     }
@@ -58,9 +58,7 @@ namespace SyntaxAnalyzer::SemanticActions
     {
         const auto ptr = BUFFER.get();
         if (ptr == nullptr)
-            throw std::runtime_error(
-                "\nspecifySyntaxWarning: No log was buffered"
-            );
+            throw std::runtime_error(RUNTIME_E3);
         ptr->type = WARNING;
         ptr->code = code;
         BUFFER.commit();

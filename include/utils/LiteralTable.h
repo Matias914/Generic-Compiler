@@ -5,11 +5,7 @@
 #include <list>
 #include <bitset>
 
-#define LT_UNSUPPORTED (-1)
-
-#define LT_FLOAT         0
-#define LT_UINT          1
-#define LT_STRING        2
+#include "resources/types.h"
 
 /*
  * @brief colecciona las constantes literales halladas durante
@@ -32,9 +28,9 @@ public:
 
     struct Entry
     {
-        std::string constant;
-        unsigned int refcount;
-        int type;
+        std::string constant  = "";
+        unsigned int refcount = 0;
+        int type              = UNKNOWN;
         TypeValue value;
     };
 
@@ -47,12 +43,22 @@ public:
 
     std::string toString() const;
 
+    auto begin() const { return this->entries.begin(); }
+    auto end()   const { return this->entries.end();   }
+
     // Útil para Testing
     void clear();
+
+    // tracing information
+    int getStringCount() const;
+    int getCharactersCount() const;
 
 private:
     std::map<std::string_view, Entry*> mapping;
     std::list<Entry> entries;
+
+    int strings_count;
+    int characters_count;
 };
 
 #endif //GC_LITERALTABLE_H

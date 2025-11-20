@@ -12,6 +12,7 @@ namespace CodeGenerator
 
     std::string getIntermediateCode();
 
+    bool generateWebAssembly();
 }
 
 #endif //GC_CODE_GENERATOR_H

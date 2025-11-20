@@ -12,11 +12,11 @@ std::string getStringOperand(const Triples::Operand& o, const int line)
 {
     switch (o.type)
     {
-    case TR_SYMBOL:
+    case SYMBOL:
         return o.value.sref->symbol;
-    case TR_LITERAL:
+    case LITERAL:
         return o.value.lref->constant;
-    case TR_TRIPLE:
+    case TRIPLE:
         return "[" + std::to_string(line + o.value.tref) + "]";
     default:
         return "_";
@@ -28,26 +28,38 @@ std::string getStringOperator(const char op)
 {
     switch (op)
     {
-    case TR_FTOI:
+    case CODEOP_FTOI:
         return "ftoi";
-    case TR_BRANCH_TRUE:
+    case CODEOP_BRANCH_TRUE:
         return "BT";
-    case TR_BRANCH_FALSE:
+    case CODEOP_BRANCH_FALSE:
         return "BF";
-    case TR_CALL:
+    case CODEOP_CALL:
         return "CALL";
-    case TR_RET:
+    case CODEOP_RET:
         return "RET";
-    case TR_EQUAL_OP:
-        return "==";
-    case TR_NOT_EQUAL_OP:
-        return "!=";
-    case TR_GE_OP:
-        return ">=";
-    case TR_LE_OP:
-        return "<=";
-    case TR_PRINT:
+    case CODEOP_PRINT:
         return "PRINT";
+    case CODEOP_EQUAL:
+        return "==";
+    case CODEOP_NOT_EQUAL:
+        return "!=";
+    case CODEOP_GE:
+        return ">=";
+    case CODEOP_LE:
+        return "<=";
+    case CODEOP_GT:
+        return ">";
+    case CODEOP_LT:
+        return "<";
+    case CODEOP_SUM:
+        return "+";
+    case CODEOP_SUB:
+        return "-";
+    case CODEOP_MUL:
+        return "*";
+    case CODEOP_DIV:
+        return "/";
     default:
         return std::string(1, op);
     }
@@ -59,7 +71,7 @@ namespace StringBuilders::TripleBuilders
     {
         std::stringstream ss;
         ss << "( "
-            << std::left << std::setw(6) << getStringOperator(t.op) << ", "
+            << std::left << std::setw(6) << getStringOperator(t.codeop) << ", "
             << std::left << std::setw(30) << getStringOperand(t.o1, line) << ", "
             << std::left << std::setw(30) << getStringOperand(t.o2, line) << " )" << "\n";
         mssg.append(ss.str());

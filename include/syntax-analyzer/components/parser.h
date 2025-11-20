@@ -50,11 +50,6 @@ extern int yydebug;
     #include "utils/SymbolTable.h"
     #include "utils/LiteralTable.h"
 
-    #define PR_NULL    (-1)
-    #define PR_SYMBOL    0
-    #define PR_LITERAL   1
-    #define PR_TRIPLE    2
-
     struct Operator
     {
         char tid;
@@ -81,7 +76,7 @@ extern int yydebug;
         } reference;
     };
 
-#line 85 "include/syntax-analyzer/components/parser.h"
+#line 80 "include/syntax-analyzer/components/parser.h"
 
 /* Token kinds.  */
 #ifndef YYTOKENTYPE
@@ -93,27 +88,27 @@ extern int yydebug;
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
     INVALID_TOKEN = 258,           /* INVALID_TOKEN  */
-    IF = 259,                      /* IF  */
-    ELSE = 260,                    /* ELSE  */
-    ENDIF = 261,                   /* ENDIF  */
-    DO = 262,                      /* DO  */
-    WHILE = 263,                   /* WHILE  */
-    RETURN = 264,                  /* RETURN  */
-    PRINT = 265,                   /* PRINT  */
-    TRUNC = 266,                   /* TRUNC  */
-    UINT = 267,                    /* UINT  */
-    FLOAT = 268,                   /* FLOAT  */
-    CR = 269,                      /* CR  */
-    POINTER_OP = 270,              /* POINTER_OP  */
-    EQUAL_OP = 271,                /* EQUAL_OP  */
-    GE_OP = 272,                   /* GE_OP  */
-    LE_OP = 273,                   /* LE_OP  */
-    ASSIGN_OP = 274,               /* ASSIGN_OP  */
-    NOT_EQUAL_OP = 275,            /* NOT_EQUAL_OP  */
+    WORD_IF = 259,                 /* WORD_IF  */
+    WORD_ELSE = 260,               /* WORD_ELSE  */
+    WORD_ENDIF = 261,              /* WORD_ENDIF  */
+    WORD_DO = 262,                 /* WORD_DO  */
+    WORD_WHILE = 263,              /* WORD_WHILE  */
+    WORD_RETURN = 264,             /* WORD_RETURN  */
+    WORD_PRINT = 265,              /* WORD_PRINT  */
+    WORD_TRUNC = 266,              /* WORD_TRUNC  */
+    WORD_UINT = 267,               /* WORD_UINT  */
+    WORD_FLOAT = 268,              /* WORD_FLOAT  */
+    WORD_CR = 269,                 /* WORD_CR  */
+    OP_POINTER = 270,              /* OP_POINTER  */
+    OP_EQUAL = 271,                /* OP_EQUAL  */
+    OP_GE = 272,                   /* OP_GE  */
+    OP_LE = 273,                   /* OP_LE  */
+    OP_ASSIGN = 274,               /* OP_ASSIGN  */
+    OP_NOT_EQUAL = 275,            /* OP_NOT_EQUAL  */
     IDENTIFIER = 276,              /* IDENTIFIER  */
-    FLOAT_LITERAL = 277,           /* FLOAT_LITERAL  */
-    UINTEGER_LITERAL = 278,        /* UINTEGER_LITERAL  */
-    STRING_LITERAL = 279           /* STRING_LITERAL  */
+    LITERAL_FLOAT = 277,           /* LITERAL_FLOAT  */
+    LITERAL_UINT = 278,            /* LITERAL_UINT  */
+    LITERAL_STRING = 279           /* LITERAL_STRING  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -122,7 +117,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 79 "include/syntax-analyzer/components/yacc.y"
+#line 73 "include/syntax-analyzer/components/yacc.y"
 
     const SymbolTable::Entry*  sref;
     const LiteralTable::Entry* lref;
@@ -131,7 +126,7 @@ union YYSTYPE
     Operator op;
     bool returnable;
 
-#line 135 "include/syntax-analyzer/components/parser.h"
+#line 130 "include/syntax-analyzer/components/parser.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

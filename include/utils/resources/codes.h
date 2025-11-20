@@ -1,5 +1,5 @@
-#ifndef GC_UTILS_MACROS_H
-#define GC_UTILS_MACROS_H
+#ifndef GC_CODES_H
+#define GC_CODES_H
 
 // ================================= //
 //               Types               //
@@ -101,4 +101,4 @@
 #define RETURN_WITHOUT_SCOPE            77
 #define MISSING_RETURN_STATEMENT        78
 
-#endif //GC_UTILS_MACROS_H
+#endif //GC_CODES_H

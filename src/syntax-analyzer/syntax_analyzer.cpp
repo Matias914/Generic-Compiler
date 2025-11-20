@@ -11,7 +11,6 @@ namespace SyntaxAnalyzer
     {
         if (yyparse() != 0)
             SemanticActions::BUFFER.commit();
-
         StringPool::clear();
     }
 }

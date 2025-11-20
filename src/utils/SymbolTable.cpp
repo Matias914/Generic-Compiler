@@ -9,7 +9,7 @@ const SymbolTable::Entry* SymbolTable::addAndGet(const std::string& symbol)
 {
     if (const auto it = mapping.find(symbol); it != mapping.end())
         return it->second;
-    Entry& ref = entries.emplace_back(symbol, ST_UNSUPPORTED, ST_UNSUPPORTED);
+    Entry& ref = entries.emplace_back(symbol, UNKNOWN, UNKNOWN);
     mapping.emplace(std::string_view(ref.symbol), &ref);
     return &ref;
 }

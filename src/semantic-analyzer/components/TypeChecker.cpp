@@ -1,6 +1,6 @@
 #include "utils/Log.h"
 #include "utils/ErrorHandler.h"
-#include "utils/resources/macros.h"
+#include "utils/resources/codes.h"
 #include "lexical-analyzer/lexical_analyzer.h"
 #include "semantic-analyzer/components/TypeChecker.h"
 
@@ -16,7 +16,7 @@ namespace SemanticAnalyzer
     {
         switch (e.type)
         {
-        case TC_UINT:
+        case UINT:
             {
                 const Log l (
                     WARNING,
@@ -25,19 +25,19 @@ namespace SemanticAnalyzer
                     {e.representation}
                 );
                 ERROR_HANDLER.add(l);
-                return TC_UINT;
+                return UINT;
             }
-        case TC_FLOAT:
-            return TC_UINT;
+        case FLOAT:
+            return UINT;
         default:
-            return TC_UNSUPPORTED;
+            return UNKNOWN;
         }
     }
 
     int TypeChecker::checkOperation(const Expression& e1, const Expression& e2)
     {
-        if (e1.type == TC_UNSUPPORTED || e2.type == TC_UNSUPPORTED) {
-            return TC_UNSUPPORTED;
+        if (e1.type == UNKNOWN || e2.type == UNKNOWN) {
+            return UNKNOWN;
         }
         if (e1.type != e2.type) {
             const Log l (
@@ -47,27 +47,45 @@ namespace SemanticAnalyzer
                 {e1.representation, e2.representation}
             );
             ERROR_HANDLER.add(l);
-            return TC_UNSUPPORTED;
+            return UNKNOWN;
         }
         return e1.type;
     }
 
     int TypeChecker::checkSemantics(const Expression& e1, const Expression& e2)
     {
-        if (e1.type == TC_UNSUPPORTED || e2.type == ST_UNSUPPORTED) {
-            return TC_UNSUPPORTED;
+        if (e1.type == UNKNOWN || e2.type == UNKNOWN) {
+            return UNKNOWN;
         }
-        if (!e1.assignable && e2.type == ST_CR)
+        if (!e1.assignable && e2.type == CR)
         {
             const Log l (
                 ERROR,
                 INCOMPATIBLE_WITH_SEMANTIC,
                 LexicalAnalyzer::YYLINENO,
-                {e1.representation, e2.representation, " CR"}
+                {e1.representation, e2.representation, "CR"}
             );
             ERROR_HANDLER.add(l);
-            return TC_UNSUPPORTED;
+            return UNKNOWN;
         }
         return e2.type;
+    }
+
+    int TypeChecker::checkAssignment(const Expression& e1, const Expression& e2)
+    {
+        if (e1.type == UNKNOWN || e2.type == UNKNOWN) {
+            return UNKNOWN;
+        }
+        if (e1.type != e2.type) {
+            const Log l (
+                ERROR,
+                INCOMPATIBLE_TYPES,
+                LexicalAnalyzer::YYLINENO,
+                {e1.representation, e2.representation}
+            );
+            ERROR_HANDLER.add(l);
+            return UNKNOWN;
+        }
+        return e1.type;
     }
 }

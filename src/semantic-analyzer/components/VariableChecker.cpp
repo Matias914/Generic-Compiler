@@ -1,4 +1,4 @@
-#include "utils/resources/macros.h"
+#include "utils/resources/codes.h"
 #include "lexical-analyzer/lexical_analyzer.h"
 #include "semantic-analyzer/semantic_analyzer.h"
 #include "semantic-analyzer/components/VariableChecker.h"
@@ -39,7 +39,7 @@ namespace SemanticAnalyzer
             const auto entry = SymbolTable::Entry({
                 name + SCOPE,
                 TYPE,
-                ST_VARIABLE
+                VARIABLE
             });
             const auto ref = SYMBOL_TABLE.update(name, entry);
             if (ref == nullptr)
@@ -73,7 +73,7 @@ namespace SemanticAnalyzer
         auto& [name, prefix] = variables.front();
         if (!prefix.empty())
         {
-            if (const auto ref = SYMBOL_TABLE.get(name + prefix); ref != nullptr && ref->type == ST_VARIABLE)
+            if (const auto ref = SYMBOL_TABLE.get(name + prefix); ref != nullptr && ref->type == VARIABLE)
             {
                 variables.pop();
                 return ref;
@@ -94,7 +94,7 @@ namespace SemanticAnalyzer
             }
             else break;
         }
-        if (ref == nullptr || (ref->use != ST_VARIABLE && ref->use != ST_PARAMETER))
+        if (ref == nullptr || (ref->use != VARIABLE && ref->use != PARAMETER))
         {
             const Log l(ERROR, UNDECLARED_VARIABLE, LexicalAnalyzer::YYLINENO, {name});
             ERROR_HANDLER.add(l);

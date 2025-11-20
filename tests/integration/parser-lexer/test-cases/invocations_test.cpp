@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 #include "utils/ReportHandler.h"
-#include "utils/resources/macros.h"
+#include "utils/resources/codes.h"
 #include "lexical-analyzer/lexical_analyzer.h"
 #include "syntax-analyzer/syntax_analyzer.h"
 

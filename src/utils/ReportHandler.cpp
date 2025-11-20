@@ -1,7 +1,7 @@
 #include "utils/ReportHandler.h"
 #include "utils/LiteralTable.h"
 #include "utils/SymbolTable.h"
-#include "utils/resources/macros.h"
+#include "utils/resources/codes.h"
 #include "utils/resources/builders.h"
 
 #include <algorithm>

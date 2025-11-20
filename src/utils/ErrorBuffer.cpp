@@ -1,5 +1,5 @@
 #include "utils/ErrorBuffer.h"
-#include "utils/resources/macros.h"
+#include "utils/resources/codes.h"
 
 ErrorBuffer::ErrorBuffer(ErrorHandler* handler)
 {

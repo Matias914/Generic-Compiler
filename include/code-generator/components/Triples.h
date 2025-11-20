@@ -6,21 +6,27 @@
 
 #include <vector>
 
-#define TR_NULL  (-1)
-#define TR_TRIPLE  0
-#define TR_SYMBOL  1
-#define TR_LITERAL 2
+#define NULLREF (-1)
+#define TRIPLE    0
+#define SYMBOL    1
+#define LITERAL   2
 
-#define TR_FTOI            'A'
-#define TR_BRANCH_TRUE     'B'
-#define TR_BRANCH_FALSE    'C'
-#define TR_CALL            'D'
-#define TR_RET             'E'
-#define TR_EQUAL_OP        'F'
-#define TR_NOT_EQUAL_OP    'G'
-#define TR_GE_OP           'H'
-#define TR_LE_OP           'I'
-#define TR_PRINT           'J'
+#define CODEOP_FTOI         0
+#define CODEOP_BRANCH_TRUE  1
+#define CODEOP_BRANCH_FALSE 2
+#define CODEOP_CALL         3
+#define CODEOP_RET          4
+#define CODEOP_PRINT        5
+#define CODEOP_EQUAL        6
+#define CODEOP_NOT_EQUAL    7
+#define CODEOP_GE           8
+#define CODEOP_LE           9
+#define CODEOP_GT           10
+#define CODEOP_LT           11
+#define CODEOP_SUM          12
+#define CODEOP_SUB          13
+#define CODEOP_MUL          14
+#define CODEOP_DIV          15
 
 namespace CodeGenerator
 {
@@ -40,7 +46,8 @@ namespace CodeGenerator
         };
         struct Triple
         {
-            char op;
+            int codeop;
+            int type;
             Operand o1, o2;
         };
         Triples();
@@ -54,6 +61,9 @@ namespace CodeGenerator
         void commit();
 
         std::string toString(bool withTab, int& line) const;
+
+        auto begin() const { return triples.begin(); }
+        auto end()   const { return triples.end();   }
 
     private:
         std::vector<Triple> triples;

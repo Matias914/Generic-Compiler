@@ -16,7 +16,7 @@ namespace StringBuilders::TableBuilders
         mssg.append("Type: ");
         switch (entry.type)
         {
-        case ST_UINT:
+        case UINT:
             mssg.append("Unsigned Int");
             break;
         default:
@@ -25,16 +25,16 @@ namespace StringBuilders::TableBuilders
         mssg.append(" | ").append("Use: ");
         switch (entry.use)
         {
-        case ST_PROGRAM:
+        case PROGRAM:
             mssg.append("  Program    ");
             break;
-        case ST_VARIABLE:
+        case VARIABLE:
             mssg.append("  Variable   ");
             break;
-        case ST_FUNCTION:
+        case FUNCTION:
             mssg.append("  Function   ");
             break;
-        case ST_PARAMETER:
+        case PARAMETER:
             mssg.append("  Parameter  ");
             break;
         default:
@@ -43,10 +43,10 @@ namespace StringBuilders::TableBuilders
         mssg.append(" | ").append("Semantics: ");
         switch (entry.semantics)
         {
-        case ST_CR:
+        case CR:
             mssg.append("    CR     ");
             break;
-        case ST_CV:
+        case CV:
             mssg.append("    CV     ");
             break;
         default:
@@ -73,13 +73,13 @@ namespace StringBuilders::TableBuilders
         mssg.append("Type: ");
         switch (entry.type)
         {
-        case LT_STRING:
+        case STRING:
             mssg.append("   String   ");
             break;
-        case LT_UINT:
+        case UINT:
             mssg.append("Unsigned Int");
             break;
-        case LT_FLOAT:
+        case FLOAT:
             mssg.append("   Float    ");
             break;
         default:

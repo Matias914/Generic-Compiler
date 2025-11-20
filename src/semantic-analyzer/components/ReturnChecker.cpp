@@ -1,10 +1,9 @@
 #include "utils/Log.h"
 #include "utils/ErrorHandler.h"
-#include "utils/resources/macros.h"
+#include "utils/resources/codes.h"
 #include "lexical-analyzer/lexical_analyzer.h"
 #include "semantic-analyzer/components/TypeChecker.h"
 #include "semantic-analyzer/components/ReturnChecker.h"
-
 
 extern ErrorHandler ERROR_HANDLER;
 
@@ -33,8 +32,8 @@ namespace SemanticAnalyzer
             return false;
         }
         const auto& [type, representation] = functions.top();
-        if (ret.type == TC_UNSUPPORTED || type == TC_UNSUPPORTED)
-            return TC_UNSUPPORTED;
+        if (ret.type == UNKNOWN || type == UNKNOWN)
+            return UNKNOWN;
         if (ret.type == type)
             return ret.type;
         const Log l (
@@ -44,12 +43,12 @@ namespace SemanticAnalyzer
             {ret.representation, representation}
         );
         ERROR_HANDLER.add(l);
-        return TC_UNSUPPORTED;
+        return UNKNOWN;
     }
 
     bool ReturnChecker::checkIfHasReturn(const bool& returnable)
     {
-        if (!functions.empty() && functions.top().type != TC_UNSUPPORTED && !returnable)
+        if (!functions.empty() && functions.top().type != UNKNOWN && !returnable)
         {
             const Log l (
                 ERROR,

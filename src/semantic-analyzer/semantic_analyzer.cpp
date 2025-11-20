@@ -17,7 +17,7 @@ namespace SemanticAnalyzer
 
     std::string SCOPE = "";
 
-    int TYPE = ST_UNSUPPORTED;
+    int TYPE = UNKNOWN;
 
     static int INVALID_SERIAL = 0;
 

@@ -1,5 +1,5 @@
 #include "utils/ErrorHandler.h"
-#include "utils/resources/macros.h"
+#include "utils/resources/codes.h"
 #include "lexical-analyzer/lexical_analyzer.h"
 #include "semantic-analyzer/components/ProgramChecker.h"
 
@@ -34,9 +34,9 @@ namespace SemanticAnalyzer
         if (entry == nullptr)
             throw std::runtime_error(RUNTIME_E1);
         // Ya fue inicializada
-        if (entry->use != ST_UNSUPPORTED)
+        if (entry->use != UNKNOWN)
             return nullptr;
-        const auto new_entry = SymbolTable::Entry({program, ST_UNSUPPORTED, ST_PROGRAM});
+        const auto new_entry = SymbolTable::Entry({program, UNKNOWN, PROGRAM});
         return SYMBOL_TABLE.update(program, new_entry);
     }
 }

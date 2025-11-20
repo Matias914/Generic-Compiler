@@ -6,26 +6,26 @@ using namespace LexicalAnalyzer;
 int ReservedWordsTable::token(const std::string& word)
 {
     if (word == "if")
-        return IF;
+        return WORD_IF;
     if (word == "else")
-        return ELSE;
+        return WORD_ELSE;
     if (word == "endif")
-        return ENDIF;
+        return WORD_ENDIF;
     if (word == "do")
-        return DO;
+        return WORD_DO;
     if (word == "while")
-        return WHILE;
+        return WORD_WHILE;
     if (word == "return")
-        return RETURN;
+        return WORD_RETURN;
     if (word == "print")
-        return PRINT;
+        return WORD_PRINT;
     if (word == "uint")
-        return UINT;
+        return WORD_UINT;
     if (word == "float")
-        return FLOAT;
+        return WORD_FLOAT;
     if (word == "cr")
-        return CR;
+        return WORD_CR;
     if (word == "trunc")
-        return TRUNC;
+        return WORD_TRUNC;
     return -1;
 }

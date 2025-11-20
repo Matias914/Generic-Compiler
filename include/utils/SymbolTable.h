@@ -1,23 +1,12 @@
 #ifndef GC_SYMBOLTABLE_H
 #define GC_SYMBOLTABLE_H
 
+#include "resources/types.h"
+
 #include <unordered_map>
 #include <string_view>
 #include <string>
 #include <list>
-
-#define ST_UNSUPPORTED (-1)
-
-#define ST_FLOAT         0
-#define ST_UINT          1
-
-#define ST_PROGRAM       0
-#define ST_VARIABLE      1
-#define ST_FUNCTION      2
-#define ST_PARAMETER     3
-
-#define ST_CV            0
-#define ST_CR            1
 
 /*
  * @brief colecciona los símbolos hallados durante el análisis
@@ -32,14 +21,14 @@ public:
     struct Entry
     {
         std::string symbol = "";
-        int type      = ST_UNSUPPORTED;
-        int use       = ST_UNSUPPORTED;
-        int semantics = ST_UNSUPPORTED;
-        int params    = ST_UNSUPPORTED;
+        int type      = UNKNOWN;
+        int use       = UNKNOWN;
+        int semantics = UNKNOWN;
+        int params    = UNKNOWN;
 
         Entry() = default;
 
-        Entry(std::string s, const int t, const int u, const int sem = ST_UNSUPPORTED, const int p = ST_UNSUPPORTED)
+        Entry(std::string s, const int t, const int u, const int sem = UNKNOWN, const int p = UNKNOWN)
             : symbol(std::move(s)), type(t), use(u), semantics(sem), params(p) {}
     };
 
@@ -51,6 +40,9 @@ public:
     const Entry* upsert(const std::string& symbol, const Entry& entry);
 
     bool remove(const std::string& symbol);
+
+    auto begin() const { return this->entries.begin(); }
+    auto end()   const { return this->entries.end();   }
 
     std::string toString() const;
 

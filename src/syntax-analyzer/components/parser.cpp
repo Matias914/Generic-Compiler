@@ -67,14 +67,14 @@
 
 
 /* First part of user prologue.  */
-#line 40 "include/syntax-analyzer/components/yacc.y"
+#line 35 "include/syntax-analyzer/components/yacc.y"
 
 #include "syntax-analyzer/components/parser.h"
 #include "syntax-analyzer/components/translator.h"
 #include "syntax-analyzer/components/string_pool.h"
 #include "syntax-analyzer/components/semantic_actions.h"
 
-#include "utils/resources/macros.h"
+#include "utils/resources/codes.h"
 #include "code-generator/code-generator.h"
 #include "lexical-analyzer/lexical_analyzer.h"
 #include "semantic-analyzer/semantic_analyzer.h"
@@ -92,17 +92,16 @@ std::stack<int> STACK;
 // Parser Functions
 
 void yyerror(const char* s);
-int mapWithCheckerType(const int type);
 char mapWithTripleOperator(const int op);
 CodeGenerator::Triples::Operand mapWithOperand(const Metadata::Reference& ref);
 
 // Avoids Code Repetition
 void createMultipleAssignmentTriple(const Metadata& m);
 void createTruncateTriple(Metadata& result, const Metadata& operand);
-void createArithmeticTriple(Metadata& r, const Metadata& o1, const Metadata& o2, const char op);
+void createArithmeticTriple(Metadata& r, const Metadata& o1, const Metadata& o2, char op);
 
 
-#line 106 "src/syntax-analyzer/components/parser.cpp"
+#line 105 "src/syntax-analyzer/components/parser.cpp"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -134,27 +133,27 @@ enum yysymbol_kind_t
   YYSYMBOL_YYerror = 1,                    /* error  */
   YYSYMBOL_YYUNDEF = 2,                    /* "invalid token"  */
   YYSYMBOL_INVALID_TOKEN = 3,              /* INVALID_TOKEN  */
-  YYSYMBOL_IF = 4,                         /* IF  */
-  YYSYMBOL_ELSE = 5,                       /* ELSE  */
-  YYSYMBOL_ENDIF = 6,                      /* ENDIF  */
-  YYSYMBOL_DO = 7,                         /* DO  */
-  YYSYMBOL_WHILE = 8,                      /* WHILE  */
-  YYSYMBOL_RETURN = 9,                     /* RETURN  */
-  YYSYMBOL_PRINT = 10,                     /* PRINT  */
-  YYSYMBOL_TRUNC = 11,                     /* TRUNC  */
-  YYSYMBOL_UINT = 12,                      /* UINT  */
-  YYSYMBOL_FLOAT = 13,                     /* FLOAT  */
-  YYSYMBOL_CR = 14,                        /* CR  */
-  YYSYMBOL_POINTER_OP = 15,                /* POINTER_OP  */
-  YYSYMBOL_EQUAL_OP = 16,                  /* EQUAL_OP  */
-  YYSYMBOL_GE_OP = 17,                     /* GE_OP  */
-  YYSYMBOL_LE_OP = 18,                     /* LE_OP  */
-  YYSYMBOL_ASSIGN_OP = 19,                 /* ASSIGN_OP  */
-  YYSYMBOL_NOT_EQUAL_OP = 20,              /* NOT_EQUAL_OP  */
+  YYSYMBOL_WORD_IF = 4,                    /* WORD_IF  */
+  YYSYMBOL_WORD_ELSE = 5,                  /* WORD_ELSE  */
+  YYSYMBOL_WORD_ENDIF = 6,                 /* WORD_ENDIF  */
+  YYSYMBOL_WORD_DO = 7,                    /* WORD_DO  */
+  YYSYMBOL_WORD_WHILE = 8,                 /* WORD_WHILE  */
+  YYSYMBOL_WORD_RETURN = 9,                /* WORD_RETURN  */
+  YYSYMBOL_WORD_PRINT = 10,                /* WORD_PRINT  */
+  YYSYMBOL_WORD_TRUNC = 11,                /* WORD_TRUNC  */
+  YYSYMBOL_WORD_UINT = 12,                 /* WORD_UINT  */
+  YYSYMBOL_WORD_FLOAT = 13,                /* WORD_FLOAT  */
+  YYSYMBOL_WORD_CR = 14,                   /* WORD_CR  */
+  YYSYMBOL_OP_POINTER = 15,                /* OP_POINTER  */
+  YYSYMBOL_OP_EQUAL = 16,                  /* OP_EQUAL  */
+  YYSYMBOL_OP_GE = 17,                     /* OP_GE  */
+  YYSYMBOL_OP_LE = 18,                     /* OP_LE  */
+  YYSYMBOL_OP_ASSIGN = 19,                 /* OP_ASSIGN  */
+  YYSYMBOL_OP_NOT_EQUAL = 20,              /* OP_NOT_EQUAL  */
   YYSYMBOL_IDENTIFIER = 21,                /* IDENTIFIER  */
-  YYSYMBOL_FLOAT_LITERAL = 22,             /* FLOAT_LITERAL  */
-  YYSYMBOL_UINTEGER_LITERAL = 23,          /* UINTEGER_LITERAL  */
-  YYSYMBOL_STRING_LITERAL = 24,            /* STRING_LITERAL  */
+  YYSYMBOL_LITERAL_FLOAT = 22,             /* LITERAL_FLOAT  */
+  YYSYMBOL_LITERAL_UINT = 23,              /* LITERAL_UINT  */
+  YYSYMBOL_LITERAL_STRING = 24,            /* LITERAL_STRING  */
   YYSYMBOL_25_ = 25,                       /* '{'  */
   YYSYMBOL_26_ = 26,                       /* '}'  */
   YYSYMBOL_27_ = 27,                       /* ';'  */
@@ -645,33 +644,33 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,   143,   143,   144,   145,   149,   153,   157,   159,   158,
-     167,   171,   179,   183,   187,   198,   197,   213,   218,   223,
-     233,   234,   238,   242,   246,   253,   260,   267,   275,   285,
-     289,   294,   300,   299,   309,   308,   324,   328,   333,   332,
-     340,   348,   352,   363,   362,   371,   377,   390,   389,   400,
-     411,   426,   427,   429,   428,   436,   442,   448,   456,   461,
-     467,   474,   484,   494,   498,   510,   521,   535,   550,   564,
-     579,   592,   605,   618,   629,   630,   631,   632,   633,   634,
-     635,   641,   654,   663,   671,   678,   691,   701,   711,   721,
-     733,   732,   739,   747,   749,   757,   763,   771,   779,   788,
-     795,   804,   815,   816,   820,   828,   827,   833,   840,   849,
-     853,   863,   864,   866,   865,   875,   876,   881,   882,   892,
-     910,   931,   949,   957,   967,   971,   977,   987,   995,  1023,
-    1036,  1035,  1048,  1047,  1053,  1052,  1060,  1059,  1069,  1068,
-    1080,  1125,  1126,  1132,  1147,  1163,  1178,  1194,  1210,  1226,
-    1234,  1243,  1251,  1260,  1276,  1293,  1301,  1312,  1319,  1333,
-    1354,  1359,  1358,  1367,  1378,  1386,  1401,  1410,  1409,  1421,
-    1422,  1433,  1437,  1445,  1451,  1458,  1459,  1465,  1469,  1476,
-    1483,  1493,  1502,  1515,  1530,  1537,  1557,  1580,  1603,  1626,
-    1638,  1644,  1654,  1663,  1678,  1679,  1684,  1688,  1696,  1716,
-    1727,  1731,  1735,  1739,  1743,  1747,  1756,  1760,  1772,  1779,
-    1788,  1792,  1800,  1804,  1812,  1816,  1820,  1827,  1838,  1842,
-    1849,  1853,  1857,  1861,  1865,  1869,  1873,  1877,  1881,  1885,
-    1893,  1904,  1908,  1912,  1916,  1920,  1924,  1932,  1940,  1947,
-    1954,  1963,  1977,  1981,  1988,  2003,  2007,  2014,  2018,  2025,
-    2033,  2040,  2056,  2065,  2079,  2083,  2090,  2095,  2103,  2114,
-    2121
+       0,   134,   134,   135,   136,   140,   144,   148,   150,   149,
+     158,   162,   170,   174,   178,   189,   188,   204,   209,   214,
+     224,   225,   229,   233,   237,   244,   251,   258,   266,   276,
+     280,   285,   291,   290,   300,   299,   315,   319,   324,   323,
+     331,   339,   343,   354,   353,   362,   368,   381,   380,   391,
+     402,   417,   418,   420,   419,   427,   433,   439,   447,   452,
+     458,   465,   475,   485,   489,   501,   515,   532,   550,   567,
+     585,   601,   617,   633,   644,   645,   646,   647,   648,   649,
+     650,   656,   679,   688,   705,   712,   725,   738,   751,   764,
+     779,   778,   785,   793,   795,   803,   809,   817,   825,   834,
+     841,   850,   861,   862,   866,   874,   873,   879,   886,   895,
+     899,   909,   910,   912,   911,   921,   922,   927,   928,   938,
+     959,   980,   998,  1006,  1016,  1020,  1026,  1036,  1044,  1082,
+    1095,  1094,  1107,  1106,  1112,  1111,  1119,  1118,  1128,  1127,
+    1139,  1194,  1195,  1201,  1216,  1232,  1247,  1263,  1279,  1295,
+    1303,  1312,  1320,  1329,  1345,  1362,  1370,  1381,  1388,  1403,
+    1425,  1430,  1429,  1438,  1449,  1457,  1473,  1482,  1481,  1493,
+    1494,  1505,  1509,  1517,  1523,  1530,  1531,  1537,  1541,  1548,
+    1555,  1565,  1574,  1587,  1602,  1609,  1629,  1652,  1675,  1698,
+    1710,  1716,  1726,  1735,  1750,  1754,  1762,  1769,  1780,  1803,
+    1814,  1818,  1822,  1826,  1830,  1834,  1843,  1847,  1859,  1866,
+    1875,  1879,  1887,  1891,  1899,  1903,  1907,  1914,  1925,  1929,
+    1936,  1940,  1944,  1948,  1952,  1956,  1960,  1964,  1968,  1972,
+    1980,  1991,  1995,  1999,  2003,  2007,  2011,  2019,  2027,  2034,
+    2041,  2050,  2064,  2068,  2075,  2090,  2094,  2101,  2105,  2112,
+    2120,  2127,  2143,  2152,  2166,  2170,  2177,  2182,  2190,  2201,
+    2208
 };
 #endif
 
@@ -687,11 +686,12 @@ static const char *yysymbol_name (yysymbol_kind_t yysymbol) YY_ATTRIBUTE_UNUSED;
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "\"end of file\"", "error", "\"invalid token\"", "INVALID_TOKEN", "IF",
-  "ELSE", "ENDIF", "DO", "WHILE", "RETURN", "PRINT", "TRUNC", "UINT",
-  "FLOAT", "CR", "POINTER_OP", "EQUAL_OP", "GE_OP", "LE_OP", "ASSIGN_OP",
-  "NOT_EQUAL_OP", "IDENTIFIER", "FLOAT_LITERAL", "UINTEGER_LITERAL",
-  "STRING_LITERAL", "'{'", "'}'", "';'", "'('", "','", "')'", "'='", "'>'",
+  "\"end of file\"", "error", "\"invalid token\"", "INVALID_TOKEN",
+  "WORD_IF", "WORD_ELSE", "WORD_ENDIF", "WORD_DO", "WORD_WHILE",
+  "WORD_RETURN", "WORD_PRINT", "WORD_TRUNC", "WORD_UINT", "WORD_FLOAT",
+  "WORD_CR", "OP_POINTER", "OP_EQUAL", "OP_GE", "OP_LE", "OP_ASSIGN",
+  "OP_NOT_EQUAL", "IDENTIFIER", "LITERAL_FLOAT", "LITERAL_UINT",
+  "LITERAL_STRING", "'{'", "'}'", "';'", "'('", "','", "')'", "'='", "'>'",
   "'<'", "'+'", "'-'", "'*'", "'/'", "'.'", "$accept", "global",
   "global_statement", "$@1", "unnamed_program_tail", "program_head", "$@2",
   "program_tail", "program_statements", "program_statement",
@@ -1665,7 +1665,7 @@ yyreduce:
   switch (yyn)
     {
   case 5: /* global_statement: declarative_stmt  */
-#line 150 "include/syntax-analyzer/components/yacc.y"
+#line 141 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticActions::announceSpecificError(GLOBAL_SCOPE_STATEMENT);
     }
@@ -1673,7 +1673,7 @@ yyreduce:
     break;
 
   case 6: /* global_statement: executable_stmt  */
-#line 154 "include/syntax-analyzer/components/yacc.y"
+#line 145 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticActions::announceSpecificError(GLOBAL_SCOPE_STATEMENT);
     }
@@ -1681,7 +1681,7 @@ yyreduce:
     break;
 
   case 8: /* $@1: %empty  */
-#line 159 "include/syntax-analyzer/components/yacc.y"
+#line 150 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::addInvalidScope();
         SemanticActions::announceSpecificError(MISSING_PROGRAM_NAME);
@@ -1693,7 +1693,7 @@ yyreduce:
     break;
 
   case 10: /* global_statement: '}'  */
-#line 168 "include/syntax-analyzer/components/yacc.y"
+#line 159 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticActions::announceSpecificError(MISSING_OPENING_BRACKET);
     }
@@ -1701,7 +1701,7 @@ yyreduce:
     break;
 
   case 11: /* global_statement: error ';'  */
-#line 172 "include/syntax-analyzer/components/yacc.y"
+#line 163 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticActions::announceSpecificError(GLOBAL_SCOPE_STATEMENT);
         yyerrok;
@@ -1710,7 +1710,7 @@ yyreduce:
     break;
 
   case 12: /* unnamed_program_tail: program_statements '}'  */
-#line 180 "include/syntax-analyzer/components/yacc.y"
+#line 171 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::removeScope();
     }
@@ -1718,7 +1718,7 @@ yyreduce:
     break;
 
   case 13: /* unnamed_program_tail: '}'  */
-#line 184 "include/syntax-analyzer/components/yacc.y"
+#line 175 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::removeScope();
     }
@@ -1726,7 +1726,7 @@ yyreduce:
     break;
 
   case 14: /* unnamed_program_tail: program_statements $end  */
-#line 188 "include/syntax-analyzer/components/yacc.y"
+#line 179 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::removeScope();
         SemanticActions::announceSpecificError(MISSING_CLOSING_BRACKET);
@@ -1735,7 +1735,7 @@ yyreduce:
     break;
 
   case 15: /* $@2: %empty  */
-#line 198 "include/syntax-analyzer/components/yacc.y"
+#line 189 "include/syntax-analyzer/components/yacc.y"
     {
         const std::string s = (yyvsp[-1].sref)->symbol;
         auto entry = SemanticAnalyzer::CHK_PROGRAMS.checkProgramDeclaration(s);
@@ -1751,7 +1751,7 @@ yyreduce:
     break;
 
   case 17: /* program_tail: program_statements '}'  */
-#line 214 "include/syntax-analyzer/components/yacc.y"
+#line 205 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticActions::logStructure("PROGRAM");
         SemanticAnalyzer::removeScope();
@@ -1760,7 +1760,7 @@ yyreduce:
     break;
 
   case 18: /* program_tail: program_statements $end  */
-#line 219 "include/syntax-analyzer/components/yacc.y"
+#line 210 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticActions::announceSpecificError(MISSING_CLOSING_BRACKET);
         SemanticAnalyzer::removeScope();
@@ -1769,7 +1769,7 @@ yyreduce:
     break;
 
   case 19: /* program_tail: '}'  */
-#line 224 "include/syntax-analyzer/components/yacc.y"
+#line 215 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticActions::logStructure("PROGRAM");
         SemanticAnalyzer::removeScope();
@@ -1778,19 +1778,19 @@ yyreduce:
     break;
 
   case 20: /* program_statements: program_statement  */
-#line 233 "include/syntax-analyzer/components/yacc.y"
+#line 224 "include/syntax-analyzer/components/yacc.y"
                                            { (yyval.returnable) = (yyvsp[0].returnable);       }
 #line 1784 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 21: /* program_statements: program_statements program_statement  */
-#line 234 "include/syntax-analyzer/components/yacc.y"
+#line 225 "include/syntax-analyzer/components/yacc.y"
                                            { (yyval.returnable) = (yyvsp[-1].returnable) || (yyvsp[0].returnable); }
 #line 1790 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 22: /* program_statement: declarative_stmt  */
-#line 239 "include/syntax-analyzer/components/yacc.y"
+#line 230 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = false;
     }
@@ -1798,7 +1798,7 @@ yyreduce:
     break;
 
   case 23: /* program_statement: executable_stmt  */
-#line 243 "include/syntax-analyzer/components/yacc.y"
+#line 234 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = (yyvsp[0].returnable);
     }
@@ -1806,7 +1806,7 @@ yyreduce:
     break;
 
   case 24: /* program_statement: program_head  */
-#line 247 "include/syntax-analyzer/components/yacc.y"
+#line 238 "include/syntax-analyzer/components/yacc.y"
     {
        (yyval.returnable) = false;
 
@@ -1817,7 +1817,7 @@ yyreduce:
     break;
 
   case 25: /* program_statement: '{' '}'  */
-#line 254 "include/syntax-analyzer/components/yacc.y"
+#line 245 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = false;
 
@@ -1828,7 +1828,7 @@ yyreduce:
     break;
 
   case 26: /* program_statement: '{' program_statements '}'  */
-#line 261 "include/syntax-analyzer/components/yacc.y"
+#line 252 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = (yyvsp[-1].returnable);
 
@@ -1839,7 +1839,7 @@ yyreduce:
     break;
 
   case 27: /* program_statement: '{' program_statements $end  */
-#line 268 "include/syntax-analyzer/components/yacc.y"
+#line 259 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = (yyvsp[-1].returnable);
 
@@ -1851,7 +1851,7 @@ yyreduce:
     break;
 
   case 28: /* program_statement: error ';'  */
-#line 276 "include/syntax-analyzer/components/yacc.y"
+#line 267 "include/syntax-analyzer/components/yacc.y"
     {
         yyerrok;
 
@@ -1860,7 +1860,7 @@ yyreduce:
     break;
 
   case 29: /* declarative_stmt: type variable_list ';'  */
-#line 286 "include/syntax-analyzer/components/yacc.y"
+#line 277 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticActions::logStructure("VARIABLE DECLARATION");
     }
@@ -1868,7 +1868,7 @@ yyreduce:
     break;
 
   case 30: /* declarative_stmt: type error ';'  */
-#line 290 "include/syntax-analyzer/components/yacc.y"
+#line 281 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticActions::specifySyntaxError(MISSING_VARIABLE);
         yyerrok;
@@ -1877,7 +1877,7 @@ yyreduce:
     break;
 
   case 31: /* declarative_stmt: type variable_list error  */
-#line 295 "include/syntax-analyzer/components/yacc.y"
+#line 286 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticActions::specifySyntaxError(MISSING_SEMICOLON);
         yyerrok;
@@ -1886,10 +1886,10 @@ yyreduce:
     break;
 
   case 32: /* $@3: %empty  */
-#line 300 "include/syntax-analyzer/components/yacc.y"
+#line 291 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::CHK_RETURNS.bufferFunction (
-            SemanticAnalyzer::ReturnChecker::Element({mapWithCheckerType(SemanticAnalyzer::TYPE), (yyvsp[-1].sref)->symbol})
+            SemanticAnalyzer::ReturnChecker::Element({SemanticAnalyzer::TYPE, (yyvsp[-1].sref)->symbol})
         );
         SemanticAnalyzer::CHK_FUNCTIONS.notifyFunctionName((yyvsp[-1].sref)->symbol);
 
@@ -1898,10 +1898,10 @@ yyreduce:
     break;
 
   case 34: /* $@4: %empty  */
-#line 309 "include/syntax-analyzer/components/yacc.y"
+#line 300 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::CHK_RETURNS.bufferFunction(
-            SemanticAnalyzer::ReturnChecker::Element({mapWithCheckerType(SemanticAnalyzer::TYPE), "...()"})
+            SemanticAnalyzer::ReturnChecker::Element({SemanticAnalyzer::TYPE, "...()"})
         );
         SemanticAnalyzer::CHK_FUNCTIONS.notifyFunctionWithoutName();
 
@@ -1912,7 +1912,7 @@ yyreduce:
     break;
 
   case 36: /* variable_list: variable  */
-#line 325 "include/syntax-analyzer/components/yacc.y"
+#line 316 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::CHK_VARIABLES.checkVariableDeclaration();
     }
@@ -1920,7 +1920,7 @@ yyreduce:
     break;
 
   case 37: /* variable_list: variable_list ',' variable  */
-#line 329 "include/syntax-analyzer/components/yacc.y"
+#line 320 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::CHK_VARIABLES.checkVariableDeclaration();
     }
@@ -1928,7 +1928,7 @@ yyreduce:
     break;
 
   case 38: /* $@5: %empty  */
-#line 333 "include/syntax-analyzer/components/yacc.y"
+#line 324 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticActions::announceSpecificError(MISSING_COMMA);
     }
@@ -1936,7 +1936,7 @@ yyreduce:
     break;
 
   case 39: /* variable_list: variable_list $@5 variable  */
-#line 337 "include/syntax-analyzer/components/yacc.y"
+#line 328 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::CHK_VARIABLES.checkVariableDeclaration();
     }
@@ -1944,7 +1944,7 @@ yyreduce:
     break;
 
   case 40: /* variable_list: variable_list ',' error  */
-#line 341 "include/syntax-analyzer/components/yacc.y"
+#line 332 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticActions::specifySyntaxError(MISSING_VARIABLE);
         yyerrok;
@@ -1952,25 +1952,25 @@ yyreduce:
 #line 1953 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 41: /* type: UINT  */
-#line 349 "include/syntax-analyzer/components/yacc.y"
+  case 41: /* type: WORD_UINT  */
+#line 340 "include/syntax-analyzer/components/yacc.y"
     {
-        SemanticAnalyzer::TYPE = ST_UINT;
+        SemanticAnalyzer::TYPE = UINT;
     }
 #line 1961 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 42: /* type: FLOAT  */
-#line 353 "include/syntax-analyzer/components/yacc.y"
+  case 42: /* type: WORD_FLOAT  */
+#line 344 "include/syntax-analyzer/components/yacc.y"
     {
-        SemanticAnalyzer::TYPE = ST_FLOAT;
+        SemanticAnalyzer::TYPE = FLOAT;
         SemanticActions::announceSpecificError(NOT_YET_IMPLEMENTED);
     }
 #line 1970 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 43: /* $@6: %empty  */
-#line 363 "include/syntax-analyzer/components/yacc.y"
+#line 354 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::CHK_FUNCTIONS.checkFunctionDeclaration();
 
@@ -1979,7 +1979,7 @@ yyreduce:
     break;
 
   case 45: /* unnamed_function_declaration_tail: function_body ';'  */
-#line 372 "include/syntax-analyzer/components/yacc.y"
+#line 363 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::removeScope();
         SemanticAnalyzer::CHK_RETURNS.removeFunction();
@@ -1989,7 +1989,7 @@ yyreduce:
     break;
 
   case 46: /* unnamed_function_declaration_tail: function_body error  */
-#line 378 "include/syntax-analyzer/components/yacc.y"
+#line 369 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::removeScope();
         SemanticAnalyzer::CHK_RETURNS.removeFunction();
@@ -2002,7 +2002,7 @@ yyreduce:
     break;
 
   case 47: /* $@7: %empty  */
-#line 390 "include/syntax-analyzer/components/yacc.y"
+#line 381 "include/syntax-analyzer/components/yacc.y"
     {
         auto entry = SemanticAnalyzer::CHK_FUNCTIONS.checkFunctionDeclaration();
         if (entry != nullptr)
@@ -2013,7 +2013,7 @@ yyreduce:
     break;
 
   case 49: /* function_declaration_tail: function_body ';'  */
-#line 401 "include/syntax-analyzer/components/yacc.y"
+#line 392 "include/syntax-analyzer/components/yacc.y"
     {
         CodeGenerator::notifyEndOfBlock();
 
@@ -2028,7 +2028,7 @@ yyreduce:
     break;
 
   case 50: /* function_declaration_tail: function_body error  */
-#line 412 "include/syntax-analyzer/components/yacc.y"
+#line 403 "include/syntax-analyzer/components/yacc.y"
     {
         CodeGenerator::notifyEndOfBlock();
 
@@ -2044,7 +2044,7 @@ yyreduce:
     break;
 
   case 53: /* $@8: %empty  */
-#line 429 "include/syntax-analyzer/components/yacc.y"
+#line 420 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticActions::announceSpecificError(MISSING_COMMA);
     }
@@ -2052,9 +2052,9 @@ yyreduce:
     break;
 
   case 55: /* formal_parameter: type IDENTIFIER  */
-#line 437 "include/syntax-analyzer/components/yacc.y"
+#line 428 "include/syntax-analyzer/components/yacc.y"
     {
-        SemanticAnalyzer::CHK_FUNCTIONS.notifyParameterSemantic(ST_CV);
+        SemanticAnalyzer::CHK_FUNCTIONS.notifyParameterSemantic(CV);
         SemanticAnalyzer::CHK_FUNCTIONS.checkParameterDeclaration((yyvsp[0].sref)->symbol);
 
     }
@@ -2062,7 +2062,7 @@ yyreduce:
     break;
 
   case 56: /* formal_parameter: type error  */
-#line 443 "include/syntax-analyzer/components/yacc.y"
+#line 434 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticActions::specifySyntaxError(MISSING_PARAMETER_NAME);
         yyerrok;
@@ -2072,10 +2072,10 @@ yyreduce:
     break;
 
   case 57: /* formal_parameter: IDENTIFIER  */
-#line 449 "include/syntax-analyzer/components/yacc.y"
+#line 440 "include/syntax-analyzer/components/yacc.y"
     {
-        SemanticAnalyzer::TYPE = ST_UNSUPPORTED;
-        SemanticAnalyzer::CHK_FUNCTIONS.notifyParameterSemantic(ST_CV);
+        SemanticAnalyzer::TYPE = UNKNOWN;
+        SemanticAnalyzer::CHK_FUNCTIONS.notifyParameterSemantic(CV);
         SemanticAnalyzer::CHK_FUNCTIONS.checkParameterDeclaration((yyvsp[0].sref)->symbol);
         SemanticActions::announceSpecificErrorWithSymbol(MISSING_PARAMETER_TYPE);
 
@@ -2084,7 +2084,7 @@ yyreduce:
     break;
 
   case 58: /* formal_parameter: parameter_semantics type IDENTIFIER  */
-#line 457 "include/syntax-analyzer/components/yacc.y"
+#line 448 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::CHK_FUNCTIONS.checkParameterDeclaration((yyvsp[0].sref)->symbol);
 
@@ -2093,7 +2093,7 @@ yyreduce:
     break;
 
   case 59: /* formal_parameter: parameter_semantics type error  */
-#line 462 "include/syntax-analyzer/components/yacc.y"
+#line 453 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticActions::specifySyntaxError(MISSING_PARAMETER_NAME);
         yyerrok;
@@ -2103,7 +2103,7 @@ yyreduce:
     break;
 
   case 60: /* formal_parameter: parameter_semantics error  */
-#line 468 "include/syntax-analyzer/components/yacc.y"
+#line 459 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticActions::specifySyntaxError(MISSING_PARAMETER_NAME);
         SemanticActions::announceSpecificError(MISSING_PARAMETER_TYPE);
@@ -2114,9 +2114,9 @@ yyreduce:
     break;
 
   case 61: /* formal_parameter: parameter_semantics IDENTIFIER  */
-#line 475 "include/syntax-analyzer/components/yacc.y"
+#line 466 "include/syntax-analyzer/components/yacc.y"
     {
-        SemanticAnalyzer::TYPE = ST_UNSUPPORTED;
+        SemanticAnalyzer::TYPE = UNKNOWN;
         SemanticAnalyzer::CHK_FUNCTIONS.checkParameterDeclaration((yyvsp[0].sref)->symbol);
         SemanticActions::announceSpecificErrorWithSymbol(MISSING_PARAMETER_TYPE);
 
@@ -2124,17 +2124,17 @@ yyreduce:
 #line 2125 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 62: /* parameter_semantics: CR  */
-#line 485 "include/syntax-analyzer/components/yacc.y"
+  case 62: /* parameter_semantics: WORD_CR  */
+#line 476 "include/syntax-analyzer/components/yacc.y"
     {
-        SemanticAnalyzer::CHK_FUNCTIONS.notifyParameterSemantic(ST_CR);
+        SemanticAnalyzer::CHK_FUNCTIONS.notifyParameterSemantic(CR);
 
     }
 #line 2134 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 63: /* function_body: '{' program_statements '}'  */
-#line 495 "include/syntax-analyzer/components/yacc.y"
+#line 486 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = (yyvsp[-1].returnable);
     }
@@ -2142,7 +2142,7 @@ yyreduce:
     break;
 
   case 64: /* function_body: '{' program_statements $end  */
-#line 499 "include/syntax-analyzer/components/yacc.y"
+#line 490 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = (yyvsp[-1].returnable);
 
@@ -2152,247 +2152,290 @@ yyreduce:
 #line 2153 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 65: /* return: RETURN '(' expression ')' ';'  */
-#line 511 "include/syntax-analyzer/components/yacc.y"
+  case 65: /* return: WORD_RETURN '(' expression ')' ';'  */
+#line 502 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::ReturnChecker::Element e = { (yyvsp[-2].metadata).expression.type, *StringPool::get((yyvsp[-2].metadata).expression.pid) };
         SemanticAnalyzer::CHK_RETURNS.checkReturnWithBuffered(e);
 
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
-            CodeGenerator::INTERMEDIATE_CODE->addTriple (
-                { TR_RET, mapWithOperand((yyvsp[-2].metadata).reference), mapWithOperand({ PR_NULL, nullptr }) }
-            );
+            CodeGenerator::INTERMEDIATE_CODE->addTriple ({ 
+                CODEOP_RET, 
+                (yyvsp[-2].metadata).expression.type,
+                mapWithOperand((yyvsp[-2].metadata).reference), 
+                CodeGenerator::Triples::Operand({ NULLREF, nullptr }) 
+            });
 
     }
-#line 2168 "src/syntax-analyzer/components/parser.cpp"
+#line 2171 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 66: /* return: RETURN '(' expression ')' error  */
-#line 522 "include/syntax-analyzer/components/yacc.y"
+  case 66: /* return: WORD_RETURN '(' expression ')' error  */
+#line 516 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::ReturnChecker::Element e = { (yyvsp[-2].metadata).expression.type, *StringPool::get((yyvsp[-2].metadata).expression.pid) };
         SemanticAnalyzer::CHK_RETURNS.checkReturnWithBuffered(e);
 
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
-            CodeGenerator::INTERMEDIATE_CODE->addTriple (
-                { TR_RET, mapWithOperand((yyvsp[-2].metadata).reference), mapWithOperand({ PR_NULL, nullptr }) }
-            );
+            CodeGenerator::INTERMEDIATE_CODE->addTriple ({ 
+                CODEOP_RET, 
+                (yyvsp[-2].metadata).expression.type,
+                mapWithOperand((yyvsp[-2].metadata).reference), 
+                CodeGenerator::Triples::Operand({ NULLREF, nullptr }) 
+            });
 
         SemanticActions::specifySyntaxError(MISSING_SEMICOLON);
         yyerrok;
 
     }
-#line 2186 "src/syntax-analyzer/components/parser.cpp"
+#line 2192 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 67: /* return: RETURN '(' expression error  */
-#line 536 "include/syntax-analyzer/components/yacc.y"
+  case 67: /* return: WORD_RETURN '(' expression error  */
+#line 533 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::ReturnChecker::Element e = { (yyvsp[-1].metadata).expression.type, *StringPool::get((yyvsp[-1].metadata).expression.pid) };
         SemanticAnalyzer::CHK_RETURNS.checkReturnWithBuffered(e);
 
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
-            CodeGenerator::INTERMEDIATE_CODE->addTriple (
-                { TR_RET, mapWithOperand((yyvsp[-1].metadata).reference), mapWithOperand({ PR_NULL, nullptr }) }
-            );
+            CodeGenerator::INTERMEDIATE_CODE->addTriple ({ 
+                CODEOP_RET,
+                (yyvsp[-1].metadata).expression.type,
+                mapWithOperand((yyvsp[-1].metadata).reference),
+                CodeGenerator::Triples::Operand({ NULLREF, nullptr }) 
+            });
 
         SemanticActions::specifySyntaxError(MISSING_CLOSING_PARENTHESIS);
         SemanticActions::announceSpecificError(MISSING_SEMICOLON);
         yyerrok;
 
     }
-#line 2205 "src/syntax-analyzer/components/parser.cpp"
+#line 2214 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 68: /* return: RETURN expression ')'  */
+  case 68: /* return: WORD_RETURN expression ')'  */
 #line 551 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::ReturnChecker::Element e = { (yyvsp[-1].metadata).expression.type, *StringPool::get((yyvsp[-1].metadata).expression.pid) };
         SemanticAnalyzer::CHK_RETURNS.checkReturnWithBuffered(e);
 
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
-            CodeGenerator::INTERMEDIATE_CODE->addTriple (
-                { TR_RET, mapWithOperand((yyvsp[-1].metadata).reference), mapWithOperand({ PR_NULL, nullptr }) }
-            );
+            CodeGenerator::INTERMEDIATE_CODE->addTriple ({ 
+                CODEOP_RET, 
+                (yyvsp[-1].metadata).expression.type,
+                mapWithOperand((yyvsp[-1].metadata).reference), 
+                CodeGenerator::Triples::Operand({ NULLREF, nullptr })
+            });
 
         SemanticActions::announceSpecificError(MISSING_OPENING_PARENTHESIS);
         SemanticActions::announceSpecificError(MISSING_SEMICOLON);
 
     }
-#line 2223 "src/syntax-analyzer/components/parser.cpp"
+#line 2235 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 69: /* return: RETURN expression error  */
-#line 565 "include/syntax-analyzer/components/yacc.y"
+  case 69: /* return: WORD_RETURN expression error  */
+#line 568 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::ReturnChecker::Element e = { (yyvsp[-1].metadata).expression.type, *StringPool::get((yyvsp[-1].metadata).expression.pid) };
         SemanticAnalyzer::CHK_RETURNS.checkReturnWithBuffered(e);
 
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
-            CodeGenerator::INTERMEDIATE_CODE->addTriple (
-                { TR_RET, mapWithOperand((yyvsp[-1].metadata).reference), mapWithOperand({ PR_NULL, nullptr }) }
-            );
+            CodeGenerator::INTERMEDIATE_CODE->addTriple ({ 
+                CODEOP_RET,
+                (yyvsp[-1].metadata).expression.type,
+                mapWithOperand((yyvsp[-1].metadata).reference),
+                CodeGenerator::Triples::Operand({ NULLREF, nullptr }) 
+            });
 
         SemanticActions::specifySyntaxError(MISSING_BOTH_PARENTHESIS_RETURN);
         SemanticActions::announceSpecificError(MISSING_SEMICOLON);
         yyerrok;
 
     }
-#line 2242 "src/syntax-analyzer/components/parser.cpp"
+#line 2257 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 70: /* return: RETURN '(' expression ';'  */
-#line 580 "include/syntax-analyzer/components/yacc.y"
+  case 70: /* return: WORD_RETURN '(' expression ';'  */
+#line 586 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::ReturnChecker::Element e = { (yyvsp[-1].metadata).expression.type, *StringPool::get((yyvsp[-1].metadata).expression.pid) };
         SemanticAnalyzer::CHK_RETURNS.checkReturnWithBuffered(e);
 
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
-            CodeGenerator::INTERMEDIATE_CODE->addTriple (
-                { TR_RET, mapWithOperand((yyvsp[-1].metadata).reference), mapWithOperand({ PR_NULL, nullptr }) }
-            );
+            CodeGenerator::INTERMEDIATE_CODE->addTriple ({ 
+                CODEOP_RET,
+                (yyvsp[-1].metadata).expression.type, 
+                mapWithOperand((yyvsp[-1].metadata).reference), 
+                CodeGenerator::Triples::Operand({ NULLREF, nullptr }) 
+            });
 
         SemanticActions::announceSpecificError(MISSING_CLOSING_PARENTHESIS);
 
     }
-#line 2259 "src/syntax-analyzer/components/parser.cpp"
+#line 2277 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 71: /* return: RETURN expression ')' ';'  */
-#line 593 "include/syntax-analyzer/components/yacc.y"
+  case 71: /* return: WORD_RETURN expression ')' ';'  */
+#line 602 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::ReturnChecker::Element e = { (yyvsp[-2].metadata).expression.type, *StringPool::get((yyvsp[-2].metadata).expression.pid) };
         SemanticAnalyzer::CHK_RETURNS.checkReturnWithBuffered(e);
 
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
-            CodeGenerator::INTERMEDIATE_CODE->addTriple (
-                { TR_RET, mapWithOperand((yyvsp[-2].metadata).reference), mapWithOperand({ PR_NULL, nullptr }) }
-            );
+            CodeGenerator::INTERMEDIATE_CODE->addTriple ({ 
+                CODEOP_RET, 
+                (yyvsp[-2].metadata).expression.type,
+                mapWithOperand((yyvsp[-2].metadata).reference), 
+                CodeGenerator::Triples::Operand({ NULLREF, nullptr }) 
+            });
 
         SemanticActions::announceSpecificError(MISSING_OPENING_PARENTHESIS);
 
     }
-#line 2276 "src/syntax-analyzer/components/parser.cpp"
+#line 2297 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 72: /* return: RETURN expression ';'  */
-#line 606 "include/syntax-analyzer/components/yacc.y"
+  case 72: /* return: WORD_RETURN expression ';'  */
+#line 618 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::ReturnChecker::Element e = { (yyvsp[-1].metadata).expression.type, *StringPool::get((yyvsp[-1].metadata).expression.pid) };
         SemanticAnalyzer::CHK_RETURNS.checkReturnWithBuffered(e);
 
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
-            CodeGenerator::INTERMEDIATE_CODE->addTriple (
-                { TR_RET, mapWithOperand((yyvsp[-1].metadata).reference), mapWithOperand({ PR_NULL, nullptr }) }
-            );
+            CodeGenerator::INTERMEDIATE_CODE->addTriple ({ 
+                CODEOP_RET,
+                (yyvsp[-1].metadata).expression.type, 
+                mapWithOperand((yyvsp[-1].metadata).reference), 
+                CodeGenerator::Triples::Operand({ NULLREF, nullptr }) 
+            });
 
         SemanticActions::announceSpecificError(MISSING_BOTH_PARENTHESIS_RETURN);
 
     }
-#line 2293 "src/syntax-analyzer/components/parser.cpp"
+#line 2317 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 73: /* return: RETURN error ';'  */
-#line 619 "include/syntax-analyzer/components/yacc.y"
+  case 73: /* return: WORD_RETURN error ';'  */
+#line 634 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticActions::specifySyntaxError(RETURN_SYNTAX_ERROR);
         yyerrok;
 
     }
-#line 2303 "src/syntax-analyzer/components/parser.cpp"
-    break;
-
-  case 74: /* executable_stmt: assignment  */
-#line 629 "include/syntax-analyzer/components/yacc.y"
-                           { (yyval.returnable) = false; }
-#line 2309 "src/syntax-analyzer/components/parser.cpp"
-    break;
-
-  case 75: /* executable_stmt: multiple_assignments  */
-#line 630 "include/syntax-analyzer/components/yacc.y"
-                           { (yyval.returnable) = false; }
-#line 2315 "src/syntax-analyzer/components/parser.cpp"
-    break;
-
-  case 76: /* executable_stmt: invocation  */
-#line 631 "include/syntax-analyzer/components/yacc.y"
-                           { (yyval.returnable) = false; }
-#line 2321 "src/syntax-analyzer/components/parser.cpp"
-    break;
-
-  case 77: /* executable_stmt: if  */
-#line 632 "include/syntax-analyzer/components/yacc.y"
-                           { (yyval.returnable) = (yyvsp[0].returnable);    }
 #line 2327 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 78: /* executable_stmt: print  */
-#line 633 "include/syntax-analyzer/components/yacc.y"
+  case 74: /* executable_stmt: assignment  */
+#line 644 "include/syntax-analyzer/components/yacc.y"
                            { (yyval.returnable) = false; }
 #line 2333 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 79: /* executable_stmt: return  */
-#line 634 "include/syntax-analyzer/components/yacc.y"
-                           { (yyval.returnable) = true;  }
+  case 75: /* executable_stmt: multiple_assignments  */
+#line 645 "include/syntax-analyzer/components/yacc.y"
+                           { (yyval.returnable) = false; }
 #line 2339 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 80: /* executable_stmt: do_while  */
-#line 635 "include/syntax-analyzer/components/yacc.y"
-                           { (yyval.returnable) = (yyvsp[0].returnable);    }
+  case 76: /* executable_stmt: invocation  */
+#line 646 "include/syntax-analyzer/components/yacc.y"
+                           { (yyval.returnable) = false; }
 #line 2345 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 81: /* assignment: assignment_head assignment_tail  */
-#line 642 "include/syntax-analyzer/components/yacc.y"
-    {
-        if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
-        {
-            Metadata::Reference ref;
-            if ((yyvsp[-1].sref) != nullptr)
-                ref = { PR_SYMBOL, (yyvsp[-1].sref) };
-            else
-                ref = { PR_NULL  , (yyvsp[-1].sref) };
-
-            CodeGenerator::INTERMEDIATE_CODE->addTriple({'=', mapWithOperand(ref), mapWithOperand((yyvsp[0].metadata).reference)});
-        }
-    }
-#line 2362 "src/syntax-analyzer/components/parser.cpp"
+  case 77: /* executable_stmt: if  */
+#line 647 "include/syntax-analyzer/components/yacc.y"
+                           { (yyval.returnable) = (yyvsp[0].returnable);    }
+#line 2351 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 82: /* assignment: variable ASSIGN_OP error ';'  */
-#line 655 "include/syntax-analyzer/components/yacc.y"
+  case 78: /* executable_stmt: print  */
+#line 648 "include/syntax-analyzer/components/yacc.y"
+                           { (yyval.returnable) = false; }
+#line 2357 "src/syntax-analyzer/components/parser.cpp"
+    break;
+
+  case 79: /* executable_stmt: return  */
+#line 649 "include/syntax-analyzer/components/yacc.y"
+                           { (yyval.returnable) = true;  }
+#line 2363 "src/syntax-analyzer/components/parser.cpp"
+    break;
+
+  case 80: /* executable_stmt: do_while  */
+#line 650 "include/syntax-analyzer/components/yacc.y"
+                           { (yyval.returnable) = (yyvsp[0].returnable);    }
+#line 2369 "src/syntax-analyzer/components/parser.cpp"
+    break;
+
+  case 81: /* assignment: assignment_head assignment_tail  */
+#line 657 "include/syntax-analyzer/components/yacc.y"
+    {
+        if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
+        { 
+            SemanticAnalyzer::TypeChecker::Expression e1 = {
+                (yyvsp[-1].metadata).expression.type,
+                *StringPool::get((yyvsp[-1].metadata).expression.pid),
+                (yyvsp[-1].metadata).expression.assignable
+            };
+            SemanticAnalyzer::TypeChecker::Expression e2 = {
+                (yyvsp[0].metadata).expression.type,
+                *StringPool::get((yyvsp[0].metadata).expression.pid),
+                (yyvsp[0].metadata).expression.assignable
+            };
+
+            CodeGenerator::INTERMEDIATE_CODE->addTriple ({
+                CODEOP_EQUAL, 
+                SemanticAnalyzer::CHK_TYPES.checkAssignment(e1, e2),
+                mapWithOperand((yyvsp[-1].metadata).reference),
+                mapWithOperand((yyvsp[0].metadata).reference)
+            });
+        }
+    }
+#line 2396 "src/syntax-analyzer/components/parser.cpp"
+    break;
+
+  case 82: /* assignment: variable OP_ASSIGN error ';'  */
+#line 680 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
         yyerrok;
 
     }
-#line 2372 "src/syntax-analyzer/components/parser.cpp"
+#line 2406 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 83: /* assignment_head: variable ASSIGN_OP  */
-#line 664 "include/syntax-analyzer/components/yacc.y"
+  case 83: /* assignment_head: variable OP_ASSIGN  */
+#line 689 "include/syntax-analyzer/components/yacc.y"
     {
-        (yyval.sref) = SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
-    
+        (yyval.metadata).reference.sref = SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
+        if ((yyval.metadata).reference.sref != nullptr)
+        {
+            (yyval.metadata).reference.type = SYMBOL;
+            (yyval.metadata).expression = { (yyval.metadata).reference.sref->type, (yyvsp[-1].pid), true };
+        }
+        else
+        {
+            (yyval.metadata).reference.type = NULLREF;
+            (yyval.metadata).expression = { UNKNOWN, (yyvsp[-1].pid), false };
+        }
     }
-#line 2381 "src/syntax-analyzer/components/parser.cpp"
+#line 2424 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 84: /* assignment_tail: expression ';'  */
-#line 672 "include/syntax-analyzer/components/yacc.y"
+#line 706 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[-1].metadata);
 
         SemanticActions::logStructure("ASSIGNMENT");
 
     }
-#line 2392 "src/syntax-analyzer/components/parser.cpp"
+#line 2435 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 85: /* assignment_tail: expression error  */
-#line 679 "include/syntax-analyzer/components/yacc.y"
+#line 713 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[-1].metadata);
 
@@ -2400,105 +2443,117 @@ yyreduce:
         yyerrok;
 
     }
-#line 2404 "src/syntax-analyzer/components/parser.cpp"
+#line 2447 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 86: /* print: PRINT '(' STRING_LITERAL ')' ';'  */
-#line 692 "include/syntax-analyzer/components/yacc.y"
+  case 86: /* print: WORD_PRINT '(' LITERAL_STRING ')' ';'  */
+#line 726 "include/syntax-analyzer/components/yacc.y"
     {
-        SemanticActions::logStructure("PRINT");
+        SemanticActions::logStructure("WORD_PRINT");
 
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
-            CodeGenerator::INTERMEDIATE_CODE->addTriple({
-                TR_PRINT, mapWithOperand({ PR_LITERAL, { .lref = (yyvsp[-2].lref) } }), mapWithOperand({ PR_NULL, nullptr })
+            CodeGenerator::INTERMEDIATE_CODE->addTriple ({
+                CODEOP_PRINT, 
+                STRING,
+                CodeGenerator::Triples::Operand({ LITERAL, { .lref = (yyvsp[-2].lref) } }), 
+                CodeGenerator::Triples::Operand({ NULLREF, nullptr })
             });
 
     }
-#line 2418 "src/syntax-analyzer/components/parser.cpp"
+#line 2464 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 87: /* print: PRINT '(' STRING_LITERAL ')' error  */
-#line 702 "include/syntax-analyzer/components/yacc.y"
+  case 87: /* print: WORD_PRINT '(' LITERAL_STRING ')' error  */
+#line 739 "include/syntax-analyzer/components/yacc.y"
     {
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
-            CodeGenerator::INTERMEDIATE_CODE->addTriple({
-                TR_PRINT, mapWithOperand({ PR_LITERAL, { .lref = (yyvsp[-2].lref) } }), mapWithOperand({ PR_NULL, nullptr })
-            });
-
-        SemanticActions::specifySyntaxError(MISSING_SEMICOLON);
-        yyerrok;
-    }
-#line 2432 "src/syntax-analyzer/components/parser.cpp"
-    break;
-
-  case 88: /* print: PRINT '(' expression ')' ';'  */
-#line 712 "include/syntax-analyzer/components/yacc.y"
-    {
-        if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
-            CodeGenerator::INTERMEDIATE_CODE->addTriple({
-                TR_PRINT, mapWithOperand((yyvsp[-2].metadata).reference), mapWithOperand({ PR_NULL, nullptr })
-            });
-
-        SemanticActions::logStructure("PRINT");
-
-    }
-#line 2446 "src/syntax-analyzer/components/parser.cpp"
-    break;
-
-  case 89: /* print: PRINT '(' expression ')' error  */
-#line 722 "include/syntax-analyzer/components/yacc.y"
-    {
-        if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
-            CodeGenerator::INTERMEDIATE_CODE->addTriple({
-                TR_PRINT, mapWithOperand((yyvsp[-2].metadata).reference), mapWithOperand({ PR_NULL, nullptr })
+            CodeGenerator::INTERMEDIATE_CODE->addTriple ({
+                CODEOP_PRINT, 
+                STRING,
+                CodeGenerator::Triples::Operand({ LITERAL, { .lref = (yyvsp[-2].lref) } }), 
+                CodeGenerator::Triples::Operand({ NULLREF, nullptr })
             });
 
         SemanticActions::specifySyntaxError(MISSING_SEMICOLON);
         yyerrok;
-
     }
-#line 2461 "src/syntax-analyzer/components/parser.cpp"
+#line 2481 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 90: /* $@9: %empty  */
-#line 733 "include/syntax-analyzer/components/yacc.y"
+  case 88: /* print: WORD_PRINT '(' expression ')' ';'  */
+#line 752 "include/syntax-analyzer/components/yacc.y"
     {
-        SemanticActions::specifySyntaxError(MISSING_ARGUMENT);
-        yyerrok;
+        if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
+            CodeGenerator::INTERMEDIATE_CODE->addTriple ({
+                CODEOP_PRINT, 
+                (yyvsp[-2].metadata).expression.type,
+                mapWithOperand((yyvsp[-2].metadata).reference), 
+                CodeGenerator::Triples::Operand({ NULLREF, nullptr })
+            });
 
-    }
-#line 2471 "src/syntax-analyzer/components/parser.cpp"
-    break;
-
-  case 92: /* print: PRINT error ';'  */
-#line 740 "include/syntax-analyzer/components/yacc.y"
-    {
-        SemanticActions::specifySyntaxError(PRINT_SYNTAX_ERROR);
-        yyerrok;
-    }
-#line 2480 "src/syntax-analyzer/components/parser.cpp"
-    break;
-
-  case 94: /* print_end: %empty  */
-#line 749 "include/syntax-analyzer/components/yacc.y"
-    {
-        SemanticActions::announceSpecificError(MISSING_SEMICOLON);
-    }
-#line 2488 "src/syntax-analyzer/components/parser.cpp"
-    break;
-
-  case 95: /* multiple_assignments: variable assignment_list opt_trunc_constant ';'  */
-#line 758 "include/syntax-analyzer/components/yacc.y"
-    {
-        createMultipleAssignmentTriple((yyvsp[-1].metadata));
-        SemanticActions::logStructure("MULTIPLE ASSIGNMENT");
+        SemanticActions::logStructure("WORD_PRINT");
 
     }
 #line 2498 "src/syntax-analyzer/components/parser.cpp"
     break;
 
+  case 89: /* print: WORD_PRINT '(' expression ')' error  */
+#line 765 "include/syntax-analyzer/components/yacc.y"
+    {
+        if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
+            CodeGenerator::INTERMEDIATE_CODE->addTriple ({
+                CODEOP_PRINT,
+                (yyvsp[-2].metadata).expression.type, 
+                mapWithOperand((yyvsp[-2].metadata).reference), 
+                CodeGenerator::Triples::Operand({ NULLREF, nullptr })
+            });
+
+        SemanticActions::specifySyntaxError(MISSING_SEMICOLON);
+        yyerrok;
+
+    }
+#line 2516 "src/syntax-analyzer/components/parser.cpp"
+    break;
+
+  case 90: /* $@9: %empty  */
+#line 779 "include/syntax-analyzer/components/yacc.y"
+    {
+        SemanticActions::specifySyntaxError(MISSING_ARGUMENT);
+        yyerrok;
+
+    }
+#line 2526 "src/syntax-analyzer/components/parser.cpp"
+    break;
+
+  case 92: /* print: WORD_PRINT error ';'  */
+#line 786 "include/syntax-analyzer/components/yacc.y"
+    {
+        SemanticActions::specifySyntaxError(PRINT_SYNTAX_ERROR);
+        yyerrok;
+    }
+#line 2535 "src/syntax-analyzer/components/parser.cpp"
+    break;
+
+  case 94: /* print_end: %empty  */
+#line 795 "include/syntax-analyzer/components/yacc.y"
+    {
+        SemanticActions::announceSpecificError(MISSING_SEMICOLON);
+    }
+#line 2543 "src/syntax-analyzer/components/parser.cpp"
+    break;
+
+  case 95: /* multiple_assignments: variable assignment_list opt_trunc_constant ';'  */
+#line 804 "include/syntax-analyzer/components/yacc.y"
+    {
+        createMultipleAssignmentTriple((yyvsp[-1].metadata));
+        SemanticActions::logStructure("MULTIPLE ASSIGNMENT");
+
+    }
+#line 2553 "src/syntax-analyzer/components/parser.cpp"
+    break;
+
   case 96: /* multiple_assignments: variable assignment_list opt_trunc_constant error  */
-#line 764 "include/syntax-analyzer/components/yacc.y"
+#line 810 "include/syntax-analyzer/components/yacc.y"
     {
         createMultipleAssignmentTriple((yyvsp[-1].metadata));
 
@@ -2506,11 +2561,11 @@ yyreduce:
         yyerrok;
 
     }
-#line 2510 "src/syntax-analyzer/components/parser.cpp"
+#line 2565 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 97: /* multiple_assignments: variable assignment_list opt_trunc_constant extra_numeric_constants ';'  */
-#line 772 "include/syntax-analyzer/components/yacc.y"
+#line 818 "include/syntax-analyzer/components/yacc.y"
     {
         createMultipleAssignmentTriple((yyvsp[-2].metadata));
 
@@ -2518,11 +2573,11 @@ yyreduce:
         SemanticActions::logStructure("MULTIPLE ASSIGNMENT");
 
     }
-#line 2522 "src/syntax-analyzer/components/parser.cpp"
+#line 2577 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 98: /* multiple_assignments: variable assignment_list opt_trunc_constant extra_numeric_constants error  */
-#line 780 "include/syntax-analyzer/components/yacc.y"
+#line 826 "include/syntax-analyzer/components/yacc.y"
     {
         createMultipleAssignmentTriple((yyvsp[-2].metadata));
 
@@ -2531,22 +2586,22 @@ yyreduce:
         yyerrok;
 
     }
-#line 2535 "src/syntax-analyzer/components/parser.cpp"
+#line 2590 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 99: /* multiple_assignments: variable assignment_list ';'  */
-#line 789 "include/syntax-analyzer/components/yacc.y"
+#line 835 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
 
         SemanticActions::announceSpecificError(MISSING_RIGHT_SIDE_VALUES);
 
     }
-#line 2546 "src/syntax-analyzer/components/parser.cpp"
+#line 2601 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 100: /* multiple_assignments: variable assignment_list error  */
-#line 796 "include/syntax-analyzer/components/yacc.y"
+#line 842 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
 
@@ -2555,11 +2610,11 @@ yyreduce:
         yyerrok;
 
     }
-#line 2559 "src/syntax-analyzer/components/parser.cpp"
+#line 2614 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 101: /* multiple_assignments: variable error ';'  */
-#line 805 "include/syntax-analyzer/components/yacc.y"
+#line 851 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
 
@@ -2567,272 +2622,285 @@ yyreduce:
         yyerrok;
 
     }
-#line 2571 "src/syntax-analyzer/components/parser.cpp"
+#line 2626 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 103: /* assignment_list: ',' variable assignment_list opt_trunc_constant ','  */
-#line 817 "include/syntax-analyzer/components/yacc.y"
+#line 863 "include/syntax-analyzer/components/yacc.y"
     {
         createMultipleAssignmentTriple((yyvsp[-1].metadata));
     }
-#line 2579 "src/syntax-analyzer/components/parser.cpp"
+#line 2634 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 104: /* assignment_list: ',' variable error opt_trunc_constant ','  */
-#line 821 "include/syntax-analyzer/components/yacc.y"
+#line 867 "include/syntax-analyzer/components/yacc.y"
     {
         createMultipleAssignmentTriple((yyvsp[-1].metadata));
 
         SemanticActions::specifySyntaxError(MISSING_EQUALS);
 
     }
-#line 2590 "src/syntax-analyzer/components/parser.cpp"
+#line 2645 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 105: /* $@10: %empty  */
-#line 828 "include/syntax-analyzer/components/yacc.y"
+#line 874 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticActions::announceSpecificErrorWithSymbol(MISSING_COMMA);
 
     }
-#line 2599 "src/syntax-analyzer/components/parser.cpp"
+#line 2654 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 107: /* assignment_list: ',' variable assignment_list opt_trunc_constant  */
-#line 834 "include/syntax-analyzer/components/yacc.y"
+#line 880 "include/syntax-analyzer/components/yacc.y"
     {
         createMultipleAssignmentTriple((yyvsp[0].metadata));
 
         SemanticActions::announceSpecificError(MISSING_COMMA);
 
     }
-#line 2610 "src/syntax-analyzer/components/parser.cpp"
+#line 2665 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 108: /* assignment_list: ',' variable assignment_list error  */
-#line 841 "include/syntax-analyzer/components/yacc.y"
+#line 887 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
         yyerrok;
 
     }
-#line 2620 "src/syntax-analyzer/components/parser.cpp"
+#line 2675 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 109: /* assignment_end: opt_trunc_constant ','  */
-#line 850 "include/syntax-analyzer/components/yacc.y"
+#line 896 "include/syntax-analyzer/components/yacc.y"
     {
         createMultipleAssignmentTriple((yyvsp[-1].metadata));
     }
-#line 2628 "src/syntax-analyzer/components/parser.cpp"
+#line 2683 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 110: /* assignment_end: opt_trunc_constant error  */
-#line 854 "include/syntax-analyzer/components/yacc.y"
+#line 900 "include/syntax-analyzer/components/yacc.y"
     {
         createMultipleAssignmentTriple((yyvsp[-1].metadata));
 
         SemanticActions::specifySyntaxError(MISSING_COMMA);
         yyerrok;
     }
-#line 2639 "src/syntax-analyzer/components/parser.cpp"
+#line 2694 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 113: /* $@11: %empty  */
-#line 866 "include/syntax-analyzer/components/yacc.y"
+#line 912 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticActions::announceSpecificError(MISSING_COMMA);
     }
-#line 2647 "src/syntax-analyzer/components/parser.cpp"
+#line 2702 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 116: /* invocation: function_invocation_head error  */
-#line 877 "include/syntax-analyzer/components/yacc.y"
+#line 923 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticActions::specifySyntaxError(MISSING_SEMICOLON);
         yyerrok;
     }
-#line 2656 "src/syntax-analyzer/components/parser.cpp"
+#line 2711 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 118: /* invocation: lambda_invocation_head error  */
-#line 883 "include/syntax-analyzer/components/yacc.y"
+#line 929 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticActions::specifySyntaxError(MISSING_SEMICOLON);
         yyerrok;
     }
-#line 2665 "src/syntax-analyzer/components/parser.cpp"
+#line 2720 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 119: /* function_invocation_head: invocation_setup function_invocation_tail  */
-#line 893 "include/syntax-analyzer/components/yacc.y"
+#line 939 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata).expression = (yyvsp[-1].metadata).expression;
         StringPool::append((yyval.metadata).expression.pid, *StringPool::get((yyvsp[0].metadata).expression.pid));
 
-        if (CodeGenerator::INTERMEDIATE_CODE != nullptr && (yyvsp[-1].metadata).reference.type != PR_NULL)
+        if (CodeGenerator::INTERMEDIATE_CODE != nullptr && (yyvsp[-1].metadata).reference.type != NULLREF)
         {
-            (yyval.metadata).reference.tref = CodeGenerator::INTERMEDIATE_CODE->addTriple (
-                { TR_CALL, mapWithOperand((yyvsp[-1].metadata).reference), mapWithOperand({ PR_NULL, nullptr }) }
+            (yyval.metadata).reference.tref = CodeGenerator::INTERMEDIATE_CODE->addTriple ({ 
+                CODEOP_CALL, 
+                (yyvsp[-1].metadata).expression.type,
+                mapWithOperand((yyvsp[-1].metadata).reference), 
+                CodeGenerator::Triples::Operand({ NULLREF, nullptr }) }
             );
             CodeGenerator::INTERMEDIATE_CODE->commit();
-            (yyval.metadata).reference.type = PR_TRIPLE;
+            (yyval.metadata).reference.type = TRIPLE;
         }
         else
             (yyval.metadata).reference = (yyvsp[-1].metadata).reference;
 
         SemanticActions::logStructure("FUNCTION INVOCATION");
     }
-#line 2687 "src/syntax-analyzer/components/parser.cpp"
+#line 2745 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 120: /* function_invocation_head: IDENTIFIER '(' error ')'  */
-#line 911 "include/syntax-analyzer/components/yacc.y"
+#line 960 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata).expression.pid = StringPool::create((yyvsp[-3].sref)->symbol + "(...)");
         (yyval.metadata).reference.sref = SemanticAnalyzer::CHK_INVOCATIONS.checkFunctionInScope((yyvsp[-3].sref)->symbol);
         if ((yyval.metadata).reference.sref != nullptr)
         {
-            (yyval.metadata).reference.type = PR_SYMBOL;
-            (yyval.metadata).expression.type = mapWithCheckerType((yyval.metadata).reference.sref->type);
+            (yyval.metadata).reference.type = SYMBOL;
+            (yyval.metadata).expression.type = (yyval.metadata).reference.sref->type;
         }
         else
         {
-            (yyval.metadata).reference.type = PR_NULL;
-            (yyval.metadata).expression.type = TC_UNSUPPORTED;
+            (yyval.metadata).reference.type = NULLREF;
+            (yyval.metadata).expression.type = UNKNOWN;
         }
 
         SemanticActions::specifySyntaxError(MISSING_ARGUMENT);
         yyerrok;
     }
-#line 2709 "src/syntax-analyzer/components/parser.cpp"
+#line 2767 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 121: /* invocation_setup: IDENTIFIER '('  */
-#line 932 "include/syntax-analyzer/components/yacc.y"
+#line 981 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata).expression.pid = StringPool::create((yyvsp[-1].sref)->symbol + "(");
         (yyval.metadata).reference.sref = SemanticAnalyzer::CHK_INVOCATIONS.checkFunctionInScope((yyvsp[-1].sref)->symbol);
         if ((yyval.metadata).reference.sref != nullptr)
         {
-            (yyval.metadata).reference.type = PR_SYMBOL;
-            (yyval.metadata).expression.type = mapWithCheckerType((yyval.metadata).reference.sref->type);
+            (yyval.metadata).reference.type = SYMBOL;
+            (yyval.metadata).expression.type = (yyval.metadata).reference.sref->type;
         }
         else
         {
-            (yyval.metadata).reference.type = PR_NULL;
-            (yyval.metadata).expression.type = TC_UNSUPPORTED;
+            (yyval.metadata).reference.type = NULLREF;
+            (yyval.metadata).expression.type = UNKNOWN;
         }
     }
-#line 2728 "src/syntax-analyzer/components/parser.cpp"
+#line 2786 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 122: /* function_invocation_tail: real_parameter_list ')'  */
-#line 950 "include/syntax-analyzer/components/yacc.y"
+#line 999 "include/syntax-analyzer/components/yacc.y"
     {
         StringPool::append((yyvsp[-1].metadata).expression.pid, ")");
-        (yyval.metadata).expression.type = TC_UNSUPPORTED;
+        (yyval.metadata).expression.type = UNKNOWN;
         (yyval.metadata).expression.pid = (yyvsp[-1].metadata).expression.pid;
 
         SemanticAnalyzer::CHK_INVOCATIONS.notifyInvocationEnd();
     }
-#line 2740 "src/syntax-analyzer/components/parser.cpp"
+#line 2798 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 123: /* function_invocation_tail: ')'  */
-#line 958 "include/syntax-analyzer/components/yacc.y"
+#line 1007 "include/syntax-analyzer/components/yacc.y"
     {
-        (yyval.metadata).expression = { TC_UNSUPPORTED, StringPool::create(")") };
+        (yyval.metadata).expression = { UNKNOWN, StringPool::create(")") };
 
         SemanticAnalyzer::CHK_INVOCATIONS.notifyInvocationEnd();
         SemanticActions::announceSpecificError(MISSING_ARGUMENT);
     }
-#line 2751 "src/syntax-analyzer/components/parser.cpp"
+#line 2809 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 124: /* real_parameter_list: real_parameter  */
-#line 968 "include/syntax-analyzer/components/yacc.y"
+#line 1017 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[0].metadata);
     }
-#line 2759 "src/syntax-analyzer/components/parser.cpp"
+#line 2817 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 125: /* real_parameter_list: real_parameter_list ',' real_parameter  */
-#line 972 "include/syntax-analyzer/components/yacc.y"
+#line 1021 "include/syntax-analyzer/components/yacc.y"
     {
         StringPool::append((yyvsp[-2].metadata).expression.pid, ", " + *StringPool::get((yyvsp[0].metadata).expression.pid));
-        (yyval.metadata).expression.type = TC_UNSUPPORTED;
+        (yyval.metadata).expression.type = UNKNOWN;
         (yyval.metadata).expression.pid = (yyvsp[-2].metadata).expression.pid;
     }
-#line 2769 "src/syntax-analyzer/components/parser.cpp"
+#line 2827 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 126: /* real_parameter_list: real_parameter_list_setup real_parameter  */
-#line 978 "include/syntax-analyzer/components/yacc.y"
+#line 1027 "include/syntax-analyzer/components/yacc.y"
     {
         StringPool::append((yyvsp[-1].metadata).expression.pid, " " + *StringPool::get((yyvsp[0].metadata).expression.pid));
-        (yyval.metadata).expression.type = TC_UNSUPPORTED;
+        (yyval.metadata).expression.type = UNKNOWN;
         (yyval.metadata).expression.pid = (yyvsp[-1].metadata).expression.pid;
 
     }
-#line 2780 "src/syntax-analyzer/components/parser.cpp"
+#line 2838 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 127: /* real_parameter_list_setup: real_parameter_list  */
-#line 988 "include/syntax-analyzer/components/yacc.y"
+#line 1037 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[0].metadata);
         SemanticActions::announceSpecificError(MISSING_COMMA);
     }
-#line 2789 "src/syntax-analyzer/components/parser.cpp"
+#line 2847 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 128: /* real_parameter: expression POINTER_OP IDENTIFIER  */
-#line 996 "include/syntax-analyzer/components/yacc.y"
+  case 128: /* real_parameter: expression OP_POINTER IDENTIFIER  */
+#line 1045 "include/syntax-analyzer/components/yacc.y"
     {
         auto entry = SemanticAnalyzer::CHK_INVOCATIONS.checkParameterInScope((yyvsp[0].sref)->symbol);
         if (entry != nullptr)
         {
             SemanticAnalyzer::TypeChecker::Expression e1 = {
-                mapWithCheckerType((yyvsp[-2].metadata).expression.type),
+                (yyvsp[-2].metadata).expression.type,
                 *StringPool::get((yyvsp[-2].metadata).expression.pid),
                 (yyvsp[-2].metadata).expression.assignable
             };
-            SemanticAnalyzer::TypeChecker::Expression e2 = { mapWithCheckerType((yyvsp[0].sref)->type), (yyvsp[0].sref)->symbol, true };
+            SemanticAnalyzer::TypeChecker::Expression e2 = { entry->semantics, (yyvsp[0].sref)->symbol, true };
+            int result = SemanticAnalyzer::CHK_TYPES.checkSemantics(e1, e2);
 
-            SemanticAnalyzer::CHK_TYPES.checkOperation(e1, e2);
-
-            e2.type = entry->semantics;
-            int result =  SemanticAnalyzer::CHK_TYPES.checkSemantics(e1, e2);
-            if (result == ST_CR && CodeGenerator::INTERMEDIATE_CODE != nullptr)
-                CodeGenerator::INTERMEDIATE_CODE->addBuffer(
-                    { '=', mapWithOperand((yyvsp[-2].metadata).reference), mapWithOperand({ PR_SYMBOL, entry }) }
-                );
-            else if (result == ST_CV && CodeGenerator::INTERMEDIATE_CODE != nullptr)
-                CodeGenerator::INTERMEDIATE_CODE->addTriple (
-                    { '=', mapWithOperand({ PR_SYMBOL, entry }), mapWithOperand((yyvsp[-2].metadata).reference) }
-                );
+            e2.type = entry->type;
+            if (result == CR && CodeGenerator::INTERMEDIATE_CODE != nullptr)
+            { 
+                int typeCR = SemanticAnalyzer::CHK_TYPES.checkAssignment(e1, e2);
+                CodeGenerator::INTERMEDIATE_CODE->addBuffer ({
+                    CODEOP_EQUAL,
+                    typeCR,
+                    mapWithOperand((yyvsp[-2].metadata).reference), 
+                    CodeGenerator::Triples::Operand({ SYMBOL, entry }) 
+                });
+            }
+            else if (result == CV && CodeGenerator::INTERMEDIATE_CODE != nullptr)
+            { 
+                int typeCV = SemanticAnalyzer::CHK_TYPES.checkAssignment(e2, e1);
+                CodeGenerator::INTERMEDIATE_CODE->addTriple ({ 
+                    CODEOP_EQUAL,
+                    typeCV,
+                    CodeGenerator::Triples::Operand({ SYMBOL, entry }), 
+                    mapWithOperand((yyvsp[-2].metadata).reference) 
+                });
+            }
         }
         StringPool::append((yyvsp[-2].metadata).expression.pid, "->" + (yyvsp[0].sref)->symbol);
-        (yyval.metadata).expression = { TC_UNSUPPORTED, (yyvsp[-2].metadata).expression.pid, false };
+        (yyval.metadata).expression = { UNKNOWN, (yyvsp[-2].metadata).expression.pid, false };
     }
-#line 2821 "src/syntax-analyzer/components/parser.cpp"
+#line 2889 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 129: /* real_parameter: expression error  */
-#line 1024 "include/syntax-analyzer/components/yacc.y"
+#line 1083 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[-1].metadata);
 
         SemanticActions::specifySyntaxError(MISSING_POINTED_PARAMETER);
         yyerrok;
     }
-#line 2832 "src/syntax-analyzer/components/parser.cpp"
+#line 2900 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 130: /* $@12: %empty  */
-#line 1036 "include/syntax-analyzer/components/yacc.y"
+#line 1095 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::CHK_LAMBDAS.notifyDeclaration((yyvsp[-1].sref)->symbol);
         CodeGenerator::addIntermediateCodeBlock (
@@ -2840,29 +2908,29 @@ yyreduce:
         );
 
     }
-#line 2844 "src/syntax-analyzer/components/parser.cpp"
+#line 2912 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 132: /* $@13: %empty  */
-#line 1048 "include/syntax-analyzer/components/yacc.y"
+#line 1107 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::removeScope();
     }
-#line 2852 "src/syntax-analyzer/components/parser.cpp"
+#line 2920 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 134: /* $@14: %empty  */
-#line 1053 "include/syntax-analyzer/components/yacc.y"
+#line 1112 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::removeScope();
         SemanticActions::announceSpecificError(MISSING_OPENING_BRACKET);
 
     }
-#line 2862 "src/syntax-analyzer/components/parser.cpp"
+#line 2930 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 136: /* $@15: %empty  */
-#line 1060 "include/syntax-analyzer/components/yacc.y"
+#line 1119 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::removeScope();
 
@@ -2870,11 +2938,11 @@ yyreduce:
         yyerrok;
 
     }
-#line 2874 "src/syntax-analyzer/components/parser.cpp"
+#line 2942 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 138: /* $@16: %empty  */
-#line 1069 "include/syntax-analyzer/components/yacc.y"
+#line 1128 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::removeScope();
 
@@ -2882,17 +2950,20 @@ yyreduce:
         yyerrok;
 
     }
-#line 2886 "src/syntax-analyzer/components/parser.cpp"
+#line 2954 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 140: /* lambda_invocation_tail: '(' lambda_real_parameter ')'  */
-#line 1081 "include/syntax-analyzer/components/yacc.y"
+#line 1140 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticActions::logStructure("LAMBDA");
 
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
             CodeGenerator::INTERMEDIATE_CODE->addTriple ({
-                TR_RET, mapWithOperand({PR_NULL, nullptr}), mapWithOperand({PR_NULL, nullptr})
+                CODEOP_RET,
+                UNKNOWN,
+                CodeGenerator::Triples::Operand({NULLREF, nullptr}),
+                CodeGenerator::Triples::Operand({NULLREF, nullptr})
             });
 
         CodeGenerator::notifyEndOfBlock();
@@ -2900,27 +2971,34 @@ yyreduce:
         SemanticAnalyzer::LambdaChecker::Lambda l = SemanticAnalyzer::CHK_LAMBDAS.getLambda();
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
         {
-            Metadata::Reference rf;
+            CodeGenerator::Triples::Operand o1;
             SemanticAnalyzer::TypeChecker::Expression e1, e2;
             if (l.parameter != nullptr)
             {
-                e1 = { mapWithCheckerType(l.parameter->type), l.pname, true};
-                rf = { PR_SYMBOL, l.parameter };
+                e1 = { l.parameter->type, l.pname, true };
+                o1 = { SYMBOL, l.parameter };
             }
             else
             {
-                e1 = { TC_UNSUPPORTED, "...", false };
-                rf = { PR_NULL, nullptr };
+                e1 = { UNKNOWN, "...", false };
+                o1 = { NULLREF, nullptr };
             }
             e2 = { (yyvsp[-1].metadata).expression.type, *StringPool::get((yyvsp[-1].metadata).expression.pid), (yyvsp[-1].metadata).expression.assignable };
-            SemanticAnalyzer::CHK_TYPES.checkOperation(e1, e2);
+            int type = SemanticAnalyzer::CHK_TYPES.checkAssignment(e1, e2);
 
             CodeGenerator::INTERMEDIATE_CODE->addTriple ({
-                '=', mapWithOperand(rf), mapWithOperand((yyvsp[-1].metadata).reference)
+                CODEOP_EQUAL,
+                type,
+                o1,
+                mapWithOperand((yyvsp[-1].metadata).reference)
             });
+
             if (l.function != nullptr)
                 CodeGenerator::INTERMEDIATE_CODE->addTriple ({
-                    TR_CALL, mapWithOperand({PR_SYMBOL, l.function}), mapWithOperand({PR_NULL, nullptr})
+                    CODEOP_CALL,
+                    UNKNOWN,
+                    CodeGenerator::Triples::Operand({SYMBOL, l.function}),
+                    CodeGenerator::Triples::Operand({NULLREF, nullptr})
                 });
         }
         SemanticAnalyzer::CHK_LAMBDAS.notifyDeclarationEnd();
@@ -2928,23 +3006,23 @@ yyreduce:
         SemanticActions::logStructure("LAMBDA");
 
     }
-#line 2932 "src/syntax-analyzer/components/parser.cpp"
+#line 3010 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 141: /* lambda_real_parameter: opt_trunc_variable  */
-#line 1125 "include/syntax-analyzer/components/yacc.y"
+#line 1194 "include/syntax-analyzer/components/yacc.y"
                          { (yyval.metadata) = (yyvsp[0].metadata); }
-#line 2938 "src/syntax-analyzer/components/parser.cpp"
+#line 3016 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 142: /* lambda_real_parameter: opt_trunc_constant  */
-#line 1126 "include/syntax-analyzer/components/yacc.y"
+#line 1195 "include/syntax-analyzer/components/yacc.y"
                          { (yyval.metadata) = (yyvsp[0].metadata); }
-#line 2944 "src/syntax-analyzer/components/parser.cpp"
+#line 3022 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 143: /* if: IF condition_body_setup ENDIF ';'  */
-#line 1133 "include/syntax-analyzer/components/yacc.y"
+  case 143: /* if: WORD_IF condition_body_setup WORD_ENDIF ';'  */
+#line 1202 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = (yyvsp[-2].returnable);
 
@@ -2956,14 +3034,14 @@ yyreduce:
             STACK.pop();
         }
 
-        SemanticActions::logStructure("IF");
+        SemanticActions::logStructure("WORD_IF");
 
     }
-#line 2963 "src/syntax-analyzer/components/parser.cpp"
+#line 3041 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 144: /* if: IF condition_body_setup ENDIF error  */
-#line 1148 "include/syntax-analyzer/components/yacc.y"
+  case 144: /* if: WORD_IF condition_body_setup WORD_ENDIF error  */
+#line 1217 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = (yyvsp[-2].returnable);
 
@@ -2979,11 +3057,11 @@ yyreduce:
         yyerrok;
 
     }
-#line 2983 "src/syntax-analyzer/components/parser.cpp"
+#line 3061 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 145: /* if: IF condition_body_setup ELSE executable_body ENDIF ';'  */
-#line 1164 "include/syntax-analyzer/components/yacc.y"
+  case 145: /* if: WORD_IF condition_body_setup WORD_ELSE executable_body WORD_ENDIF ';'  */
+#line 1233 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = (yyvsp[-4].returnable);
 
@@ -2995,14 +3073,14 @@ yyreduce:
             STACK.pop();
         }
 
-        SemanticActions::logStructure("IF-ELSE");
+        SemanticActions::logStructure("WORD_IF-WORD_ELSE");
 
     }
-#line 3002 "src/syntax-analyzer/components/parser.cpp"
+#line 3080 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 146: /* if: IF condition_body_setup ELSE executable_body ENDIF error  */
-#line 1179 "include/syntax-analyzer/components/yacc.y"
+  case 146: /* if: WORD_IF condition_body_setup WORD_ELSE executable_body WORD_ENDIF error  */
+#line 1248 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = (yyvsp[-4].returnable) || (yyvsp[-2].returnable);
 
@@ -3018,11 +3096,11 @@ yyreduce:
         yyerrok;
 
     }
-#line 3022 "src/syntax-analyzer/components/parser.cpp"
+#line 3100 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 147: /* if: IF condition_body_setup error  */
-#line 1195 "include/syntax-analyzer/components/yacc.y"
+  case 147: /* if: WORD_IF condition_body_setup error  */
+#line 1264 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = (yyvsp[-1].returnable);
 
@@ -3038,11 +3116,11 @@ yyreduce:
         yyerrok;
 
     }
-#line 3042 "src/syntax-analyzer/components/parser.cpp"
+#line 3120 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 148: /* if: IF condition_body_setup ELSE executable_body error  */
-#line 1211 "include/syntax-analyzer/components/yacc.y"
+  case 148: /* if: WORD_IF condition_body_setup WORD_ELSE executable_body error  */
+#line 1280 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = (yyvsp[-3].returnable) || (yyvsp[-1].returnable);
 
@@ -3058,11 +3136,11 @@ yyreduce:
         yyerrok;
 
     }
-#line 3062 "src/syntax-analyzer/components/parser.cpp"
+#line 3140 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 149: /* if: IF condition error ENDIF ';'  */
-#line 1227 "include/syntax-analyzer/components/yacc.y"
+  case 149: /* if: WORD_IF condition error WORD_ENDIF ';'  */
+#line 1296 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = false;
 
@@ -3070,11 +3148,11 @@ yyreduce:
         yyerrok;
 
     }
-#line 3074 "src/syntax-analyzer/components/parser.cpp"
+#line 3152 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 150: /* if: IF condition error ';'  */
-#line 1235 "include/syntax-analyzer/components/yacc.y"
+  case 150: /* if: WORD_IF condition error ';'  */
+#line 1304 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = false;
 
@@ -3083,11 +3161,11 @@ yyreduce:
         yyerrok;
 
     }
-#line 3087 "src/syntax-analyzer/components/parser.cpp"
+#line 3165 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 151: /* if: IF condition error ELSE ENDIF ';'  */
-#line 1244 "include/syntax-analyzer/components/yacc.y"
+  case 151: /* if: WORD_IF condition error WORD_ELSE WORD_ENDIF ';'  */
+#line 1313 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = false;
 
@@ -3095,11 +3173,11 @@ yyreduce:
         yyerrok;
 
     }
-#line 3099 "src/syntax-analyzer/components/parser.cpp"
+#line 3177 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 152: /* if: IF condition error ELSE ';'  */
-#line 1252 "include/syntax-analyzer/components/yacc.y"
+  case 152: /* if: WORD_IF condition error WORD_ELSE ';'  */
+#line 1321 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = false;
 
@@ -3108,11 +3186,11 @@ yyreduce:
         yyerrok;
 
     }
-#line 3112 "src/syntax-analyzer/components/parser.cpp"
+#line 3190 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 153: /* if: IF condition_body_setup ELSE error ENDIF ';'  */
-#line 1261 "include/syntax-analyzer/components/yacc.y"
+  case 153: /* if: WORD_IF condition_body_setup WORD_ELSE error WORD_ENDIF ';'  */
+#line 1330 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = (yyvsp[-4].returnable);
 
@@ -3128,11 +3206,11 @@ yyreduce:
         yyerrok;
 
     }
-#line 3132 "src/syntax-analyzer/components/parser.cpp"
+#line 3210 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 154: /* if: IF condition_body_setup ELSE error ';'  */
-#line 1277 "include/syntax-analyzer/components/yacc.y"
+  case 154: /* if: WORD_IF condition_body_setup WORD_ELSE error ';'  */
+#line 1346 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = (yyvsp[-3].returnable);
 
@@ -3149,11 +3227,11 @@ yyreduce:
         yyerrok;
 
     }
-#line 3153 "src/syntax-analyzer/components/parser.cpp"
+#line 3231 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 155: /* if: ELSE executable_body ENDIF ';'  */
-#line 1294 "include/syntax-analyzer/components/yacc.y"
+  case 155: /* if: WORD_ELSE executable_body WORD_ENDIF ';'  */
+#line 1363 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = (yyvsp[-2].returnable);
 
@@ -3161,11 +3239,11 @@ yyreduce:
         yyerrok;
 
     }
-#line 3165 "src/syntax-analyzer/components/parser.cpp"
+#line 3243 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 156: /* if: IF error ';'  */
-#line 1302 "include/syntax-analyzer/components/yacc.y"
+  case 156: /* if: WORD_IF error ';'  */
+#line 1371 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = false;
 
@@ -3173,79 +3251,81 @@ yyreduce:
         yyerrok;
 
     }
-#line 3177 "src/syntax-analyzer/components/parser.cpp"
+#line 3255 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 157: /* condition_body_setup: condition_setup then_body_setup  */
-#line 1313 "include/syntax-analyzer/components/yacc.y"
+#line 1382 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = (yyvsp[0].returnable);
     }
-#line 3185 "src/syntax-analyzer/components/parser.cpp"
+#line 3263 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 158: /* condition_setup: condition  */
-#line 1320 "include/syntax-analyzer/components/yacc.y"
+#line 1389 "include/syntax-analyzer/components/yacc.y"
     {
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
         {
             STACK.push(CodeGenerator::INTERMEDIATE_CODE->addTriple ({
-                TR_BRANCH_FALSE,
-                mapWithOperand({PR_TRIPLE, { .tref = CodeGenerator::INTERMEDIATE_CODE->getLastTriple()}}),
-                mapWithOperand({PR_NULL, nullptr})
+                CODEOP_BRANCH_FALSE,
+                (yyvsp[0].metadata).expression.type,
+                mapWithOperand((yyvsp[0].metadata).reference),
+                CodeGenerator::Triples::Operand({NULLREF, nullptr})
             }));
         }
     }
-#line 3200 "src/syntax-analyzer/components/parser.cpp"
+#line 3279 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 159: /* then_body_setup: executable_body  */
-#line 1334 "include/syntax-analyzer/components/yacc.y"
+#line 1404 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = (yyvsp[0].returnable);
 
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
         {
             int triple = CodeGenerator::INTERMEDIATE_CODE->addTriple ({
-                TR_BRANCH_TRUE,
-                mapWithOperand({PR_NULL, nullptr}),
-                mapWithOperand({PR_NULL, nullptr})
+                CODEOP_BRANCH_TRUE,
+                UNKNOWN,
+                CodeGenerator::Triples::Operand({NULLREF, nullptr}),
+                CodeGenerator::Triples::Operand({NULLREF, nullptr})
             });
             CodeGenerator::INTERMEDIATE_CODE->updateTripleReference(STACK.top(), triple + 1);
             STACK.pop();
             STACK.push(triple);
         }
     }
-#line 3220 "src/syntax-analyzer/components/parser.cpp"
+#line 3300 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 160: /* do_while: do_while_head do_body  */
-#line 1355 "include/syntax-analyzer/components/yacc.y"
+#line 1426 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = (yyvsp[0].returnable);
     }
-#line 3228 "src/syntax-analyzer/components/parser.cpp"
+#line 3308 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 161: /* $@17: %empty  */
-#line 1359 "include/syntax-analyzer/components/yacc.y"
+#line 1430 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticActions::announceSpecificError(MISSING_WHILE_EXECUTABLE_BODY);
 
     }
-#line 3237 "src/syntax-analyzer/components/parser.cpp"
+#line 3317 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 162: /* do_while: DO $@17 WHILE do_while_tail  */
-#line 1364 "include/syntax-analyzer/components/yacc.y"
+  case 162: /* do_while: WORD_DO $@17 WORD_WHILE do_while_tail  */
+#line 1435 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = false;
     }
-#line 3245 "src/syntax-analyzer/components/parser.cpp"
+#line 3325 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 163: /* do_while: DO error ';'  */
-#line 1368 "include/syntax-analyzer/components/yacc.y"
+  case 163: /* do_while: WORD_DO error ';'  */
+#line 1439 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = false;
 
@@ -3253,39 +3333,40 @@ yyreduce:
         yyerrok;
 
     }
-#line 3257 "src/syntax-analyzer/components/parser.cpp"
+#line 3337 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 164: /* do_while_head: DO  */
-#line 1379 "include/syntax-analyzer/components/yacc.y"
+  case 164: /* do_while_head: WORD_DO  */
+#line 1450 "include/syntax-analyzer/components/yacc.y"
     {
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
             STACK.push(CodeGenerator::INTERMEDIATE_CODE->getLastTriple() + 1);
     }
-#line 3266 "src/syntax-analyzer/components/parser.cpp"
+#line 3346 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 165: /* do_body: executable_body WHILE condition ';'  */
-#line 1387 "include/syntax-analyzer/components/yacc.y"
+  case 165: /* do_body: executable_body WORD_WHILE condition ';'  */
+#line 1458 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = (yyvsp[-3].returnable);
 
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
-            CodeGenerator::INTERMEDIATE_CODE->addTriple({
-                TR_BRANCH_TRUE,
-                mapWithOperand({ PR_TRIPLE, { .tref = CodeGenerator::INTERMEDIATE_CODE->getLastTriple() }}),
-                mapWithOperand({ PR_TRIPLE, { .tref = STACK.top() }})
+            CodeGenerator::INTERMEDIATE_CODE->addTriple ({
+                CODEOP_BRANCH_TRUE,
+                (yyvsp[-1].metadata).expression.type,
+                mapWithOperand((yyvsp[-1].metadata).reference),
+                CodeGenerator::Triples::Operand({ TRIPLE, { .tref = STACK.top() }})
             });
         STACK.pop();
 
-        SemanticActions::logStructure("DO-WHILE");
+        SemanticActions::logStructure("WORD_DO-WORD_WHILE");
 
     }
-#line 3285 "src/syntax-analyzer/components/parser.cpp"
+#line 3366 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 166: /* do_body: executable_body WHILE condition error  */
-#line 1402 "include/syntax-analyzer/components/yacc.y"
+  case 166: /* do_body: executable_body WORD_WHILE condition error  */
+#line 1474 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = (yyvsp[-3].returnable);
 
@@ -3293,46 +3374,46 @@ yyreduce:
         yyerrok;
 
     }
-#line 3297 "src/syntax-analyzer/components/parser.cpp"
+#line 3378 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 167: /* $@18: %empty  */
-#line 1410 "include/syntax-analyzer/components/yacc.y"
+#line 1482 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticActions::announceSpecificError(MISSING_WHILE);
 
     }
-#line 3306 "src/syntax-analyzer/components/parser.cpp"
+#line 3387 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 168: /* do_body: executable_body $@18 do_while_tail  */
-#line 1415 "include/syntax-analyzer/components/yacc.y"
+#line 1487 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = (yyvsp[-2].returnable);
     }
-#line 3314 "src/syntax-analyzer/components/parser.cpp"
+#line 3395 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 170: /* do_while_tail: condition error  */
-#line 1423 "include/syntax-analyzer/components/yacc.y"
+#line 1495 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticActions::specifySyntaxError(MISSING_SEMICOLON);
         yyerrok;
 
     }
-#line 3324 "src/syntax-analyzer/components/parser.cpp"
+#line 3405 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 171: /* executable_body: '{' executable_statements '}'  */
-#line 1434 "include/syntax-analyzer/components/yacc.y"
+#line 1506 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = (yyvsp[-1].returnable);
     }
-#line 3332 "src/syntax-analyzer/components/parser.cpp"
+#line 3413 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 172: /* executable_body: '{' executable_statements error  */
-#line 1438 "include/syntax-analyzer/components/yacc.y"
+#line 1510 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = (yyvsp[-1].returnable);
 
@@ -3340,68 +3421,68 @@ yyreduce:
         yyerrok;
 
     }
-#line 3344 "src/syntax-analyzer/components/parser.cpp"
+#line 3425 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 173: /* executable_body: '{' error '}'  */
-#line 1446 "include/syntax-analyzer/components/yacc.y"
+#line 1518 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = false;
 
         yyerrok;
     }
-#line 3354 "src/syntax-analyzer/components/parser.cpp"
+#line 3435 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 174: /* executable_body: executable_stmt  */
-#line 1452 "include/syntax-analyzer/components/yacc.y"
+#line 1524 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = (yyvsp[0].returnable);
     }
-#line 3362 "src/syntax-analyzer/components/parser.cpp"
+#line 3443 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 175: /* executable_statements: executable_stmt  */
-#line 1458 "include/syntax-analyzer/components/yacc.y"
+#line 1530 "include/syntax-analyzer/components/yacc.y"
                                             { (yyval.returnable) = (yyvsp[0].returnable);       }
-#line 3368 "src/syntax-analyzer/components/parser.cpp"
+#line 3449 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 176: /* executable_statements: executable_statements executable_stmt  */
-#line 1459 "include/syntax-analyzer/components/yacc.y"
+#line 1531 "include/syntax-analyzer/components/yacc.y"
                                             { (yyval.returnable) = (yyvsp[-1].returnable) || (yyvsp[0].returnable); }
-#line 3374 "src/syntax-analyzer/components/parser.cpp"
+#line 3455 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 177: /* opt_trunc_constant: numeric_constant  */
-#line 1466 "include/syntax-analyzer/components/yacc.y"
+#line 1538 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[0].metadata);
     }
-#line 3382 "src/syntax-analyzer/components/parser.cpp"
+#line 3463 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 178: /* opt_trunc_constant: trunc_constant  */
-#line 1470 "include/syntax-analyzer/components/yacc.y"
+#line 1542 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[0].metadata);
     }
-#line 3390 "src/syntax-analyzer/components/parser.cpp"
+#line 3471 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 179: /* trunc_constant: TRUNC '(' numeric_constant ')'  */
-#line 1477 "include/syntax-analyzer/components/yacc.y"
+  case 179: /* trunc_constant: WORD_TRUNC '(' numeric_constant ')'  */
+#line 1549 "include/syntax-analyzer/components/yacc.y"
     {
         createTruncateTriple((yyval.metadata), (yyvsp[-1].metadata));
 
         (yyval.metadata).expression.pid = StringPool::create("trunc(" + *StringPool::get((yyvsp[-1].metadata).expression.pid) + ")");
 
     }
-#line 3401 "src/syntax-analyzer/components/parser.cpp"
+#line 3482 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 180: /* trunc_constant: TRUNC '(' numeric_constant error  */
-#line 1484 "include/syntax-analyzer/components/yacc.y"
+  case 180: /* trunc_constant: WORD_TRUNC '(' numeric_constant error  */
+#line 1556 "include/syntax-analyzer/components/yacc.y"
     {
         createTruncateTriple((yyval.metadata), (yyvsp[-1].metadata));
 
@@ -3411,11 +3492,11 @@ yyreduce:
         yyerrok;
 
     }
-#line 3415 "src/syntax-analyzer/components/parser.cpp"
+#line 3496 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 181: /* trunc_constant: TRUNC numeric_constant ')'  */
-#line 1494 "include/syntax-analyzer/components/yacc.y"
+  case 181: /* trunc_constant: WORD_TRUNC numeric_constant ')'  */
+#line 1566 "include/syntax-analyzer/components/yacc.y"
     {
         createTruncateTriple((yyval.metadata), (yyvsp[-1].metadata));
 
@@ -3424,11 +3505,11 @@ yyreduce:
         SemanticActions::announceSpecificError(MISSING_OPENING_PARENTHESIS);
 
     }
-#line 3428 "src/syntax-analyzer/components/parser.cpp"
+#line 3509 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 182: /* trunc_constant: TRUNC numeric_constant error  */
-#line 1503 "include/syntax-analyzer/components/yacc.y"
+  case 182: /* trunc_constant: WORD_TRUNC numeric_constant error  */
+#line 1575 "include/syntax-analyzer/components/yacc.y"
     {
         createTruncateTriple((yyval.metadata), (yyvsp[-1].metadata));
 
@@ -3438,166 +3519,166 @@ yyreduce:
         yyerrok;
 
     }
-#line 3442 "src/syntax-analyzer/components/parser.cpp"
+#line 3523 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 183: /* opt_trunc_variable: variable  */
-#line 1516 "include/syntax-analyzer/components/yacc.y"
+#line 1588 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata).reference.sref = SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
         if ((yyval.metadata).reference.sref != nullptr)
         {
-            (yyval.metadata).reference.type = PR_SYMBOL;
-            (yyval.metadata).expression = { mapWithCheckerType((yyval.metadata).reference.sref->type), (yyvsp[0].pid), true };
+            (yyval.metadata).reference.type = SYMBOL;
+            (yyval.metadata).expression = { (yyval.metadata).reference.sref->type, (yyvsp[0].pid), true };
         }
         else
         {
-            (yyval.metadata).reference.type = PR_NULL;
-            (yyval.metadata).expression = { TC_UNSUPPORTED, (yyvsp[0].pid), true };
+            (yyval.metadata).reference.type = NULLREF;
+            (yyval.metadata).expression = { UNKNOWN, (yyvsp[0].pid), true };
         }
 
     }
-#line 3461 "src/syntax-analyzer/components/parser.cpp"
+#line 3542 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 184: /* opt_trunc_variable: trunc_variable  */
-#line 1531 "include/syntax-analyzer/components/yacc.y"
+#line 1603 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[0].metadata);
     }
-#line 3469 "src/syntax-analyzer/components/parser.cpp"
+#line 3550 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 185: /* trunc_variable: TRUNC '(' variable ')'  */
-#line 1538 "include/syntax-analyzer/components/yacc.y"
+  case 185: /* trunc_variable: WORD_TRUNC '(' variable ')'  */
+#line 1610 "include/syntax-analyzer/components/yacc.y"
     {
         auto entry = SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
         if (entry != nullptr)
         {
             Metadata m;
-            m.reference  = { PR_SYMBOL, entry };
-            m.expression = { mapWithCheckerType(entry->type), (yyvsp[-1].pid), true };
+            m.reference  = { SYMBOL, entry };
+            m.expression = { entry->type, (yyvsp[-1].pid), true };
             
             createTruncateTriple((yyval.metadata), m);
         }
         else
         {
-            (yyval.metadata).reference  = { PR_NULL, nullptr };
-            (yyval.metadata).expression.type = TC_UNSUPPORTED;
+            (yyval.metadata).reference  = { NULLREF, nullptr };
+            (yyval.metadata).expression.type = UNKNOWN;
             (yyval.metadata).expression.assignable = false;
         }
         (yyval.metadata).expression.pid = StringPool::create("trunc " + *StringPool::get((yyvsp[-1].pid)) + ")");
-
-    }
-#line 3493 "src/syntax-analyzer/components/parser.cpp"
-    break;
-
-  case 186: /* trunc_variable: TRUNC '(' variable error  */
-#line 1558 "include/syntax-analyzer/components/yacc.y"
-    {
-        auto entry = SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
-        if (entry != nullptr)
-        {
-            Metadata m;
-            m.reference  = { PR_SYMBOL, entry };
-            m.expression = { mapWithCheckerType(entry->type), (yyvsp[-1].pid), true };
-            
-            createTruncateTriple((yyval.metadata), m);
-        }
-        else
-        {
-            (yyval.metadata).reference  = { PR_NULL, nullptr };
-            (yyval.metadata).expression.type = TC_UNSUPPORTED;
-            (yyval.metadata).expression.assignable = false;
-        }
-        (yyval.metadata).expression.pid = StringPool::create("trunc " + *StringPool::get((yyvsp[-1].pid)) + ")");
-
-        SemanticActions::specifySyntaxError(MISSING_CLOSING_PARENTHESIS);
-        yyerrok;
-
-    }
-#line 3520 "src/syntax-analyzer/components/parser.cpp"
-    break;
-
-  case 187: /* trunc_variable: TRUNC variable ')'  */
-#line 1581 "include/syntax-analyzer/components/yacc.y"
-    {
-        auto entry = SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
-        if (entry != nullptr)
-        { 
-            Metadata m;
-            m.reference  = { PR_SYMBOL, entry };
-            m.expression = { mapWithCheckerType(entry->type), (yyvsp[-1].pid), true };
-            
-            createTruncateTriple((yyval.metadata), m);
-
-        }
-        else
-        {
-            (yyval.metadata).reference  = { PR_NULL, nullptr };
-            (yyval.metadata).expression.type = TC_UNSUPPORTED;
-            (yyval.metadata).expression.assignable = false;
-        }
-        (yyval.metadata).expression.pid = StringPool::create("trunc " + *StringPool::get((yyvsp[-1].pid)) + ")");
-
-        SemanticActions::announceSpecificError(MISSING_OPENING_PARENTHESIS);
-
-    }
-#line 3547 "src/syntax-analyzer/components/parser.cpp"
-    break;
-
-  case 188: /* trunc_variable: TRUNC variable error  */
-#line 1604 "include/syntax-analyzer/components/yacc.y"
-    {
-        auto entry = SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
-        if (entry != nullptr)
-        { 
-            Metadata m;
-            m.reference  = { PR_SYMBOL, entry };
-            m.expression = { mapWithCheckerType(entry->type), (yyvsp[-1].pid), true };
-            
-            createTruncateTriple((yyval.metadata), m);
-        }
-        else
-        {
-            (yyval.metadata).reference  = { PR_NULL, nullptr };
-            (yyval.metadata).expression.type = TC_UNSUPPORTED;
-            (yyval.metadata).expression.assignable = false;
-        }
-        (yyval.metadata).expression.pid = StringPool::create("trunc " + *StringPool::get((yyvsp[-1].pid)) + ")");
-
-        SemanticActions::specifySyntaxError(MISSING_BOTH_PARENTHESIS_TRUNC);
-        yyerrok;
 
     }
 #line 3574 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 189: /* trunc_variable: TRUNC error ';'  */
-#line 1627 "include/syntax-analyzer/components/yacc.y"
+  case 186: /* trunc_variable: WORD_TRUNC '(' variable error  */
+#line 1630 "include/syntax-analyzer/components/yacc.y"
     {
-        (yyval.metadata).reference  = { PR_NULL , nullptr };
-        (yyval.metadata).expression = { TC_UNSUPPORTED, StringPool::create("trunc ..."), false };
+        auto entry = SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
+        if (entry != nullptr)
+        {
+            Metadata m;
+            m.reference  = { SYMBOL, entry };
+            m.expression = { entry->type, (yyvsp[-1].pid), true };
+            
+            createTruncateTriple((yyval.metadata), m);
+        }
+        else
+        {
+            (yyval.metadata).reference  = { NULLREF, nullptr };
+            (yyval.metadata).expression.type = UNKNOWN;
+            (yyval.metadata).expression.assignable = false;
+        }
+        (yyval.metadata).expression.pid = StringPool::create("trunc " + *StringPool::get((yyvsp[-1].pid)) + ")");
+
+        SemanticActions::specifySyntaxError(MISSING_CLOSING_PARENTHESIS);
+        yyerrok;
+
+    }
+#line 3601 "src/syntax-analyzer/components/parser.cpp"
+    break;
+
+  case 187: /* trunc_variable: WORD_TRUNC variable ')'  */
+#line 1653 "include/syntax-analyzer/components/yacc.y"
+    {
+        auto entry = SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
+        if (entry != nullptr)
+        { 
+            Metadata m;
+            m.reference  = { SYMBOL, entry };
+            m.expression = { entry->type, (yyvsp[-1].pid), true };
+            
+            createTruncateTriple((yyval.metadata), m);
+
+        }
+        else
+        {
+            (yyval.metadata).reference  = { NULLREF, nullptr };
+            (yyval.metadata).expression.type = UNKNOWN;
+            (yyval.metadata).expression.assignable = false;
+        }
+        (yyval.metadata).expression.pid = StringPool::create("trunc " + *StringPool::get((yyvsp[-1].pid)) + ")");
+
+        SemanticActions::announceSpecificError(MISSING_OPENING_PARENTHESIS);
+
+    }
+#line 3628 "src/syntax-analyzer/components/parser.cpp"
+    break;
+
+  case 188: /* trunc_variable: WORD_TRUNC variable error  */
+#line 1676 "include/syntax-analyzer/components/yacc.y"
+    {
+        auto entry = SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
+        if (entry != nullptr)
+        { 
+            Metadata m;
+            m.reference  = { SYMBOL, entry };
+            m.expression = { entry->type, (yyvsp[-1].pid), true };
+            
+            createTruncateTriple((yyval.metadata), m);
+        }
+        else
+        {
+            (yyval.metadata).reference  = { NULLREF, nullptr };
+            (yyval.metadata).expression.type = UNKNOWN;
+            (yyval.metadata).expression.assignable = false;
+        }
+        (yyval.metadata).expression.pid = StringPool::create("trunc " + *StringPool::get((yyvsp[-1].pid)) + ")");
+
+        SemanticActions::specifySyntaxError(MISSING_BOTH_PARENTHESIS_TRUNC);
+        yyerrok;
+
+    }
+#line 3655 "src/syntax-analyzer/components/parser.cpp"
+    break;
+
+  case 189: /* trunc_variable: WORD_TRUNC error ';'  */
+#line 1699 "include/syntax-analyzer/components/yacc.y"
+    {
+        (yyval.metadata).reference  = { NULLREF , nullptr };
+        (yyval.metadata).expression = { UNKNOWN, StringPool::create("trunc ..."), false };
 
         SemanticActions::specifySyntaxError(TRUNC_SYNTAX_ERROR);
         yyerrok;
 
     }
-#line 3587 "src/syntax-analyzer/components/parser.cpp"
+#line 3668 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 190: /* trunc_expression: TRUNC '(' expression ')'  */
-#line 1639 "include/syntax-analyzer/components/yacc.y"
+  case 190: /* trunc_expression: WORD_TRUNC '(' expression ')'  */
+#line 1711 "include/syntax-analyzer/components/yacc.y"
     {
         createTruncateTriple((yyval.metadata), (yyvsp[-1].metadata));
         
         (yyval.metadata).expression.pid = StringPool::create("trunc(" + *StringPool::get((yyvsp[-1].metadata).expression.pid) + ")");
     }
-#line 3597 "src/syntax-analyzer/components/parser.cpp"
+#line 3678 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 191: /* trunc_expression: TRUNC '(' expression error  */
-#line 1645 "include/syntax-analyzer/components/yacc.y"
+  case 191: /* trunc_expression: WORD_TRUNC '(' expression error  */
+#line 1717 "include/syntax-analyzer/components/yacc.y"
     {
         createTruncateTriple((yyval.metadata), (yyvsp[-1].metadata));
         
@@ -3607,11 +3688,11 @@ yyreduce:
         yyerrok;
 
     }
-#line 3611 "src/syntax-analyzer/components/parser.cpp"
+#line 3692 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 192: /* trunc_expression: TRUNC expression ')'  */
-#line 1655 "include/syntax-analyzer/components/yacc.y"
+  case 192: /* trunc_expression: WORD_TRUNC expression ')'  */
+#line 1727 "include/syntax-analyzer/components/yacc.y"
     {
         createTruncateTriple((yyval.metadata), (yyvsp[-1].metadata));
         
@@ -3620,11 +3701,11 @@ yyreduce:
         SemanticActions::announceSpecificError(MISSING_OPENING_PARENTHESIS);
 
     }
-#line 3624 "src/syntax-analyzer/components/parser.cpp"
+#line 3705 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 193: /* trunc_expression: TRUNC expression error  */
-#line 1664 "include/syntax-analyzer/components/yacc.y"
+  case 193: /* trunc_expression: WORD_TRUNC expression error  */
+#line 1736 "include/syntax-analyzer/components/yacc.y"
     {
         createTruncateTriple((yyval.metadata), (yyvsp[-1].metadata));
         
@@ -3634,37 +3715,54 @@ yyreduce:
         yyerrok;
 
     }
-#line 3638 "src/syntax-analyzer/components/parser.cpp"
+#line 3719 "src/syntax-analyzer/components/parser.cpp"
+    break;
+
+  case 194: /* condition: '(' comparison ')'  */
+#line 1751 "include/syntax-analyzer/components/yacc.y"
+    {
+        (yyval.metadata) = (yyvsp[-1].metadata);
+    }
+#line 3727 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 195: /* condition: '(' comparison error  */
-#line 1680 "include/syntax-analyzer/components/yacc.y"
+#line 1755 "include/syntax-analyzer/components/yacc.y"
     {
+        (yyval.metadata) = (yyvsp[-1].metadata);
+
         SemanticActions::specifySyntaxError(MISSING_CLOSING_PARENTHESIS);
         yyerrok;
+
     }
-#line 3647 "src/syntax-analyzer/components/parser.cpp"
+#line 3739 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 196: /* condition: comparison ')'  */
-#line 1685 "include/syntax-analyzer/components/yacc.y"
+#line 1763 "include/syntax-analyzer/components/yacc.y"
     {
+        (yyval.metadata) = (yyvsp[-1].metadata);
+
         SemanticActions::announceSpecificError(MISSING_OPENING_PARENTHESIS);
+
     }
-#line 3655 "src/syntax-analyzer/components/parser.cpp"
+#line 3750 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 197: /* condition: comparison error  */
-#line 1689 "include/syntax-analyzer/components/yacc.y"
+#line 1770 "include/syntax-analyzer/components/yacc.y"
     {
+        (yyval.metadata) = (yyvsp[-1].metadata);
+
         SemanticActions::specifySyntaxError(MISSING_BOTH_PARENTHESIS);
         yyerrok;
+
     }
-#line 3664 "src/syntax-analyzer/components/parser.cpp"
+#line 3762 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 198: /* comparison: expression comparison_operator expression  */
-#line 1697 "include/syntax-analyzer/components/yacc.y"
+#line 1781 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::TypeChecker::Expression e1 = { (yyvsp[-2].metadata).expression.type, *StringPool::get((yyvsp[-2].metadata).expression.pid) };
         SemanticAnalyzer::TypeChecker::Expression e2 = { (yyvsp[0].metadata).expression.type, *StringPool::get((yyvsp[0].metadata).expression.pid) };
@@ -3675,20 +3773,23 @@ yyreduce:
 
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
         {
-            (yyval.metadata).reference.tref = CodeGenerator::INTERMEDIATE_CODE->addTriple(
-                {(yyvsp[-1].op).tid, mapWithOperand((yyvsp[-2].metadata).reference), mapWithOperand((yyvsp[0].metadata).reference)}
-            );
-            (yyval.metadata).reference.type = PR_TRIPLE;
+            (yyval.metadata).reference.tref = CodeGenerator::INTERMEDIATE_CODE->addTriple ({
+                (yyvsp[-1].op).tid,
+                (yyval.metadata).expression.type,
+                mapWithOperand((yyvsp[-2].metadata).reference),
+                mapWithOperand((yyvsp[0].metadata).reference)
+            });
+            (yyval.metadata).reference.type = TRIPLE;
         }
         else
-            (yyval.metadata).reference = { PR_NULL, nullptr };
+            (yyval.metadata).reference = { NULLREF, nullptr };
         (yyval.metadata).expression.assignable = false;
     }
-#line 3688 "src/syntax-analyzer/components/parser.cpp"
+#line 3789 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 199: /* comparison: expression error  */
-#line 1717 "include/syntax-analyzer/components/yacc.y"
+#line 1804 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[-1].metadata);
 
@@ -3696,67 +3797,67 @@ yyreduce:
         yyerrok;
 
     }
-#line 3700 "src/syntax-analyzer/components/parser.cpp"
+#line 3801 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 200: /* comparison_operator: EQUAL_OP  */
-#line 1728 "include/syntax-analyzer/components/yacc.y"
+  case 200: /* comparison_operator: OP_EQUAL  */
+#line 1815 "include/syntax-analyzer/components/yacc.y"
     {
-        (yyval.op) = { mapWithTripleOperator(EQUAL_OP), StringPool::create(Translator::translate(EQUAL_OP)) };
+        (yyval.op) = { CODEOP_EQUAL, StringPool::create(Translator::translate(OP_EQUAL)) };
     }
-#line 3708 "src/syntax-analyzer/components/parser.cpp"
+#line 3809 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 201: /* comparison_operator: NOT_EQUAL_OP  */
-#line 1732 "include/syntax-analyzer/components/yacc.y"
+  case 201: /* comparison_operator: OP_NOT_EQUAL  */
+#line 1819 "include/syntax-analyzer/components/yacc.y"
     {
-        (yyval.op) = { mapWithTripleOperator(NOT_EQUAL_OP), StringPool::create(Translator::translate(NOT_EQUAL_OP)) };
+        (yyval.op) = { CODEOP_NOT_EQUAL, StringPool::create(Translator::translate(OP_NOT_EQUAL)) };
     }
-#line 3716 "src/syntax-analyzer/components/parser.cpp"
+#line 3817 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 202: /* comparison_operator: GE_OP  */
-#line 1736 "include/syntax-analyzer/components/yacc.y"
+  case 202: /* comparison_operator: OP_GE  */
+#line 1823 "include/syntax-analyzer/components/yacc.y"
     {
-        (yyval.op) = { mapWithTripleOperator(GE_OP), StringPool::create(Translator::translate(GE_OP)) };
+        (yyval.op) = { CODEOP_GE, StringPool::create(Translator::translate(OP_GE)) };
     }
-#line 3724 "src/syntax-analyzer/components/parser.cpp"
+#line 3825 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 203: /* comparison_operator: LE_OP  */
-#line 1740 "include/syntax-analyzer/components/yacc.y"
+  case 203: /* comparison_operator: OP_LE  */
+#line 1827 "include/syntax-analyzer/components/yacc.y"
     {
-        (yyval.op) = { mapWithTripleOperator(LE_OP), StringPool::create(Translator::translate(LE_OP)) };
+        (yyval.op) = { CODEOP_LE, StringPool::create(Translator::translate(OP_LE)) };
     }
-#line 3732 "src/syntax-analyzer/components/parser.cpp"
+#line 3833 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 204: /* comparison_operator: '>'  */
-#line 1744 "include/syntax-analyzer/components/yacc.y"
+#line 1831 "include/syntax-analyzer/components/yacc.y"
     {
-        (yyval.op) = { mapWithTripleOperator('>'), StringPool::create(">") };
+        (yyval.op) = { CODEOP_GT, StringPool::create(">") };
     }
-#line 3740 "src/syntax-analyzer/components/parser.cpp"
+#line 3841 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 205: /* comparison_operator: '<'  */
-#line 1748 "include/syntax-analyzer/components/yacc.y"
+#line 1835 "include/syntax-analyzer/components/yacc.y"
     {
-        (yyval.op) = { mapWithTripleOperator('<'), StringPool::create("<") };
+        (yyval.op) = { CODEOP_LT, StringPool::create("<") };
     }
-#line 3748 "src/syntax-analyzer/components/parser.cpp"
+#line 3849 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 206: /* expression: term  */
-#line 1757 "include/syntax-analyzer/components/yacc.y"
+#line 1844 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[0].metadata);
     }
-#line 3756 "src/syntax-analyzer/components/parser.cpp"
+#line 3857 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 207: /* expression: expression_setup positive_term  */
-#line 1761 "include/syntax-analyzer/components/yacc.y"
+#line 1848 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::TypeChecker::Expression e1 = { (yyvsp[-1].metadata).expression.type, *StringPool::get((yyvsp[-1].metadata).expression.pid) };
         SemanticAnalyzer::TypeChecker::Expression e2 = { (yyvsp[0].metadata).expression.type, *StringPool::get((yyvsp[0].metadata).expression.pid) };
@@ -3768,43 +3869,43 @@ yyreduce:
         
         (yyval.metadata).expression.assignable = false;
     }
-#line 3772 "src/syntax-analyzer/components/parser.cpp"
+#line 3873 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 208: /* expression: '+' term  */
-#line 1773 "include/syntax-analyzer/components/yacc.y"
+#line 1860 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[0].metadata);
 
         SemanticActions::announceSpecificError(MISSING_LEFT_SUM_OPERAND);
 
     }
-#line 3783 "src/syntax-analyzer/components/parser.cpp"
+#line 3884 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 209: /* expression: '+' error  */
-#line 1780 "include/syntax-analyzer/components/yacc.y"
+#line 1867 "include/syntax-analyzer/components/yacc.y"
     {
-        (yyval.metadata).reference  = { PR_NULL , nullptr };
-        (yyval.metadata).expression = { TC_UNSUPPORTED, StringPool::create("..."), false };
+        (yyval.metadata).reference  = { NULLREF , nullptr };
+        (yyval.metadata).expression = { UNKNOWN, StringPool::create("..."), false };
 
         SemanticActions::specifySyntaxError(MISSING_BOTH_SUM_OPERANDS);
         yyerrok;
 
     }
-#line 3796 "src/syntax-analyzer/components/parser.cpp"
+#line 3897 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 210: /* expression: expression '+' term  */
-#line 1789 "include/syntax-analyzer/components/yacc.y"
+#line 1876 "include/syntax-analyzer/components/yacc.y"
     {
         createArithmeticTriple((yyval.metadata), (yyvsp[-2].metadata), (yyvsp[0].metadata), '+');
     }
-#line 3804 "src/syntax-analyzer/components/parser.cpp"
+#line 3905 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 211: /* expression: expression '+' error  */
-#line 1793 "include/syntax-analyzer/components/yacc.y"
+#line 1880 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[-2].metadata);
 
@@ -3812,19 +3913,19 @@ yyreduce:
         yyerrok;
 
     }
-#line 3816 "src/syntax-analyzer/components/parser.cpp"
+#line 3917 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 212: /* expression: expression '-' term  */
-#line 1801 "include/syntax-analyzer/components/yacc.y"
+#line 1888 "include/syntax-analyzer/components/yacc.y"
     {
         createArithmeticTriple((yyval.metadata), (yyvsp[-2].metadata), (yyvsp[0].metadata), '-');
     }
-#line 3824 "src/syntax-analyzer/components/parser.cpp"
+#line 3925 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 213: /* expression: expression '-' error  */
-#line 1805 "include/syntax-analyzer/components/yacc.y"
+#line 1892 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[-2].metadata);
 
@@ -3832,133 +3933,133 @@ yyreduce:
         yyerrok;
 
     }
-#line 3836 "src/syntax-analyzer/components/parser.cpp"
+#line 3937 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 214: /* expression: trunc_expression  */
-#line 1813 "include/syntax-analyzer/components/yacc.y"
+#line 1900 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[0].metadata);
     }
-#line 3844 "src/syntax-analyzer/components/parser.cpp"
+#line 3945 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 215: /* expression: expression '+' trunc_expression  */
-#line 1817 "include/syntax-analyzer/components/yacc.y"
+#line 1904 "include/syntax-analyzer/components/yacc.y"
     {
         createArithmeticTriple((yyval.metadata), (yyvsp[-2].metadata), (yyvsp[0].metadata), '+');
     }
-#line 3852 "src/syntax-analyzer/components/parser.cpp"
+#line 3953 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 216: /* expression: expression '-' trunc_expression  */
-#line 1821 "include/syntax-analyzer/components/yacc.y"
+#line 1908 "include/syntax-analyzer/components/yacc.y"
     {
         createArithmeticTriple((yyval.metadata), (yyvsp[-2].metadata), (yyvsp[0].metadata), '-');
     }
-#line 3860 "src/syntax-analyzer/components/parser.cpp"
+#line 3961 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 217: /* expression_setup: expression  */
-#line 1828 "include/syntax-analyzer/components/yacc.y"
+#line 1915 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[0].metadata);
 
         SemanticActions::announceSpecificError(MISSING_EXPRESSION_OPERATOR);
     }
-#line 3870 "src/syntax-analyzer/components/parser.cpp"
+#line 3971 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 218: /* term: positive_term  */
-#line 1839 "include/syntax-analyzer/components/yacc.y"
+#line 1926 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[0].metadata);
     }
-#line 3878 "src/syntax-analyzer/components/parser.cpp"
+#line 3979 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 219: /* term: negative_term  */
-#line 1843 "include/syntax-analyzer/components/yacc.y"
+#line 1930 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[0].metadata);
     }
-#line 3886 "src/syntax-analyzer/components/parser.cpp"
+#line 3987 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 220: /* positive_term: positive_term '*' factor  */
-#line 1850 "include/syntax-analyzer/components/yacc.y"
+#line 1937 "include/syntax-analyzer/components/yacc.y"
     {
         createArithmeticTriple((yyval.metadata), (yyvsp[-2].metadata), (yyvsp[0].metadata), '*');
     }
-#line 3894 "src/syntax-analyzer/components/parser.cpp"
+#line 3995 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 221: /* positive_term: positive_term '/' factor  */
-#line 1854 "include/syntax-analyzer/components/yacc.y"
+#line 1941 "include/syntax-analyzer/components/yacc.y"
     {
         createArithmeticTriple((yyval.metadata), (yyvsp[-2].metadata), (yyvsp[0].metadata), '/');
     }
-#line 3902 "src/syntax-analyzer/components/parser.cpp"
+#line 4003 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 222: /* positive_term: trunc_expression '/' factor  */
-#line 1858 "include/syntax-analyzer/components/yacc.y"
+#line 1945 "include/syntax-analyzer/components/yacc.y"
     {
         createArithmeticTriple((yyval.metadata), (yyvsp[-2].metadata), (yyvsp[0].metadata), '/');
     }
-#line 3910 "src/syntax-analyzer/components/parser.cpp"
+#line 4011 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 223: /* positive_term: trunc_expression '*' factor  */
-#line 1862 "include/syntax-analyzer/components/yacc.y"
+#line 1949 "include/syntax-analyzer/components/yacc.y"
     {
         createArithmeticTriple((yyval.metadata), (yyvsp[-2].metadata), (yyvsp[0].metadata), '*');
     }
-#line 3918 "src/syntax-analyzer/components/parser.cpp"
+#line 4019 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 224: /* positive_term: trunc_expression '/' trunc_expression  */
-#line 1866 "include/syntax-analyzer/components/yacc.y"
+#line 1953 "include/syntax-analyzer/components/yacc.y"
     {
         createArithmeticTriple((yyval.metadata), (yyvsp[-2].metadata), (yyvsp[0].metadata), '/');
     }
-#line 3926 "src/syntax-analyzer/components/parser.cpp"
+#line 4027 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 225: /* positive_term: trunc_expression '*' trunc_expression  */
-#line 1870 "include/syntax-analyzer/components/yacc.y"
+#line 1957 "include/syntax-analyzer/components/yacc.y"
     {
         createArithmeticTriple((yyval.metadata), (yyvsp[-2].metadata), (yyvsp[0].metadata), '*');
     }
-#line 3934 "src/syntax-analyzer/components/parser.cpp"
+#line 4035 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 226: /* positive_term: positive_term '/' trunc_expression  */
-#line 1874 "include/syntax-analyzer/components/yacc.y"
+#line 1961 "include/syntax-analyzer/components/yacc.y"
     {
         createArithmeticTriple((yyval.metadata), (yyvsp[-2].metadata), (yyvsp[0].metadata), '/');
     }
-#line 3942 "src/syntax-analyzer/components/parser.cpp"
+#line 4043 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 227: /* positive_term: positive_term '*' trunc_expression  */
-#line 1878 "include/syntax-analyzer/components/yacc.y"
+#line 1965 "include/syntax-analyzer/components/yacc.y"
     {
         createArithmeticTriple((yyval.metadata), (yyvsp[-2].metadata), (yyvsp[0].metadata), '*');
     }
-#line 3950 "src/syntax-analyzer/components/parser.cpp"
+#line 4051 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 228: /* positive_term: positive_factor  */
-#line 1882 "include/syntax-analyzer/components/yacc.y"
+#line 1969 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[0].metadata);
     }
-#line 3958 "src/syntax-analyzer/components/parser.cpp"
+#line 4059 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 229: /* positive_term: positive_term '*' error  */
-#line 1886 "include/syntax-analyzer/components/yacc.y"
+#line 1973 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[-2].metadata);
 
@@ -3966,11 +4067,11 @@ yyreduce:
         yyerrok;
 
     }
-#line 3970 "src/syntax-analyzer/components/parser.cpp"
+#line 4071 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 230: /* positive_term: positive_term '/' error  */
-#line 1894 "include/syntax-analyzer/components/yacc.y"
+#line 1981 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[-2].metadata);
 
@@ -3978,51 +4079,51 @@ yyreduce:
         yyerrok;
 
     }
-#line 3982 "src/syntax-analyzer/components/parser.cpp"
+#line 4083 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 231: /* negative_term: negative_term '*' factor  */
-#line 1905 "include/syntax-analyzer/components/yacc.y"
+#line 1992 "include/syntax-analyzer/components/yacc.y"
     {
         createArithmeticTriple((yyval.metadata), (yyvsp[-2].metadata), (yyvsp[0].metadata), '*');
     }
-#line 3990 "src/syntax-analyzer/components/parser.cpp"
+#line 4091 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 232: /* negative_term: negative_term '/' factor  */
-#line 1909 "include/syntax-analyzer/components/yacc.y"
+#line 1996 "include/syntax-analyzer/components/yacc.y"
     {
         createArithmeticTriple((yyval.metadata), (yyvsp[-2].metadata), (yyvsp[0].metadata), '/');
     }
-#line 3998 "src/syntax-analyzer/components/parser.cpp"
+#line 4099 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 233: /* negative_term: negative_term '/' trunc_expression  */
-#line 1913 "include/syntax-analyzer/components/yacc.y"
+#line 2000 "include/syntax-analyzer/components/yacc.y"
     {
         createArithmeticTriple((yyval.metadata), (yyvsp[-2].metadata), (yyvsp[0].metadata), '/');
     }
-#line 4006 "src/syntax-analyzer/components/parser.cpp"
+#line 4107 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 234: /* negative_term: negative_term '*' trunc_expression  */
-#line 1917 "include/syntax-analyzer/components/yacc.y"
+#line 2004 "include/syntax-analyzer/components/yacc.y"
     {
         createArithmeticTriple((yyval.metadata), (yyvsp[-2].metadata), (yyvsp[0].metadata), '*');
     }
-#line 4014 "src/syntax-analyzer/components/parser.cpp"
+#line 4115 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 235: /* negative_term: negative_factor  */
-#line 1921 "include/syntax-analyzer/components/yacc.y"
+#line 2008 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[0].metadata);
     }
-#line 4022 "src/syntax-analyzer/components/parser.cpp"
+#line 4123 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 236: /* negative_term: negative_term '*' error  */
-#line 1925 "include/syntax-analyzer/components/yacc.y"
+#line 2012 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[-2].metadata);
 
@@ -4030,11 +4131,11 @@ yyreduce:
         yyerrok;
 
     }
-#line 4034 "src/syntax-analyzer/components/parser.cpp"
+#line 4135 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 237: /* negative_term: negative_term '/' error  */
-#line 1933 "include/syntax-analyzer/components/yacc.y"
+#line 2020 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[-2].metadata);
 
@@ -4042,253 +4143,253 @@ yyreduce:
         yyerrok;
 
     }
-#line 4046 "src/syntax-analyzer/components/parser.cpp"
+#line 4147 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 238: /* negative_term: '*' factor  */
-#line 1941 "include/syntax-analyzer/components/yacc.y"
+#line 2028 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[0].metadata);
 
         SemanticActions::announceSpecificError(MISSING_LEFT_MUL_FACTOR);
 
     }
-#line 4057 "src/syntax-analyzer/components/parser.cpp"
+#line 4158 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 239: /* negative_term: '/' factor  */
-#line 1948 "include/syntax-analyzer/components/yacc.y"
+#line 2035 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[0].metadata);
 
         SemanticActions::announceSpecificError(MISSING_LEFT_DIV_FACTOR);
 
     }
-#line 4068 "src/syntax-analyzer/components/parser.cpp"
+#line 4169 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 240: /* negative_term: '*' error  */
-#line 1955 "include/syntax-analyzer/components/yacc.y"
+#line 2042 "include/syntax-analyzer/components/yacc.y"
     {
-        (yyval.metadata).reference  = { PR_NULL , nullptr };
-        (yyval.metadata).expression = { TC_UNSUPPORTED, StringPool::create("..."), false };
+        (yyval.metadata).reference  = { NULLREF , nullptr };
+        (yyval.metadata).expression = { UNKNOWN, StringPool::create("..."), false };
 
         SemanticActions::specifySyntaxError(MISSING_BOTH_FACTORS);
         yyerrok;
 
     }
-#line 4081 "src/syntax-analyzer/components/parser.cpp"
+#line 4182 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 241: /* negative_term: '/' error  */
-#line 1964 "include/syntax-analyzer/components/yacc.y"
+#line 2051 "include/syntax-analyzer/components/yacc.y"
     {
-        (yyval.metadata).reference  = { PR_NULL , nullptr };
-        (yyval.metadata).expression = { TC_UNSUPPORTED, StringPool::create("..."), false };
+        (yyval.metadata).reference  = { NULLREF , nullptr };
+        (yyval.metadata).expression = { UNKNOWN, StringPool::create("..."), false };
 
         SemanticActions::specifySyntaxError(MISSING_BOTH_FACTORS);
         yyerrok;
 
     }
-#line 4094 "src/syntax-analyzer/components/parser.cpp"
+#line 4195 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 242: /* factor: positive_factor  */
-#line 1978 "include/syntax-analyzer/components/yacc.y"
+#line 2065 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[0].metadata);
     }
-#line 4102 "src/syntax-analyzer/components/parser.cpp"
+#line 4203 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 243: /* factor: negative_factor  */
-#line 1982 "include/syntax-analyzer/components/yacc.y"
+#line 2069 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[0].metadata);
     }
-#line 4110 "src/syntax-analyzer/components/parser.cpp"
+#line 4211 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 244: /* positive_factor: variable  */
-#line 1989 "include/syntax-analyzer/components/yacc.y"
+#line 2076 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata).reference.sref = SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
         if ((yyval.metadata).reference.sref != nullptr)
         {
-            (yyval.metadata).reference.type = PR_SYMBOL;
-            (yyval.metadata).expression = { mapWithCheckerType((yyval.metadata).reference.sref->type), (yyvsp[0].pid), true };
+            (yyval.metadata).reference.type = SYMBOL;
+            (yyval.metadata).expression = { (yyval.metadata).reference.sref->type, (yyvsp[0].pid), true };
         }
         else
         {
-            (yyval.metadata).reference.type = PR_NULL;
-            (yyval.metadata).expression = { TC_UNSUPPORTED, (yyvsp[0].pid), true };
+            (yyval.metadata).reference.type = NULLREF;
+            (yyval.metadata).expression = { UNKNOWN, (yyvsp[0].pid), true };
         }
 
     }
-#line 4129 "src/syntax-analyzer/components/parser.cpp"
+#line 4230 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 245: /* positive_factor: positive_constant  */
-#line 2004 "include/syntax-analyzer/components/yacc.y"
+#line 2091 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[0].metadata);
     }
-#line 4137 "src/syntax-analyzer/components/parser.cpp"
+#line 4238 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 246: /* positive_factor: function_invocation_head  */
-#line 2008 "include/syntax-analyzer/components/yacc.y"
+#line 2095 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[0].metadata);
     }
-#line 4145 "src/syntax-analyzer/components/parser.cpp"
+#line 4246 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 247: /* negative_factor: negative_constant  */
-#line 2015 "include/syntax-analyzer/components/yacc.y"
+#line 2102 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[0].metadata);
     }
-#line 4153 "src/syntax-analyzer/components/parser.cpp"
+#line 4254 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 248: /* negative_factor: lambda_invocation_head  */
-#line 2019 "include/syntax-analyzer/components/yacc.y"
+#line 2106 "include/syntax-analyzer/components/yacc.y"
     {
-        (yyval.metadata).reference  = { PR_NULL , nullptr };
-        (yyval.metadata).expression = { TC_UNSUPPORTED, StringPool::create("..."), false };
+        (yyval.metadata).reference  = { NULLREF , nullptr };
+        (yyval.metadata).expression = { UNKNOWN, StringPool::create("..."), false };
         
         SemanticActions::announceSpecificError(INVALID_LAMBDA_USE);
     }
-#line 4164 "src/syntax-analyzer/components/parser.cpp"
+#line 4265 "src/syntax-analyzer/components/parser.cpp"
     break;
 
-  case 249: /* negative_factor: '-' UINTEGER_LITERAL  */
-#line 2026 "include/syntax-analyzer/components/yacc.y"
+  case 249: /* negative_factor: '-' LITERAL_UINT  */
+#line 2113 "include/syntax-analyzer/components/yacc.y"
     {
-        (yyval.metadata).reference  = { PR_LITERAL, .lref = (yyvsp[0].lref) };
-        (yyval.metadata).expression = { TC_UINT, StringPool::create((yyvsp[0].lref)->constant), false };
+        (yyval.metadata).reference  = { LITERAL, .lref = (yyvsp[0].lref) };
+        (yyval.metadata).expression = { UINT, StringPool::create((yyvsp[0].lref)->constant), false };
 
         SemanticActions::announceSpecificError(MISSING_LEFT_SUB_OPERAND);
-
-    }
-#line 4176 "src/syntax-analyzer/components/parser.cpp"
-    break;
-
-  case 250: /* negative_factor: '-' function_invocation_head  */
-#line 2034 "include/syntax-analyzer/components/yacc.y"
-    {
-        (yyval.metadata) = (yyvsp[0].metadata);
-
-        SemanticActions::announceSpecificError(MISSING_LEFT_SUB_OPERAND);
-
-    }
-#line 4187 "src/syntax-analyzer/components/parser.cpp"
-    break;
-
-  case 251: /* negative_factor: '-' variable  */
-#line 2041 "include/syntax-analyzer/components/yacc.y"
-    {
-        (yyval.metadata).reference.sref = SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
-        if ((yyval.metadata).reference.sref != nullptr)
-        {
-            (yyval.metadata).reference.type = PR_SYMBOL;
-            (yyval.metadata).expression = { mapWithCheckerType((yyval.metadata).reference.sref->type), (yyvsp[0].pid), false };
-        }
-        else
-        {
-            (yyval.metadata).reference = { PR_NULL, nullptr };
-            (yyval.metadata).expression = { TC_UNSUPPORTED, (yyvsp[0].pid), false };
-        }
-        SemanticActions::announceSpecificError(MISSING_LEFT_SUB_OPERAND);
-
-    }
-#line 4207 "src/syntax-analyzer/components/parser.cpp"
-    break;
-
-  case 252: /* negative_factor: '-' lambda_invocation_head  */
-#line 2057 "include/syntax-analyzer/components/yacc.y"
-    {
-        (yyval.metadata).reference  = { PR_NULL , nullptr };
-        (yyval.metadata).expression = { TC_UNSUPPORTED, StringPool::create("..."), false };
-
-        SemanticActions::announceSpecificError(MISSING_BOTH_SUB_OPERANDS);
-        SemanticActions::announceSpecificError(INVALID_LAMBDA_USE);
-
-    }
-#line 4220 "src/syntax-analyzer/components/parser.cpp"
-    break;
-
-  case 253: /* negative_factor: '-' error  */
-#line 2066 "include/syntax-analyzer/components/yacc.y"
-    {
-        (yyval.metadata).reference  = { PR_NULL , nullptr };
-        (yyval.metadata).expression = { TC_UNSUPPORTED, StringPool::create("..."), false };
-
-        SemanticActions::specifySyntaxError(MISSING_BOTH_SUB_OPERANDS);
-        yyerrok;
-
-    }
-#line 4233 "src/syntax-analyzer/components/parser.cpp"
-    break;
-
-  case 254: /* numeric_constant: positive_constant  */
-#line 2080 "include/syntax-analyzer/components/yacc.y"
-    {
-        (yyval.metadata) = (yyvsp[0].metadata);
-    }
-#line 4241 "src/syntax-analyzer/components/parser.cpp"
-    break;
-
-  case 255: /* numeric_constant: negative_constant  */
-#line 2084 "include/syntax-analyzer/components/yacc.y"
-    {
-        (yyval.metadata) = (yyvsp[0].metadata);
-    }
-#line 4249 "src/syntax-analyzer/components/parser.cpp"
-    break;
-
-  case 256: /* positive_constant: UINTEGER_LITERAL  */
-#line 2091 "include/syntax-analyzer/components/yacc.y"
-    {
-        (yyval.metadata).reference  = { PR_LITERAL, .lref = (yyvsp[0].lref) };
-        (yyval.metadata).expression = { TC_UINT, StringPool::create((yyvsp[0].lref)->constant), false };
-    }
-#line 4258 "src/syntax-analyzer/components/parser.cpp"
-    break;
-
-  case 257: /* positive_constant: FLOAT_LITERAL  */
-#line 2096 "include/syntax-analyzer/components/yacc.y"
-    {
-        (yyval.metadata).reference  = { PR_LITERAL, .lref = (yyvsp[0].lref) };
-        (yyval.metadata).expression = { TC_FLOAT, StringPool::create((yyvsp[0].lref)->constant), false };
-    }
-#line 4267 "src/syntax-analyzer/components/parser.cpp"
-    break;
-
-  case 258: /* negative_constant: '-' FLOAT_LITERAL  */
-#line 2104 "include/syntax-analyzer/components/yacc.y"
-    {
-        (yyval.metadata).reference  = { PR_LITERAL , .lref = SemanticActions::turnNegative((yyvsp[0].lref)) };
-        (yyval.metadata).expression = { TC_FLOAT, StringPool::create((yyvsp[0].lref)->constant), false };
 
     }
 #line 4277 "src/syntax-analyzer/components/parser.cpp"
     break;
 
+  case 250: /* negative_factor: '-' function_invocation_head  */
+#line 2121 "include/syntax-analyzer/components/yacc.y"
+    {
+        (yyval.metadata) = (yyvsp[0].metadata);
+
+        SemanticActions::announceSpecificError(MISSING_LEFT_SUB_OPERAND);
+
+    }
+#line 4288 "src/syntax-analyzer/components/parser.cpp"
+    break;
+
+  case 251: /* negative_factor: '-' variable  */
+#line 2128 "include/syntax-analyzer/components/yacc.y"
+    {
+        (yyval.metadata).reference.sref = SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
+        if ((yyval.metadata).reference.sref != nullptr)
+        {
+            (yyval.metadata).reference.type = SYMBOL;
+            (yyval.metadata).expression = { (yyval.metadata).reference.sref->type, (yyvsp[0].pid), false };
+        }
+        else
+        {
+            (yyval.metadata).reference = { NULLREF, nullptr };
+            (yyval.metadata).expression = { UNKNOWN, (yyvsp[0].pid), false };
+        }
+        SemanticActions::announceSpecificError(MISSING_LEFT_SUB_OPERAND);
+
+    }
+#line 4308 "src/syntax-analyzer/components/parser.cpp"
+    break;
+
+  case 252: /* negative_factor: '-' lambda_invocation_head  */
+#line 2144 "include/syntax-analyzer/components/yacc.y"
+    {
+        (yyval.metadata).reference  = { NULLREF , nullptr };
+        (yyval.metadata).expression = { UNKNOWN, StringPool::create("..."), false };
+
+        SemanticActions::announceSpecificError(MISSING_BOTH_SUB_OPERANDS);
+        SemanticActions::announceSpecificError(INVALID_LAMBDA_USE);
+
+    }
+#line 4321 "src/syntax-analyzer/components/parser.cpp"
+    break;
+
+  case 253: /* negative_factor: '-' error  */
+#line 2153 "include/syntax-analyzer/components/yacc.y"
+    {
+        (yyval.metadata).reference  = { NULLREF , nullptr };
+        (yyval.metadata).expression = { UNKNOWN, StringPool::create("..."), false };
+
+        SemanticActions::specifySyntaxError(MISSING_BOTH_SUB_OPERANDS);
+        yyerrok;
+
+    }
+#line 4334 "src/syntax-analyzer/components/parser.cpp"
+    break;
+
+  case 254: /* numeric_constant: positive_constant  */
+#line 2167 "include/syntax-analyzer/components/yacc.y"
+    {
+        (yyval.metadata) = (yyvsp[0].metadata);
+    }
+#line 4342 "src/syntax-analyzer/components/parser.cpp"
+    break;
+
+  case 255: /* numeric_constant: negative_constant  */
+#line 2171 "include/syntax-analyzer/components/yacc.y"
+    {
+        (yyval.metadata) = (yyvsp[0].metadata);
+    }
+#line 4350 "src/syntax-analyzer/components/parser.cpp"
+    break;
+
+  case 256: /* positive_constant: LITERAL_UINT  */
+#line 2178 "include/syntax-analyzer/components/yacc.y"
+    {
+        (yyval.metadata).reference  = { LITERAL, .lref = (yyvsp[0].lref) };
+        (yyval.metadata).expression = { UINT, StringPool::create((yyvsp[0].lref)->constant), false };
+    }
+#line 4359 "src/syntax-analyzer/components/parser.cpp"
+    break;
+
+  case 257: /* positive_constant: LITERAL_FLOAT  */
+#line 2183 "include/syntax-analyzer/components/yacc.y"
+    {
+        (yyval.metadata).reference  = { LITERAL, .lref = (yyvsp[0].lref) };
+        (yyval.metadata).expression = { FLOAT, StringPool::create((yyvsp[0].lref)->constant), false };
+    }
+#line 4368 "src/syntax-analyzer/components/parser.cpp"
+    break;
+
+  case 258: /* negative_constant: '-' LITERAL_FLOAT  */
+#line 2191 "include/syntax-analyzer/components/yacc.y"
+    {
+        (yyval.metadata).reference  = { LITERAL , .lref = SemanticActions::turnNegative((yyvsp[0].lref)) };
+        (yyval.metadata).expression = { FLOAT, StringPool::create((yyvsp[0].lref)->constant), false };
+
+    }
+#line 4378 "src/syntax-analyzer/components/parser.cpp"
+    break;
+
   case 259: /* variable: IDENTIFIER  */
-#line 2115 "include/syntax-analyzer/components/yacc.y"
+#line 2202 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.pid) = StringPool::create((yyvsp[0].sref)->symbol);
 
         SemanticAnalyzer::CHK_VARIABLES.notifyVariableName((yyvsp[0].sref)->symbol);
 
     }
-#line 4288 "src/syntax-analyzer/components/parser.cpp"
+#line 4389 "src/syntax-analyzer/components/parser.cpp"
     break;
 
   case 260: /* variable: variable '.' IDENTIFIER  */
-#line 2122 "include/syntax-analyzer/components/yacc.y"
+#line 2209 "include/syntax-analyzer/components/yacc.y"
     {
         StringPool::append((yyvsp[-2].pid), "." + (yyvsp[0].sref)->symbol);
         (yyval.pid) = (yyvsp[-2].pid);
@@ -4296,11 +4397,11 @@ yyreduce:
         SemanticAnalyzer::CHK_VARIABLES.notifyVariablePrefix((yyvsp[0].sref)->symbol);
 
     }
-#line 4300 "src/syntax-analyzer/components/parser.cpp"
+#line 4401 "src/syntax-analyzer/components/parser.cpp"
     break;
 
 
-#line 4304 "src/syntax-analyzer/components/parser.cpp"
+#line 4405 "src/syntax-analyzer/components/parser.cpp"
 
       default: break;
     }
@@ -4493,7 +4594,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 2131 "include/syntax-analyzer/components/yacc.y"
+#line 2218 "include/syntax-analyzer/components/yacc.y"
  // Codes ------------------------------------------
 
 void yyerror(const char* s)
@@ -4501,71 +4602,42 @@ void yyerror(const char* s)
     SemanticActions::announceSyntaxError();
 }
 
-int mapWithCheckerType(const int type)
-{
-    switch (type)
-    {
-    case ST_UINT:
-        return TC_UINT;
-    case ST_FLOAT:
-        return TC_FLOAT;
-    default:
-        return TC_UNSUPPORTED;
-    }
-}
-
-char mapWithTripleOperator(const int op)
-{
-    switch (op)
-    {
-    case EQUAL_OP:
-        return TR_EQUAL_OP;
-    case NOT_EQUAL_OP:
-        return TR_NOT_EQUAL_OP;
-    case GE_OP:
-        return TR_GE_OP;
-    case LE_OP:
-        return TR_LE_OP;
-    default:
-        return op;
-    }
-}
-
 CodeGenerator::Triples::Operand mapWithOperand(const Metadata::Reference& ref)
 {
     switch (ref.type)
     {
-    case PR_SYMBOL:
-        return { TR_SYMBOL , { .sref = ref.sref } };
-    case PR_LITERAL:
-        return { TR_LITERAL, { .lref = ref.lref } };
-    case PR_TRIPLE:
-        return { TR_TRIPLE , { .tref = ref.tref } };
+    case SYMBOL:
+        return { SYMBOL , { .sref = ref.sref } };
+    case LITERAL:
+        return { LITERAL, { .lref = ref.lref } };
+    case TRIPLE:
+        return { TRIPLE , { .tref = ref.tref } };
     default:
-        return { TR_NULL   , { .sref = nullptr  } };
+        return { NULLREF, { .sref = nullptr  }};
     }
 }
 
 void createMultipleAssignmentTriple(const Metadata& m)
 {
     SemanticAnalyzer::TypeChecker::Expression e1 = {
-        TC_UNSUPPORTED,
+        UNKNOWN,
         SemanticAnalyzer::CHK_VARIABLES.getCurrentVariableName()
     };
 
     auto entry = SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
     if (entry != nullptr)
     {
-        e1.type = mapWithCheckerType(entry->type);
+        e1.type = entry->type;
 
         SemanticAnalyzer::TypeChecker::Expression e2 = { m.expression.type, *StringPool::get(m.expression.pid) };
-        SemanticAnalyzer::CHK_TYPES.checkOperation(e1, e2);
+        int result = SemanticAnalyzer::CHK_TYPES.checkAssignment(e1, e2);
 
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
         {
             CodeGenerator::INTERMEDIATE_CODE->addTriple ({
-                '=',
-                mapWithOperand({PR_SYMBOL, entry}),
+                CODEOP_EQUAL,
+                result,
+                CodeGenerator::Triples::Operand({SYMBOL, entry}),
                 mapWithOperand(m.reference)
             });
         }
@@ -4579,13 +4651,16 @@ void createTruncateTriple(Metadata& result, const Metadata& operand)
 
     if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
     {
-        result.reference.tref = CodeGenerator::INTERMEDIATE_CODE->addTriple(
-            {TR_FTOI, mapWithOperand(operand.reference), mapWithOperand({ PR_NULL, nullptr })}
-        );
-        result.reference.type = PR_TRIPLE;
+        result.reference.tref = CodeGenerator::INTERMEDIATE_CODE->addTriple ({
+            CODEOP_FTOI,
+            result.expression.type,
+            mapWithOperand(operand.reference),
+            CodeGenerator::Triples::Operand({ NULLREF, nullptr })
+        });
+        result.reference.type = TRIPLE;
     }
     else
-        result.reference = { PR_NULL, nullptr };
+        result.reference = { NULLREF, nullptr };
     
     result.expression.assignable = false;
 }
@@ -4599,15 +4674,37 @@ void createArithmeticTriple(Metadata& r, const Metadata& o1, const Metadata& o2,
     r.expression.pid = o1.expression.pid;
     StringPool::append(o1.expression.pid, " " + std::string(1, op) + " " + *StringPool::get(o2.expression.pid));
 
+    int codeop;
+    switch (op)
+    {
+    case '+':
+        codeop = CODEOP_SUM;
+        break;
+    case '-':
+        codeop = CODEOP_SUB;
+        break;
+    case '*':
+        codeop = CODEOP_MUL;
+        break;
+    case '/':
+        codeop = CODEOP_DIV;
+        break;
+    default:
+        codeop = UNKNOWN;
+    }
+
     if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
     {
-        r.reference.tref = CodeGenerator::INTERMEDIATE_CODE->addTriple(
-            {op, mapWithOperand(o1.reference), mapWithOperand(o2.reference)}
-        );
-        r.reference.type = PR_TRIPLE;
+        r.reference.tref = CodeGenerator::INTERMEDIATE_CODE->addTriple ({
+            codeop,
+            r.expression.type,
+            mapWithOperand(o1.reference),
+            mapWithOperand(o2.reference)
+        });
+        r.reference.type = TRIPLE;
     }
     else
-        r.reference = { PR_NULL, nullptr };
+        r.reference = { NULLREF, nullptr };
     
     r.expression.assignable = false;
 }
