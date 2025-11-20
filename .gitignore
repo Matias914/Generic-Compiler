@@ -50,3 +50,5 @@ gc_tests
 *.output
 
 .idea/
+
+outputs/
