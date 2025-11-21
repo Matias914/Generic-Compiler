@@ -15,7 +15,7 @@ PROGRAMA {
     uint X Y
     uint PROGRAMA.X Y := Z;
     float X;
-    X := 1UI--2.1;
+    X := 1--2.1;
     uint ;
     uint Y(cr Z, cr uint Z, cr uint, cr, A) {
         if (X > Y)
@@ -23,18 +23,18 @@ PROGRAMA {
         endif;
         A := Y(A->Z);
         B := C;
-        X := Y(A->Z, B->P, B+2UI->Y) + Z(Y->R);
+        X := Y(A->Z, B->P, B+2->Y) + Z(Y->R);
     };
 
-    D, A  B.B  C.C = 1UI  -1.13452345F+12  5UI 1UI;
+    D, A  B.B  C.C = 1  -1.1345234512  5UI 1UI;
     D, A  B.B  C.C = 1UI  -1.13452345F+12, 5UI, 1UI;
-    D, A  B.B  C.C = 1UI, trunc(  5UI, 1UI;
+    D, A  B.B  C.C 1UI, trunc(  5UI, 1UI;
     D, A  B.B  C.C = 1UI, -1.13452345F+12, 5UI, 1UI;
-    D, A  B.B, C.C = 1UI  -1.13452345F+12  5UI, 1UI;
+    D, A  B.B, C.C = 1UI  -1.13452345F+12  5UI, 1;
     D, A  B.B, C.C = trunc 1UI  -1.13452345F+12, 5UI, 1UI;
     D, A  B.B, C.C = 1UI, -1.13452345F+12  5UI, 1UI;
     D, A  B.B, C.C = 1UI, -1.13452345F+12, 5UI, 1UI;
-    D, A  B.B  C.C = 1UI  -1.13452345F+12  trunc 5UI), 1UI;
+    D, A  B.B  C.C = 1UI  -1.1345234+12  trunc 5UI), 1UI;
     D, A, B.B  C.C = 1UI  -1.13452345F+12, 5UI, 1UI;
     D, A, B.B  C.C = 1UI, -1.13452345F+12  5UI, 1UI;
     D, A, B.B  C.C = 1UI, -1.13452345F+12, 5UI, 1UI;
@@ -47,11 +47,11 @@ PROGRAMA {
 
     do {
         X := Y;
-        F(trunc(A - -2.1), Y->);
+        F(truc(A - -2.1), Y->);
     } (X =! Z);
 
     do
-    while (X =! Z);
+    whie (X =! Z);
 
     Y(X->Y PROGRAMA.P->P);
     Y(uint X) { if (X > Y) return (Y.X); endif; };
@@ -81,16 +81,16 @@ PROGRAMA {
 
     A F.B F.C = 1UI -1.13452345F+12 5UI;
     X, Y = :==, F(X->) 2UI
-    X = 1UI, 0.25F-2, trunc(-2.54);
+    X = 1UI, 0.25F-2, trnc(-2.54);
 
     MIVARIABLESUPERLARGAQUESETIENE := 2UI;
 
     (uint PARAMETER) { if (X =! Y) { print("a"); } endif;(trunc(PROGRAMA.X));
-    (uint PARAMETER)  if (X =! Y) { print("a"); } endif; } (PROGRAMA.X);
+    (uit PARAMETER)  i(X =! Y) { print("a"); } endf; } (PROGRAMA.X);
     (uint PARAMETER)  if (X =! Y) { print("a"); } endif;  (trunc 2.3);
 
     if X =! Y(A->Z)
-        print("hola");
+        prin("hola");
     endif;
 
     X := trunc -2UI;
@@ -105,7 +105,7 @@ PROGRAMA {
     X := + 2.1 -2.1 -2.1;
 
 
-    X := 3UI + 4UI (uint PARAMETER) { if (X =! Y) { print("a"); } endif; } (trunc3.X));
+    X := 3UI + 4 (uint PARAMETER) { if (X =! Y) { print("a"); } endif; } (truc3.X));
 
     if X = X
         (uint PARAMETER) { if (X =! Y) { print("a"); } endif; } (trunc(3e.X;
@@ -117,8 +117,7 @@ PROGRAMA {
 
     if (X > Y);
 
-    if (X > Y)
-        return (trdasfunc (Y.X));
+    if (X >turn (trdasfunc (Y.X));
     else
 
     ;
@@ -129,7 +128,7 @@ PROGRAMA {
 
     endif;
 
-    if (X > Y)
+    if (X  Y)
 
     ;
 
@@ -143,12 +142,11 @@ PROGRAMA {
 
     else
         return (trunc (Y.X));
-    endif;
 
     PROGRAMA3 {
         uint X;
-        X := 2UI;
-        print(X);
+        X := 2;
+        print(X);as.daskd
     }
 
     print( trunc X)
@@ -164,13 +162,18 @@ uint F(cr uint A, cr uint B) {
 };
 
 PROGRAMA2
-    uint X;
+    uit X;
+    as
+     d5
+     f adf
+     +S;ljK;Llk;LS 66DD  j;LAJS
+
 }
 
-uint F(cr uint A, cr uint B) {
-    uint uint F(cr uint A, cr uint B) {
+uint F(cr unt A, cr uint B) {
+    uint uint F(c uint A, cr uint B) {
              uint X Y;
              return (A + B);
          }; X Y;
-    return (A + B);
-};
+    retrn (A + B);
+};alkfj

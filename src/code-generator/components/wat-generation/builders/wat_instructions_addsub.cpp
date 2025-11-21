@@ -30,8 +30,29 @@ namespace CodeGenerator::InstructionsGenerators
         switch (m.type)
         {
         case UINT:
-            generateOperand(m.output, m.nesting, m.o1);
-            generateOperand(m.output, m.nesting, m.o2);
+            // Se escribe 1er. variable auxiliar
+            if (m.o2.type == TRIPLE)
+                m.output.append(m.nesting)
+                        .append("global.set $tempi2\n");
+
+            // Se escribe 2da. variable auxiliar
+            if (m.o1.type == TRIPLE)
+                m.output.append(m.nesting)
+                        .append("global.set $tempi1\n");
+
+            // Ahora se obtienen valores, cosa de guardar en un registro temporal
+            // lo que se trajo de otro.
+            if (m.o1.type == TRIPLE)
+                m.output.append(m.nesting)
+                        .append("global.get $tempi1\n");
+            else
+                generateOperand(m.output, m.nesting, m.o1);
+
+            if (m.o2.type == TRIPLE)
+                m.output.append(m.nesting)
+                        .append("global.get $tempi2\n");
+            else
+                generateOperand(m.output, m.nesting, m.o2);
 
             m.output.append(m.nesting)
                     .append("i32.lt_u\n")
@@ -48,8 +69,15 @@ namespace CodeGenerator::InstructionsGenerators
                     .append(m.nesting)
                     .append("end\n");
 
-            generateOperand(m.output, m.nesting, m.o1);
-            generateOperand(m.output, m.nesting, m.o2);
+            if (m.o1.type == TRIPLE)
+                m.output.append(m.nesting).append("global.get $tempi1\n");
+            else
+                generateOperand(m.output, m.nesting, m.o1);
+
+            if (m.o2.type == TRIPLE)
+                m.output.append(m.nesting).append("global.get $tempi2\n");
+            else
+                generateOperand(m.output, m.nesting, m.o2);
 
             m.output.append(m.nesting)
                     .append("i32.sub\n");

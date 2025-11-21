@@ -87,28 +87,29 @@ extern int yydebug;
     YYEOF = 0,                     /* "end of file"  */
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
-    INVALID_TOKEN = 258,           /* INVALID_TOKEN  */
-    WORD_IF = 259,                 /* WORD_IF  */
-    WORD_ELSE = 260,               /* WORD_ELSE  */
-    WORD_ENDIF = 261,              /* WORD_ENDIF  */
-    WORD_DO = 262,                 /* WORD_DO  */
-    WORD_WHILE = 263,              /* WORD_WHILE  */
-    WORD_RETURN = 264,             /* WORD_RETURN  */
-    WORD_PRINT = 265,              /* WORD_PRINT  */
-    WORD_TRUNC = 266,              /* WORD_TRUNC  */
-    WORD_UINT = 267,               /* WORD_UINT  */
-    WORD_FLOAT = 268,              /* WORD_FLOAT  */
-    WORD_CR = 269,                 /* WORD_CR  */
-    OP_POINTER = 270,              /* OP_POINTER  */
-    OP_EQUAL = 271,                /* OP_EQUAL  */
-    OP_GE = 272,                   /* OP_GE  */
-    OP_LE = 273,                   /* OP_LE  */
-    OP_ASSIGN = 274,               /* OP_ASSIGN  */
-    OP_NOT_EQUAL = 275,            /* OP_NOT_EQUAL  */
-    IDENTIFIER = 276,              /* IDENTIFIER  */
-    LITERAL_FLOAT = 277,           /* LITERAL_FLOAT  */
-    LITERAL_UINT = 278,            /* LITERAL_UINT  */
-    LITERAL_STRING = 279           /* LITERAL_STRING  */
+    INVALID_RWORD = 258,           /* INVALID_RWORD  */
+    INVALID_TOKEN = 259,           /* INVALID_TOKEN  */
+    WORD_IF = 260,                 /* WORD_IF  */
+    WORD_ELSE = 261,               /* WORD_ELSE  */
+    WORD_ENDIF = 262,              /* WORD_ENDIF  */
+    WORD_DO = 263,                 /* WORD_DO  */
+    WORD_WHILE = 264,              /* WORD_WHILE  */
+    WORD_RETURN = 265,             /* WORD_RETURN  */
+    WORD_PRINT = 266,              /* WORD_PRINT  */
+    WORD_TRUNC = 267,              /* WORD_TRUNC  */
+    WORD_UINT = 268,               /* WORD_UINT  */
+    WORD_FLOAT = 269,              /* WORD_FLOAT  */
+    WORD_CR = 270,                 /* WORD_CR  */
+    OP_POINTER = 271,              /* OP_POINTER  */
+    OP_EQUAL = 272,                /* OP_EQUAL  */
+    OP_GE = 273,                   /* OP_GE  */
+    OP_LE = 274,                   /* OP_LE  */
+    OP_ASSIGN = 275,               /* OP_ASSIGN  */
+    OP_NOT_EQUAL = 276,            /* OP_NOT_EQUAL  */
+    IDENTIFIER = 277,              /* IDENTIFIER  */
+    LITERAL_FLOAT = 278,           /* LITERAL_FLOAT  */
+    LITERAL_UINT = 279,            /* LITERAL_UINT  */
+    LITERAL_STRING = 280           /* LITERAL_STRING  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -126,7 +127,7 @@ union YYSTYPE
     Operator op;
     bool returnable;
 
-#line 130 "include/syntax-analyzer/components/parser.h"
+#line 131 "include/syntax-analyzer/components/parser.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

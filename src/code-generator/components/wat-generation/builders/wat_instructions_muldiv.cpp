@@ -27,10 +27,17 @@ namespace CodeGenerator::InstructionsGenerators
 
     void generateDivision(const Metadata& m)
     {
-        generateOperand(m.output, m.nesting, m.o2);
         switch (m.type)
         {
         case UINT:
+            if (m.o2.type == TRIPLE)
+                m.output.append(m.nesting)
+                        .append("global.set $tempi1\n")
+                        .append(m.nesting)
+                        .append("global.get $tempi1\n");
+            else
+                generateOperand(m.output, m.nesting, m.o2);
+
             m.output.append(m.nesting)
                     .append("i32.const 0\n")
                     .append(m.nesting)
@@ -49,12 +56,23 @@ namespace CodeGenerator::InstructionsGenerators
                     .append("end\n");
 
             generateOperand(m.output, m.nesting, m.o1);
-            generateOperand(m.output, m.nesting, m.o2);
+            if (m.o2.type == TRIPLE)
+                m.output.append(m.nesting).append("global.get $tempi1\n");
+            else
+                generateOperand(m.output, m.nesting, m.o2);
 
             m.output.append(m.nesting)
                     .append("i32.div_u\n");
             break;
         case FLOAT:
+            if (m.o2.type == TRIPLE)
+                m.output.append(m.nesting)
+                        .append("global.set $tempf1\n")
+                        .append(m.nesting)
+                        .append("global.get $tempf1\n");
+            else
+                generateOperand(m.output, m.nesting, m.o2);
+
             m.output.append(m.nesting)
                     .append("f32.const 0.0\n")
                     .append(m.nesting)
@@ -73,7 +91,10 @@ namespace CodeGenerator::InstructionsGenerators
                     .append("end\n");
 
             generateOperand(m.output, m.nesting, m.o1);
-            generateOperand(m.output, m.nesting, m.o2);
+            if (m.o2.type == TRIPLE)
+                m.output.append(m.nesting).append("global.get $tempf1\n");
+            else
+                generateOperand(m.output, m.nesting, m.o2);
 
             m.output.append(m.nesting)
                     .append("f32.div\n");

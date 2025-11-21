@@ -61,6 +61,8 @@ set(COMPILER_SOURCES
         src/code-generator/components/wat-generation/builders/wat_instructions_addsub.cpp
         src/code-generator/components/wat-generation/builders/wat_instructions_comparators.cpp
         src/code-generator/components/wat-generation/builders/wat_instructions_control.cpp
+        src/code-generator/components/wat-generation/builders/wat_instructions_functions.cpp
+        src/code-generator/components/wat-generation/builders/wat_instructions_coertions.cpp
 )
 
 set(TEST_SOURCES

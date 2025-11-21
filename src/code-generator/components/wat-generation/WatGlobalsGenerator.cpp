@@ -13,7 +13,7 @@ namespace CodeGenerator
 
     std::string WatGlobalsGenerator::determineInitializer(const SymbolTable::Entry& entry)
     {
-        if (entry.type == UINT)
+        if (entry.type == UINT || entry.use == FUNCTION)
             return "0";
         if (entry.type == FLOAT)
             return "0.0";
@@ -22,11 +22,23 @@ namespace CodeGenerator
 
     void WatGlobalsGenerator::generate()
     {
+        // Auxiliar Variables for Checks
+        output.append("\t(global $tempi1 (mut i32) (i32.const 0))\n")
+              .append("\t(global $tempi2 (mut i32) (i32.const 0))\n")
+              .append("\t(global $tempf1 (mut f32) (f32.const 0.0))\n")
+              .append("\t(global $tempf2 (mut f32) (f32.const 0.0))\n");
+
         for (const auto& entry : SYMBOL_TABLE)
         {
+
             if (entry.use == VARIABLE || entry.use == PARAMETER || entry.use == FUNCTION)
             {
-                const std::string type = WatTranslator::translateType(entry.type);
+                std::string type;
+                if (entry.use != FUNCTION)
+                    type = WatTranslator::translateType(entry.type);
+                // Because Function Variables are used to detect recursion
+                else
+                    type = "i32";
                 output.append("\t(global ")
                       .append(WatTranslator::translateSymbol(entry.symbol))
                       .append(" (mut ")

@@ -176,7 +176,7 @@ int SemanticActions::SA16(std::string& lexeme, const char character)
     {
         const Log log(ERROR, INVALID_RESERVED_WORD, YYLINENO, {lexeme});
         ERROR_HANDLER.add(log);
-        return INVALID_TOKEN;
+        return INVALID_RWORD;
     }
     return token;
 }

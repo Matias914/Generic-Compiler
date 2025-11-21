@@ -12,21 +12,26 @@ namespace SemanticAnalyzer
 {
     TypeChecker::TypeChecker() {}
 
+    bool TypeChecker::truncateNecessary(const Expression& e)
+    {
+        if (e.type != UINT)
+            return true;
+        const Log l (
+            WARNING,
+            TRUNC_USELESS,
+            LexicalAnalyzer::YYLINENO,
+            {e.representation}
+        );
+        ERROR_HANDLER.add(l);
+        return false;
+    }
+
     int TypeChecker::checkTruncate(const Expression& e)
     {
         switch (e.type)
         {
         case UINT:
-            {
-                const Log l (
-                    WARNING,
-                    TRUNC_USELESS,
-                    LexicalAnalyzer::YYLINENO,
-                    {e.representation}
-                );
-                ERROR_HANDLER.add(l);
-                return UINT;
-            }
+            return UINT;
         case FLOAT:
             return UINT;
         default:

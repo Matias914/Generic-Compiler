@@ -23,10 +23,13 @@ namespace CodeGenerator
         const WatSegmentGenerator& segment;
 
         std::map<char, InstructionsGenerators::InstructionsGenerator> mapping = {
+            {CODEOP_FTOI         , InstructionsGenerators::generateFloatToInteger },
             {CODEOP_BRANCH_TRUE  , InstructionsGenerators::generateBranchTrue     },
             {CODEOP_BRANCH_FALSE , InstructionsGenerators::generateBranchFalse    },
             {CODEOP_IF_END       , InstructionsGenerators::generateEndif          },
             {CODEOP_DO_START     , InstructionsGenerators::generateDoWhile        },
+            {CODEOP_CALL         , InstructionsGenerators::generateCall           },
+            {CODEOP_RET          , InstructionsGenerators::generateReturn         },
             {CODEOP_PRINT        , InstructionsGenerators::generatePrint          },
             {CODEOP_ASSIGN       , InstructionsGenerators::generateAssignment     },
             {CODEOP_EQUAL        , InstructionsGenerators::generateEquals         },

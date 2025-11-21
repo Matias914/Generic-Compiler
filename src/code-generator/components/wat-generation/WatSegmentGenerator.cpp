@@ -3,7 +3,7 @@
 
 extern LiteralTable LITERAL_TABLE;
 
-#define ERROR_MSG(X) "\"[[ RUNTIME ERROR ]]: " X ".\""
+#define ERROR_MSG(X) "\"\\n\\n[[ RUNTIME ERROR ]]: " X ".\\n\""
 
 namespace CodeGenerator
 {

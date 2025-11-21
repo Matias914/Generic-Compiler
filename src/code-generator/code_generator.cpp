@@ -41,7 +41,8 @@ namespace CodeGenerator
         if (POSITIONS.empty())
             throw std::runtime_error(RUNTIME_E1);
         POSITIONS.pop();
-        INTERMEDIATE_CODE = ICODES[POSITIONS.top()].code;
+        if (!POSITIONS.empty())
+            INTERMEDIATE_CODE = ICODES[POSITIONS.top()].code;
     }
 
     std::string getIntermediateCode()

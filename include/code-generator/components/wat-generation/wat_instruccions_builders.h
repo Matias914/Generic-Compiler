@@ -21,11 +21,18 @@ namespace CodeGenerator::InstructionsGenerators
 
     void generatePrint(const Metadata& m);
 
+    // Coertions
+    void generateFloatToInteger(const Metadata& m);
+
     // Control
     void generateBranchTrue(const Metadata& m);
     void generateBranchFalse(const Metadata& m);
     void generateEndif(const Metadata& m);
     void generateDoWhile(const Metadata& m);
+
+    // Functions
+    void generateCall(const Metadata& m);
+    void generateReturn(const Metadata& m);
 
     // Comparators
     void generateEquals(const Metadata& m);
@@ -36,6 +43,8 @@ namespace CodeGenerator::InstructionsGenerators
     void generateLessThan(const Metadata& m);
 
     void generateAssignment(const Metadata& m);
+
+    // Operations
     void generateAddition(const Metadata& m);
     void generateDivision(const Metadata& m);
     void generateSubstraction(const Metadata& m);

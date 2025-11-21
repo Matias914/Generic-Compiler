@@ -18,6 +18,8 @@ namespace SemanticAnalyzer
         };
         TypeChecker();
 
+        static bool truncateNecessary(const Expression& e);
+
         static int checkTruncate(const Expression& e);
         static int checkOperation(const Expression& e1, const Expression& e2);
         static int checkSemantics(const Expression& e1, const Expression& e2);

@@ -26,7 +26,7 @@ namespace CodeGenerator::InstructionsGenerators
                 {
                     m.nesting.pop_back();
                     m.output.append(m.nesting)
-                            .append("else");
+                            .append("else\n");
                     m.nesting.append("\t");
                 }
             }

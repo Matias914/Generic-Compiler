@@ -5,6 +5,7 @@
 #include <stdexcept>
 
 #define RUNTIME_E1 "\ngenerate: Code Block must be a function or program"
+#define RUNTIME_E2 "\ngenerate: Operation Code Unrecognized"
 
 namespace CodeGenerator
 {
@@ -25,6 +26,10 @@ namespace CodeGenerator
             output.append("(export \"main\") (result i32)\n");
         else if (s.use == FUNCTION)
         {
+            // Lambda is VOID
+            if (s.type == UINT)
+                output.append("(result i32)\n");
+
             // Recursion Detection
             output.append("\n")
                   .append(nesting)
@@ -63,18 +68,15 @@ namespace CodeGenerator
                 o2,
                 segment,
             };
-            if (op != CODEOP_FTOI && op != CODEOP_CALL && op != CODEOP_RET)
-                mapping[op](m);
+            if (auto it = mapping.find(op); it != mapping.end())
+                it->second(m);
+            else
+                throw std::runtime_error(RUNTIME_E2);
         }
         if (s.use == PROGRAM)
             output.append(nesting)
                   .append("i32.const 0\n\t)");
         else
-            output.append(nesting)
-                  .append("i32.const 0\n")
-                  .append(nesting)
-                  .append("global.set ")
-                  .append(symbol)
-                  .append("\n\t)\n\n");
+            output.append("\t)\n\n");
     }
 }

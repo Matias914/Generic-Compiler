@@ -79,6 +79,7 @@ void createArithmeticTriple(Metadata& r, const Metadata& o1, const Metadata& o2,
     bool returnable;
 }
 
+%token INVALID_RWORD
 %token INVALID_TOKEN
 %token WORD_IF
 %token WORD_ELSE
@@ -105,17 +106,8 @@ void createArithmeticTriple(Metadata& r, const Metadata& o1, const Metadata& o2,
 %start global
 
 // For Functions
-%type <returnable> program_statements
-%type <returnable> program_statement
-%type <returnable> executable_body
-%type <returnable> executable_statements
-%type <returnable> executable_stmt
-%type <returnable> function_body
-%type <returnable> do_while
-%type <returnable> do_body
-%type <returnable> if
-%type <returnable> condition_body_setup
-%type <returnable> then_body_setup
+%type <returnable> program_statements program_statement executable_body executable_statements executable_stmt
+%type <returnable> function_body do_while do_body if if_head condition_body_setup then_body_setup
 
 // For Arithmetic Expressions
 %type <metadata> lambda_real_parameter assignment_head assignment_tail function_invocation_head invocation_setup
@@ -1127,7 +1119,6 @@ lambda_invocation_middle:
         yyerrok;
 
     } // Action: SemanticAnalyzer::addScope() + Error: Missing Closing Bracket
-    lambda_invocation_tail
     | executable_statements error
     {
         SemanticAnalyzer::removeScope();
@@ -1136,7 +1127,6 @@ lambda_invocation_middle:
         yyerrok;
 
     } // Action: SemanticAnalyzer::addScope() + Error: Missing Both Brackets
-    lambda_invocation_tail
 ;
 
 lambda_invocation_tail:
@@ -1145,6 +1135,7 @@ lambda_invocation_tail:
         SemanticActions::logStructure("LAMBDA");
 
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
+        {
             CodeGenerator::INTERMEDIATE_CODE->addTriple ({
                 CODEOP_RET,
                 UNKNOWN,
@@ -1152,13 +1143,12 @@ lambda_invocation_tail:
                 CodeGenerator::Triples::Operand({NULLREF, nullptr})
             });
 
-        CodeGenerator::notifyEndOfBlock();
+            CodeGenerator::notifyEndOfBlock();
 
-        SemanticAnalyzer::LambdaChecker::Lambda l = SemanticAnalyzer::CHK_LAMBDAS.getLambda();
-        if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
-        {
-            CodeGenerator::Triples::Operand o1;
             SemanticAnalyzer::TypeChecker::Expression e1, e2;
+            SemanticAnalyzer::LambdaChecker::Lambda l = SemanticAnalyzer::CHK_LAMBDAS.getLambda();
+
+            CodeGenerator::Triples::Operand o1;
             if (l.parameter != nullptr)
             {
                 e1 = { l.parameter->type, l.pname, true };
@@ -1202,7 +1192,60 @@ lambda_real_parameter:
 // ======================================= If ====================================== //
 
 if:
-    WORD_IF condition_body_setup WORD_ENDIF ';'
+    if_head ';'
+    {
+        $$ = $1;
+    }
+    | if_head error
+    {
+        $$ = $1;
+
+        SemanticActions::specifySyntaxError(MISSING_SEMICOLON);
+        yyerrok;
+    }
+    | WORD_IF error ';'
+    {
+        $$ = false;
+
+        SemanticActions::specifySyntaxError(IF_SYNTAX_ERROR);
+        yyerrok;
+
+    } // Error: If General Error
+    | WORD_IF condition error ';'
+    {
+        $$ = false;
+
+        SemanticActions::specifySyntaxError(MISSING_IF_EXECUTABLE_BODY);
+        SemanticActions::announceSpecificError(MISSING_ENDIF);
+        yyerrok;
+
+    } // Error: Missing Exutable Body and WORD_ENDIF in WORD_IF
+    | WORD_IF condition_body_setup WORD_ELSE error ';'
+    {
+        $$ = $2;
+
+        if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
+        {
+            CodeGenerator::INTERMEDIATE_CODE->updateTripleReference (
+                STACK.top(), CodeGenerator::INTERMEDIATE_CODE->addTriple({
+                    CODEOP_IF_END,
+                    UNKNOWN,
+                    CodeGenerator::Triples::Operand({NULLREF, nullptr}),
+                    CodeGenerator::Triples::Operand({NULLREF, nullptr}),
+                })
+            );
+            STACK.pop();
+        }
+
+        SemanticActions::specifySyntaxError(MISSING_ELSE_EXECUTABLE_BODY);
+        SemanticActions::announceSpecificError(MISSING_ENDIF);
+        yyerrok;
+
+    } // Error: Missing Executable Body in WORD_ELSE and WORD_ENDIF
+;
+
+if_head:
+    WORD_IF condition_body_setup WORD_ENDIF
     {
         $$ = $2;
 
@@ -1222,28 +1265,7 @@ if:
         SemanticActions::logStructure("WORD_IF");
 
     } // Log  : If
-    | WORD_IF condition_body_setup WORD_ENDIF error
-    {
-        $$ = $2;
-
-        if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
-        {
-            CodeGenerator::INTERMEDIATE_CODE->updateTripleReference (
-                STACK.top(), CodeGenerator::INTERMEDIATE_CODE->addTriple({
-                    CODEOP_IF_END,
-                    UNKNOWN,
-                    CodeGenerator::Triples::Operand({NULLREF, nullptr}),
-                    CodeGenerator::Triples::Operand({NULLREF, nullptr}),
-                })
-            );
-            STACK.pop();
-        }
-
-        SemanticActions::specifySyntaxError(MISSING_SEMICOLON);
-        yyerrok;
-
-    } // Error: Missing Semicolon
-    | WORD_IF condition_body_setup WORD_ELSE executable_body WORD_ENDIF ';'
+    | WORD_IF condition_body_setup WORD_ELSE executable_body WORD_ENDIF
     {
         $$ = $2;
 
@@ -1263,27 +1285,6 @@ if:
         SemanticActions::logStructure("WORD_IF-WORD_ELSE");
 
     } // Log  : If-Else
-    | WORD_IF condition_body_setup WORD_ELSE executable_body WORD_ENDIF error
-    {
-        $$ = $2 || $4;
-
-        if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
-        {
-            CodeGenerator::INTERMEDIATE_CODE->updateTripleReference (
-                STACK.top(), CodeGenerator::INTERMEDIATE_CODE->addTriple({
-                    CODEOP_IF_END,
-                    UNKNOWN,
-                    CodeGenerator::Triples::Operand({NULLREF, nullptr}),
-                    CodeGenerator::Triples::Operand({NULLREF, nullptr}),
-                })
-            );
-            STACK.pop();
-        }
-
-        SemanticActions::specifySyntaxError(MISSING_SEMICOLON);
-        yyerrok;
-
-    } // Error: Missing Semicolon
     | WORD_IF condition_body_setup error
     {
         $$ = $2;
@@ -1326,7 +1327,7 @@ if:
         yyerrok;
 
     } // Error: Missing WORD_ENDIF in WORD_IF-WORD_ELSE
-    | WORD_IF condition error WORD_ENDIF ';'
+    | WORD_IF condition error WORD_ENDIF
     {
         $$ = false;
 
@@ -1334,16 +1335,7 @@ if:
         yyerrok;
 
     } // Error: Missing Executable Body in WORD_IF
-    | WORD_IF condition error ';'
-    {
-        $$ = false;
-
-        SemanticActions::specifySyntaxError(MISSING_IF_EXECUTABLE_BODY);
-        SemanticActions::announceSpecificError(MISSING_ENDIF);
-        yyerrok;
-
-    } // Error: Missing Exutable Body and WORD_ENDIF in WORD_IF
-    | WORD_IF condition error WORD_ELSE WORD_ENDIF ';'
+    | WORD_IF condition error WORD_ELSE WORD_ENDIF
     {
         $$ = false;
 
@@ -1351,7 +1343,7 @@ if:
         yyerrok;
 
     } // Error: Missing Both Executable Body in WORD_IF-WORD_ELSE
-    | WORD_IF condition error WORD_ELSE ';'
+    | WORD_IF condition error WORD_ELSE
     {
         $$ = false;
 
@@ -1360,7 +1352,7 @@ if:
         yyerrok;
 
     } // Error: Missing Both Executable Body and WORD_ENDIF in WORD_IF-WORD_ELSE
-    | WORD_IF condition_body_setup WORD_ELSE error WORD_ENDIF ';'
+    | WORD_IF condition_body_setup WORD_ELSE error WORD_ENDIF
     {
         $$ = $2;
 
@@ -1381,7 +1373,14 @@ if:
         yyerrok;
 
     } // Error: Missing Executable Body in WORD_ELSE
-    | WORD_IF condition_body_setup WORD_ELSE error ';'
+    | WORD_ELSE executable_body WORD_ENDIF
+    {
+        $$ = $2;
+
+        SemanticActions::announceSpecificError(MISSING_IF_STATEMENT);
+
+    } // Error: Missing WORD_IF Statement
+    | WORD_IF condition_body_setup WORD_ELSE executable_body INVALID_RWORD
     {
         $$ = $2;
 
@@ -1397,28 +1396,41 @@ if:
             );
             STACK.pop();
         }
-
-        SemanticActions::specifySyntaxError(MISSING_ELSE_EXECUTABLE_BODY);
-        SemanticActions::announceSpecificError(MISSING_ENDIF);
-        yyerrok;
-
-    } // Error: Missing Executable Body in WORD_ELSE and WORD_ENDIF
-    | WORD_ELSE executable_body WORD_ENDIF ';'
+    } // Error: (Lexical) Invalid Endif
+    | WORD_IF condition_body_setup INVALID_RWORD executable_body WORD_ENDIF
     {
         $$ = $2;
 
-        SemanticActions::announceSpecificError(MISSING_IF_STATEMENT);
-        yyerrok;
-
-    } // Error: Missing WORD_IF Statement
-    | WORD_IF error ';'
+        if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
+        {
+            CodeGenerator::INTERMEDIATE_CODE->updateTripleReference (
+                STACK.top(), CodeGenerator::INTERMEDIATE_CODE->addTriple({
+                    CODEOP_IF_END,
+                    UNKNOWN,
+                    CodeGenerator::Triples::Operand({NULLREF, nullptr}),
+                    CodeGenerator::Triples::Operand({NULLREF, nullptr}),
+                })
+            );
+            STACK.pop();
+        }
+    } // Error: (Lexical) Invalid Else
+    | WORD_IF condition_body_setup INVALID_RWORD executable_body INVALID_RWORD
     {
-        $$ = false;
+        $$ = $2;
 
-        SemanticActions::specifySyntaxError(IF_SYNTAX_ERROR);
-        yyerrok;
-
-    } // Error: If General Error
+        if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
+        {
+            CodeGenerator::INTERMEDIATE_CODE->updateTripleReference (
+                STACK.top(), CodeGenerator::INTERMEDIATE_CODE->addTriple({
+                    CODEOP_IF_END,
+                    UNKNOWN,
+                    CodeGenerator::Triples::Operand({NULLREF, nullptr}),
+                    CodeGenerator::Triples::Operand({NULLREF, nullptr}),
+                })
+            );
+            STACK.pop();
+        }
+    } // Error: (Lexical) Invalid Else and Endif
 ;
 
 condition_body_setup:
@@ -1861,6 +1873,10 @@ comparison:
         yyerrok;
 
     } // Error: Missing Comparison Operator
+    | expression comparison_operator error
+    {
+        yyerrok;
+    }
 ;
 
 comparison_operator:
@@ -2320,22 +2336,25 @@ void createMultipleAssignmentTriple(const Metadata& m)
 void createTruncateTriple(Metadata& result, const Metadata& operand)
 {
     SemanticAnalyzer::TypeChecker::Expression e = { operand.expression.type, *StringPool::get(operand.expression.pid) };
-    result.expression.type = SemanticAnalyzer::CHK_TYPES.checkTruncate(e);
 
-    if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
+    if (SemanticAnalyzer::CHK_TYPES.truncateNecessary(e))
     {
-        result.reference.tref = CodeGenerator::INTERMEDIATE_CODE->addTriple ({
-            CODEOP_FTOI,
-            result.expression.type,
-            mapWithOperand(operand.reference),
-            CodeGenerator::Triples::Operand({ NULLREF, nullptr })
-        });
-        result.reference.type = TRIPLE;
-    }
-    else
-        result.reference = { NULLREF, nullptr };
-    
-    result.expression.assignable = false;
+        if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
+        {
+            result.expression.type = SemanticAnalyzer::CHK_TYPES.checkTruncate(e);
+            result.reference.tref = CodeGenerator::INTERMEDIATE_CODE->addTriple ({
+                CODEOP_FTOI,
+                result.expression.type,
+                mapWithOperand(operand.reference),
+                CodeGenerator::Triples::Operand({ NULLREF, nullptr })
+            });
+            result.reference.type = TRIPLE;
+        }
+        else
+            result.reference = { NULLREF, nullptr };
+        result.expression.assignable = false;
+    } else
+        result = operand;
 }
 
 void createArithmeticTriple(Metadata& r, const Metadata& o1, const Metadata& o2, const char op)
