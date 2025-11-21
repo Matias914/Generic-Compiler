@@ -47,6 +47,11 @@ void ReportHandler::generateReport() const
     std::string mssg = "";
     mssg.reserve(256 * this->logs.size());
     using namespace StringBuilders::ReportBuilders;
+
+    file << CodeGenerator::getIntermediateCode() << "\n\n"
+         << SYMBOL_TABLE.toString()              << "\n\n"
+         << LITERAL_TABLE.toString()             << "\n\n";
+
     mssg.append(generateTokenHeader());
     // Se recorren los tokens
     for (auto it = this->logs.begin(); it != this->last_token; ++it) {
@@ -65,10 +70,7 @@ void ReportHandler::generateReport() const
             .append(" - ")
             .append(generateStructureReport(it->content));
     }
-    file << mssg << "\n\n"
-         << SYMBOL_TABLE.toString()  << "\n\n"
-         << LITERAL_TABLE.toString() << "\n\n"
-         << CodeGenerator::getIntermediateCode();
+    file << mssg;
     file.close();
 }
 

@@ -486,6 +486,10 @@ function_body:
     {
         $$ = $2;
     }
+    | '{' '}'
+    {
+        $$ = false;
+    }
     | '{' program_statements YYEOF
     {
         $$ = $2;
@@ -669,7 +673,7 @@ assignment:
             };
 
             CodeGenerator::INTERMEDIATE_CODE->addTriple ({
-                CODEOP_EQUAL, 
+                CODEOP_ASSIGN,
                 SemanticAnalyzer::CHK_TYPES.checkAssignment(e1, e2),
                 mapWithOperand($1.reference),
                 mapWithOperand($2.reference)
@@ -1059,7 +1063,7 @@ real_parameter:
             { 
                 int typeCR = SemanticAnalyzer::CHK_TYPES.checkAssignment(e1, e2);
                 CodeGenerator::INTERMEDIATE_CODE->addBuffer ({
-                    CODEOP_EQUAL,
+                    CODEOP_ASSIGN,
                     typeCR,
                     mapWithOperand($1.reference), 
                     CodeGenerator::Triples::Operand({ SYMBOL, entry }) 
@@ -1069,7 +1073,7 @@ real_parameter:
             { 
                 int typeCV = SemanticAnalyzer::CHK_TYPES.checkAssignment(e2, e1);
                 CodeGenerator::INTERMEDIATE_CODE->addTriple ({ 
-                    CODEOP_EQUAL,
+                    CODEOP_ASSIGN,
                     typeCV,
                     CodeGenerator::Triples::Operand({ SYMBOL, entry }), 
                     mapWithOperand($1.reference) 
@@ -1169,7 +1173,7 @@ lambda_invocation_tail:
             int type = SemanticAnalyzer::CHK_TYPES.checkAssignment(e1, e2);
 
             CodeGenerator::INTERMEDIATE_CODE->addTriple ({
-                CODEOP_EQUAL,
+                CODEOP_ASSIGN,
                 type,
                 o1,
                 mapWithOperand($2.reference)
@@ -1204,8 +1208,13 @@ if:
 
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
         {
-            CodeGenerator::INTERMEDIATE_CODE->updateTripleReference(
-                STACK.top(), CodeGenerator::INTERMEDIATE_CODE->getLastTriple() + 1
+            CodeGenerator::INTERMEDIATE_CODE->updateTripleReference (
+                STACK.top(), CodeGenerator::INTERMEDIATE_CODE->addTriple({
+                    CODEOP_IF_END,
+                    UNKNOWN,
+                    CodeGenerator::Triples::Operand({NULLREF, nullptr}),
+                    CodeGenerator::Triples::Operand({NULLREF, nullptr}),
+                })
             );
             STACK.pop();
         }
@@ -1219,8 +1228,13 @@ if:
 
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
         {
-            CodeGenerator::INTERMEDIATE_CODE->updateTripleReference(
-                STACK.top(), CodeGenerator::INTERMEDIATE_CODE->getLastTriple() + 1
+            CodeGenerator::INTERMEDIATE_CODE->updateTripleReference (
+                STACK.top(), CodeGenerator::INTERMEDIATE_CODE->addTriple({
+                    CODEOP_IF_END,
+                    UNKNOWN,
+                    CodeGenerator::Triples::Operand({NULLREF, nullptr}),
+                    CodeGenerator::Triples::Operand({NULLREF, nullptr}),
+                })
             );
             STACK.pop();
         }
@@ -1235,8 +1249,13 @@ if:
 
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
         {
-            CodeGenerator::INTERMEDIATE_CODE->updateTripleReference(
-                STACK.top(), CodeGenerator::INTERMEDIATE_CODE->getLastTriple() + 1
+            CodeGenerator::INTERMEDIATE_CODE->updateTripleReference (
+                STACK.top(), CodeGenerator::INTERMEDIATE_CODE->addTriple({
+                    CODEOP_IF_END,
+                    UNKNOWN,
+                    CodeGenerator::Triples::Operand({NULLREF, nullptr}),
+                    CodeGenerator::Triples::Operand({NULLREF, nullptr}),
+                })
             );
             STACK.pop();
         }
@@ -1250,8 +1269,13 @@ if:
 
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
         {
-            CodeGenerator::INTERMEDIATE_CODE->updateTripleReference(
-                STACK.top(), CodeGenerator::INTERMEDIATE_CODE->getLastTriple() + 1
+            CodeGenerator::INTERMEDIATE_CODE->updateTripleReference (
+                STACK.top(), CodeGenerator::INTERMEDIATE_CODE->addTriple({
+                    CODEOP_IF_END,
+                    UNKNOWN,
+                    CodeGenerator::Triples::Operand({NULLREF, nullptr}),
+                    CodeGenerator::Triples::Operand({NULLREF, nullptr}),
+                })
             );
             STACK.pop();
         }
@@ -1266,8 +1290,13 @@ if:
 
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
         {
-            CodeGenerator::INTERMEDIATE_CODE->updateTripleReference(
-                STACK.top(), CodeGenerator::INTERMEDIATE_CODE->getLastTriple() + 1
+            CodeGenerator::INTERMEDIATE_CODE->updateTripleReference (
+                STACK.top(), CodeGenerator::INTERMEDIATE_CODE->addTriple({
+                    CODEOP_IF_END,
+                    UNKNOWN,
+                    CodeGenerator::Triples::Operand({NULLREF, nullptr}),
+                    CodeGenerator::Triples::Operand({NULLREF, nullptr}),
+                })
             );
             STACK.pop();
         }
@@ -1282,8 +1311,13 @@ if:
 
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
         {
-            CodeGenerator::INTERMEDIATE_CODE->updateTripleReference(
-                STACK.top(), CodeGenerator::INTERMEDIATE_CODE->getLastTriple() + 1
+            CodeGenerator::INTERMEDIATE_CODE->updateTripleReference (
+                STACK.top(), CodeGenerator::INTERMEDIATE_CODE->addTriple({
+                    CODEOP_IF_END,
+                    UNKNOWN,
+                    CodeGenerator::Triples::Operand({NULLREF, nullptr}),
+                    CodeGenerator::Triples::Operand({NULLREF, nullptr}),
+                })
             );
             STACK.pop();
         }
@@ -1332,8 +1366,13 @@ if:
 
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
         {
-            CodeGenerator::INTERMEDIATE_CODE->updateTripleReference(
-                STACK.top(), CodeGenerator::INTERMEDIATE_CODE->getLastTriple() + 1
+            CodeGenerator::INTERMEDIATE_CODE->updateTripleReference (
+                STACK.top(), CodeGenerator::INTERMEDIATE_CODE->addTriple({
+                    CODEOP_IF_END,
+                    UNKNOWN,
+                    CodeGenerator::Triples::Operand({NULLREF, nullptr}),
+                    CodeGenerator::Triples::Operand({NULLREF, nullptr}),
+                })
             );
             STACK.pop();
         }
@@ -1348,8 +1387,13 @@ if:
 
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
         {
-            CodeGenerator::INTERMEDIATE_CODE->updateTripleReference(
-                STACK.top(), CodeGenerator::INTERMEDIATE_CODE->getLastTriple() + 1
+            CodeGenerator::INTERMEDIATE_CODE->updateTripleReference (
+                STACK.top(), CodeGenerator::INTERMEDIATE_CODE->addTriple({
+                    CODEOP_IF_END,
+                    UNKNOWN,
+                    CodeGenerator::Triples::Operand({NULLREF, nullptr}),
+                    CodeGenerator::Triples::Operand({NULLREF, nullptr}),
+                })
             );
             STACK.pop();
         }
@@ -1449,7 +1493,12 @@ do_while_head:
     WORD_DO
     {
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
-            STACK.push(CodeGenerator::INTERMEDIATE_CODE->getLastTriple() + 1);
+            STACK.push(CodeGenerator::INTERMEDIATE_CODE->addTriple ({
+                CODEOP_DO_START,
+                UNKNOWN,
+                CodeGenerator::Triples::Operand({NULLREF, nullptr}),
+                CodeGenerator::Triples::Operand({NULLREF, nullptr})
+            }));
     }
 ;
 
@@ -1523,6 +1572,10 @@ executable_body:
     | executable_stmt
     {
         $$ = $1;
+    }
+    | '{' '}'
+    {
+        $$ = false;
     }
 ;
 
@@ -2255,7 +2308,7 @@ void createMultipleAssignmentTriple(const Metadata& m)
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
         {
             CodeGenerator::INTERMEDIATE_CODE->addTriple ({
-                CODEOP_EQUAL,
+                CODEOP_ASSIGN,
                 result,
                 CodeGenerator::Triples::Operand({SYMBOL, entry}),
                 mapWithOperand(m.reference)

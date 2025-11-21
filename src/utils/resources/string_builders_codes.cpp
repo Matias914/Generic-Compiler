@@ -8,9 +8,9 @@ namespace StringBuilders::CodeBuilders
 {
     void intermediateCodeHeader(std::string& mssg)
     {
-        mssg.append("==============================================")
+        mssg.append("===================================")
             .append(" Intermediate Code ")
-            .append("==============================================");
+            .append("===================================");
     }
 
     void intermediateCodeBlock(std::string& mssg, const SymbolTable::Entry* ref, const Triples* t, int& line)

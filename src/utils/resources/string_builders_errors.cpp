@@ -326,7 +326,7 @@ namespace StringBuilders::ErrorBuilders
 
     std::string missingComparisonOperator(const std::vector<std::string>& content)
     {
-        return ERROR_MSG("Two expressions cannot be compared without operator. Did you mean to write '==', '!=', ... ?");
+        return ERROR_MSG("Two expressions cannot be compared without operator. Did you mean to write '==', '=!', ... ?");
     }
 
     std::string missingExpressionOperator(const std::vector<std::string>& content)

@@ -1,9 +1,10 @@
 #include "code-generator/components/wat-generation/wat_translations.h"
 #include "code-generator/components/wat-generation/wat_instruccions_builders.h"
 
-#define RUNTIME_E1 "\ngeneratePrintInstruccions: constant type cannot be unsupported."
-#define RUNTIME_E2 "\ngeneratePrintInstruccions: variable type cant be other than uint."
-#define RUNTIME_E3 "\ngeneratePrintInstruccions: an expression cannot have other type than uint or float."
+#define RUNTIME_E1 "\ngeneratePrint: unknow constant type."
+#define RUNTIME_E2 "\ngeneratePrint: variable type cant be other than uint."
+#define RUNTIME_E3 "\ngeneratePrint: an expression cannot have other type than uint or float."
+#define RUNTIME_E4 "\ngeneratePrint: unknown operand type."
 
 #include <stdexcept>
 
@@ -17,7 +18,7 @@ namespace CodeGenerator::InstructionsGenerators
             if (m.o1.value.lref->type == STRING)
                 m.output.append(m.nesting)
                       .append("i32.const ")
-                      .append(std::to_string(m.offsets.at(m.o1.value.lref)))
+                      .append(std::to_string(m.segment.getOffset(m.o1.value.lref)))
                       .append("\n")
                       .append(m.nesting)
                       .append("call $print_str\n");
@@ -35,6 +36,8 @@ namespace CodeGenerator::InstructionsGenerators
                       .append("\n")
                       .append(m.nesting)
                       .append("call $print_f32\n");
+            else
+                throw std::runtime_error(RUNTIME_E1);
             break;
         case SYMBOL:
             if (m.o1.value.sref->type == UINT)
@@ -56,9 +59,10 @@ namespace CodeGenerator::InstructionsGenerators
                 m.output.append("call $print_f32\n");
             else
                 throw std::runtime_error(RUNTIME_E3);
+            break;
         }
         default:
-            break;
+            throw std::runtime_error(RUNTIME_E4);
         }
     }
 }

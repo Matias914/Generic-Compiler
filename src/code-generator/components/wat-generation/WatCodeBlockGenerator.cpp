@@ -8,22 +8,50 @@
 
 namespace CodeGenerator
 {
-    WatCodeBlockGenerator::WatCodeBlockGenerator(std::string& output, std::map<const LiteralTable::Entry*, int> offsets) :
+    WatCodeBlockGenerator::WatCodeBlockGenerator(std::string& output, const WatSegmentGenerator& segment) :
         CodeBlockGenerator(output),
         nesting("\t\t"),
-        offsets(std::move(offsets)) {}
+        segment(segment) {}
 
     void WatCodeBlockGenerator::generate(const SymbolTable::Entry& s, const Triples& triples)
     {
-        output.append("\t(func ")
-              .append(WatTranslator::translateSymbol(s.symbol))
-              .append(" ");
-        if (s.use == PROGRAM)
-            output.append("(export \"main\") (result i32)");
-        else if (s.use != FUNCTION)
-            throw std::runtime_error(RUNTIME_E1);
+        const auto& symbol = WatTranslator::translateSymbol(s.symbol);
 
-        output.append("\n");
+        output.append("\t(func ")
+              .append(symbol)
+              .append(" ");
+
+        if (s.use == PROGRAM)
+            output.append("(export \"main\") (result i32)\n");
+        else if (s.use == FUNCTION)
+        {
+            // Recursion Detection
+            output.append("\n")
+                  .append(nesting)
+                  .append("global.get ")
+                  .append(symbol)
+                  .append("\n")
+                  .append(nesting)
+                  .append("if\n")
+                  .append(nesting)
+                  .append("\ti32.const ")
+                  .append(std::to_string(segment.getRecursionOffset()))
+                  .append("\n")
+                  .append(nesting)
+                  .append("\tcall $print_str\n")
+                  .append(nesting)
+                  .append("\tunreachable\n")
+                  .append(nesting)
+                  .append("end\n")
+                  .append(nesting)
+                  .append("i32.const 1\n")
+                  .append(nesting)
+                  .append("global.set ")
+                  .append(symbol)
+                  .append("\n");
+        }
+        else
+            throw std::runtime_error(RUNTIME_E1);
 
         for (const auto& [op, tp, o1, o2] : triples)
         {
@@ -33,11 +61,20 @@ namespace CodeGenerator
                 tp,
                 o1,
                 o2,
-                offsets,
+                segment,
             };
-            if (op == CODEOP_PRINT)
+            if (op != CODEOP_FTOI && op != CODEOP_CALL && op != CODEOP_RET)
                 mapping[op](m);
         }
-        output.append("\t\ti32.const 0\n\t)");
+        if (s.use == PROGRAM)
+            output.append(nesting)
+                  .append("i32.const 0\n\t)");
+        else
+            output.append(nesting)
+                  .append("i32.const 0\n")
+                  .append(nesting)
+                  .append("global.set ")
+                  .append(symbol)
+                  .append("\n\t)\n\n");
     }
 }

@@ -7,7 +7,6 @@
 
 using namespace CodeGenerator;
 
-// Helper function to get the string representation of an operand
 std::string getStringOperand(const Triples::Operand& o, const int line)
 {
     switch (o.type)
@@ -15,6 +14,8 @@ std::string getStringOperand(const Triples::Operand& o, const int line)
     case SYMBOL:
         return o.value.sref->symbol;
     case LITERAL:
+        if (o.value.lref->constant.size() > 20)
+            return o.value.lref->constant.substr(0, 17) + "...\"";
         return o.value.lref->constant;
     case TRIPLE:
         return "[" + std::to_string(line + o.value.tref) + "]";
@@ -23,7 +24,6 @@ std::string getStringOperand(const Triples::Operand& o, const int line)
     }
 }
 
-// Helper function to get the string representation of an operator
 std::string getStringOperator(const char op)
 {
     switch (op)
@@ -40,6 +40,8 @@ std::string getStringOperator(const char op)
         return "RET";
     case CODEOP_PRINT:
         return "PRINT";
+    case CODEOP_ASSIGN:
+        return "=";
     case CODEOP_EQUAL:
         return "==";
     case CODEOP_NOT_EQUAL:
@@ -60,6 +62,10 @@ std::string getStringOperator(const char op)
         return "*";
     case CODEOP_DIV:
         return "/";
+    case CODEOP_DO_START:
+        return "dostart";
+    case CODEOP_IF_END:
+        return "endif";
     default:
         return std::string(1, op);
     }
@@ -70,10 +76,10 @@ namespace StringBuilders::TripleBuilders
     void triple(std::string& mssg, const Triples::Triple& t, const int line)
     {
         std::stringstream ss;
-        ss << "( "
-            << std::left << std::setw(6) << getStringOperator(t.codeop) << ", "
-            << std::left << std::setw(30) << getStringOperand(t.o1, line) << ", "
-            << std::left << std::setw(30) << getStringOperand(t.o2, line) << " )" << "\n";
+        ss << "( " << std::left << std::setw(8) << getStringOperator(t.codeop)
+           << ", " << std::left << std::setw(22) << getStringOperand(t.o1, line)
+           << ", " << std::left << std::setw(22) << getStringOperand(t.o2, line)
+           << " ) => type: " << t.type << "\n";
         mssg.append(ss.str());
     }
 }

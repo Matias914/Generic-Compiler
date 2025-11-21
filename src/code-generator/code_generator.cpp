@@ -62,7 +62,6 @@ namespace CodeGenerator
     bool generateWebAssembly()
     {
         std::ofstream file("../outputs/wa.wat");
-        constexpr int page_size = 65536;
 
         // Creates Header
         std::string code =
@@ -70,25 +69,20 @@ namespace CodeGenerator
             "\t(import \"console\" \"print_str\" (func $print_str (param i32)))\n"
             "\t(import \"console\" \"print_i32\" (func $print_i32 (param i32)))\n"
             "\t(import \"console\" \"print_f32\" (func $print_f32 (param f32)))\n"
-            "\t(memory (export \"memory\") ";
-
-        code.append(std::to_string (
-            (LITERAL_TABLE.getStringCount() + LITERAL_TABLE.getCharactersCount()) / page_size + 1
-        )).append(")\n\n");
+            "\n"
+        ;
 
         auto wsegment = WatSegmentGenerator(code);
-        for (const auto& entry : LITERAL_TABLE)
-            wsegment.generate(entry);
+        wsegment.generate();
 
         code.append("\n");
 
         auto wglobals = WatGlobalsGenerator(code);
-        for (const auto& entry : SYMBOL_TABLE )
-            wglobals.generate(entry);
+        wglobals.generate();
 
         code.append("\n");
 
-        auto wcodeblock = WatCodeBlockGenerator(code, wsegment.getOffsets());
+        auto wcodeblock = WatCodeBlockGenerator(code, wsegment);
         for (auto it = ICODES.rbegin(); it != ICODES.rend(); ++it) {
             auto& [ref, code] = *it;
             wcodeblock.generate(*ref, *code);

@@ -1,23 +1,129 @@
 
 PROGRAMA {
-    uint X1, X2, X3;
+    uint Y (cr uint A, uint B) {
+        ## Descomentar para error
+            Y(A->A, B->B);
+        ##
+        return (2UI);
+    };
 
-    X1 := 2UI;
+    print("\n\n ------- Prueba Print Cadenas\n\n");
 
-    print("Hola como estas?");
+    print("Hola como estas? ... ");
     print("Prueba WA");
 
-    print(X1);
+    print("\n\n ------- Prueba Print Constantes\n\n");
 
-    print(2UI);
-
+    print("4\t -> ");
+    print(4UI);
+    print("\n3.4F+10\t -> ");
     print(3.4F+10);
+    print("\n.3F-1\t -> ");
     print(.3F-1);
+    print("\n2.3\t -> ");
     print(2.3);
+    print("\n2.\t -> ");
     print(2.);
 
+    print("\n\n ------- Prueba Asignaciones\n\n");
+
+    uint X1, X2, X3, X4;
+
+    print("X1 == ");
+    print(X1);
+    print("\nX2 == ");
+    print(X2);
+    print("\nX3 == ");
+    print(X3);
+
+    X1 := 1UI;
+    X2, X3 = 2UI, 3UI;
+
+    print("\nX1 == ");
+    print(X1);
+    print("\nX2 == ");
+    print(X2);
+    print("\nX3 == ");
+    print(X3);
+
+    print("\n\n ------- Prueba Operaciones\n\n");
+
+    print("X1 + X2 = ");
+    print(X1 + X2);
+    print("\nX1 + X2 * X3 + X1 = ");
+    print(X1 + X2 * X3 + X1);
+
+    print("\n\n ------- Prueba Divisiones\n\n");
+
+    print("X1 / X3 = ");
+    X1 := X1 / X3;
+    print(X1);
+    print("\n11.0 / 2.0 = ");
+    print(11.0 / 2.0);
+    print("\n11 / 2 = ");
+    print(11UI / 2UI);
+    print("\n");
+
+    ## Descomentar para error
+        X1 := X2 / X1;
     ##
-        print(2. + 3.4);
-        print(2UI + 3UI);
+
+    print("\n\n ------- Prueba Resta\n\n");
+
+    X4 := 65535UI;
+    X1 := X3 - X1;
+    print("X3 (3) - X1 (0) = ");
+    print(X1);
+
+    ## Descomentar para error
+        X1 := X2  - X3;
     ##
+
+    print("\n\n ------- Prueba Comparaciones\n\n");
+
+    print("X1 (3) ? X2 (2) ...\n");
+    if (X1 == X2) { print("Igual\n");         } endif;
+    if (X1 =! X2) { print("Distinto\n");      } endif;
+    if (X1 >= X2) { print("Mayor o Igual\n"); } endif;
+    if (X1 <= X2) { print("Menor o Igual\n"); } endif;
+    if (X1 >  X2) { print("Mayor");           } endif;
+    if (X1 <  X2) { print("Menor");           } endif;
+
+    print("\n\n ------- Prueba Control\n\n");
+
+    X1 := 0UI;
+    do
+    {
+        print("\n- Iteracion - ");
+        print(X1);
+        print("\n");
+
+        if (X1 / 2UI == 0UI)
+        {
+            print("X1 / 2 da 0\n");
+            X3 := 5UI;
+            print(X3);
+            print("\n");
+            do
+            {
+                X3 := X3 - 1UI;
+                print(X3);
+                print("\n");
+            } while (X3 > 1UI);
+        }
+        else
+        {
+            print("X1 / 2 no da 0\n");
+            do
+            {
+                X3 := X3 + 1UI;
+            } while (X3 < 65534UI);
+            print(X3);
+            print("\n");
+        }
+        endif;
+
+        X1 := X1 + 1UI;
+
+    } while (X1 < 3UI);
 }

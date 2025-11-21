@@ -6,7 +6,7 @@ namespace StringBuilders::TableBuilders
 {
     void symbolTableHeader(std::string& mssg)
     {
-        mssg.append("================================================")
+        mssg.append("==============================================")
             .append(" Symbol Table ")
             .append("================================================");
     }
@@ -63,9 +63,9 @@ namespace StringBuilders::TableBuilders
 
     void literalTableHeader(std::string& mssg)
     {
-        mssg.append("================================================")
+        mssg.append("==============================================")
             .append(" Literal Table ")
-            .append("================================================");
+            .append("===============================================");
     }
 
     void literalTableEntry(std::string& mssg, const LiteralTable::Entry& entry)

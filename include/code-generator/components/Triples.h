@@ -14,19 +14,22 @@
 #define CODEOP_FTOI         0
 #define CODEOP_BRANCH_TRUE  1
 #define CODEOP_BRANCH_FALSE 2
-#define CODEOP_CALL         3
-#define CODEOP_RET          4
-#define CODEOP_PRINT        5
-#define CODEOP_EQUAL        6
-#define CODEOP_NOT_EQUAL    7
-#define CODEOP_GE           8
-#define CODEOP_LE           9
-#define CODEOP_GT           10
-#define CODEOP_LT           11
-#define CODEOP_SUM          12
-#define CODEOP_SUB          13
-#define CODEOP_MUL          14
-#define CODEOP_DIV          15
+#define CODEOP_DO_START     3
+#define CODEOP_IF_END       4
+#define CODEOP_CALL         5
+#define CODEOP_RET          6
+#define CODEOP_PRINT        7
+#define CODEOP_ASSIGN       8
+#define CODEOP_EQUAL        9
+#define CODEOP_NOT_EQUAL    10
+#define CODEOP_GE           11
+#define CODEOP_LE           12
+#define CODEOP_GT           13
+#define CODEOP_LT           14
+#define CODEOP_SUM          15
+#define CODEOP_SUB          16
+#define CODEOP_MUL          17
+#define CODEOP_DIV          18
 
 namespace CodeGenerator
 {

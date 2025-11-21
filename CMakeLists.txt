@@ -55,6 +55,12 @@ set(COMPILER_SOURCES
         src/code-generator/components/wat-generation/WatGlobalsGenerator.cpp
         src/code-generator/components/wat-generation/WatCodeBlockGenerator.cpp
         src/code-generator/components/wat-generation/builders/wat_instructions_print.cpp
+        src/code-generator/components/wat-generation/builders/wat_instructions_assignments.cpp
+        src/code-generator/components/wat-generation/builders/wat_instructions_muldiv.cpp
+        src/code-generator/components/wat-generation/builders/wat_instructions_operand.cpp
+        src/code-generator/components/wat-generation/builders/wat_instructions_addsub.cpp
+        src/code-generator/components/wat-generation/builders/wat_instructions_comparators.cpp
+        src/code-generator/components/wat-generation/builders/wat_instructions_control.cpp
 )
 
 set(TEST_SOURCES
