@@ -60,9 +60,9 @@ namespace CodeGenerator
         return mssg;
     }
 
-    bool generateWebAssembly()
+    bool generateWebAssembly(const std::string& output)
     {
-        std::ofstream file("../outputs/wa.wat");
+        std::ofstream file(output);
 
         // Creates Header
         std::string code =

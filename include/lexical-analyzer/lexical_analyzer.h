@@ -16,7 +16,7 @@ namespace LexicalAnalyzer
     extern std::ifstream SOURCE_FILE;
 
     int yylex();
-    bool open(const char* filename);
+    bool open(const std::string& filename);
 }
 
 #endif //GC_LEXICAL_ANALYZER_H

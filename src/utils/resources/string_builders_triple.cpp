@@ -12,6 +12,8 @@ std::string getStringOperand(const Triples::Operand& o, const int line)
     switch (o.type)
     {
     case SYMBOL:
+        if (o.value.sref->symbol.size() > 20)
+            return o.value.sref->symbol.substr(0, 17) + "...";
         return o.value.sref->symbol;
     case LITERAL:
         if (o.value.lref->constant.size() > 20)
@@ -71,6 +73,21 @@ std::string getStringOperator(const char op)
     }
 }
 
+std::string getStringType(const int type)
+{
+    switch (type)
+    {
+    case UINT:
+        return "U";
+    case FLOAT:
+        return "F";
+    case STRING:
+        return "S";
+    default:
+        return "N";
+    }
+}
+
 namespace StringBuilders::TripleBuilders
 {
     void triple(std::string& mssg, const Triples::Triple& t, const int line)
@@ -79,7 +96,7 @@ namespace StringBuilders::TripleBuilders
         ss << "( " << std::left << std::setw(8) << getStringOperator(t.codeop)
            << ", " << std::left << std::setw(22) << getStringOperand(t.o1, line)
            << ", " << std::left << std::setw(22) << getStringOperand(t.o2, line)
-           << " ) => type: " << t.type << "\n";
+           << " ) => type: " << getStringType(t.type) << "\n";
         mssg.append(ss.str());
     }
 }

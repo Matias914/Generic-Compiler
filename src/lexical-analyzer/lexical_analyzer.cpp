@@ -42,7 +42,7 @@ namespace LexicalAnalyzer
         return token;
     }
 
-    bool open(const char* filename)
+    bool open(const std::string& filename)
     {
         SOURCE_FILE = std::ifstream(filename, std::ios::in);
         if (!SOURCE_FILE.is_open())

@@ -1,0 +1,31 @@
+## ------------------------------------------------ ##
+##            Programa de Ejemplo Válido            ##
+## ------------------------------------------------ ##
+
+PROGRAMA {
+    uint X1, Y1, Z1, X2, Y2, Z2, X3, Y3, Z3;
+
+    uint MASLARGAQUELAFILADELSUPERMERCADOCUANDOESTASAPURADO;
+    MASLARGAQUELAFILADELSUPERMERCADOCUANDOESTASAPURADO := 2UI;
+
+    if (X1 =! Y(X1->A, X2->B, Y2->C)) {
+        X1 := 2UI * 2UI;
+    } else {
+        print("N/A");
+    }
+    endif;
+
+    ## Expresiones ##
+
+    X1 := trunc(X1-2UI);
+    X1 := X1 - Y(X1->A, X2->B, Y2->C);
+    X1 := 2UI / 3UI - 2UI;
+    X1 := 0.0 * 0UI / 0.0F+38 ;
+    X1 := 0.0 * 2UI * (uint X) { return (X); } (X1) / 65535UI;
+    X1 := 0.0 - -2.1 - - 3. + .2;
+    X1 := trunc(A * B);
+    X1 := - 2.1 - 2.1 - 2.1;
+
+
+    X1 Y1 Z1  = 2.0, 3.0, 4.0;
+}
