@@ -1,6 +1,6 @@
-#include "utils/ErrorHandler.h"
-#include "lexical-analyzer/lexical_analyzer.h"
 #include "semantic-analyzer/semantic_analyzer.h"
+
+#include "utils/ErrorHandler.h"
 
 extern SymbolTable SYMBOL_TABLE;
 extern ErrorHandler ERROR_HANDLER;

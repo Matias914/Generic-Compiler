@@ -1,12 +1,13 @@
-#include "code-generator/components/wat-generation/wat_translations.h"
 #include "code-generator/components/wat-generation/wat_instruccions_builders.h"
+
+#include <stdexcept>
+
+#include "code-generator/components/wat-generation/wat_translations.h"
 
 #define RUNTIME_E1 "\ngeneratePrint: unknow constant type."
 #define RUNTIME_E2 "\ngeneratePrint: variable type cant be other than uint."
 #define RUNTIME_E3 "\ngeneratePrint: an expression cannot have other type than uint or float."
 #define RUNTIME_E4 "\ngeneratePrint: unknown operand type."
-
-#include <stdexcept>
 
 namespace CodeGenerator::InstructionsGenerators
 {

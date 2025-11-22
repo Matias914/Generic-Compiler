@@ -6,6 +6,13 @@
 
 namespace SemanticAnalyzer
 {
+    /*
+     * @brief clase que se encarga de verificar la integridad de las sentencias de return
+     *
+     * Verifica que el return pertenezca a una función y que concuerde el tipo retornado con la
+     * firma de la función. Además determina, según la función actual si necesita o no sentencia
+     * de retorno.
+     */
     class ReturnChecker
     {
     public:

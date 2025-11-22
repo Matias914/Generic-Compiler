@@ -1,12 +1,13 @@
-#include "code-generator/components/wat-generation/wat_translations.h"
 #include "code-generator/components/wat-generation/wat_instruccions_builders.h"
+
+#include <stdexcept>
+
+#include "code-generator/components/wat-generation/wat_translations.h"
 
 #define RUNTIME_E1 "\ngenerateAssignment: left side cannot be other than uint."
 #define RUNTIME_E2 "\ngenerateAssignment: right side constant cannot be other than uint."
 #define RUNTIME_E3 "\ngenerateAssignment: right side symbol cannot be other than uint."
 #define RUNTIME_E4 "\ngenerateAssignment: unknown operand type."
-
-#include <stdexcept>
 
 namespace CodeGenerator::InstructionsGenerators
 {

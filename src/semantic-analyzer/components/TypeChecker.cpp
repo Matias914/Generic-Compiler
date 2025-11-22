@@ -1,10 +1,10 @@
-#include "utils/Log.h"
-#include "utils/ErrorHandler.h"
-#include "utils/resources/codes.h"
-#include "lexical-analyzer/lexical_analyzer.h"
 #include "semantic-analyzer/components/TypeChecker.h"
 
-#include <iostream>
+#include "lexical-analyzer/lexical_analyzer.h"
+#include "utils/ErrorHandler.h"
+#include "utils/Log.h"
+#include "utils/resources/codes.h"
+#include "utils/resources/types.h"
 
 extern ErrorHandler ERROR_HANDLER;
 

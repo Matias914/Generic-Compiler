@@ -1,15 +1,21 @@
 #ifndef GC_WATCODEBLOCKGENERATOR_H
 #define GC_WATCODEBLOCKGENERATOR_H
 
-#include "utils/SymbolTable.h"
-#include "code-generator/components/Triples.h"
-#include "code-generator/components/CodeBlockGenerator.h"
-#include "code-generator/components/wat-generation/wat_instruccions_builders.h"
-
 #include <string>
+
+#include "code-generator/components/CodeBlockGenerator.h"
+#include "code-generator/components/Triples.h"
+#include "code-generator/components/wat-generation/wat_instruccions_builders.h"
+#include "utils/SymbolTable.h"
 
 namespace CodeGenerator
 {
+    /*
+     * @brief clase que se encarga de traducir los tercetos a código WAT ejecutable.
+     *
+     * Para ello utiliza los InstructionsBuilders y el generador de segmentos quién lleva
+     * registro de los offsets de los mensajes de error.
+     */
     class WatCodeBlockGenerator final : public CodeBlockGenerator
     {
     public:

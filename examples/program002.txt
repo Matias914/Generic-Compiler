@@ -30,7 +30,7 @@ PROGRAMA {
 
     print("\n\n ------- Prueba Print Cadenas\n\n");
 
-    print("Hola como estas? ... ");
+    print("Hola como estas? ... \00 mensaje oculto por el C-Style");
     print("Prueba WA");
 
     print("\n\n ------- Prueba Print Constantes\n\n");

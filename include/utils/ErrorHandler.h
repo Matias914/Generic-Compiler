@@ -1,10 +1,9 @@
 #ifndef GC_ERRORHANDLER_H
 #define GC_ERRORHANDLER_H
 
-#include "Log.h"
-#include "resources/builders.h"
-
 #include <list>
+
+#include "Log.h"
 
 /*
  * @brief maneja logs relacionados con los Errores y Warnings

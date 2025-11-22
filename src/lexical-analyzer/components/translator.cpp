@@ -1,5 +1,6 @@
-#include "lexical-analyzer/components/lexical_tokens.h"
 #include "lexical-analyzer/components/translator.h"
+
+#include "lexical-analyzer/components/lexical_tokens.h"
 
 using namespace LexicalAnalyzer;
 

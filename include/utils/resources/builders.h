@@ -1,12 +1,12 @@
 #ifndef GC_BUILDERS_H
 #define GC_BUILDERS_H
 
-#include "utils/SymbolTable.h"
-#include "utils/LiteralTable.h"
-#include "code-generator/components/Triples.h"
-
 #include <string>
 #include <vector>
+
+#include "code-generator/components/Triples.h"
+#include "utils/LiteralTable.h"
+#include "utils/SymbolTable.h"
 
 namespace StringBuilders
 {

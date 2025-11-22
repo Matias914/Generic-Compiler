@@ -1,9 +1,9 @@
 #include "code-generator/components/wat-generation/wat_instruccions_builders.h"
 
+#include <stdexcept>
+
 #define RUNTIME_E1 "\ngenerateAddition: unknown addition type."
 #define RUNTIME_E2 "\ngenerateSubstraction: unknown substraction type."
-
-#include <stdexcept>
 
 namespace CodeGenerator::InstructionsGenerators
 {

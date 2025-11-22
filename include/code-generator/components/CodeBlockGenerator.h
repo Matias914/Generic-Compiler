@@ -1,11 +1,15 @@
 #ifndef GC_CODEBLOCKGENERATOR_H
 #define GC_CODEBLOCKGENERATOR_H
 
-#include "utils/SymbolTable.h"
 #include "code-generator/components/Triples.h"
+#include "utils/SymbolTable.h"
 
 namespace CodeGenerator
 {
+    /*
+     * @brief interfaz que define cómo es un generador de código ejecutable de
+     * Assembler.
+     */
     class CodeBlockGenerator
     {
     public:

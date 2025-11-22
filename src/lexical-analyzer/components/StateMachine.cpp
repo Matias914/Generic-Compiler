@@ -1,5 +1,6 @@
-#include "lexical-analyzer/components/states.h"
 #include "lexical-analyzer/components/StateMachine.h"
+
+#include "lexical-analyzer/components/states.h"
 
 using namespace LexicalAnalyzer;
 

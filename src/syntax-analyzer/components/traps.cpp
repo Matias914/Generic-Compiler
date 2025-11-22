@@ -1,9 +1,10 @@
-#include "utils/ErrorHandler.h"
-#include "utils/resources/codes.h"
+#include "syntax-analyzer/components/semantic_actions.h"
+
 #include "lexical-analyzer/lexical_analyzer.h"
 #include "syntax-analyzer/components/parser.h"
 #include "syntax-analyzer/components/translator.h"
-#include "syntax-analyzer/components/semantic_actions.h"
+#include "utils/ErrorHandler.h"
+#include "utils/resources/codes.h"
 
 #define RUNTIME_E1 "\nannounceSpecificErrorWithSymbol: No log was buffered"
 #define RUNTIME_E2 "\nspecifySyntaxError: No log was buffered"

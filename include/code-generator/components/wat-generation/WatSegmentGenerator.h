@@ -1,13 +1,19 @@
 #ifndef GC_WATSEGMENTGENERATOR_H
 #define GC_WATSEGMENTGENERATOR_H
 
-#include "utils/LiteralTable.h"
-#include "code-generator/components/HeaderGenerator.h"
-
 #include <map>
+
+#include "code-generator/components/HeaderGenerator.h"
+#include "utils/LiteralTable.h"
 
 namespace CodeGenerator
 {
+    /*
+     * @brief clase que genera el segmento de datos del archivo WAT generado.
+     *
+     * Para ello, utiliza las funcionalidades de tracing de la tabla de literales.
+     * Además, incorpora mensajes de errores y lleva registro de sus offsets.
+     */
     class WatSegmentGenerator final : public HeaderGenerator
     {
     public:

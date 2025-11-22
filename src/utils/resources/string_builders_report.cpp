@@ -1,4 +1,5 @@
 #include "utils/resources/builders.h"
+
 #include "syntax-analyzer/components/parser.h"
 
 namespace StringBuilders::ReportBuilders

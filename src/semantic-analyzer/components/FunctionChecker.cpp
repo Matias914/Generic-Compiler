@@ -1,9 +1,10 @@
-#include "utils/Log.h"
-#include "utils/ErrorHandler.h"
-#include "utils/resources/codes.h"
+#include "semantic-analyzer/components/FunctionChecker.h"
+
 #include "lexical-analyzer/lexical_analyzer.h"
 #include "semantic-analyzer/semantic_analyzer.h"
-#include "semantic-analyzer/components/FunctionChecker.h"
+#include "utils/ErrorHandler.h"
+#include "utils/Log.h"
+#include "utils/resources/codes.h"
 
 #define RUNTIME_E1 "\ncheckFunctionDeclaration: failed to add function"
 

@@ -5,6 +5,12 @@
 
 namespace SemanticAnalyzer
 {
+    /*
+     * @brief clase que se encarga de verificar la integridad de los programas.
+     *
+     * Verifica redeclaraciones, nombres y actualiza la tabla de símbolos con la información
+     * correspondiente.
+     */
     class ProgramChecker
     {
     public:

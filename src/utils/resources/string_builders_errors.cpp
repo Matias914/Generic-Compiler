@@ -1,6 +1,6 @@
-#include <stdexcept>
-
 #include "utils/resources/builders.h"
+
+#include <stdexcept>
 
 #define   ERROR_MSG(x) "Error: " x "."
 #define WARNING_MSG(x) "Warning: " x "."

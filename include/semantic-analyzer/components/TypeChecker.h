@@ -7,6 +7,10 @@ extern ErrorHandler ERROR_HANDLER;
 
 namespace SemanticAnalyzer
 {
+    /*
+     * @brief clase que se encarga de verificar la integridad de tipos de las operaciones aritméticas, de los
+     * truncamientos explícitos y de las asignaciones.
+     */
     class TypeChecker
     {
     public:

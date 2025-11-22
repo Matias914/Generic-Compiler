@@ -1,10 +1,10 @@
 #ifndef GC_TRIPLES_H
 #define GC_TRIPLES_H
 
-#include "utils/SymbolTable.h"
-#include "utils/LiteralTable.h"
-
 #include <vector>
+
+#include "utils/LiteralTable.h"
+#include "utils/SymbolTable.h"
 
 #define NULLREF (-1)
 #define TRIPLE    0
@@ -33,6 +33,12 @@
 
 namespace CodeGenerator
 {
+    /*
+     * @brief clase que almacena un bloque de tercetos.
+     *
+     * Su rol es justamente manejar su almacenamiento, permitiendo guardarlos,
+     * recorrerlos o modificarlos ligeramente (las referencias).
+     */
     class Triples
     {
     public:

@@ -3,6 +3,12 @@
 
 #include <string>
 
+/*
+ * @brief namespace usado para agrupar las funcionalidades relacionadas
+ * con el manejo de los strings que representan los elementos del programa.
+ *
+ * Tales representaciones son usadas para el manejo de errores.
+ */
 namespace SyntaxAnalyzer::StringPool
 {
      int create(const std::string& initial);

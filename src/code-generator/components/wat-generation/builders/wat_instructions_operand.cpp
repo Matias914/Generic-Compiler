@@ -1,7 +1,8 @@
-#include "code-generator/components/wat-generation/wat_translations.h"
 #include "code-generator/components/wat-generation/wat_instruccions_builders.h"
 
 #include <stdexcept>
+
+#include "code-generator/components/wat-generation/wat_translations.h"
 
 #define RUNTIME_E1 "\ngenerateOperand: constant operand cannot be other than uint or float."
 #define RUNTIME_E2 "\ngenerateOperand: symbol operand cannot be other than uint."

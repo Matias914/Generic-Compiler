@@ -1,12 +1,12 @@
 #ifndef GC_SYMBOLTABLE_H
 #define GC_SYMBOLTABLE_H
 
-#include "resources/types.h"
-
-#include <unordered_map>
-#include <string_view>
-#include <string>
 #include <list>
+#include <string>
+#include <string_view>
+#include <unordered_map>
+
+#include "resources/types.h"
 
 /*
  * @brief colecciona los símbolos hallados durante el análisis

@@ -1,3 +1,4 @@
+#include "cxxopts.hpp"
 #include "code-generator/code-generator.h"
 #include "lexical-analyzer/lexical_analyzer.h"
 #include "syntax-analyzer/syntax_analyzer.h"
@@ -5,10 +6,9 @@
 #include "utils/LiteralTable.h"
 #include "utils/ReportHandler.h"
 #include "utils/SymbolTable.h"
-#include "cxxopts.hpp"
 
-#include <iostream>
 #include <filesystem>
+#include <iostream>
 
 bool VERBOSE_OPTION = false;
 
@@ -87,7 +87,9 @@ int main(const int argc, char* argv[])
         } else {
             output_file = std::filesystem::path(input_file).stem().string() + ".wat";
         }
-        CodeGenerator::generateWebAssembly(output_file);
+
+        if (!CodeGenerator::generateWebAssembly(output_file))
+            throw std::runtime_error(ERROR_MSG("the output path does not exists"));
 
         if (ERROR_HANDLER.warningCount() != 0)
         {

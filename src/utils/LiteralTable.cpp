@@ -1,6 +1,6 @@
 #include "utils/LiteralTable.h"
+
 #include "utils/resources/builders.h"
-#include "syntax-analyzer/components/parser.h"
 
 LiteralTable::LiteralTable() : mapping(), entries(), strings_count(0), characters_count(0) {}
 

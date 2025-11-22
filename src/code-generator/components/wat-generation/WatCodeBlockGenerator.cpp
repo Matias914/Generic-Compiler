@@ -1,8 +1,9 @@
-#include "code-generator/components/wat-generation/wat_translations.h"
-#include "code-generator/components/wat-generation/WatSegmentGenerator.h"
 #include "code-generator/components/wat-generation/WatCodeBlockGenerator.h"
 
 #include <stdexcept>
+
+#include "code-generator/components/wat-generation/WatSegmentGenerator.h"
+#include "code-generator/components/wat-generation/wat_translations.h"
 
 #define RUNTIME_E1 "\ngenerate: Code Block must be a function or program"
 #define RUNTIME_E2 "\ngenerate: Operation Code Unrecognized"

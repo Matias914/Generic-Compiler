@@ -5,6 +5,12 @@
 
 namespace SemanticAnalyzer
 {
+    /*
+     * @brief clase que se encarga de verificar la integridad de las declaraciones
+     * de funciones.
+     *
+     * Verifica la integridad del tipo, nombre y parámetros.
+     */
     class FunctionChecker
     {
     public:

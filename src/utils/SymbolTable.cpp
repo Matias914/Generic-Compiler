@@ -1,7 +1,8 @@
 #include "utils/SymbolTable.h"
-#include "utils/resources/builders.h"
 
 #include <algorithm>
+
+#include "utils/resources/builders.h"
 
 SymbolTable::SymbolTable() : mapping(), entries() {}
 

@@ -3,6 +3,10 @@
 
 #include "components/Triples.h"
 
+/*
+ * @brief namespace que expone las funcionalidades del generador
+ * de código.
+ */
 namespace CodeGenerator
 {
     extern Triples* INTERMEDIATE_CODE;

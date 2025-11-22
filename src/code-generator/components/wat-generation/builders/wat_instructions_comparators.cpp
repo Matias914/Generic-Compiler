@@ -1,13 +1,13 @@
 #include "code-generator/components/wat-generation/wat_instruccions_builders.h"
 
+#include <stdexcept>
+
 #define RUNTIME_E1 "\ngenerateEquals: unknown == type."
 #define RUNTIME_E2 "\ngenerateNotEquals: unknown =! type."
 #define RUNTIME_E3 "\ngenerateGreaterOrEquals: >= type."
 #define RUNTIME_E4 "\ngenerateLessOrEquals: unknown <= type."
 #define RUNTIME_E5 "\ngenerateGreaterThan: unknown > type."
 #define RUNTIME_E6 "\ngenerateLessThan: unknown < type."
-
-#include <stdexcept>
 
 namespace CodeGenerator::InstructionsGenerators
 {

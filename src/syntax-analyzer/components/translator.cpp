@@ -1,5 +1,6 @@
-#include "syntax-analyzer/components/parser.h"
 #include "syntax-analyzer/components/translator.h"
+
+#include "syntax-analyzer/components/parser.h"
 
 using namespace SyntaxAnalyzer;
 

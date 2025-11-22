@@ -31,7 +31,7 @@
 
     <script>
         const params = new URLSearchParams(window.location.search);
-        const WASM_FILENAME = params.get('file') || './wa.wasm';
+        const WASM_FILENAME = params.get('file');
 
         let wasmMemory;
 

@@ -3,6 +3,10 @@
 
 #include <string>
 
+/*
+ * @brief namespace dedicado a funciones que traduzcan elementos del formato
+ * interno al de WAT.
+ */
 namespace CodeGenerator::WatTranslator
 {
     std::string translateType(int type);

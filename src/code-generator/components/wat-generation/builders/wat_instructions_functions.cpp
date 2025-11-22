@@ -1,9 +1,10 @@
-#include "code-generator/components/wat-generation/wat_translations.h"
 #include "code-generator/components/wat-generation/wat_instruccions_builders.h"
 
-#define RUNTIME_E1 "\ngenerateCall: invalid function."
-
 #include <stdexcept>
+
+#include "code-generator/components/wat-generation/wat_translations.h"
+
+#define RUNTIME_E1 "\ngenerateCall: invalid function."
 
 namespace CodeGenerator::InstructionsGenerators
 {

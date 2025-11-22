@@ -1,9 +1,10 @@
-#include "utils/Log.h"
-#include "utils/ErrorHandler.h"
-#include "utils/resources/codes.h"
+#include "semantic-analyzer/components/InvocationChecker.h"
+
 #include "lexical-analyzer/lexical_analyzer.h"
 #include "semantic-analyzer/semantic_analyzer.h"
-#include "semantic-analyzer/components/InvocationChecker.h"
+#include "utils/ErrorHandler.h"
+#include "utils/Log.h"
+#include "utils/resources/codes.h"
 
 extern SymbolTable SYMBOL_TABLE;
 extern ErrorHandler ERROR_HANDLER;

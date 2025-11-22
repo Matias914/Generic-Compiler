@@ -1,6 +1,7 @@
+#include "utils/resources/builders.h"
+
 #include "utils/LiteralTable.h"
 #include "utils/SymbolTable.h"
-#include "utils/resources/builders.h"
 
 namespace StringBuilders::TableBuilders
 {

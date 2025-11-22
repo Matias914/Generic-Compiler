@@ -1,9 +1,10 @@
 #include "utils/resources/builders.h"
-#include "code-generator/components/Triples.h"
 
-#include <string>
-#include <sstream>
 #include <iomanip>
+#include <sstream>
+#include <string>
+
+#include "code-generator/components/Triples.h"
 
 using namespace CodeGenerator;
 

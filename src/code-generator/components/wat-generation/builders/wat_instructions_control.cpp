@@ -1,9 +1,9 @@
 #include "code-generator/components/wat-generation/wat_instruccions_builders.h"
 
-#define WHILE_BLOCK_NAME "$do_while_block_"
-
 #include <stack>
 #include <stdexcept>
+
+#define WHILE_BLOCK_NAME "$do_while_block_"
 
 #define RUNTIME_E1 "\ngenerateBranchTrue: the stack was empty or there wasn't a triple ref."
 #define RUNTIME_E2 "\ngenerateBranchTrue: the stack should have had a while ID."

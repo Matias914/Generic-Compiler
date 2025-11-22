@@ -1,13 +1,14 @@
-#include "utils/ErrorHandler.h"
-#include "utils/resources/codes.h"
-#include "lexical-analyzer/lexical_analyzer.h"
-#include "syntax-analyzer/components/parser.h"
-#include "lexical-analyzer/components/reserved_words.h"
 #include "lexical-analyzer/components/semantic_actions.h"
 
+#include <cmath>
 #include <fstream>
 #include <limits>
-#include <cmath>
+
+#include "lexical-analyzer/lexical_analyzer.h"
+#include "lexical-analyzer/components/reserved_words.h"
+#include "syntax-analyzer/components/parser.h"
+#include "utils/ErrorHandler.h"
+#include "utils/resources/codes.h"
 
 extern SymbolTable SYMBOL_TABLE;
 extern LiteralTable LITERAL_TABLE;

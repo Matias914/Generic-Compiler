@@ -1,11 +1,18 @@
 #ifndef GC_WAT_INSTRUCCIONS_BUILDERS_H
 #define GC_WAT_INSTRUCCIONS_BUILDERS_H
 
+#include <string>
+
 #include "code-generator/components/Triples.h"
 #include "code-generator/components/wat-generation/WatSegmentGenerator.h"
 
-#include <string>
-
+/*
+ * @brief namespace dedicado a incorporar builders que sepan realizar
+ * la traducción a formato WAT de las instrucciones de código intermedio.
+ *
+ * Utiliza la estructura metadata como DTO, la cual consta con toda la información
+ * útil.
+ */
 namespace CodeGenerator::InstructionsGenerators
 {
     struct Metadata

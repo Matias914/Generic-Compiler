@@ -1,18 +1,22 @@
 #ifndef GC_SEMANTIC_ANALYZER_H
 #define GC_SEMANTIC_ANALYZER_H
 
-#include "components/TypeChecker.h"
-#include "components/ReturnChecker.h"
-#include "components/ProgramChecker.h"
-#include "components/FunctionChecker.h"
-#include "components/VariableChecker.h"
-#include "components/InvocationChecker.h"
-
 #include <string>
 
+#include "components/FunctionChecker.h"
+#include "components/InvocationChecker.h"
 #include "components/LambdaChecker.h"
+#include "components/ProgramChecker.h"
+#include "components/ReturnChecker.h"
+#include "components/TypeChecker.h"
+#include "components/VariableChecker.h"
 
-
+/*
+ * @brief namespace que expone las funciones del análisis semántico y sus componentes.
+ *
+ * Se divide en clases que se encargan de diferentes tipos de restricciones, repartiendo la funcionalidad
+ * en componentes.
+ */
 namespace SemanticAnalyzer
 {
     extern std::string SCOPE;

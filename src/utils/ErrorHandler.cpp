@@ -1,9 +1,10 @@
 #include "utils/ErrorHandler.h"
+
+#include <algorithm>
+#include <iostream>
+
 #include "utils/resources/codes.h"
 #include "utils/resources/dispatcher.h"
-
-#include <iostream>
-#include <algorithm>
 
 ErrorHandler::ErrorHandler()
 {

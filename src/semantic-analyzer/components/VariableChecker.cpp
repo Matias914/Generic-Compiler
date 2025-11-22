@@ -1,7 +1,8 @@
-#include "utils/resources/codes.h"
+#include "semantic-analyzer/components/VariableChecker.h"
+
 #include "lexical-analyzer/lexical_analyzer.h"
 #include "semantic-analyzer/semantic_analyzer.h"
-#include "semantic-analyzer/components/VariableChecker.h"
+#include "utils/resources/codes.h"
 
 #define RUNTIME_E1 "\ncheckVariableDeclaration: 'variables' is empty"
 #define RUNTIME_E2 "\ncheckVariableExistanceInScope: 'variables' is empty"

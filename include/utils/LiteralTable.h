@@ -1,9 +1,9 @@
 #ifndef GC_LITERALTABLE_H
 #define GC_LITERALTABLE_H
 
-#include <map>
-#include <list>
 #include <bitset>
+#include <list>
+#include <map>
 
 #include "resources/types.h"
 

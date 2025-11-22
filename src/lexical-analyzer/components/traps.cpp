@@ -1,10 +1,11 @@
-#include "utils/ErrorHandler.h"
-#include "utils/resources/codes.h"
-#include "syntax-analyzer/components/parser.h"
-#include "lexical-analyzer/lexical_analyzer.h"
 #include "lexical-analyzer/components/semantic_actions.h"
 
 #include <fstream>
+
+#include "lexical-analyzer/lexical_analyzer.h"
+#include "syntax-analyzer/components/parser.h"
+#include "utils/ErrorHandler.h"
+#include "utils/resources/codes.h"
 
 extern ErrorHandler ERROR_HANDLER;
 

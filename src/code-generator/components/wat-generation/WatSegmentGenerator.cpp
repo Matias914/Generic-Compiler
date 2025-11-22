@@ -1,5 +1,6 @@
-#include "utils/LiteralTable.h"
 #include "code-generator/components/wat-generation/WatSegmentGenerator.h"
+
+#include "utils/LiteralTable.h"
 
 extern LiteralTable LITERAL_TABLE;
 

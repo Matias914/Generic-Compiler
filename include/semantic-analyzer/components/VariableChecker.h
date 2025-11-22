@@ -7,6 +7,13 @@
 
 namespace SemanticAnalyzer
 {
+    /*
+     * @brief clase que se encarga de verificar la integridad de las variables del programa.
+     *
+     * Verifica la integridad del nombre y tipo. Dado que múltiples asignaciones de variables pueden seguirse tras
+     * la otra, se usa una cola. De esta manera, en asignaciones múltiples, puede llevarse registro de qué variable
+     * es la activa.
+     */
     class VariableChecker
     {
     public:

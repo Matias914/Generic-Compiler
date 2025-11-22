@@ -1,5 +1,6 @@
-#include "utils/resources/builders.h"
 #include "code-generator/components/Triples.h"
+
+#include "utils/resources/builders.h"
 
 namespace CodeGenerator
 {

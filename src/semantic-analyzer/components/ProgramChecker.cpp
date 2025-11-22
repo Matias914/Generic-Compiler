@@ -1,7 +1,8 @@
+#include "semantic-analyzer/components/ProgramChecker.h"
+
+#include "lexical-analyzer/lexical_analyzer.h"
 #include "utils/ErrorHandler.h"
 #include "utils/resources/codes.h"
-#include "lexical-analyzer/lexical_analyzer.h"
-#include "semantic-analyzer/components/ProgramChecker.h"
 
 #define RUNTIME_E1 "\nupdateSymbolAsProgram: failed to get program"
 

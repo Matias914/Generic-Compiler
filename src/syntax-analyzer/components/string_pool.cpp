@@ -1,7 +1,7 @@
 #include "syntax-analyzer/components/string_pool.h"
 
-#include <vector>
 #include <string>
+#include <vector>
 
 namespace SyntaxAnalyzer::StringPool
 {

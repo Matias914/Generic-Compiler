@@ -1,10 +1,11 @@
+#include "lexical-analyzer/lexical_analyzer.h"
+
+#include "lexical-analyzer/components/lexical_tokens.h"
+#include "lexical-analyzer/components/StateMachine.h"
+#include "lexical-analyzer/components/translator.h"
 #include "utils/Log.h"
 #include "utils/ReportHandler.h"
 #include "utils/resources/codes.h"
-#include "lexical-analyzer/lexical_analyzer.h"
-#include "lexical-analyzer/components/lexical_tokens.h"
-#include "lexical-analyzer/components/translator.h"
-#include "lexical-analyzer/components/StateMachine.h"
 
 extern bool VERBOSE_OPTION;
 extern ReportHandler REPORT_HANDLER;

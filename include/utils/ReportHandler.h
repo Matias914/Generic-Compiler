@@ -1,10 +1,10 @@
 #ifndef GC_REPORTHANDLER_H
 #define GC_REPORTHANDLER_H
 
-#include "utils/Log.h"
-
-#include <list>
 #include <fstream>
+#include <list>
+
+#include "utils/Log.h"
 
 /*
  * @brief maneja logs relacionados con la opción de VERBOSE (reporte)
