@@ -22,15 +22,15 @@ TEST_F(TestLexicalAnalyzer, string_literals)
 
     // ----- Cadenas de una línea ----- //
 
-    EXPECT_EQ(yylex(), STRING_LITERAL);
+    EXPECT_EQ(yylex(), LITERAL_STRING);
     EXPECT_TRUE(validLiteral("\"Esta es una cadena válida de una línea\""));
 
     EXPECT_EQ(yylex(), INVALID_TOKEN);
     EXPECT_FALSE(validLiteral("\"Esta es una cadena inválida de más de"));
 
     // Por la palabra reservada
-    EXPECT_EQ(yylex(), INVALID_TOKEN);
-    EXPECT_EQ(yylex(), INVALID_TOKEN);
+    EXPECT_EQ(yylex(), INVALID_RWORD);
+    EXPECT_EQ(yylex(), INVALID_RWORD);
 
     EXPECT_EQ(yylex(), INVALID_TOKEN);
     EXPECT_FALSE(validLiteral("\"Esta es otra cadena inválida"));

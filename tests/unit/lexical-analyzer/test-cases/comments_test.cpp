@@ -30,13 +30,13 @@ TEST_F(TestLexicalAnalyzer, comments)
     EXPECT_TRUE(validSymbol("C"));
 
     // Por la palabra reservada
-    EXPECT_EQ(yylex(), INVALID_TOKEN);
+    EXPECT_EQ(yylex(), INVALID_RWORD);
 
     EXPECT_EQ(yylex(), IDENTIFIER);
     EXPECT_TRUE(validSymbol("I"));
 
     // Por la palabra reservada
-    EXPECT_EQ(yylex(), INVALID_TOKEN);
+    EXPECT_EQ(yylex(), INVALID_RWORD);
 
     EXPECT_EQ(yylex(), 0);
 }

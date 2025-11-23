@@ -59,11 +59,11 @@ TEST(TestSemanticActions, SA3)
     std::string lexeme = "65535U";
     constexpr char character = 'I';
     const int token = SA3(lexeme, character);
-    EXPECT_EQ(token, UINTEGER_LITERAL);
+    EXPECT_EQ(token, LITERAL_UINT);
     EXPECT_EQ(lexeme, "65535UI");
     const auto entry = LITERAL_TABLE.get(lexeme);
     EXPECT_EQ(entry->constant, lexeme);
-    EXPECT_EQ(entry->type, UINTEGER_LITERAL);
+    EXPECT_EQ(entry->type, UINT);
     EXPECT_EQ(entry->value.i, 65535);
     // Integration With Parser
     EXPECT_EQ(entry, yylval.lref);
@@ -88,22 +88,22 @@ TEST(TestSemanticActions, SA4)
     std::string lexeme = "3.40282346F+38";
     constexpr char character = 'c';
     int token = SA4(lexeme, character);
-    EXPECT_EQ(token, FLOAT_LITERAL);
+    EXPECT_EQ(token, LITERAL_FLOAT);
     EXPECT_EQ(lexeme, "3.40282346F+38");
     auto entry = LITERAL_TABLE.get(lexeme);
     EXPECT_EQ(entry->constant, lexeme);
-    EXPECT_EQ(entry->type, FLOAT_LITERAL);
+    EXPECT_EQ(entry->type, FLOAT);
     EXPECT_EQ(entry->value.f, std::numeric_limits<float>::max());
     // Integration With Parser
     EXPECT_EQ(entry, yylval.lref);
     // Min Value for Float
     lexeme = "1.17549436F-38";
     token = SA4(lexeme, character);
-    EXPECT_EQ(token, FLOAT_LITERAL);
+    EXPECT_EQ(token, LITERAL_FLOAT);
     EXPECT_EQ(lexeme, "1.17549436F-38");
     entry = LITERAL_TABLE.get(lexeme);
     EXPECT_EQ(entry->constant, lexeme);
-    EXPECT_EQ(entry->type, FLOAT_LITERAL);
+    EXPECT_EQ(entry->type, FLOAT);
     EXPECT_EQ(entry->value.f, std::numeric_limits<float>::min());
     // Integration With Parser
     EXPECT_EQ(entry, yylval.lref);
@@ -135,11 +135,11 @@ TEST(TestSemanticActions, SA5)
     std::string lexeme = "\"l";
     constexpr char character = '\"';
     const int token = SA5(lexeme, character);
-    EXPECT_EQ(token, STRING_LITERAL);
+    EXPECT_EQ(token, LITERAL_STRING);
     EXPECT_EQ(lexeme, "\"l\"");
     const auto entry = LITERAL_TABLE.get(lexeme);
     EXPECT_EQ(entry->constant, lexeme);
-    EXPECT_EQ(entry->type, STRING_LITERAL);
+    EXPECT_EQ(entry->type, STRING);
     // Integration With Parser
     EXPECT_EQ(entry, yylval.lref);
 }
@@ -197,7 +197,7 @@ TEST(TestSemanticActions, SA9)
     std::string lexeme = "=";
     constexpr char character = '=';
     const int token = SA9(lexeme, character);
-    EXPECT_EQ(token, EQUAL_OP);
+    EXPECT_EQ(token, OP_EQUAL);
     EXPECT_EQ(lexeme, "==");
 }
 
@@ -206,7 +206,7 @@ TEST(TestSemanticActions, SA10)
     std::string lexeme = "=";
     constexpr char character = '!';
     const int token = SA10(lexeme, character);
-    EXPECT_EQ(token, NOT_EQUAL_OP);
+    EXPECT_EQ(token, OP_NOT_EQUAL);
     EXPECT_EQ(lexeme, "=!");
 }
 
@@ -215,7 +215,7 @@ TEST(TestSemanticActions, SA11)
     std::string lexeme = ":";
     constexpr char character = '=';
     const int token = SA11(lexeme, character);
-    EXPECT_EQ(token, ASSIGN_OP);
+    EXPECT_EQ(token, OP_ASSIGN);
     EXPECT_EQ(lexeme, ":=");
 }
 
@@ -224,7 +224,7 @@ TEST(TestSemanticActions, SA12)
     std::string lexeme = "<";
     constexpr char character = '=';
     const int token = SA12(lexeme, character);
-    EXPECT_EQ(token, LE_OP);
+    EXPECT_EQ(token, OP_LE);
     EXPECT_EQ(lexeme, "<=");
 }
 
@@ -234,7 +234,7 @@ TEST(TestSemanticActions, SA13)
     std::string lexeme = ">";
     constexpr char character = '=';
     const int token = SA13(lexeme, character);
-    EXPECT_EQ(token, GE_OP);
+    EXPECT_EQ(token, OP_GE);
     EXPECT_EQ(lexeme, ">=");
 }
 
@@ -244,7 +244,7 @@ TEST(TestSemanticActions, SA14)
     std::string lexeme = "-";
     constexpr char character = '>';
     const int token = SA14(lexeme, character);
-    EXPECT_EQ(token, POINTER_OP);
+    EXPECT_EQ(token, OP_POINTER);
     EXPECT_EQ(lexeme, "->");
 }
 
@@ -260,17 +260,17 @@ TEST(TestSemanticActions, SA15)
 TEST(TestSemanticActions, SA16)
 {
     constexpr int vals[11] = {
-        IF,
-        ELSE,
-        ENDIF,
-        DO,
-        WHILE,
-        RETURN,
-        PRINT,
-        TRUNC,
-        UINT,
-        FLOAT,
-        CR
+        WORD_IF,
+        WORD_ELSE,
+        WORD_ENDIF,
+        WORD_DO,
+        WORD_WHILE,
+        WORD_RETURN,
+        WORD_PRINT,
+        WORD_TRUNC,
+        WORD_UINT,
+        WORD_FLOAT,
+        WORD_CR
     };
     for (int i = 0; i < std::size(vals); i++)
     {
@@ -288,7 +288,7 @@ TEST(TestSemanticActions, ErrorInSA16)
     std::string lexeme = "l";
     constexpr char character = 'C';
     const int token = SA16(lexeme, character);
-    EXPECT_EQ(token, INVALID_TOKEN);
+    EXPECT_EQ(token, INVALID_RWORD);
     // Log Check
     const auto log = ERROR_HANDLER.getLastestLog();
     EXPECT_EQ(log->type, ERROR);

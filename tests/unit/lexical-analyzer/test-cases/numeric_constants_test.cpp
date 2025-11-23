@@ -24,48 +24,48 @@ TEST_F(TestLexicalAnalyzer, numeric_constants)
 
     // ----- Entero sin Signo (16 bits) ----- //
 
-    EXPECT_EQ(yylex(), UINTEGER_LITERAL);
+    EXPECT_EQ(yylex(), LITERAL_UINT);
     EXPECT_TRUE(validLiteral("0UI"));
-    EXPECT_EQ(yylex(), UINTEGER_LITERAL);
+    EXPECT_EQ(yylex(), LITERAL_UINT);
     EXPECT_TRUE(validLiteral("65535UI"));
-    EXPECT_EQ(yylex(), UINTEGER_LITERAL);
+    EXPECT_EQ(yylex(), LITERAL_UINT);
     EXPECT_TRUE(validLiteral("15UI"));
 
     // ------ Punto Flotante (32 bits) ------ //
 
     
-    EXPECT_EQ(yylex(), FLOAT_LITERAL);
+    EXPECT_EQ(yylex(), LITERAL_FLOAT);
     EXPECT_TRUE(validLiteral("1.17549436F-38"));
-    EXPECT_EQ(yylex(), FLOAT_LITERAL);
+    EXPECT_EQ(yylex(), LITERAL_FLOAT);
     EXPECT_TRUE(validLiteral("3.40282346F+38"));
     EXPECT_EQ(yylex(), '-');
-    EXPECT_EQ(yylex(), FLOAT_LITERAL);
+    EXPECT_EQ(yylex(), LITERAL_FLOAT);
     EXPECT_TRUE(validLiteral("1.17549436F-38"));
     EXPECT_EQ(yylex(), '-');
-    EXPECT_EQ(yylex(), FLOAT_LITERAL);
+    EXPECT_EQ(yylex(), LITERAL_FLOAT);
     EXPECT_TRUE(validLiteral("3.40282346F+38"));
-    EXPECT_EQ(yylex(), FLOAT_LITERAL);
+    EXPECT_EQ(yylex(), LITERAL_FLOAT);
     EXPECT_TRUE(validLiteral("0.0"));
 
     // ----------- Combinaciones ------------ //
 
-    EXPECT_EQ(yylex(), FLOAT_LITERAL);
+    EXPECT_EQ(yylex(), LITERAL_FLOAT);
     EXPECT_TRUE(validLiteral("3."));
-    EXPECT_EQ(yylex(), FLOAT_LITERAL);
+    EXPECT_EQ(yylex(), LITERAL_FLOAT);
     EXPECT_TRUE(validLiteral("3.40282346"));
-    EXPECT_EQ(yylex(), FLOAT_LITERAL);
+    EXPECT_EQ(yylex(), LITERAL_FLOAT);
     EXPECT_TRUE(validLiteral(".40282346"));
-    EXPECT_EQ(yylex(), FLOAT_LITERAL);
+    EXPECT_EQ(yylex(), LITERAL_FLOAT);
     EXPECT_TRUE(validLiteral("3.F+38"));
-    EXPECT_EQ(yylex(), FLOAT_LITERAL);
+    EXPECT_EQ(yylex(), LITERAL_FLOAT);
     EXPECT_TRUE(validLiteral("3.40282346F+38"));
-    EXPECT_EQ(yylex(), FLOAT_LITERAL);
+    EXPECT_EQ(yylex(), LITERAL_FLOAT);
     EXPECT_TRUE(validLiteral(".40282346F+38"));
-    EXPECT_EQ(yylex(), FLOAT_LITERAL);
+    EXPECT_EQ(yylex(), LITERAL_FLOAT);
     EXPECT_TRUE(validLiteral("3.F-38"));
-    EXPECT_EQ(yylex(), FLOAT_LITERAL);
+    EXPECT_EQ(yylex(), LITERAL_FLOAT);
     EXPECT_TRUE(validLiteral("3.40282346F-38"));
-    EXPECT_EQ(yylex(), FLOAT_LITERAL);
+    EXPECT_EQ(yylex(), LITERAL_FLOAT);
     EXPECT_TRUE(validLiteral(".40282346F-37"));
 
     // ----------- Errores ------------ //

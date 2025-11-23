@@ -22,17 +22,17 @@ TEST_F(TestLexicalAnalyzer, reserved_words)
 
     // ----- Palabras Reservadas ----- //
 
-    EXPECT_EQ(yylex(), IF);
-    EXPECT_EQ(yylex(), ELSE);
-    EXPECT_EQ(yylex(), ENDIF);
-    EXPECT_EQ(yylex(), DO);
-    EXPECT_EQ(yylex(), WHILE);
-    EXPECT_EQ(yylex(), RETURN);
-    EXPECT_EQ(yylex(), PRINT);
-    EXPECT_EQ(yylex(), TRUNC);
-    EXPECT_EQ(yylex(), UINT);
-    EXPECT_EQ(yylex(), FLOAT);
-    EXPECT_EQ(yylex(), CR);
+    EXPECT_EQ(yylex(), WORD_IF);
+    EXPECT_EQ(yylex(), WORD_ELSE);
+    EXPECT_EQ(yylex(), WORD_ENDIF);
+    EXPECT_EQ(yylex(), WORD_DO);
+    EXPECT_EQ(yylex(), WORD_WHILE);
+    EXPECT_EQ(yylex(), WORD_RETURN);
+    EXPECT_EQ(yylex(), WORD_PRINT);
+    EXPECT_EQ(yylex(), WORD_TRUNC);
+    EXPECT_EQ(yylex(), WORD_UINT);
+    EXPECT_EQ(yylex(), WORD_FLOAT);
+    EXPECT_EQ(yylex(), WORD_CR);
 
     // ----- Identificadores ----- //
 
@@ -50,28 +50,28 @@ TEST_F(TestLexicalAnalyzer, reserved_words)
 
     // ----------- Errores ------------ //
 
-    EXPECT_EQ(yylex(), INVALID_TOKEN);
-    EXPECT_EQ(yylex(), INVALID_TOKEN);
-    EXPECT_EQ(yylex(), INVALID_TOKEN);
-    EXPECT_EQ(yylex(), INVALID_TOKEN);
-    EXPECT_EQ(yylex(), INVALID_TOKEN);
-    EXPECT_EQ(yylex(), INVALID_TOKEN);
-    EXPECT_EQ(yylex(), INVALID_TOKEN);
-    EXPECT_EQ(yylex(), INVALID_TOKEN);
-    EXPECT_EQ(yylex(), INVALID_TOKEN);
-    EXPECT_EQ(yylex(), INVALID_TOKEN);
-    EXPECT_EQ(yylex(), INVALID_TOKEN);
-    EXPECT_EQ(yylex(), INVALID_TOKEN);
-    EXPECT_EQ(yylex(), INVALID_TOKEN);
-    EXPECT_EQ(yylex(), INVALID_TOKEN);
-    EXPECT_EQ(yylex(), INVALID_TOKEN);
-    EXPECT_EQ(yylex(), INVALID_TOKEN);
-    EXPECT_EQ(yylex(), INVALID_TOKEN);
-    EXPECT_EQ(yylex(), INVALID_TOKEN);
-    EXPECT_EQ(yylex(), INVALID_TOKEN);
-    EXPECT_EQ(yylex(), INVALID_TOKEN);
-    EXPECT_EQ(yylex(), INVALID_TOKEN);
-    EXPECT_EQ(yylex(), INVALID_TOKEN);
+    EXPECT_EQ(yylex(), INVALID_RWORD);
+    EXPECT_EQ(yylex(), INVALID_RWORD);
+    EXPECT_EQ(yylex(), INVALID_RWORD);
+    EXPECT_EQ(yylex(), INVALID_RWORD);
+    EXPECT_EQ(yylex(), INVALID_RWORD);
+    EXPECT_EQ(yylex(), INVALID_RWORD);
+    EXPECT_EQ(yylex(), INVALID_RWORD);
+    EXPECT_EQ(yylex(), INVALID_RWORD);
+    EXPECT_EQ(yylex(), INVALID_RWORD);
+    EXPECT_EQ(yylex(), INVALID_RWORD);
+    EXPECT_EQ(yylex(), INVALID_RWORD);
+    EXPECT_EQ(yylex(), INVALID_RWORD);
+    EXPECT_EQ(yylex(), INVALID_RWORD);
+    EXPECT_EQ(yylex(), INVALID_RWORD);
+    EXPECT_EQ(yylex(), INVALID_RWORD);
+    EXPECT_EQ(yylex(), INVALID_RWORD);
+    EXPECT_EQ(yylex(), INVALID_RWORD);
+    EXPECT_EQ(yylex(), INVALID_RWORD);
+    EXPECT_EQ(yylex(), INVALID_RWORD);
+    EXPECT_EQ(yylex(), INVALID_RWORD);
+    EXPECT_EQ(yylex(), INVALID_RWORD);
+    EXPECT_EQ(yylex(), INVALID_RWORD);
 
     EXPECT_EQ(yylex(), 0);
 }

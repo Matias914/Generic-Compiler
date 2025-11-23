@@ -44,6 +44,7 @@
 #include "semantic-analyzer/semantic_analyzer.h"
 
 #include <stack>
+#include <iostream>
 
 #define yylex LexicalAnalyzer::yylex
 
@@ -866,16 +867,10 @@ assignment_list:
         SemanticActions::specifySyntaxError(MISSING_EQUALS);
 
     } // Error: Missing Equals Operator
-    | variable
-    {
-        SemanticActions::announceSpecificErrorWithSymbol(MISSING_COMMA);
-
-    } // Error: Missing Comma
-    assignment_list assignment_end
+    | left_variable assignment_list assignment_end
     | ',' variable assignment_list opt_trunc_constant
     {
         createMultipleAssignmentTriple($4);
-
         SemanticActions::announceSpecificError(MISSING_COMMA);
 
     } // Error: Missing Right Side Comma
@@ -898,11 +893,25 @@ assignment_end:
 
         SemanticActions::specifySyntaxError(MISSING_COMMA);
         yyerrok;
+
     } // Error: Missing Comma
 ;
 
+left_variable:
+    /* empty */
+    {
+        SemanticActions::announceSpecificErrorWithSymbol(MISSING_COMMA);
+    } // Error: Missing Comma
+    variable
+; // HOW WORKS THIS SHI ????
+
 extra_numeric_constants:
     ',' opt_trunc_constant
+    | /* empty */
+    {
+        SemanticActions::announceSpecificError(MISSING_COMMA);
+    } // Error: Missing Comma
+    opt_trunc_constant
     | extra_numeric_constants ',' opt_trunc_constant
     | extra_numeric_constants
     {

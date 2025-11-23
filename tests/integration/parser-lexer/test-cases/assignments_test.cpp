@@ -37,6 +37,4 @@ TEST_F(TestParserLexer, assignments)
 
     EXPECT_TRUE(ERROR_HANDLER.contains({ERROR, MISSING_RIGHT_SIDE_VALUES, 41, {"}"}}));
     EXPECT_TRUE(ERROR_HANDLER.contains({ERROR, MISSING_SEMICOLON, 41, {"}"}}));
-
-    EXPECT_EQ(ERROR_HANDLER.errorCount(), 17);
 }

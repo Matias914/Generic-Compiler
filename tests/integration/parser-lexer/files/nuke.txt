@@ -91,7 +91,7 @@ PROGRAMA {
 
     if X =! Y(A->Z)
         prin("hola");
-    endif;
+    1 endif;
 
     X := trunc -2UI;
     X := -X(Y->Z);
@@ -140,7 +140,7 @@ PROGRAMA {
 
     if (X > Y)
 
-    else
+    ASDHJ else
         return (trunc (Y.X));
 
     PROGRAMA3 {

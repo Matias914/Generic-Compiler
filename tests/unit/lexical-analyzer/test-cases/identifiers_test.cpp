@@ -45,7 +45,7 @@ TEST_F(TestLexicalAnalyzer, identifiers)
     EXPECT_TRUE(validSymbol("MIVARIABLE%"));
     EXPECT_EQ(yylex(), IDENTIFIER);
     EXPECT_TRUE(validSymbol("M"));
-    EXPECT_EQ(yylex(), INVALID_TOKEN);
+    EXPECT_EQ(yylex(), INVALID_RWORD);
     EXPECT_EQ(yylex(), IDENTIFIER);
     EXPECT_TRUE(validSymbol("VARIA"));
     EXPECT_EQ(yylex(), '.');

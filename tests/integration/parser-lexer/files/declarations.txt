@@ -22,8 +22,6 @@ PROGRAM {
         return (A);
     };
 
-
-
     ## Errores Sintácticos:
         Dentro de la lista de errores se hallan:
         - Declaración sin Variable

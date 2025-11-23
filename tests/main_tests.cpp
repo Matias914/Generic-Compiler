@@ -1,19 +1,19 @@
+#include <string>
+
 #include "gtest/gtest.h"
 #include "utils/ErrorHandler.h"
 #include "utils/LiteralTable.h"
 #include "utils/ReportHandler.h"
 #include "utils/SymbolTable.h"
 
-#include <string>
-
 bool VERBOSE_OPTION = false;
 
 std::string OUTPUT_DIRECTORY;
 std::string WORKING_DIRECTORY = ".";
 
-SymbolTable SYMBOL_TABLE;
-LiteralTable LITERAL_TABLE;
-ErrorHandler ERROR_HANDLER;
+SymbolTable   SYMBOL_TABLE;
+LiteralTable  LITERAL_TABLE;
+ErrorHandler  ERROR_HANDLER;
 ReportHandler REPORT_HANDLER;
 
 /*
@@ -34,7 +34,7 @@ int main(int argc, char** argv)
             VERBOSE_OPTION = true;
             OUTPUT_DIRECTORY = arg.substr(10);
         } else
-            std::cerr << "Invalid Arguments were given: " << arg << "\n";
+            std::cerr << "\n[[ ERROR ]]: Invalid Arguments were given: " << arg << "\n";
     }
     return RUN_ALL_TESTS();
 }

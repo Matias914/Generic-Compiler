@@ -23,12 +23,12 @@ TEST_F(TestLexicalAnalyzer, special_characters)
 
     // ----- Operadores Compuestos ----- //
 
-    EXPECT_EQ(yylex(), EQUAL_OP);
-    EXPECT_EQ(yylex(), NOT_EQUAL_OP);
-    EXPECT_EQ(yylex(), LE_OP);
-    EXPECT_EQ(yylex(), GE_OP);
-    EXPECT_EQ(yylex(), ASSIGN_OP);
-    EXPECT_EQ(yylex(), POINTER_OP);
+    EXPECT_EQ(yylex(), OP_EQUAL);
+    EXPECT_EQ(yylex(), OP_NOT_EQUAL);
+    EXPECT_EQ(yylex(), OP_LE);
+    EXPECT_EQ(yylex(), OP_GE);
+    EXPECT_EQ(yylex(), OP_ASSIGN);
+    EXPECT_EQ(yylex(), OP_POINTER);
 
     // ----- Caracteres Especiales ----- //
 

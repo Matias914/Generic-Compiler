@@ -171,6 +171,7 @@ namespace StringBuilders::ErrorBuilders
             throw std::runtime_error("\nmissingClosingBrackets: invalid log");
         if (content[0].size() > 0)
             return ERROR_MSG("'" + content[0] + "' found but } was expected");
+
         return ERROR_MSG("Block was opened with '{' but never closed with }");
     }
 

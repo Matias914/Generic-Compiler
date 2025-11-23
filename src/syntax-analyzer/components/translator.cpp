@@ -17,6 +17,8 @@ std::string Translator::translate(const int token) {
         return "Unknown Token";
     case INVALID_TOKEN:
         return "Unknown Word";
+    case INVALID_RWORD:
+        return "Unknown Reserved Word";
     case WORD_IF:
         return "if";
     case WORD_ELSE:
