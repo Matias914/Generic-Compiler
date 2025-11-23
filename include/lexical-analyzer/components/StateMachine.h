@@ -1,7 +1,7 @@
 #ifndef GC_STATEMACHINE_H
 #define GC_STATEMACHINE_H
 
-#include "semantic_actions.h"
+#include "SemanticActions.h"
 
 /*
  * @brief clase que representa una State Machine.

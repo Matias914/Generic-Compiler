@@ -1,7 +1,7 @@
 #include "semantic-analyzer/components/InvocationChecker.h"
 
-#include "lexical-analyzer/lexical_analyzer.h"
-#include "semantic-analyzer/semantic_analyzer.h"
+#include "lexical-analyzer/LexicalAnalyzer.h"
+#include "semantic-analyzer/SemanticAnalyzer.h"
 #include "utils/ErrorHandler.h"
 #include "utils/Log.h"
 #include "utils/resources/codes.h"

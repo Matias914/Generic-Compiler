@@ -2,10 +2,10 @@
 
 #include <algorithm>
 
-#include "code-generator/code-generator.h"
+#include "code-generator/CodeGenerator.h"
 #include "utils/LiteralTable.h"
 #include "utils/SymbolTable.h"
-#include "utils/resources/builders.h"
+#include "utils/resources/StringBuilders.h"
 #include "utils/resources/codes.h"
 
 extern SymbolTable SYMBOL_TABLE;

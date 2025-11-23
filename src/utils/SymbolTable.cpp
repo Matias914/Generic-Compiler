@@ -2,7 +2,7 @@
 
 #include <algorithm>
 
-#include "utils/resources/builders.h"
+#include "utils/resources/StringBuilders.h"
 
 SymbolTable::SymbolTable() : mapping(), entries() {}
 

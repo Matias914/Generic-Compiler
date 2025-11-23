@@ -4,7 +4,7 @@
 #include <iostream>
 
 #include "utils/resources/codes.h"
-#include "utils/resources/dispatcher.h"
+#include "utils/resources/StringBuilderDispatcher.h"
 
 ErrorHandler::ErrorHandler()
 {

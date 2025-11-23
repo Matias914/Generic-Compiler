@@ -5,7 +5,7 @@
 
 #include "code-generator/components/CodeBlockGenerator.h"
 #include "code-generator/components/Triples.h"
-#include "code-generator/components/wat-generation/wat_instruccions_builders.h"
+#include "code-generator/components/wat-generation/WatInstruccionsBuilders.h"
 #include "utils/SymbolTable.h"
 
 namespace CodeGenerator

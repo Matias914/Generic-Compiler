@@ -1,13 +1,13 @@
 #include "gtest/gtest.h"
 #include "utils/ErrorHandler.h"
 #include "utils/resources/codes.h"
-#include "syntax-analyzer/components/parser.h"
-#include "lexical-analyzer/lexical_analyzer.h"
-#include "lexical-analyzer/components/semantic_actions.h"
+#include "syntax-analyzer/components/Parser.h"
+#include "lexical-analyzer/LexicalAnalyzer.h"
+#include "lexical-analyzer/components/SemanticActions.h"
 
 #include <cmath>
 
-#include "syntax-analyzer/components/translator.h"
+#include "syntax-analyzer/components/Translator.h"
 
 using namespace LexicalAnalyzer;
 using namespace LexicalAnalyzer::SemanticActions;

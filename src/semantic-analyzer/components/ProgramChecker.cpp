@@ -1,6 +1,6 @@
 #include "semantic-analyzer/components/ProgramChecker.h"
 
-#include "lexical-analyzer/lexical_analyzer.h"
+#include "lexical-analyzer/LexicalAnalyzer.h"
 #include "utils/ErrorHandler.h"
 #include "utils/resources/codes.h"
 

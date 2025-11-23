@@ -2,7 +2,7 @@
 
 #include <stdexcept>
 
-#include "semantic-analyzer/semantic_analyzer.h"
+#include "semantic-analyzer/SemanticAnalyzer.h"
 
 #define RUNTIME_E1 "\nnotifyDeclaration: update of lambda failed"
 

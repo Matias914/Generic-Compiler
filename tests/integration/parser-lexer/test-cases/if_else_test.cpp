@@ -1,7 +1,7 @@
 #include "../fixture/TestParserLexer.h"
 #include "gtest/gtest.h"
-#include "lexical-analyzer/lexical_analyzer.h"
-#include "syntax-analyzer/syntax_analyzer.h"
+#include "lexical-analyzer/LexicalAnalyzer.h"
+#include "syntax-analyzer/SyntaxAnalyzer.h"
 #include "utils/ReportHandler.h"
 #include "utils/resources/codes.h"
 

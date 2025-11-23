@@ -18,29 +18,29 @@ set(COMPILER_SOURCES
         src/utils/LiteralTable.cpp
         src/utils/ReportHandler.cpp
         src/utils/ErrorHandler.cpp
-        src/utils/resources/dispatcher.cpp
-        src/utils/resources/string_builders_codes.cpp
-        src/utils/resources/string_builders_errors.cpp
-        src/utils/resources/string_builders_report.cpp
-        src/utils/resources/string_builders_tables.cpp
-        src/utils/resources/string_builders_triple.cpp
+        src/utils/resources/CodeBuilders.cpp
+        src/utils/resources/ErrorBuilders.cpp
+        src/utils/resources/ReportBuilders.cpp
+        src/utils/resources/TableBuilders.cpp
+        src/utils/resources/TripleBuilders.cpp
+        src/utils/resources/StringBuilderDispatcher.cpp
         # Syntax Analyzer
-        src/syntax-analyzer/syntax_analyzer.cpp
-        src/syntax-analyzer/components/traps.cpp
-        src/syntax-analyzer/components/parser.cpp
-        src/syntax-analyzer/components/translator.cpp
-        src/syntax-analyzer/components/string_pool.cpp
-        src/syntax-analyzer/components/semantic_actions.cpp
+        src/syntax-analyzer/SyntaxAnalyzer.cpp
+        src/syntax-analyzer/components/Traps.cpp
+        src/syntax-analyzer/components/Parser.cpp
+        src/syntax-analyzer/components/Translator.cpp
+        src/syntax-analyzer/components/StringPool.cpp
+        src/syntax-analyzer/components/SemanticActions.cpp
         # Lexical Analyzer
-        src/lexical-analyzer/lexical_analyzer.cpp
-        src/lexical-analyzer/components/traps.cpp
-        src/lexical-analyzer/components/states.cpp
-        src/lexical-analyzer/components/translator.cpp
+        src/lexical-analyzer/LexicalAnalyzer.cpp
+        src/lexical-analyzer/components/Traps.cpp
+        src/lexical-analyzer/components/States.cpp
+        src/lexical-analyzer/components/Translator.cpp
         src/lexical-analyzer/components/StateMachine.cpp
-        src/lexical-analyzer/components/reserved_words.cpp
-        src/lexical-analyzer/components/semantic_actions.cpp
+        src/lexical-analyzer/components/ReservedWordsTable.cpp
+        src/lexical-analyzer/components/SemanticActions.cpp
         # Semantic Analyzer
-        src/semantic-analyzer/semantic_analyzer.cpp
+        src/semantic-analyzer/SemanticAnalyzer.cpp
         src/semantic-analyzer/components/TypeChecker.cpp
         src/semantic-analyzer/components/ReturnChecker.cpp
         src/semantic-analyzer/components/LambdaChecker.cpp
@@ -49,21 +49,21 @@ set(COMPILER_SOURCES
         src/semantic-analyzer/components/VariableChecker.cpp
         src/semantic-analyzer/components/InvocationChecker.cpp
         # Code Generation
-        src/code-generator/code_generator.cpp
+        src/code-generator/CodeGenerator.cpp
         src/code-generator/components/Triples.cpp
-        src/code-generator/components/wat-generation/wat_translations.cpp
+        src/code-generator/components/wat-generation/WatTranslatator.cpp
         src/code-generator/components/wat-generation/WatSegmentGenerator.cpp
         src/code-generator/components/wat-generation/WatGlobalsGenerator.cpp
         src/code-generator/components/wat-generation/WatCodeBlockGenerator.cpp
-        src/code-generator/components/wat-generation/builders/wat_instructions_print.cpp
-        src/code-generator/components/wat-generation/builders/wat_instructions_assignments.cpp
-        src/code-generator/components/wat-generation/builders/wat_instructions_muldiv.cpp
-        src/code-generator/components/wat-generation/builders/wat_instructions_operand.cpp
-        src/code-generator/components/wat-generation/builders/wat_instructions_addsub.cpp
-        src/code-generator/components/wat-generation/builders/wat_instructions_comparators.cpp
-        src/code-generator/components/wat-generation/builders/wat_instructions_control.cpp
-        src/code-generator/components/wat-generation/builders/wat_instructions_functions.cpp
-        src/code-generator/components/wat-generation/builders/wat_instructions_coertions.cpp
+        src/code-generator/components/wat-generation/builders/PrintBuilders.cpp
+        src/code-generator/components/wat-generation/builders/AssignmentBuilders.cpp
+        src/code-generator/components/wat-generation/builders/MulDivBuilders.cpp
+        src/code-generator/components/wat-generation/builders/OperandBuilders.cpp
+        src/code-generator/components/wat-generation/builders/AddSubBuilders.cpp
+        src/code-generator/components/wat-generation/builders/ComparisonBuilders.cpp
+        src/code-generator/components/wat-generation/builders/ControlBuilders.cpp
+        src/code-generator/components/wat-generation/builders/CallRetBuilders.cpp
+        src/code-generator/components/wat-generation/builders/CoertionsBuilders.cpp
 )
 
 set(TEST_SOURCES
@@ -90,6 +90,7 @@ set(TEST_SOURCES
         tests/integration/parser-lexer/test-cases/declarations_test.cpp
         tests/integration/parser-lexer/test-cases/invocations_test.cpp
         tests/integration/parser-lexer/test-cases/programs_test.cpp
+        src/utils/CompilerState.cpp
 )
 
 # =========================================================
@@ -132,6 +133,6 @@ target_compile_definitions(gc_tests PRIVATE "SOURCE_PATH=\"${CMAKE_SOURCE_DIR}\"
 # CTest ejecutará el comando: gc_tests --input=../
 add_test(
         NAME RunAllWithArgs
-        COMMAND gc_tests --input=../ --verbose=../outputs
+        COMMAND gc_tests --input=../ --verbose=../outputs/tests
         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
 )

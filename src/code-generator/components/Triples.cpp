@@ -1,6 +1,6 @@
 #include "code-generator/components/Triples.h"
 
-#include "utils/resources/builders.h"
+#include "utils/resources/StringBuilders.h"
 
 namespace CodeGenerator
 {
@@ -60,6 +60,7 @@ namespace CodeGenerator
         using namespace StringBuilders::TripleBuilders;
         for (auto t : triples)
         {
+            mssg.append(std::to_string(line));
             if (withTab) mssg.append("\t");
             triple(mssg, t, offset);
             line++;

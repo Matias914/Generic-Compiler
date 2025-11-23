@@ -1,6 +1,6 @@
 #include "semantic-analyzer/components/ReturnChecker.h"
 
-#include "lexical-analyzer/lexical_analyzer.h"
+#include "lexical-analyzer/LexicalAnalyzer.h"
 #include "semantic-analyzer/components/TypeChecker.h"
 #include "utils/ErrorHandler.h"
 #include "utils/Log.h"

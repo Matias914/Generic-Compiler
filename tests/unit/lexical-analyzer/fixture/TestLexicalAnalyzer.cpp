@@ -1,13 +1,11 @@
 #include "TestLexicalAnalyzer.h"
-#include "syntax-analyzer/components/parser.h"
+
+#include "syntax-analyzer/components/Parser.h"
+#include "utils/CompilerState.h"
 
 void TestLexicalAnalyzer::SetUp()
 {
-    SYMBOL_TABLE.clear();
-    LITERAL_TABLE.clear();
-
-    if (VERBOSE_OPTION)
-        REPORT_HANDLER.clear();
+    CompilerState::reset();
 }
 
 void TestLexicalAnalyzer::TearDown()

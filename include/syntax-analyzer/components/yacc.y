@@ -33,15 +33,15 @@
 
 // Importa y declara lo necesario para el .cpp
 %{
-#include "syntax-analyzer/components/parser.h"
-#include "syntax-analyzer/components/translator.h"
-#include "syntax-analyzer/components/string_pool.h"
-#include "syntax-analyzer/components/semantic_actions.h"
+#include "syntax-analyzer/components/Parser.h"
+#include "syntax-analyzer/components/Translator.h"
+#include "syntax-analyzer/components/StringPool.h"
+#include "syntax-analyzer/components/SemanticActions.h"
 
 #include "utils/resources/codes.h"
-#include "code-generator/code-generator.h"
-#include "lexical-analyzer/lexical_analyzer.h"
-#include "semantic-analyzer/semantic_analyzer.h"
+#include "code-generator/CodeGenerator.h"
+#include "lexical-analyzer/LexicalAnalyzer.h"
+#include "semantic-analyzer/SemanticAnalyzer.h"
 
 #include <stack>
 #include <iostream>
@@ -68,7 +68,7 @@ void createArithmeticTriple(Metadata& r, const Metadata& o1, const Metadata& o2,
 %}
 
 // Corrige la ruta del header en el .cpp
-%define api.header.include {"syntax-analyzer/components/parser.h"}
+%define api.header.include {"syntax-analyzer/components/Parser.h"}
 
 %union
 {

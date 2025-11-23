@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
-#include "lexical-analyzer/lexical_analyzer.h"
-#include "syntax-analyzer/components/parser.h"
+#include "lexical-analyzer/LexicalAnalyzer.h"
+#include "syntax-analyzer/components/Parser.h"
 
 #include "../fixture/TestLexicalAnalyzer.h"
 
