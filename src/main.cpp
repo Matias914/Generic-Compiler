@@ -17,7 +17,7 @@ LiteralTable  LITERAL_TABLE;
 ErrorHandler  ERROR_HANDLER;
 ReportHandler REPORT_HANDLER;
 
-#define ERROR_MSG(X) "\n[[ ERROR ]]: " X "."
+#define ERROR_MSG(X) "\n[[ ERROR ]]: " X ".\n"
 
 int main(const int argc, char* argv[])
 {

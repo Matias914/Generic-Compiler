@@ -2,11 +2,12 @@
 
 #include <filesystem>
 #include <fstream>
-#include <iostream>
 #include <ostream>
 #include <stack>
 #include <stdexcept>
+#include <string>
 
+#include "../../include/code-generator/components/wasm-generation/command.h"
 #include "code-generator/components/wat-generation/WatCodeBlockGenerator.h"
 #include "code-generator/components/wat-generation/WatGlobalsGenerator.h"
 #include "code-generator/components/wat-generation/WatSegmentGenerator.h"
@@ -108,27 +109,9 @@ namespace CodeGenerator
         file << code;
         file.close();
 
-        // --- Step 2: Attempt to generate .wasm file ---
-        try
-        {
-            std::filesystem::path path(output);
-            path.replace_extension(".wasm");
-            std::string output_wasm_path = path.string();
-            std::string command = "wat2wasm ";
-            command.append(output).append(" -o ").append(output_wasm_path);
-
-            std::cout << command << std::endl;
-            if (const int result = std::system(command.c_str()); result != 0)
-            {
-                std::cerr << WARNING_MSG("could not generate .wasm binary. Ensure WABT is installed and 'wat2wasm'"
-                                         " is in your system's PATH") << std::endl;
-            }
-        }
-        catch (const std::exception& e)
-        {
-            std::cerr << WARNING_MSG("failed to generate .wasm file due to an error")
-                      << "\n" << e.what() << std::endl;
-        }
+        // Step 2: Attempt to generate .wasm file
+        invokeWat2Wasm(output);
+        
         return true;
     }
 }
