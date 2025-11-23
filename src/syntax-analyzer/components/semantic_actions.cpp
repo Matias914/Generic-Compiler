@@ -14,7 +14,7 @@ extern int yychar;
 
 extern bool VERBOSE_OPTION;
 
-extern LiteralTable LITERAL_TABLE;
+extern LiteralTable  LITERAL_TABLE;
 extern ReportHandler REPORT_HANDLER;
 
 namespace SyntaxAnalyzer::SemanticActions

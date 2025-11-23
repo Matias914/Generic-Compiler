@@ -28,15 +28,13 @@ PROGRAM {
         - Falta ";" después de la invocación
         - Falta alguna llave del cuerpo
 
-        Se espera error en las líneas:
+        Se espera error en las líneas: 39 40 40 41 41 42 42 44 45 45 46 46 47 47 48
     ##
-
 
     uint X2;
     uint F2(cr uint A, uint B) {
         return (0UI);
     };
-
 
     F(X1->A  X1->B)
     F(X1-> , X1->B)

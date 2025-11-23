@@ -114,4 +114,11 @@ namespace CodeGenerator
         
         return true;
     }
+
+    void clear()
+    {
+        while (!POSITIONS.empty())
+            POSITIONS.pop();
+        ICODES.clear();
+    }
 }

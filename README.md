@@ -1,31 +1,48 @@
+
+-----
+
 # Compilador [gc]
 
-Este repositorio contiene el código fuente de un compilador simple, single-threaded desarrollado en C++. El proyecto utiliza Docker para garantizar un entorno de compilación y ejecución consistente.
+Este repositorio contiene el código fuente de un compilador simple, single-threaded desarrollado en C++17. El proyecto traduce código fuente de alto nivel a **WebAssembly Text Format (`.wat`)** y, si las herramientas están disponibles, ensambla automáticamente el binario ejecutable (`.wasm`).
 
----
+El proyecto utiliza **Docker** para garantizar un entorno de compilación consistente y evitar problemas de dependencias.
+
+-----
+
+## Características ✨
+
+* **C++ Moderno:** Construido usando características de C++17, incluyendo `<filesystem>` para gestión de rutas multiplataforma.
+* **Target WebAssembly:** Genera código intermedio `.wat` legible por humanos.
+* **Ensamblado Automático:** El compilador detecta si `wat2wasm` (del kit WABT) está instalado en el entorno y genera el binario `.wasm` automáticamente.
+* **CLI Flexible:** Una interfaz de línea de comandos robusta para una operación sencilla (flags `-i`, `-o`, etc).
+* **Entorno de Ejecución:** Incluye un entorno anfitrión simple en HTML/JS para ejecutar y visualizar el resultado en un navegador.
+
+-----
 
 ## Requisitos Previos 📋
 
-Para compilar y ejecutar este proyecto, el único requisito es tener **Docker** instalado y funcionando en tu sistema.
+1.  **Docker:** Es el único requisito obligatorio para compilar el proyecto.
+2.  **WABT (Opcional):** Si deseas que el compilador genere automáticamente el archivo `.wasm` final:
+    * Si ejecutas el binario **localmente** (fuera de Docker), debes instalar WABT en tu sistema (`sudo pacman -S wabt` o equivalente).
+    * Si deseas que se genere **durante el build** de Docker, asegúrate de que tu `Dockerfile` instale `wabt`.
 
----
+-----
 
 ## Crear la Imagen de Docker
 
-El proyecto está configurado para ser compilado usando una imagen de Docker. Podés usar una imagen personalizada basada en el `Dockerfile` del proyecto y construirla vos mismo.
+El proyecto está configurado para ser compilado usando una imagen de Docker.
 
 Parado en el directorio raíz del proyecto (donde está el `Dockerfile`), ejecutá:
+
 ```bash
 docker build -t <nombre-imagen> .
-````
+```
 
 -----
 
 ## Compilación 🛠️
 
-Todo el proceso de compilación se maneja a través de Docker para evitar problemas de dependencias y asegurar la portabilidad.
-
-Para compilar el proyecto, clona este repositorio, abre una terminal en el directorio raíz del proyecto y ejecuta el siguiente comando (usando el nombre de la imagen que corresponda):
+Todo el proceso de compilación se maneja a través de Docker. Ejecuta el comando correspondiente a tu sistema operativo en la raíz del proyecto:
 
 #### Para Linux:
 
@@ -45,12 +62,12 @@ sudo docker run --rm \
   "
 ```
 
-#### Para Windows:
+#### Para Windows (Powershell/CMD):
 
 ```bash
-sudo docker run --rm \                                                                                   
-  -v "$(pwd)":/generic_compiler <nombre-imagen> \
-  bash -c "  
+docker run --rm ^
+  -v "%cd%":/generic_compiler <nombre-imagen> ^
+  bash -c "
     set -e &&
     mkdir -p /tmp/build &&
     cd /tmp/build &&
@@ -60,44 +77,51 @@ sudo docker run --rm \
     cp gc.exe /generic_compiler/bin/ &&
     cp gc_tests.exe /generic_compiler/bin/
   "
-
 ```
 
-Este comando compilará el proyecto completo y dejará los ejecutables `gc` y `gc_tests` en una nueva carpeta llamada `bin/` en la raíz del proyecto. Si son generados para Windows, tendrán la extensión `.exe`.
+Este comando dejará los ejecutables `gc` y `gc_tests` en una nueva carpeta `bin/` en la raíz de tu proyecto.
 
 -----
 
 ## Uso ▶️
 
-Una vez compilado, puedes usar el compilador o ejecutar la suite de pruebas desde la carpeta `./bin`.
+Una vez compilado, encontrarás los binarios en la carpeta `./bin`.
 
-### Ejecutar el Compilador
+### Ejecutar el Compilador (`gc`)
 
-Para compilar un archivo de código fuente, utiliza el ejecutable `gc`.
+El compilador ahora utiliza flags explícitos para configurar la entrada y salida. Al ejecutarlo, intentará generar el archivo `.wat` y buscará `wat2wasm` para crear el `.wasm`.
 
 **Sintaxis:**
 
 ```bash
-./bin/gc <ruta_al_archivo_fuente> [-v <ruta_al_archivo_log>]
+./bin/gc -i <entrada> [opciones]
 ```
 
-  * `<ruta_al_archivo_fuente>`: la ruta al archivo de código que deseas compilar.
-  * `-v <ruta_al_archivo_log>`: activa el modo detallado y guarda un log del proceso de compilación en la ruta especificada. El mismo, muestra información de las tablas de símbolos y literales, además de, tokens y estructuras sintácticas.
+**Opciones Disponibles:**
+
+| Flag | Opción Completa | Descripción |
+| :--- | :--- | :--- |
+| `-i` | `--input` | **(Opcional)** Ruta al archivo de código fuente. |
+| `-o` | `--output` | Ruta para el archivo de salida (base). Por defecto es el nombre de entrada `.wat`. |
+| `-r` | `--report` | Ruta para guardar el log de compilación (Tokens, AST, Símbolos). |
+| `-v` | `--verbose` | Activa la salida detallada en consola y habilita el reporte. |
+| `-h` | `--help` | Muestra la ayuda. |
 
 **Ejemplos:**
 
 ```bash
-# Compilar un archivo
-./bin/gc examples/program001.txt
+# 1. Compilación básica (Genera .wat y .wasm en examples/)
+./bin/gc examples/program002.txt
 
-# Compilar un archivo y generar un log
-mkdir outputs
-./bin/gc examples/program001.txt -v outputs/compilation.log
+# 2. Especificando salida y generando reporte de compilación
+./bin/gc -i examples/program002.txt -o outputs/mi_programa.wat -r outputs/debug.log -v
 ```
 
-### Ejecutar los Tests
+> **Nota:** Si ves el aviso `[Warning] Local 'wat2wasm' not found`, significa que el compilador generó el código `.wat` correctamente, pero no encontró la herramienta para convertirlo a binario en tu sistema. Instala **WABT** para solucionar esto.
 
-Para verificar la integridad y el correcto funcionamiento de los componentes del compilador, puedes ejecutar la suite de pruebas automatizadas.
+### Ejecutar los Tests (`gc_tests`)
+
+Para verificar la integridad y el correcto funcionamiento de los componentes del compilador.
 
 **Sintaxis:**
 
@@ -105,12 +129,27 @@ Para verificar la integridad y el correcto funcionamiento de los componentes del
 ./bin/gc_tests --input=<ruta_proyecto> [--verbose=<directorio_logs>]
 ```
 
-  * `--input=<ruta_proyecto>`: especifica el directorio raíz del proyecto. Es necesario para que los tests puedan encontrar sus archivos de datos. Generalmente se usa `.` para indicar el directorio actual.
-  * `--verbose=<directorio_logs>`: activa la generación de reportes en archivos de texto con los resultados de los tests. Los reportes se guardarán en el directorio especificado. **Se recomienda usar `--verbose=outputs`** para mantener los resultados organizados.
-
 **Ejemplo:**
 
 ```bash
 # Ejecutar todos los tests y generar los logs de salida en la carpeta 'outputs'
 ./bin/gc_tests --input=. --verbose=outputs
 ```
+
+-----
+
+## Ejecución en Navegador (Runtime) 🚀
+
+El proyecto incluye un entorno web para ejecutar tus archivos `.wat` compilados.
+
+1.  **Inicia un servidor web local** desde la raíz del proyecto:
+
+    ```bash
+    python3 -m http.server
+    ```
+
+2.  **Abre tu navegador** e ingresa a la URL del runtime pasando tu archivo como parámetro:
+
+    `http://localhost:8000/runtime/index.html?file=../outputs/program001.wat`
+
+    *(Asegúrate de que la ruta relativa en `file=` apunte a donde generaste tu archivo wat).*

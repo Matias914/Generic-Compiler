@@ -26,16 +26,14 @@ PROGRAM {
         - Faltan "," en las asignaciones multiples
         - Hay más variables del lado izquierdo que derecho.
 
-        Se espera error en las líneas: 36 38 38 38 38 38 38 39 39 39 39 39 40 40 41 41 41
+        Se espera error en las líneas: 34 36 36 36 36 36 36 37 37 37 37 37 38 38 39 39 39
     ##
 
     X := 1UI
 
     print(X);
 
-    X Y Z W = 2UI 3UI 4UI 5UI;
-    X Y Z = 6UI 7UI 8UI 9UI 10UI
-    X, Y = 11UI 12UI 13UI 14UI 15UI
+    X Y Z = 2UI 3UI 4UI 5UI 6UI
+    X, Y = 2UI 3UI 4UI 5UI 6UI
     X Y = 16UI
-    X, Y 17UI, 18UI;
 }

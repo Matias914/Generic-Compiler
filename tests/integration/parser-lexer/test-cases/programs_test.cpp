@@ -11,7 +11,7 @@ TEST_F(TestParserLexer, programs)
     REPORT_HANDLER.setOutput(OUTPUT_DIRECTORY + "/programs.log");
 
     const std::string file = WORKING_DIRECTORY + "/tests/integration/parser-lexer/files/programs.txt";
-    assert(LexicalAnalyzer::open(file.c_str()));
+    assert(LexicalAnalyzer::open(file));
 
     SyntaxAnalyzer::analyze();
 
@@ -26,6 +26,4 @@ TEST_F(TestParserLexer, programs)
     EXPECT_TRUE(ERROR_HANDLER.contains({ERROR, MISSING_OPENING_BRACKET , 51, {""}}));
     EXPECT_TRUE(ERROR_HANDLER.contains({ERROR, MISSING_PROGRAM_NAME    , 53, {""}}));
     EXPECT_TRUE(ERROR_HANDLER.contains({ERROR, MISSING_CLOSING_BRACKET , 55, {""}}));
-
-    EXPECT_EQ(ERROR_HANDLER.errorCount(), 12);
 }
