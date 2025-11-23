@@ -17,13 +17,15 @@ namespace CodeGenerator::InstructionsGenerators
         m.output.append(m.nesting)
             .append("call ")
             .append(symbol)
-            .append("\n")
-            .append(m.nesting)
-            .append("i32.const 0\n")
-            .append(m.nesting)
-            .append("global.set ")
-            .append(symbol)
             .append("\n");
+
+        if (m.type != UNKNOWN)
+            m.output.append(m.nesting)
+                    .append("i32.const 1\n")
+                    .append(m.nesting)
+                    .append("global.set ")
+                    .append(symbol)
+                    .append("\n");
     }
 
     void generateReturn(const Metadata& m)

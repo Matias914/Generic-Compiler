@@ -7,10 +7,12 @@
 
 #define RUNTIME_E1 "\ngenerateBranchTrue: the stack was empty or there wasn't a triple ref."
 #define RUNTIME_E2 "\ngenerateBranchTrue: the stack should have had a while ID."
-#define RUNTIME_E3 "\ngenerateBranchTrue: a triple reference must be an integer."
+#define RUNTIME_E3 "\ngenerateIf: a triple reference must be an integer."
 
 namespace CodeGenerator::InstructionsGenerators
 {
+    int IF_BLOCK_ID = 0;
+
     static int WHILE_BLOCK_ID = 0;
     static auto CONTEXT = std::stack<int>();
 
@@ -20,15 +22,13 @@ namespace CodeGenerator::InstructionsGenerators
         if (m.o2.type == NULLREF)
             if (!CONTEXT.empty() && m.o1.type == TRIPLE)
             {
-                // Si el branch de la rama True tiene el distinto destino que
-                // el de la rama False, hay else
-                if (CONTEXT.top() != m.o1.value.tref)
-                {
-                    m.nesting.pop_back();
-                    m.output.append(m.nesting)
-                            .append("else\n");
-                    m.nesting.append("\t");
-                }
+                m.output.append(m.nesting)
+                        .append("br $endif_")
+                        .append(std::to_string(CONTEXT.top()))
+                        .append("\n");
+                m.nesting.pop_back();
+                m.output.append(m.nesting)
+                        .append(")\n");
             }
             else
                 throw std::runtime_error(RUNTIME_E1);
@@ -43,6 +43,7 @@ namespace CodeGenerator::InstructionsGenerators
                     .append("\n");
             m.nesting.pop_back();
             m.output.append(m.nesting).append(")\n");
+
         }
         else
             throw std::runtime_error(RUNTIME_E2);
@@ -52,21 +53,37 @@ namespace CodeGenerator::InstructionsGenerators
 
     void generateBranchFalse(const Metadata& m)
     {
-        if (m.o2.type != TRIPLE)
-            throw std::runtime_error(RUNTIME_E3);
-
-        // Se empuja la dirección de salto para el Branch True
-        CONTEXT.push(m.o2.value.tref);
         m.output.append(m.nesting)
-                .append("if\n");
+                .append("i32.eqz\n")
+                .append(m.nesting)
+                .append("br_if $dummy_else_")
+                .append(std::to_string(CONTEXT.top()))
+                .append("\n");
+    }
+
+    void generateIf(const Metadata& m)
+    {
+        const auto id = std::to_string(++IF_BLOCK_ID);
+        m.output.append(m.nesting)
+                .append("(block $endif_")
+                .append(id)
+                .append("\n");
         m.nesting.append("\t");
+        m.output.append(m.nesting)
+                .append("(block $dummy_else_")
+                .append(id)
+                .append("\n");
+        m.nesting.append("\t");
+
+        // Para que el Branch True/False conozca el nombre
+        CONTEXT.push(IF_BLOCK_ID);
     }
 
     void generateEndif(const Metadata& m)
     {
         m.nesting.pop_back();
         m.output.append(m.nesting)
-                .append("end\n");
+                .append(")\n");
     }
 
     void generateDoWhile(const Metadata& m)
@@ -78,7 +95,7 @@ namespace CodeGenerator::InstructionsGenerators
                 .append("\n");
         m.nesting.append("\t");
 
-        // Para el Branch True conozca el nombre
+        // Para que el Branch True conozca el nombre
         CONTEXT.push(WHILE_BLOCK_ID);
     }
 }

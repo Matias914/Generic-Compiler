@@ -34,6 +34,7 @@ namespace CodeGenerator::InstructionsGenerators
     // Control
     void generateBranchTrue(const Metadata& m);
     void generateBranchFalse(const Metadata& m);
+    void generateIf(const Metadata& m);
     void generateEndif(const Metadata& m);
     void generateDoWhile(const Metadata& m);
 
@@ -57,7 +58,9 @@ namespace CodeGenerator::InstructionsGenerators
     void generateSubstraction(const Metadata& m);
     void generateMultiplication(const Metadata& m);
 
-    // Utility
+    // Utilities
+    extern int IF_BLOCK_ID;
+
     void generateOperand(std::string& mssg, const std::string& nesting, const Triples::Operand& op);
 }
 

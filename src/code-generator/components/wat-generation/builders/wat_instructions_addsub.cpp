@@ -27,6 +27,8 @@ namespace CodeGenerator::InstructionsGenerators
 
     void generateSubstraction(const Metadata& m)
     {
+        const auto id = std::to_string(++IF_BLOCK_ID);
+
         switch (m.type)
         {
         case UINT:
@@ -39,6 +41,13 @@ namespace CodeGenerator::InstructionsGenerators
             if (m.o1.type == TRIPLE)
                 m.output.append(m.nesting)
                         .append("global.set $tempi1\n");
+
+            // Crea bloque If
+            m.output.append(m.nesting)
+                    .append("(block $endif_")
+                    .append(id)
+                    .append("\n");
+            m.nesting.append("\t");
 
             // Ahora se obtienen valores, cosa de guardar en un registro temporal
             // lo que se trajo de otro.
@@ -54,20 +63,26 @@ namespace CodeGenerator::InstructionsGenerators
             else
                 generateOperand(m.output, m.nesting, m.o2);
 
+            // Chequea Underflow
             m.output.append(m.nesting)
-                    .append("i32.lt_u\n")
+                    .append("i32.ge_u\n")
                     .append(m.nesting)
-                    .append("if \n")
+                    .append("br_if $endif_")
+                    .append(id)
+                    .append("\n")
                     .append(m.nesting)
-                    .append("\ti32.const ")
+                    .append("i32.const ")
                     .append(std::to_string(m.segment.getNegativeUnsignedOffset()))
                     .append("\n")
                     .append(m.nesting)
-                    .append("\tcall $print_str\n")
+                    .append("call $print_str\n")
                     .append(m.nesting)
-                    .append("\tunreachable\n")
-                    .append(m.nesting)
-                    .append("end\n");
+                    .append("unreachable\n");
+
+            // Cierra If
+            m.nesting.pop_back();
+            m.output.append(m.nesting)
+                    .append(")\n");
 
             if (m.o1.type == TRIPLE)
                 m.output.append(m.nesting).append("global.get $tempi1\n");

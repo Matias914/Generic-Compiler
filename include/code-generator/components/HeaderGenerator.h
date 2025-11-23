@@ -1,6 +1,8 @@
 #ifndef GC_HEADERGENERATOR_H
 #define GC_HEADERGENERATOR_H
 
+#include <string>
+
 namespace CodeGenerator
 {
     /*

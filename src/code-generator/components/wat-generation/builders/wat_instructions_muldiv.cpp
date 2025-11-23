@@ -27,6 +27,15 @@ namespace CodeGenerator::InstructionsGenerators
 
     void generateDivision(const Metadata& m)
     {
+        const auto id = std::to_string(++IF_BLOCK_ID);
+
+        // Creates If Block
+        m.output.append(m.nesting)
+                .append("(block $endif_")
+                .append(id)
+                .append("\n");
+        m.nesting.append("\t");
+
         switch (m.type)
         {
         case UINT:
@@ -38,22 +47,24 @@ namespace CodeGenerator::InstructionsGenerators
             else
                 generateOperand(m.output, m.nesting, m.o2);
 
+            // Checks If Not Zero
             m.output.append(m.nesting)
-                    .append("i32.const 0\n")
+                    .append("br_if $endif_")
+                    .append(id)
+                    .append("\n")
                     .append(m.nesting)
-                    .append("i32.eq\n")
-                    .append(m.nesting)
-                    .append("if \n")
-                    .append(m.nesting)
-                    .append("\ti32.const ")
+                    .append("i32.const ")
                     .append(std::to_string(m.segment.getZeroDivisionOffset()))
                     .append("\n")
                     .append(m.nesting)
-                    .append("\tcall $print_str\n")
+                    .append("call $print_str\n")
                     .append(m.nesting)
-                    .append("\tunreachable\n")
-                    .append(m.nesting)
-                    .append("end\n");
+                    .append("unreachable\n");
+
+            // Closes If Block
+            m.nesting.pop_back();
+            m.output.append(m.nesting)
+                    .append(")\n");
 
             generateOperand(m.output, m.nesting, m.o1);
             if (m.o2.type == TRIPLE)
@@ -73,22 +84,28 @@ namespace CodeGenerator::InstructionsGenerators
             else
                 generateOperand(m.output, m.nesting, m.o2);
 
+            // Checks If Not Zero With Floating Point
             m.output.append(m.nesting)
                     .append("f32.const 0.0\n")
                     .append(m.nesting)
-                    .append("f32.eq\n")
+                    .append("f32.ne\n")
                     .append(m.nesting)
-                    .append("if \n")
+                    .append("br_if $endif_")
+                    .append(id)
+                    .append("\n")
                     .append(m.nesting)
-                    .append("\ti32.const ")
+                    .append("i32.const ")
                     .append(std::to_string(m.segment.getZeroDivisionOffset()))
                     .append("\n")
                     .append(m.nesting)
-                    .append("\tcall $print_str\n")
+                    .append("call $print_str\n")
                     .append(m.nesting)
-                    .append("\tunreachable\n")
-                    .append(m.nesting)
-                    .append("end\n");
+                    .append("unreachable\n");
+
+            // Closes If Block
+            m.nesting.pop_back();
+            m.output.append(m.nesting)
+                    .append(")\n");
 
             generateOperand(m.output, m.nesting, m.o1);
             if (m.o2.type == TRIPLE)

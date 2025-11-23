@@ -14,7 +14,9 @@ namespace CodeGenerator
 
     std::string WatGlobalsGenerator::determineInitializer(const SymbolTable::Entry& entry)
     {
-        if (entry.type == UINT || entry.use == FUNCTION)
+        if (entry.use == FUNCTION)
+            return "1";
+        if (entry.type == UINT)
             return "0";
         if (entry.type == FLOAT)
             return "0.0";
@@ -31,8 +33,8 @@ namespace CodeGenerator
 
         for (const auto& entry : SYMBOL_TABLE)
         {
-
-            if (entry.use == VARIABLE || entry.use == PARAMETER || entry.use == FUNCTION)
+            // If it's a variable, parameter or a function with name
+            if (entry.use == VARIABLE || entry.use == PARAMETER || (entry.use == FUNCTION && entry.type != UNKNOWN))
             {
                 std::string type;
                 if (entry.use != FUNCTION)

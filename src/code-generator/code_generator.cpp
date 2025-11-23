@@ -117,6 +117,7 @@ namespace CodeGenerator
             std::string command = "wat2wasm ";
             command.append(output).append(" -o ").append(output_wasm_path);
 
+            std::cout << command << std::endl;
             if (const int result = std::system(command.c_str()); result != 0)
             {
                 std::cerr << WARNING_MSG("could not generate .wasm binary. Ensure WABT is installed and 'wat2wasm'"

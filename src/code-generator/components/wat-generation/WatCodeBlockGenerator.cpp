@@ -27,34 +27,42 @@ namespace CodeGenerator
             output.append("(export \"main\") (result i32)\n");
         else if (s.use == FUNCTION)
         {
-            // Lambda is VOID
+            // Lambda is VOID and not callable
             if (s.type == UINT)
+            {
                 output.append("(result i32)\n");
 
-            // Recursion Detection
-            output.append("\n")
-                  .append(nesting)
-                  .append("global.get ")
-                  .append(symbol)
-                  .append("\n")
-                  .append(nesting)
-                  .append("if\n")
-                  .append(nesting)
-                  .append("\ti32.const ")
-                  .append(std::to_string(segment.getRecursionOffset()))
-                  .append("\n")
-                  .append(nesting)
-                  .append("\tcall $print_str\n")
-                  .append(nesting)
-                  .append("\tunreachable\n")
-                  .append(nesting)
-                  .append("end\n")
-                  .append(nesting)
-                  .append("i32.const 1\n")
-                  .append(nesting)
-                  .append("global.set ")
-                  .append(symbol)
-                  .append("\n");
+                // Recursion Detection
+                const auto id = std::to_string(++InstructionsGenerators::IF_BLOCK_ID);
+                output.append(nesting)
+                      .append("(block $endif_")
+                      .append(id)
+                      .append("\n")
+                      .append(nesting)
+                      .append("\tglobal.get ")
+                      .append(symbol)
+                      .append("\n")
+                      .append(nesting)
+                      .append("\tbr_if $endif_")
+                      .append(id)
+                      .append("\n")
+                      .append(nesting)
+                      .append("\ti32.const ")
+                      .append(std::to_string(segment.getRecursionOffset()))
+                      .append("\n")
+                      .append(nesting)
+                      .append("\tcall $print_str\n")
+                      .append(nesting)
+                      .append("\tunreachable\n")
+                      .append(nesting)
+                      .append(")\n")
+                      .append(nesting)
+                      .append("i32.const 0\n")
+                      .append(nesting)
+                      .append("global.set ")
+                      .append(symbol);
+            }
+            output.append("\n");
         }
         else
             throw std::runtime_error(RUNTIME_E1);

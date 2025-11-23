@@ -720,7 +720,7 @@ assignment_tail:
 print:
     WORD_PRINT '(' LITERAL_STRING ')' ';'
     {
-        SemanticActions::logStructure("WORD_PRINT");
+        SemanticActions::logStructure("PRINT");
 
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
             CodeGenerator::INTERMEDIATE_CODE->addTriple ({
@@ -754,7 +754,7 @@ print:
                 CodeGenerator::Triples::Operand({ NULLREF, nullptr })
             });
 
-        SemanticActions::logStructure("WORD_PRINT");
+        SemanticActions::logStructure("PRINT");
 
     } // Log  : Print
     | WORD_PRINT '(' expression ')' error
@@ -1192,18 +1192,18 @@ lambda_real_parameter:
 // ======================================= If ====================================== //
 
 if:
-    if_head ';'
+    if_word if_head ';'
     {
-        $$ = $1;
+        $$ = $2;
     }
-    | if_head error
+    | if_word if_head error
     {
-        $$ = $1;
+        $$ = $2;
 
         SemanticActions::specifySyntaxError(MISSING_SEMICOLON);
         yyerrok;
     }
-    | WORD_IF error ';'
+    | if_word error ';'
     {
         $$ = false;
 
@@ -1211,7 +1211,7 @@ if:
         yyerrok;
 
     } // Error: If General Error
-    | WORD_IF condition error ';'
+    | if_word condition error ';'
     {
         $$ = false;
 
@@ -1220,7 +1220,7 @@ if:
         yyerrok;
 
     } // Error: Missing Exutable Body and WORD_ENDIF in WORD_IF
-    | WORD_IF condition_body_setup WORD_ELSE error ';'
+    | if_word condition_body_setup WORD_ELSE error ';'
     {
         $$ = $2;
 
@@ -1244,10 +1244,25 @@ if:
     } // Error: Missing Executable Body in WORD_ELSE and WORD_ENDIF
 ;
 
-if_head:
-    WORD_IF condition_body_setup WORD_ENDIF
+if_word:
+    WORD_IF
     {
-        $$ = $2;
+        if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
+        {
+            CodeGenerator::INTERMEDIATE_CODE->addTriple ({
+                CODEOP_IF_START,
+                UNKNOWN,
+                CodeGenerator::Triples::Operand({NULLREF, nullptr}),
+                CodeGenerator::Triples::Operand({NULLREF, nullptr}),
+            });
+        }
+    }
+;
+
+if_head:
+    condition_body_setup WORD_ENDIF
+    {
+        $$ = $1;
 
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
         {
@@ -1262,12 +1277,12 @@ if_head:
             STACK.pop();
         }
 
-        SemanticActions::logStructure("WORD_IF");
+        SemanticActions::logStructure("IF");
 
     } // Log  : If
-    | WORD_IF condition_body_setup WORD_ELSE executable_body WORD_ENDIF
+    | condition_body_setup WORD_ELSE executable_body WORD_ENDIF
     {
-        $$ = $2;
+        $$ = $1;
 
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
         {
@@ -1282,12 +1297,12 @@ if_head:
             STACK.pop();
         }
 
-        SemanticActions::logStructure("WORD_IF-WORD_ELSE");
+        SemanticActions::logStructure("IF-ELSE");
 
     } // Log  : If-Else
-    | WORD_IF condition_body_setup error
+    | condition_body_setup error
     {
-        $$ = $2;
+        $$ = $1;
 
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
         {
@@ -1305,10 +1320,10 @@ if_head:
         SemanticActions::specifySyntaxError(MISSING_ENDIF);
         yyerrok;
 
-    } // Error: Missing WORD_ENDIF in WORD_IF
-    | WORD_IF condition_body_setup WORD_ELSE executable_body error
+    } // Error: Missing WORD_ENDIF in IF
+    | condition_body_setup WORD_ELSE executable_body error
     {
-        $$ = $2 || $4;
+        $$ = $1 || $3;
 
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
         {
@@ -1326,24 +1341,24 @@ if_head:
         SemanticActions::specifySyntaxError(MISSING_ENDIF);
         yyerrok;
 
-    } // Error: Missing WORD_ENDIF in WORD_IF-WORD_ELSE
-    | WORD_IF condition error WORD_ENDIF
+    } // Error: Missing WORD_ENDIF in IF-ELSE
+    | condition error WORD_ENDIF
     {
         $$ = false;
 
         SemanticActions::specifySyntaxError(MISSING_IF_EXECUTABLE_BODY);
         yyerrok;
 
-    } // Error: Missing Executable Body in WORD_IF
-    | WORD_IF condition error WORD_ELSE WORD_ENDIF
+    } // Error: Missing Executable Body in IF
+    | condition error WORD_ELSE WORD_ENDIF
     {
         $$ = false;
 
         SemanticActions::specifySyntaxError(MISSING_BOTH_EXECUTABLE_BODY);
         yyerrok;
 
-    } // Error: Missing Both Executable Body in WORD_IF-WORD_ELSE
-    | WORD_IF condition error WORD_ELSE
+    } // Error: Missing Both Executable Body in IF-ELSE
+    | condition error WORD_ELSE
     {
         $$ = false;
 
@@ -1351,10 +1366,10 @@ if_head:
         SemanticActions::announceSpecificError(MISSING_ENDIF);
         yyerrok;
 
-    } // Error: Missing Both Executable Body and WORD_ENDIF in WORD_IF-WORD_ELSE
-    | WORD_IF condition_body_setup WORD_ELSE error WORD_ENDIF
+    } // Error: Missing Both Executable Body and WORD_ENDIF in IF-ELSE
+    | condition_body_setup WORD_ELSE error WORD_ENDIF
     {
-        $$ = $2;
+        $$ = $1;
 
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
         {
@@ -1379,10 +1394,10 @@ if_head:
 
         SemanticActions::announceSpecificError(MISSING_IF_STATEMENT);
 
-    } // Error: Missing WORD_IF Statement
-    | WORD_IF condition_body_setup WORD_ELSE executable_body INVALID_RWORD
+    } // Error: Missing IF Statement
+    | condition_body_setup WORD_ELSE executable_body INVALID_RWORD
     {
-        $$ = $2;
+        $$ = $1;
 
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
         {
@@ -1397,9 +1412,9 @@ if_head:
             STACK.pop();
         }
     } // Error: (Lexical) Invalid Endif
-    | WORD_IF condition_body_setup INVALID_RWORD executable_body WORD_ENDIF
+    | condition_body_setup INVALID_RWORD executable_body WORD_ENDIF
     {
-        $$ = $2;
+        $$ = $1;
 
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
         {
@@ -1414,9 +1429,9 @@ if_head:
             STACK.pop();
         }
     } // Error: (Lexical) Invalid Else
-    | WORD_IF condition_body_setup INVALID_RWORD executable_body INVALID_RWORD
+    | condition_body_setup INVALID_RWORD executable_body INVALID_RWORD
     {
-        $$ = $2;
+        $$ = $1;
 
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
         {
@@ -1528,7 +1543,7 @@ do_body:
             });
         STACK.pop();
 
-        SemanticActions::logStructure("WORD_DO-WORD_WHILE");
+        SemanticActions::logStructure("DO-WHILE");
 
     } // Log  : WORD_DO-WORD_WHILE
     | executable_body WORD_WHILE condition error

@@ -67,6 +67,8 @@ std::string getStringOperator(const char op)
         return "/";
     case CODEOP_DO_START:
         return "dostart";
+    case CODEOP_IF_START:
+        return "ifstart";
     case CODEOP_IF_END:
         return "endif";
     default:

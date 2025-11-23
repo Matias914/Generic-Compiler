@@ -99,7 +99,7 @@
                 const { instance } = await WebAssembly.instantiateStreaming(response, importObject);
                 wasmMemory = instance.exports.memory;
 
-                logScreen("Ejecutando función main()...\n");
+                logScreen("\nEjecutando función main()...\n");
                 const result = instance.exports.main();
 
                 logScreen(`\nResultado: ${result}`);

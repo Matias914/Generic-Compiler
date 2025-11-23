@@ -21,9 +21,6 @@ PROGRAMA {
     };
 
     uint Y%%SIN%%PRINT (cr uint A, uint B) {
-            ## Descomentar para error
-                Y(A->A, B->B);
-            ##
             A, B = 1UI, 3UI;
             return (2UI);
         };
@@ -89,9 +86,13 @@ PROGRAMA {
         X1 := X2 / X1;
     ##
 
+    ## Descomentar para error
+         print(2.0 / 0.0);
+    ##
+
     print("\n\n ------- Prueba Resta\n\n");
 
-    print("\nX1 == ");
+    print("X1 == ");
     print(X1);
     print("\nX3 == ");
     print(X3);
@@ -125,7 +126,7 @@ PROGRAMA {
             X2 := X2 - 1UI;
         } while (X2 > 1UI);
 
-        print("\n- Iteracion - ");
+        print("- Iteracion - ");
         print(X1);
         print("\n");
 
