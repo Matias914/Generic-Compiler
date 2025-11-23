@@ -54,3 +54,7 @@ gc_tests
 outputs/
 
 bin/
+
+docs/demo.tape
+
+*.gif

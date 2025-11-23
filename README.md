@@ -7,6 +7,8 @@ Este repositorio contiene el código fuente de un compilador simple, single-thre
 
 El proyecto utiliza **Docker** para garantizar un entorno de compilación consistente y evitar problemas de dependencias.
 
+![Demo del Compilador](docs/demo.gif)
+
 -----
 
 ## Características ✨
