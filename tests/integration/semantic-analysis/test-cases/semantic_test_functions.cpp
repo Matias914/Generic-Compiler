@@ -21,4 +21,6 @@ TEST_F(CompilerTest, semantic_functions)
     EXPECT_TRUE(ERROR_HANDLER.contains({ERROR, MISSING_RETURN_STATEMENT  , 50, {"F%NO%RETURN"}}));
     EXPECT_TRUE(ERROR_HANDLER.contains({ERROR, INCOMPATIBLE_WITH_SEMANTIC, 65, {"2.5", "A", "cr"}}));
     EXPECT_TRUE(ERROR_HANDLER.contains({ERROR, INCOMPATIBLE_TYPES        , 68, {"X", "uint", "A", "float"}}));
+
+    EXPECT_FALSE(ERROR_HANDLER.contains({ERROR, VARIABLE_REDECLARATION, 78, {"F1"}}));
 }

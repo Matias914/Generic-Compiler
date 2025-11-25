@@ -74,7 +74,7 @@ namespace SemanticAnalyzer
         auto& [name, prefix] = variables.front();
         if (!prefix.empty())
         {
-            if (const auto ref = SYMBOL_TABLE.get(name + prefix); ref != nullptr && ref->type == VARIABLE)
+            if (const auto ref = SYMBOL_TABLE.get(name + prefix); ref != nullptr && ref->use == VARIABLE)
             {
                 variables.pop();
                 return ref;

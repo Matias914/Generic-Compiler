@@ -1,0 +1,54 @@
+## --------------------------------------------------- ##
+##  Prueba de SEMÁNTICA de Variables y Asignaciones    ##
+## --------------------------------------------------- ##
+
+PROGRAMA {
+
+    ## Declaración Global ##
+    uint VAR%GLOBAL;
+
+    ## --------------------------------------------------------- ##
+    ## CASOS VÁLIDOS (No deben generar errores)                  ##
+    ## --------------------------------------------------------- ##
+
+    uint TEST%SCOPE(uint PARAM%VAR) {
+        uint LOCAL;
+
+        ## 1. Visibilidad en ámbitos anidados ##
+        LOCAL := VAR%GLOBAL;
+
+        ## 2. Reconocimiento con prefijo de ámbito (Qualified Name) ##
+        ## Asumiendo que el nombre del programa es el root scope ##
+        LOCAL := PROGRAMA.VAR%GLOBAL;
+
+        ## 3. Reconocimiento de parámetros como variables locales ##
+        LOCAL := PARAM%VAR;
+
+        return (LOCAL);
+    };
+
+    ## --------------------------------------------------------- ##
+    ## CASOS INVÁLIDOS (Deben generar errores específicos)       ##
+    ## --------------------------------------------------------- ##
+
+    uint X, Y;
+
+    ## 4. Asignación Múltiple con tipos inválidos ##
+    ## X recibe uint (valido), Y recibe float (invalido) ##
+    ## Error esperado en la linea 39 ##
+    X, Y = 1UI, 2.3;
+
+    ## 5. Asignación Simple con tipos inválidos ##
+    ## X es uint, se asigna float ##
+    ## Error esperado en la linea 44 ##
+    X := 4.5;
+
+    uint FUNC%TEST(uint A) {
+        return (A);
+    };
+
+    ## 6. Uso de Función como Variable en asignación ##
+    ## FUNC%TEST es una función, no se le puede asignar valor ##
+    ## Error esperado en la linea 53 ##
+    FUNC%TEST := 10UI;
+}

@@ -68,9 +68,10 @@ set(COMPILER_SOURCES
 
 set(TEST_SOURCES
         tests/main_tests.cpp
+        src/utils/CompilerState.cpp
         # Fixtures
-        tests/unit/lexical-analyzer/fixture/TestLexicalAnalyzer.cpp
         tests/integration/fixture/CompilerTest.cpp
+        tests/unit/lexical-analyzer/fixture/TestLexicalAnalyzer.cpp
         # Unit Tests
         tests/unit/utils/test_symbol_table.cpp
         tests/unit/lexical-analyzer/test-cases/lexical_test_numeric_constants.cpp
@@ -90,8 +91,8 @@ set(TEST_SOURCES
         tests/integration/parser-lexer/test-cases/syntax_test_declarations.cpp
         tests/integration/parser-lexer/test-cases/syntax_test_invocations.cpp
         tests/integration/parser-lexer/test-cases/syntax_test_programs.cpp
-        src/utils/CompilerState.cpp
         tests/integration/semantic-analysis/test-cases/semantic_test_functions.cpp
+        tests/integration/semantic-analysis/test-cases/semantic_test_variables.cpp
 )
 
 # =========================================================
