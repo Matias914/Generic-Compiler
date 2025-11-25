@@ -5,8 +5,8 @@
 ##
     Bloque 1: Redeclaraciones
     - Se declara una variable GLOBALVAR.
-    - Se intenta declarar una función con el mismo nombre en el mismo ámbito.
-    - Se declara una función F1.
+    - Se intenta declarar una función con el mismo nombre que la variable en el mismo ámbito.
+    - Se invoca una función que no existe.
     - Se intenta declarar otra función F1 en el mismo ámbito.
 ##
 
@@ -18,6 +18,9 @@ PROGRAMA {
     uint GLOBALVAR(uint A) {
         return (1UI);
     };
+
+    ## Error: No declaración ##
+    F1(GLOBALVAR->A);
 
     uint F1(uint A) {
         return (A);
@@ -67,6 +70,7 @@ PROGRAMA {
 ##
     Bloque 4: Ámbitos anidados (Prueba de validez)
     - Redefinir un nombre en un ámbito interno NO debe dar error (Shadowing).
+    - Una función es visible en ámbitos anidados.
 ##
 
     uint VALIDA%SHADOWING(uint A) {
@@ -74,5 +78,10 @@ PROGRAMA {
         uint F1;
         F1 := 5UI;
         return (F1);
+
+        ## Esto es válido: PARAM%TEST sigue siendo visible ##
+        uint H1(uint B) {
+            return (PARAM%TEST(F1->A));
+        };
     };
 }
