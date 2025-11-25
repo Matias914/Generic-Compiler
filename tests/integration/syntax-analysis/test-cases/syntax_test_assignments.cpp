@@ -5,16 +5,14 @@
 #include "utils/ReportHandler.h"
 #include "utils/resources/codes.h"
 
-TEST_F(CompilerTest, assignments)
+TEST_F(CompilerTest, syntax_assignments)
 {
     REPORT_HANDLER.setOutput(OUTPUT_DIRECTORY + "/syntax_assignments.log");
 
-    const std::string file = WORKING_DIRECTORY + "/tests/integration/parser-lexer/files/syntax_assignments.txt";
+    const std::string file = WORKING_DIRECTORY + "/tests/integration/syntax-analysis/files/syntax_assignments.txt";
     assert(LexicalAnalyzer::open(file));
 
     SyntaxAnalyzer::analyze();
-
-    // Se espera error en las líneas: 36 38 38 38 38 38 38 39 39 39 39 39 40 40 41 41 41
 
     // Dentro del campo del contenido debe aparecer aquello encontrado
     EXPECT_TRUE(ERROR_HANDLER.contains({ERROR, MISSING_SEMICOLON, 34, {"print"}}));

@@ -5,11 +5,11 @@
 #include "utils/ReportHandler.h"
 #include "utils/resources/codes.h"
 
-TEST_F(CompilerTest, if_else)
+TEST_F(CompilerTest, syntax_if_else)
 {
     REPORT_HANDLER.setOutput(OUTPUT_DIRECTORY + "/syntax_if_else.log");
 
-    const std::string file = WORKING_DIRECTORY + "/tests/integration/parser-lexer/files/syntax_if_else.txt";
+    const std::string file = WORKING_DIRECTORY + "/tests/integration/syntax-analysis/files/syntax_if_else.txt";
     assert(LexicalAnalyzer::open(file));
 
     SyntaxAnalyzer::analyze();

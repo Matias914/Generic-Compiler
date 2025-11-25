@@ -5,18 +5,17 @@
 #include "utils/ReportHandler.h"
 #include "utils/resources/codes.h"
 
-TEST_F(CompilerTest, programs)
+TEST_F(CompilerTest, syntax_programs)
 {
     REPORT_HANDLER.setOutput(OUTPUT_DIRECTORY + "/syntax_programs.log");
 
-    const std::string file = WORKING_DIRECTORY + "/tests/integration/parser-lexer/files/syntax_programs.txt";
+    const std::string file = WORKING_DIRECTORY + "/tests/integration/syntax-analysis/files/syntax_programs.txt";
     assert(LexicalAnalyzer::open(file));
 
     SyntaxAnalyzer::analyze();
 
     // Dentro del campo del contenido debe aparecer aquello encontrado
 
-    // 33, 37, 42, 46, 50, 51, 53, 55
     EXPECT_TRUE(ERROR_HANDLER.contains({ERROR, GLOBAL_SCOPE_STATEMENT  , 33, {""}}));
     EXPECT_TRUE(ERROR_HANDLER.contains({ERROR, MISSING_PROGRAM_NAME    , 35, {""}}));
     EXPECT_TRUE(ERROR_HANDLER.contains({ERROR, INVALID_PROGRAM_NESTING , 42, {""}}));

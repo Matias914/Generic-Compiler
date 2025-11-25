@@ -84,15 +84,19 @@ set(TEST_SOURCES
         tests/unit/lexical-analyzer/test-cases/lexical_test_identifiers.cpp
         tests/unit/lexical-analyzer/test-cases/lexical_test_special_characters.cpp
         # Integration Tests
-        tests/integration/parser-lexer/test-cases/syntax_test_do_while.cpp
-        tests/integration/parser-lexer/test-cases/syntax_test_if_else.cpp
-        tests/integration/parser-lexer/test-cases/syntax_test_expressions.cpp
-        tests/integration/parser-lexer/test-cases/syntax_test_assignments.cpp
-        tests/integration/parser-lexer/test-cases/syntax_test_declarations.cpp
-        tests/integration/parser-lexer/test-cases/syntax_test_invocations.cpp
-        tests/integration/parser-lexer/test-cases/syntax_test_programs.cpp
+        tests/integration/syntax-analysis/test-cases/syntax_test_do_while.cpp
+        tests/integration/syntax-analysis/test-cases/syntax_test_if_else.cpp
+        tests/integration/syntax-analysis/test-cases/syntax_test_expressions.cpp
+        tests/integration/syntax-analysis/test-cases/syntax_test_assignments.cpp
+        tests/integration/syntax-analysis/test-cases/syntax_test_declarations.cpp
+        tests/integration/syntax-analysis/test-cases/syntax_test_invocations.cpp
+        tests/integration/syntax-analysis/test-cases/syntax_test_programs.cpp
         tests/integration/semantic-analysis/test-cases/semantic_test_functions.cpp
         tests/integration/semantic-analysis/test-cases/semantic_test_variables.cpp
+        tests/integration/semantic-analysis/test-cases/semantic_test_expressions.cpp
+        tests/integration/code-generation/test-cases/code_test_functions.cpp
+        tests/integration/code-generation/test-cases/code_test_assignments.cpp
+        tests/integration/code-generation/test-cases/code_test_control.cpp
 )
 
 # =========================================================

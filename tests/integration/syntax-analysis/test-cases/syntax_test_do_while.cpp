@@ -5,11 +5,11 @@
 #include "utils/ReportHandler.h"
 #include "utils/resources/codes.h"
 
-TEST_F(CompilerTest, do_while)
+TEST_F(CompilerTest, syntax_do_while)
 {
     REPORT_HANDLER.setOutput(OUTPUT_DIRECTORY + "/syntax_do_while.log");
 
-    const std::string file = WORKING_DIRECTORY + "/tests/integration/parser-lexer/files/syntax_do_while.txt";
+    const std::string file = WORKING_DIRECTORY + "/tests/integration/syntax-analysis/files/syntax_do_while.txt";
     assert(LexicalAnalyzer::open(file));
 
     SyntaxAnalyzer::analyze();

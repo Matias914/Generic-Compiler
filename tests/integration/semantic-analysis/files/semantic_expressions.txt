@@ -1,0 +1,49 @@
+## --------------------------------------------------- ##
+##  Prueba de SEMÁNTICA de Expresiones y Tipos         ##
+## --------------------------------------------------- ##
+
+PROGRAMA {
+    uint VAR%INT;
+    float VAR%FLOAT;
+
+    VAR%INT := 10UI;
+    VAR%FLOAT := 5.5;
+
+    ## --------------------------------------------------------- ##
+    ## 1. Operandos Incompatibles (Errores)                      ##
+    ## --------------------------------------------------------- ##
+
+    ## Suma: Uint + Float -> Incompatible ##
+    VAR%INT := VAR%INT + VAR%FLOAT;
+
+    ## Multiplicación: Float * Uint -> Incompatible ##
+    VAR%FLOAT := VAR%FLOAT * VAR%INT;
+
+    ## Relacional: Uint > Float -> Incompatible ##
+    if (VAR%INT > VAR%FLOAT)
+        print("Esto no deberia compilar");
+    endif;
+
+    ## --------------------------------------------------------- ##
+    ## 2. Conversiones Explícitas Float->Int (Válido)            ##
+    ## --------------------------------------------------------- ##
+
+    ## trunc de un literal flotante ##
+    VAR%INT := trunc(2.1);
+
+    ## trunc de una variable flotante ##
+    VAR%INT := trunc(VAR%FLOAT);
+
+    ## Expresión mixta corregida con trunc: Uint + trunc(Float) ##
+    VAR%INT := VAR%INT + trunc(VAR%FLOAT);
+
+    ## --------------------------------------------------------- ##
+    ## 3. Conversiones Explícitas Int->Int (Warning)             ##
+    ## --------------------------------------------------------- ##
+
+    ## trunc de un entero (Redundante) -> Debe generar WARNING ##
+    VAR%INT := trunc(10UI);
+
+    ## trunc de variable entera -> Debe generar WARNING ##
+    VAR%INT := trunc(VAR%INT);
+}

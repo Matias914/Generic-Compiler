@@ -14,12 +14,14 @@ namespace CodeGenerator
     void addIntermediateCodeBlock(const SymbolTable::Entry* ref);
     void notifyEndOfBlock();
 
-    std::string getIntermediateCode();
-
     bool generateWebAssembly(const std::string& output);
+
+    // Used for report
+    std::string getIntermediateCode();
 
     // Util para Testing
     void clear();
+    const Triples* getAssociatedTriples(const std::string& name);
 }
 
 #endif //GC_CODE_GENERATOR_H

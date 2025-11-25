@@ -46,21 +46,6 @@ namespace CodeGenerator
             INTERMEDIATE_CODE = ICODES[POSITIONS.top()].code;
     }
 
-    std::string getIntermediateCode()
-    {
-        int line = 1;
-        std::string mssg;
-        using namespace StringBuilders::CodeBuilders;
-        intermediateCodeHeader(mssg);
-        mssg.append("\n");
-        for (int i = ICODES.size() - 1; i >= 0; --i)
-        {
-            mssg.append("\n");
-            intermediateCodeBlock(mssg, ICODES[i].ref, ICODES[i].code, line);
-        }
-        return mssg;
-    }
-
     bool generateWebAssembly(const std::string& output)
     {
         // --- Step 1: Generate .wat file ---
@@ -112,10 +97,35 @@ namespace CodeGenerator
         return true;
     }
 
+    std::string getIntermediateCode()
+    {
+        int line = 1;
+        std::string mssg;
+        using namespace StringBuilders::CodeBuilders;
+        intermediateCodeHeader(mssg);
+        mssg.append("\n");
+        for (int i = ICODES.size() - 1; i >= 0; --i)
+        {
+            mssg.append("\n");
+            intermediateCodeBlock(mssg, ICODES[i].ref, ICODES[i].code, line);
+        }
+        return mssg;
+    }
+
     void clear()
     {
         while (!POSITIONS.empty())
             POSITIONS.pop();
         ICODES.clear();
+    }
+
+    const Triples* getAssociatedTriples(const std::string& name)
+    {
+        const auto entry = SYMBOL_TABLE.get(name);
+        if (entry == nullptr) return nullptr;
+        for (auto it = ICODES.begin(); it != ICODES.end(); ++it)
+            if (entry == it->ref)
+                return it->code;
+        return nullptr;
     }
 }

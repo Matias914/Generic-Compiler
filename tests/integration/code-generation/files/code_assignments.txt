@@ -1,0 +1,30 @@
+## --------------------------------------------------- ##
+##  Prueba de Generación de Código: Asignaciones       ##
+## --------------------------------------------------- ##
+##
+    Objetivo: Verificar optimizaciones y desgloses en
+    asignaciones.
+
+    Casos de prueba:
+    1. Asignación Múltiple: Debe generar una secuencia
+       de asignaciones simples consecutivas.
+    2. Trunc Real: Debe generar la instrucción de
+       conversión (CODEOP_FTOI) cuando es Float -> Uint.
+    3. Trunc Redundante: NO debe generar instrucción de
+       conversión cuando es Uint -> Uint (Optimización).
+##
+
+PROGRAMA {
+    uint A, B, C;
+    float F;
+    F := 5.5;
+
+    ## Asignacion Multiple ##
+    A, B = 10UI, 20UI;
+
+    ## Trunc Real (Float -> Int) ##
+    C := trunc(F);
+
+    ## Trunc Redundante (Int -> Int) ##
+    A := trunc(B);
+}

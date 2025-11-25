@@ -1,0 +1,38 @@
+## --------------------------------------------------- ##
+##  Prueba de Generación de Código: Funciones          ##
+## --------------------------------------------------- ##
+##
+    Objetivo: Verificar la generación de código modular
+    (funciones y lambdas) y la semántica de invocación.
+
+    Casos de prueba:
+    1. Generación Separada: El cuerpo de FUNC y la Lambda
+       no deben aparecer en el flujo de PROGRAMA.
+    2. Semántica CR:
+       - Antes del Call: Copia valor al parámetro (CV/CR).
+       - Call + Asignación por Return..
+       - Después del Call: Copia valor del parámetro a la
+         variable original (CR).
+    3. Lambdas:
+       - Generación de etiqueta automática (@L1).
+       - Invocación inmediata.
+##
+
+PROGRAMA {
+    uint GLOB;
+
+    ## Funcion Regular ##
+    ## A es por Copia (CV), B es por Copia-Resultado (CR) ##
+    uint FUNC(uint A, cr uint B) {
+        B := A + B;
+        return (B);
+    };
+
+    ## Invocación de Función Regular ##
+    GLOB := FUNC(10UI->A, GLOB->B);
+
+    ## El cuerpo de la lambda debe generarse aparte y ser llamado aqui. ##
+    (uint E) {
+        print(E + 1UI);
+    } (GLOB);
+}

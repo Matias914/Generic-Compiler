@@ -18,7 +18,10 @@ TEST_F(CompilerTest, semantic_variables)
     EXPECT_FALSE(ERROR_HANDLER.contains({ERROR, UNDECLARED_VARIABLE, 22, {"PROGRAMA.VAR%GLOBAL"}}));
     EXPECT_FALSE(ERROR_HANDLER.contains({ERROR, UNDECLARED_VARIABLE, 25, {"PARAM%VAR"}}));
 
-    EXPECT_TRUE(ERROR_HANDLER.contains({ERROR, INCOMPATIBLE_TYPES , 39, {"Y", "uint", "2.3", "float"}}));
-    EXPECT_TRUE(ERROR_HANDLER.contains({ERROR, INCOMPATIBLE_TYPES , 44, {"X", "uint", "4.5", "float"}}));
-    EXPECT_TRUE(ERROR_HANDLER.contains({ERROR, UNDECLARED_VARIABLE, 53, {"FUNC%TEST"}}));
+    // Este error es de tipo Sintáctico pero se incluyó en esta sección por el contexto
+    EXPECT_TRUE(ERROR_HANDLER.contains({WARNING, EXTRA_NUMERIC_CONSTANTS, 39, {""}}));
+
+    EXPECT_TRUE(ERROR_HANDLER.contains({ERROR  , INCOMPATIBLE_TYPES     , 39, {"Y", "uint", "2.3", "float"}}));
+    EXPECT_TRUE(ERROR_HANDLER.contains({ERROR  , INCOMPATIBLE_TYPES     , 44, {"X", "uint", "4.5", "float"}}));
+    EXPECT_TRUE(ERROR_HANDLER.contains({ERROR  , UNDECLARED_VARIABLE    , 53, {"FUNC%TEST"}}));
 }

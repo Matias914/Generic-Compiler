@@ -35,8 +35,8 @@ PROGRAMA {
 
     ## 4. Asignación Múltiple con tipos inválidos ##
     ## X recibe uint (valido), Y recibe float (invalido) ##
-    ## Error esperado en la linea 39 ##
-    X, Y = 1UI, 2.3;
+    ## Error esperado en la linea 39 + Warning por lado derecho con más elementos ##
+    X, Y = 1UI, 2.3, 4UI;
 
     ## 5. Asignación Simple con tipos inválidos ##
     ## X es uint, se asigna float ##

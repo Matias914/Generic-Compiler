@@ -5,11 +5,11 @@
 #include "utils/ReportHandler.h"
 #include "utils/resources/codes.h"
 
-TEST_F(CompilerTest, invocations)
+TEST_F(CompilerTest, syntax_invocations)
 {
     REPORT_HANDLER.setOutput(OUTPUT_DIRECTORY + "/syntax_invocations.log");
 
-    const std::string file = WORKING_DIRECTORY + "/tests/integration/parser-lexer/files/syntax_invocations.txt";
+    const std::string file = WORKING_DIRECTORY + "/tests/integration/syntax-analysis/files/syntax_invocations.txt";
     assert(LexicalAnalyzer::open(file));
 
     SyntaxAnalyzer::analyze();

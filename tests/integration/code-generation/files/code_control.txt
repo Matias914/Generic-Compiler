@@ -1,0 +1,27 @@
+## --------------------------------------------------- ##
+##  Prueba de Generación de Código: Flujo de Control   ##
+## --------------------------------------------------- ##
+##
+    Objetivo: Verificar la correcta generación de tercetos
+    para estructuras de control anidadas.
+
+    Estructura probada:
+    - DO-WHILE como bucle principal.
+    - IF-ELSE anidado dentro del bucle.
+    - Verificación de etiquetas (CODEOP_DO_START) y saltos
+      (CODEOP_BRANCH_TRUE/FALSE).
+##
+
+PROGRAMA {
+    uint X, Y;
+    X := 0UI;
+    Y := 10UI;
+
+    do {
+        if (X > 5UI)
+            X := X - 1UI;
+        else
+            X := X + 1UI;
+        endif;
+    } while (X < Y);
+}
