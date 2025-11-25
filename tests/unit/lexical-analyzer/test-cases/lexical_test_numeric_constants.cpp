@@ -17,9 +17,9 @@ using namespace LexicalAnalyzer;
  */
 TEST_F(TestLexicalAnalyzer, numeric_constants)
 {
-    REPORT_HANDLER.setOutput(OUTPUT_DIRECTORY + "/numeric_constants.log");
+    REPORT_HANDLER.setOutput(OUTPUT_DIRECTORY + "/lexical_numeric_constants.log");
 
-    const std::string file = WORKING_DIRECTORY + "/tests/unit/lexical-analyzer/files/numeric_constants.txt";
+    const std::string file = WORKING_DIRECTORY + "/tests/unit/lexical-analyzer/files/lexical_numeric_constants.txt";
     assert(open(file.c_str()));
 
     // ----- Entero sin Signo (16 bits) ----- //

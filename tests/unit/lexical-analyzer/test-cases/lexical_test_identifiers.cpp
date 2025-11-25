@@ -17,9 +17,9 @@ using namespace LexicalAnalyzer;
  */
 TEST_F(TestLexicalAnalyzer, identifiers)
 {
-    REPORT_HANDLER.setOutput(OUTPUT_DIRECTORY + "/identifiers.log");
+    REPORT_HANDLER.setOutput(OUTPUT_DIRECTORY + "/lexical_identifiers.log");
 
-    const std::string file = WORKING_DIRECTORY + "/tests/unit/lexical-analyzer/files/identifiers.txt";
+    const std::string file = WORKING_DIRECTORY + "/tests/unit/lexical-analyzer/files/lexical_identifiers.txt";
     assert(open(file.c_str()));
 
     // ----- Identificadores ----- //

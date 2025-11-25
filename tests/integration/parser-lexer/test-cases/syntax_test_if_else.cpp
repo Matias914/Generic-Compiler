@@ -1,15 +1,15 @@
-#include "../fixture/TestParserLexer.h"
+#include "../../fixture/CompilerTest.h"
 #include "gtest/gtest.h"
 #include "lexical-analyzer/LexicalAnalyzer.h"
 #include "syntax-analyzer/SyntaxAnalyzer.h"
 #include "utils/ReportHandler.h"
 #include "utils/resources/codes.h"
 
-TEST_F(TestParserLexer, if_else)
+TEST_F(CompilerTest, if_else)
 {
-    REPORT_HANDLER.setOutput(OUTPUT_DIRECTORY + "/if_else.log");
+    REPORT_HANDLER.setOutput(OUTPUT_DIRECTORY + "/syntax_if_else.log");
 
-    const std::string file = WORKING_DIRECTORY + "/tests/integration/parser-lexer/files/if_else.txt";
+    const std::string file = WORKING_DIRECTORY + "/tests/integration/parser-lexer/files/syntax_if_else.txt";
     assert(LexicalAnalyzer::open(file));
 
     SyntaxAnalyzer::analyze();

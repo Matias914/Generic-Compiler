@@ -511,15 +511,20 @@ namespace StringBuilders::ErrorBuilders
 
     std::string incompatibleTypes(const std::vector<std::string>& content)
     {
-        if (content.size() != 2)
+        if (content.size() != 4)
             throw std::runtime_error("\nincompatibleTypes: invalid log");
         std::string mssg;
         mssg.clear();
         mssg.append("Incompatible types in operation. Left side: '")
             .append(content[0])
-            .append("', Right side: '")
+            .append("' (")
             .append(content[1])
-            .append("'");
+            .append(")")
+            .append(", Right side: '")
+            .append(content[2])
+            .append("' (")
+            .append(content[3])
+            .append(")");
         return ERROR_MSG(+mssg+);
     }
 
@@ -555,5 +560,10 @@ namespace StringBuilders::ErrorBuilders
         if (content.size() != 1)
             throw std::runtime_error("\nmissingReturnStatement: invalid log");
         return ERROR_MSG("Function '" + content[0] + "' has a path without a return statemnt");
+    }
+
+    std::string noParamsGiven(const std::vector<std::string>& content)
+    {
+        return ERROR_MSG("A function must have at least one parameter");
     }
 }

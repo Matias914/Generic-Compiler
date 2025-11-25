@@ -16,9 +16,9 @@ using namespace LexicalAnalyzer;
  */
 TEST_F(TestLexicalAnalyzer, special_characters)
 {
-    REPORT_HANDLER.setOutput(OUTPUT_DIRECTORY + "/special_characters.log");
+    REPORT_HANDLER.setOutput(OUTPUT_DIRECTORY + "/lexical_special_characters.log");
 
-    const std::string file = WORKING_DIRECTORY + "/tests/unit/lexical-analyzer/files/special_characters.txt";
+    const std::string file = WORKING_DIRECTORY + "/tests/unit/lexical-analyzer/files/lexical_special_characters.txt";
     assert(open(file.c_str()));
 
     // ----- Operadores Compuestos ----- //

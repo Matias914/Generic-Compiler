@@ -70,27 +70,28 @@ set(TEST_SOURCES
         tests/main_tests.cpp
         # Fixtures
         tests/unit/lexical-analyzer/fixture/TestLexicalAnalyzer.cpp
-        tests/integration/parser-lexer/fixture/TestParserLexer.cpp
+        tests/integration/fixture/CompilerTest.cpp
         # Unit Tests
-        tests/unit/utils/SymbolTable_test.cpp
-        tests/unit/lexical-analyzer/test-cases/numeric_constants_test.cpp
-        tests/unit/lexical-analyzer/test-cases/reserved_words_test.cpp
-        tests/unit/lexical-analyzer/test-cases/comments_test.cpp
-        tests/unit/lexical-analyzer/test-cases/string_literals_test.cpp
-        tests/unit/lexical-analyzer/components/states_test.cpp
-        tests/unit/lexical-analyzer/components/semantic_actions_test.cpp
-        tests/unit/lexical-analyzer/components/translator_test.cpp
-        tests/unit/lexical-analyzer/test-cases/identifiers_test.cpp
-        tests/unit/lexical-analyzer/test-cases/special_characters_test.cpp
+        tests/unit/utils/test_symbol_table.cpp
+        tests/unit/lexical-analyzer/test-cases/lexical_test_numeric_constants.cpp
+        tests/unit/lexical-analyzer/test-cases/lexical_test_reserved_words.cpp
+        tests/unit/lexical-analyzer/test-cases/lexical_test_comments.cpp
+        tests/unit/lexical-analyzer/test-cases/lexical_test_string_literals.cpp
+        tests/unit/lexical-analyzer/components/test_states.cpp
+        tests/unit/lexical-analyzer/components/test_semantic_actions.cpp
+        tests/unit/lexical-analyzer/components/test_translator.cpp
+        tests/unit/lexical-analyzer/test-cases/lexical_test_identifiers.cpp
+        tests/unit/lexical-analyzer/test-cases/lexical_test_special_characters.cpp
         # Integration Tests
-        tests/integration/parser-lexer/test-cases/do_while_test.cpp
-        tests/integration/parser-lexer/test-cases/if_else_test.cpp
-        tests/integration/parser-lexer/test-cases/expressions_test.cpp
-        tests/integration/parser-lexer/test-cases/assignments_test.cpp
-        tests/integration/parser-lexer/test-cases/declarations_test.cpp
-        tests/integration/parser-lexer/test-cases/invocations_test.cpp
-        tests/integration/parser-lexer/test-cases/programs_test.cpp
+        tests/integration/parser-lexer/test-cases/syntax_test_do_while.cpp
+        tests/integration/parser-lexer/test-cases/syntax_test_if_else.cpp
+        tests/integration/parser-lexer/test-cases/syntax_test_expressions.cpp
+        tests/integration/parser-lexer/test-cases/syntax_test_assignments.cpp
+        tests/integration/parser-lexer/test-cases/syntax_test_declarations.cpp
+        tests/integration/parser-lexer/test-cases/syntax_test_invocations.cpp
+        tests/integration/parser-lexer/test-cases/syntax_test_programs.cpp
         src/utils/CompilerState.cpp
+        tests/integration/semantic-analysis/test-cases/semantic_test_functions.cpp
 )
 
 # =========================================================

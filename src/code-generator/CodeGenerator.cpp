@@ -4,7 +4,6 @@
 #include <fstream>
 #include <ostream>
 #include <stack>
-#include <stdexcept>
 #include <string>
 
 #include "../../include/code-generator/components/wasm-generation/wasm_command.h"
@@ -15,9 +14,7 @@
 
 #define WARNING_MSG(X) "\n[[ WARNING ]]: " X "."
 
-#define RUNTIME_E1 "\nnotifyEndOfBlock(): block was marked as ended but no block was found"
-
-extern SymbolTable SYMBOL_TABLE;
+extern SymbolTable  SYMBOL_TABLE;
 extern LiteralTable LITERAL_TABLE;
 
 namespace CodeGenerator
@@ -43,7 +40,7 @@ namespace CodeGenerator
     void notifyEndOfBlock()
     {
         if (POSITIONS.empty())
-            throw std::runtime_error(RUNTIME_E1);
+            return;
         POSITIONS.pop();
         if (!POSITIONS.empty())
             INTERMEDIATE_CODE = ICODES[POSITIONS.top()].code;

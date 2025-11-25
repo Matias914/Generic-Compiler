@@ -182,6 +182,8 @@ StringBuilder getBuilderForErrors(const int& code)
         return returnWithoutScope;
     case MISSING_RETURN_STATEMENT:
         return missingReturnStatement;
+    case NO_PARAMS_GIVEN:
+        return noParamsGiven;
     default:
         return defaultError;
     }

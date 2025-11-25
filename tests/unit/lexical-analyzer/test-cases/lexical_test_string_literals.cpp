@@ -15,9 +15,9 @@ using namespace LexicalAnalyzer;
  */
 TEST_F(TestLexicalAnalyzer, string_literals)
 {
-    REPORT_HANDLER.setOutput(OUTPUT_DIRECTORY + "/string_literals.log");
+    REPORT_HANDLER.setOutput(OUTPUT_DIRECTORY + "/lexical_string_literals.log");
 
-    const std::string file = WORKING_DIRECTORY + "/tests/unit/lexical-analyzer/files/string_literals.txt";
+    const std::string file = WORKING_DIRECTORY + "/tests/unit/lexical-analyzer/files/lexical_string_literals.txt";
     assert(open(file.c_str()));
 
     // ----- Cadenas de una línea ----- //

@@ -100,5 +100,6 @@
 #define RETURN_INCOMPATIBLE             76
 #define RETURN_WITHOUT_SCOPE            77
 #define MISSING_RETURN_STATEMENT        78
+#define NO_PARAMS_GIVEN                 79
 
 #endif //GC_CODES_H

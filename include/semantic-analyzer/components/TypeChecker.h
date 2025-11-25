@@ -29,6 +29,9 @@ namespace SemanticAnalyzer
         static int checkSemantics(const Expression& e1, const Expression& e2);
         static int checkAssignment(const Expression& e1, const Expression& e2);
 
+    private:
+        static std::string typeToString(int type);
+        static std::string semanticToString(int semantic);
     };
 }
 

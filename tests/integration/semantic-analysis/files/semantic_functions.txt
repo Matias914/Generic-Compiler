@@ -1,0 +1,78 @@
+## --------------------------------------------------- ##
+##  Prueba de SEMÁNTICA de declaraciones e invocación  ##
+## --------------------------------------------------- ##
+
+##
+    Bloque 1: Redeclaraciones
+    - Se declara una variable GLOBALVAR.
+    - Se intenta declarar una función con el mismo nombre en el mismo ámbito.
+    - Se declara una función F1.
+    - Se intenta declarar otra función F1 en el mismo ámbito.
+##
+
+PROGRAMA {
+
+    uint GLOBALVAR;
+
+    ## Error: Redeclaración ##
+    uint GLOBALVAR(uint A) {
+        return (1UI);
+    };
+
+    uint F1(uint A) {
+        return (A);
+    };
+
+    ## Error: Redeclaración ##
+    uint F1(uint B) {
+        return (B);
+    };
+
+##
+    Bloque 2: Tipos de Retorno
+    - Una función debe retornar algo.
+    - El tipo retornado debe coincidir con el declarado.
+
+    Errores esperados en líneas: 40, 46
+##
+
+    ## Error: Tipo de retorno incorrecto (Se espera uint, retorna float) ##
+    uint F%BAD%TYPE(uint A) {
+        return (2.5);
+    };
+
+    ## Error: Falta sentencia return (La función debe retornar algo) ##
+    uint F%NO%RETURN(uint A) {
+        print("Esta función no devuelve nada");
+    };
+
+##
+    Bloque 3: Invocación y Parámetros
+    - Tipo de parámetro real vs formal.
+    - Semántica del parámetro.
+##
+
+    uint PARAM%TEST(cr float A) {
+        return (trunc(A));
+    };
+
+    uint X;
+
+    ## Error: Semántica incorrecta ##
+    X := PARAM%TEST(2.5->A);
+
+    ## Error: Tipo de parámetro no coincide ##
+    X := PARAM%TEST(X->A);
+
+##
+    Bloque 4: Ámbitos anidados (Prueba de validez)
+    - Redefinir un nombre en un ámbito interno NO debe dar error (Shadowing).
+##
+
+    uint VALIDA%SHADOWING(uint A) {
+        ## Esto es válido: F1 existe afuera, pero aquí es una variable local ##
+        uint F1;
+        F1 := 5UI;
+        return (F1);
+    };
+}

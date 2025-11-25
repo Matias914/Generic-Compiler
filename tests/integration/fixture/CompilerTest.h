@@ -1,13 +1,13 @@
-#ifndef GC_TESTPARSERLEXER_H
-#define GC_TESTPARSERLEXER_H
-
-#include "gtest/gtest.h"
-#include "utils/SymbolTable.h"
-#include "utils/LiteralTable.h"
-#include "utils/ErrorHandler.h"
-#include "utils/ReportHandler.h"
+#ifndef GC_COMPILERTEST_H
+#define GC_COMPILERTEST_H
 
 #include <string>
+
+#include "gtest/gtest.h"
+#include "utils/ErrorHandler.h"
+#include "utils/LiteralTable.h"
+#include "utils/ReportHandler.h"
+#include "utils/SymbolTable.h"
 
 extern bool VERBOSE_OPTION;
 
@@ -20,11 +20,11 @@ extern LiteralTable LITERAL_TABLE;
 extern ErrorHandler ERROR_HANDLER;
 extern ReportHandler REPORT_HANDLER;
 
-class TestParserLexer : public ::testing::Test
+class CompilerTest : public ::testing::Test
 {
     void SetUp() override;
     void TearDown() override;
 };
 
 
-#endif //GC_TESTPARSERLEXER_H
+#endif //GC_COMPILERTEST_H

@@ -96,6 +96,7 @@ namespace StringBuilders
         std::string returnIncompatible(const std::vector<std::string>& content);
         std::string returnWithoutScope(const std::vector<std::string>& content);
         std::string missingReturnStatement(const std::vector<std::string>& content);
+        std::string noParamsGiven(const std::vector<std::string>& content);
 
         // Warnings
         std::string defaultWarning(const std::vector<std::string>& content);

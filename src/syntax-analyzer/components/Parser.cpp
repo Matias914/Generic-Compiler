@@ -102,7 +102,7 @@ void createTruncateTriple(Metadata& result, const Metadata& operand);
 void createArithmeticTriple(Metadata& r, const Metadata& o1, const Metadata& o2, char op);
 
 
-#line 106 "src/syntax-analyzer/components/parser.cpp"
+#line 106 "src/syntax-analyzer/components/Parser.cpp"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -188,81 +188,83 @@ enum yysymbol_kind_t
   YYSYMBOL_type = 55,                      /* type  */
   YYSYMBOL_unnamed_function_declaration_middle = 56, /* unnamed_function_declaration_middle  */
   YYSYMBOL_57_6 = 57,                      /* $@6  */
-  YYSYMBOL_unnamed_function_declaration_tail = 58, /* unnamed_function_declaration_tail  */
-  YYSYMBOL_function_declaration_middle = 59, /* function_declaration_middle  */
-  YYSYMBOL_60_7 = 60,                      /* $@7  */
-  YYSYMBOL_function_declaration_tail = 61, /* function_declaration_tail  */
-  YYSYMBOL_formal_parameter_list = 62,     /* formal_parameter_list  */
-  YYSYMBOL_63_8 = 63,                      /* $@8  */
-  YYSYMBOL_formal_parameter = 64,          /* formal_parameter  */
-  YYSYMBOL_parameter_semantics = 65,       /* parameter_semantics  */
-  YYSYMBOL_function_body = 66,             /* function_body  */
-  YYSYMBOL_return = 67,                    /* return  */
-  YYSYMBOL_executable_stmt = 68,           /* executable_stmt  */
-  YYSYMBOL_assignment = 69,                /* assignment  */
-  YYSYMBOL_assignment_head = 70,           /* assignment_head  */
-  YYSYMBOL_assignment_tail = 71,           /* assignment_tail  */
-  YYSYMBOL_print = 72,                     /* print  */
-  YYSYMBOL_73_9 = 73,                      /* $@9  */
-  YYSYMBOL_print_end = 74,                 /* print_end  */
-  YYSYMBOL_multiple_assignments = 75,      /* multiple_assignments  */
-  YYSYMBOL_assignment_list = 76,           /* assignment_list  */
-  YYSYMBOL_assignment_end = 77,            /* assignment_end  */
-  YYSYMBOL_left_variable = 78,             /* left_variable  */
-  YYSYMBOL_79_10 = 79,                     /* $@10  */
-  YYSYMBOL_extra_numeric_constants = 80,   /* extra_numeric_constants  */
-  YYSYMBOL_81_11 = 81,                     /* $@11  */
-  YYSYMBOL_82_12 = 82,                     /* $@12  */
-  YYSYMBOL_invocation = 83,                /* invocation  */
-  YYSYMBOL_function_invocation_head = 84,  /* function_invocation_head  */
-  YYSYMBOL_invocation_setup = 85,          /* invocation_setup  */
-  YYSYMBOL_function_invocation_tail = 86,  /* function_invocation_tail  */
-  YYSYMBOL_real_parameter_list = 87,       /* real_parameter_list  */
-  YYSYMBOL_real_parameter_list_setup = 88, /* real_parameter_list_setup  */
-  YYSYMBOL_real_parameter = 89,            /* real_parameter  */
-  YYSYMBOL_lambda_invocation_head = 90,    /* lambda_invocation_head  */
-  YYSYMBOL_91_13 = 91,                     /* $@13  */
-  YYSYMBOL_lambda_invocation_middle = 92,  /* lambda_invocation_middle  */
-  YYSYMBOL_93_14 = 93,                     /* $@14  */
-  YYSYMBOL_94_15 = 94,                     /* $@15  */
+  YYSYMBOL_58_7 = 58,                      /* $@7  */
+  YYSYMBOL_unnamed_function_declaration_tail = 59, /* unnamed_function_declaration_tail  */
+  YYSYMBOL_function_declaration_middle = 60, /* function_declaration_middle  */
+  YYSYMBOL_61_8 = 61,                      /* $@8  */
+  YYSYMBOL_62_9 = 62,                      /* $@9  */
+  YYSYMBOL_function_declaration_tail = 63, /* function_declaration_tail  */
+  YYSYMBOL_formal_parameter_list = 64,     /* formal_parameter_list  */
+  YYSYMBOL_65_10 = 65,                     /* $@10  */
+  YYSYMBOL_formal_parameter = 66,          /* formal_parameter  */
+  YYSYMBOL_parameter_semantics = 67,       /* parameter_semantics  */
+  YYSYMBOL_function_body = 68,             /* function_body  */
+  YYSYMBOL_return = 69,                    /* return  */
+  YYSYMBOL_executable_stmt = 70,           /* executable_stmt  */
+  YYSYMBOL_assignment = 71,                /* assignment  */
+  YYSYMBOL_assignment_head = 72,           /* assignment_head  */
+  YYSYMBOL_assignment_tail = 73,           /* assignment_tail  */
+  YYSYMBOL_print = 74,                     /* print  */
+  YYSYMBOL_75_11 = 75,                     /* $@11  */
+  YYSYMBOL_print_end = 76,                 /* print_end  */
+  YYSYMBOL_multiple_assignments = 77,      /* multiple_assignments  */
+  YYSYMBOL_assignment_list = 78,           /* assignment_list  */
+  YYSYMBOL_assignment_end = 79,            /* assignment_end  */
+  YYSYMBOL_left_variable = 80,             /* left_variable  */
+  YYSYMBOL_81_12 = 81,                     /* $@12  */
+  YYSYMBOL_extra_numeric_constants = 82,   /* extra_numeric_constants  */
+  YYSYMBOL_83_13 = 83,                     /* $@13  */
+  YYSYMBOL_84_14 = 84,                     /* $@14  */
+  YYSYMBOL_invocation = 85,                /* invocation  */
+  YYSYMBOL_function_invocation_head = 86,  /* function_invocation_head  */
+  YYSYMBOL_invocation_setup = 87,          /* invocation_setup  */
+  YYSYMBOL_function_invocation_tail = 88,  /* function_invocation_tail  */
+  YYSYMBOL_real_parameter_list = 89,       /* real_parameter_list  */
+  YYSYMBOL_real_parameter_list_setup = 90, /* real_parameter_list_setup  */
+  YYSYMBOL_real_parameter = 91,            /* real_parameter  */
+  YYSYMBOL_lambda_invocation_head = 92,    /* lambda_invocation_head  */
+  YYSYMBOL_93_15 = 93,                     /* $@15  */
+  YYSYMBOL_lambda_invocation_middle = 94,  /* lambda_invocation_middle  */
   YYSYMBOL_95_16 = 95,                     /* $@16  */
-  YYSYMBOL_lambda_missing_closing_bracket = 96, /* lambda_missing_closing_bracket  */
-  YYSYMBOL_lambda_invocation_tail = 97,    /* lambda_invocation_tail  */
-  YYSYMBOL_lambda_real_parameter = 98,     /* lambda_real_parameter  */
-  YYSYMBOL_if = 99,                        /* if  */
-  YYSYMBOL_if_word = 100,                  /* if_word  */
-  YYSYMBOL_if_head = 101,                  /* if_head  */
-  YYSYMBOL_condition_body_setup = 102,     /* condition_body_setup  */
-  YYSYMBOL_condition_setup = 103,          /* condition_setup  */
-  YYSYMBOL_then_body_setup = 104,          /* then_body_setup  */
-  YYSYMBOL_do_while = 105,                 /* do_while  */
-  YYSYMBOL_106_17 = 106,                   /* $@17  */
-  YYSYMBOL_do_while_head = 107,            /* do_while_head  */
-  YYSYMBOL_do_body = 108,                  /* do_body  */
-  YYSYMBOL_109_18 = 109,                   /* $@18  */
-  YYSYMBOL_do_while_tail = 110,            /* do_while_tail  */
-  YYSYMBOL_executable_body = 111,          /* executable_body  */
-  YYSYMBOL_executable_statements = 112,    /* executable_statements  */
-  YYSYMBOL_opt_trunc_constant = 113,       /* opt_trunc_constant  */
-  YYSYMBOL_trunc_constant = 114,           /* trunc_constant  */
-  YYSYMBOL_opt_trunc_variable = 115,       /* opt_trunc_variable  */
-  YYSYMBOL_trunc_variable = 116,           /* trunc_variable  */
-  YYSYMBOL_trunc_expression = 117,         /* trunc_expression  */
-  YYSYMBOL_condition = 118,                /* condition  */
-  YYSYMBOL_comparison = 119,               /* comparison  */
-  YYSYMBOL_comparison_operator = 120,      /* comparison_operator  */
-  YYSYMBOL_expression = 121,               /* expression  */
-  YYSYMBOL_expression_setup = 122,         /* expression_setup  */
-  YYSYMBOL_term = 123,                     /* term  */
-  YYSYMBOL_positive_term = 124,            /* positive_term  */
-  YYSYMBOL_negative_term = 125,            /* negative_term  */
-  YYSYMBOL_factor = 126,                   /* factor  */
-  YYSYMBOL_positive_factor = 127,          /* positive_factor  */
-  YYSYMBOL_negative_factor = 128,          /* negative_factor  */
-  YYSYMBOL_numeric_constant = 129,         /* numeric_constant  */
-  YYSYMBOL_positive_constant = 130,        /* positive_constant  */
-  YYSYMBOL_negative_constant = 131,        /* negative_constant  */
-  YYSYMBOL_variable = 132                  /* variable  */
+  YYSYMBOL_96_17 = 96,                     /* $@17  */
+  YYSYMBOL_97_18 = 97,                     /* $@18  */
+  YYSYMBOL_lambda_missing_closing_bracket = 98, /* lambda_missing_closing_bracket  */
+  YYSYMBOL_lambda_invocation_tail = 99,    /* lambda_invocation_tail  */
+  YYSYMBOL_lambda_real_parameter = 100,    /* lambda_real_parameter  */
+  YYSYMBOL_if = 101,                       /* if  */
+  YYSYMBOL_if_word = 102,                  /* if_word  */
+  YYSYMBOL_if_head = 103,                  /* if_head  */
+  YYSYMBOL_condition_body_setup = 104,     /* condition_body_setup  */
+  YYSYMBOL_condition_setup = 105,          /* condition_setup  */
+  YYSYMBOL_then_body_setup = 106,          /* then_body_setup  */
+  YYSYMBOL_do_while = 107,                 /* do_while  */
+  YYSYMBOL_108_19 = 108,                   /* $@19  */
+  YYSYMBOL_do_while_head = 109,            /* do_while_head  */
+  YYSYMBOL_do_body = 110,                  /* do_body  */
+  YYSYMBOL_111_20 = 111,                   /* $@20  */
+  YYSYMBOL_do_while_tail = 112,            /* do_while_tail  */
+  YYSYMBOL_executable_body = 113,          /* executable_body  */
+  YYSYMBOL_executable_statements = 114,    /* executable_statements  */
+  YYSYMBOL_opt_trunc_constant = 115,       /* opt_trunc_constant  */
+  YYSYMBOL_trunc_constant = 116,           /* trunc_constant  */
+  YYSYMBOL_opt_trunc_variable = 117,       /* opt_trunc_variable  */
+  YYSYMBOL_trunc_variable = 118,           /* trunc_variable  */
+  YYSYMBOL_trunc_expression = 119,         /* trunc_expression  */
+  YYSYMBOL_condition = 120,                /* condition  */
+  YYSYMBOL_comparison = 121,               /* comparison  */
+  YYSYMBOL_comparison_operator = 122,      /* comparison_operator  */
+  YYSYMBOL_expression = 123,               /* expression  */
+  YYSYMBOL_expression_setup = 124,         /* expression_setup  */
+  YYSYMBOL_term = 125,                     /* term  */
+  YYSYMBOL_positive_term = 126,            /* positive_term  */
+  YYSYMBOL_negative_term = 127,            /* negative_term  */
+  YYSYMBOL_factor = 128,                   /* factor  */
+  YYSYMBOL_positive_factor = 129,          /* positive_factor  */
+  YYSYMBOL_negative_factor = 130,          /* negative_factor  */
+  YYSYMBOL_numeric_constant = 131,         /* numeric_constant  */
+  YYSYMBOL_positive_constant = 132,        /* positive_constant  */
+  YYSYMBOL_negative_constant = 133,        /* negative_constant  */
+  YYSYMBOL_variable = 134                  /* variable  */
 };
 typedef enum yysymbol_kind_t yysymbol_kind_t;
 
@@ -590,16 +592,16 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  65
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   1119
+#define YYLAST   1083
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  40
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  93
+#define YYNNTS  95
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  271
+#define YYNRULES  275
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  412
+#define YYNSTATES  418
 
 /* YYMAXUTOK -- Last valid token kind.  */
 #define YYMAXUTOK   280
@@ -655,30 +657,30 @@ static const yytype_int16 yyrline[] =
      151,   155,   163,   167,   171,   182,   181,   197,   202,   207,
      217,   218,   222,   226,   230,   237,   244,   251,   259,   269,
      273,   278,   284,   283,   293,   292,   308,   312,   317,   316,
-     324,   332,   336,   347,   346,   355,   361,   374,   373,   384,
-     395,   410,   411,   413,   412,   420,   426,   432,   440,   445,
-     451,   458,   468,   478,   482,   486,   498,   512,   529,   547,
-     564,   582,   598,   614,   630,   641,   642,   643,   644,   645,
-     646,   647,   653,   676,   685,   702,   709,   722,   735,   748,
-     761,   776,   775,   782,   790,   792,   800,   806,   814,   822,
-     831,   838,   847,   858,   859,   863,   870,   871,   877,   886,
-     890,   902,   902,   909,   911,   911,   915,   917,   916,   926,
-     927,   932,   933,   943,   964,   985,  1003,  1011,  1021,  1025,
-    1031,  1041,  1049,  1087,  1100,  1099,  1112,  1111,  1118,  1117,
-    1124,  1126,  1125,  1136,  1145,  1200,  1201,  1207,  1211,  1218,
-    1229,  1244,  1264,  1284,  1305,  1326,  1334,  1343,  1351,  1373,
-    1381,  1388,  1409,  1416,  1433,  1450,  1470,  1477,  1492,  1514,
-    1519,  1518,  1527,  1538,  1551,  1567,  1576,  1575,  1587,  1588,
-    1599,  1603,  1611,  1617,  1621,  1628,  1629,  1635,  1639,  1646,
-    1653,  1663,  1672,  1685,  1700,  1707,  1727,  1750,  1773,  1796,
-    1808,  1814,  1824,  1833,  1848,  1852,  1860,  1867,  1878,  1901,
-    1909,  1916,  1920,  1924,  1928,  1932,  1936,  1945,  1949,  1961,
-    1968,  1977,  1981,  1989,  1993,  2001,  2005,  2009,  2016,  2027,
-    2031,  2038,  2042,  2046,  2050,  2054,  2058,  2062,  2066,  2070,
-    2074,  2082,  2093,  2097,  2101,  2105,  2109,  2113,  2121,  2129,
-    2136,  2143,  2152,  2166,  2170,  2177,  2192,  2196,  2203,  2207,
-    2214,  2222,  2229,  2245,  2254,  2268,  2272,  2279,  2284,  2292,
-    2303,  2310
+     324,   332,   336,   347,   346,   353,   352,   363,   369,   382,
+     381,   390,   389,   402,   413,   428,   429,   431,   430,   438,
+     444,   450,   458,   463,   469,   476,   486,   496,   500,   504,
+     516,   530,   547,   565,   582,   600,   616,   632,   648,   659,
+     660,   661,   662,   663,   664,   665,   671,   694,   703,   720,
+     727,   740,   753,   766,   779,   794,   793,   800,   808,   810,
+     818,   824,   832,   840,   849,   856,   865,   876,   877,   881,
+     888,   889,   895,   904,   908,   920,   920,   927,   929,   929,
+     933,   935,   934,   944,   945,   950,   951,   961,   982,  1003,
+    1021,  1029,  1039,  1043,  1049,  1059,  1067,  1105,  1118,  1117,
+    1130,  1129,  1136,  1135,  1142,  1144,  1143,  1154,  1163,  1218,
+    1219,  1225,  1229,  1236,  1247,  1262,  1282,  1302,  1323,  1344,
+    1352,  1361,  1369,  1391,  1399,  1406,  1427,  1434,  1451,  1468,
+    1488,  1495,  1510,  1532,  1537,  1536,  1545,  1556,  1569,  1585,
+    1594,  1593,  1605,  1606,  1617,  1621,  1629,  1635,  1639,  1646,
+    1647,  1653,  1657,  1664,  1671,  1681,  1690,  1703,  1718,  1725,
+    1745,  1768,  1791,  1814,  1826,  1832,  1842,  1851,  1866,  1870,
+    1878,  1885,  1896,  1919,  1927,  1934,  1938,  1942,  1946,  1950,
+    1954,  1963,  1967,  1979,  1986,  1995,  1999,  2007,  2011,  2019,
+    2023,  2027,  2034,  2045,  2049,  2056,  2060,  2064,  2068,  2072,
+    2076,  2080,  2084,  2088,  2092,  2100,  2111,  2115,  2119,  2123,
+    2127,  2131,  2139,  2147,  2154,  2161,  2170,  2184,  2188,  2195,
+    2210,  2214,  2221,  2225,  2232,  2240,  2247,  2263,  2272,  2286,
+    2290,  2297,  2302,  2310,  2321,  2328
 };
 #endif
 
@@ -704,21 +706,22 @@ static const char *const yytname[] =
   "global", "global_statement", "$@1", "unnamed_program_tail",
   "program_head", "$@2", "program_tail", "program_statements",
   "program_statement", "declarative_stmt", "$@3", "$@4", "variable_list",
-  "$@5", "type", "unnamed_function_declaration_middle", "$@6",
+  "$@5", "type", "unnamed_function_declaration_middle", "$@6", "$@7",
   "unnamed_function_declaration_tail", "function_declaration_middle",
-  "$@7", "function_declaration_tail", "formal_parameter_list", "$@8",
-  "formal_parameter", "parameter_semantics", "function_body", "return",
-  "executable_stmt", "assignment", "assignment_head", "assignment_tail",
-  "print", "$@9", "print_end", "multiple_assignments", "assignment_list",
-  "assignment_end", "left_variable", "$@10", "extra_numeric_constants",
-  "$@11", "$@12", "invocation", "function_invocation_head",
-  "invocation_setup", "function_invocation_tail", "real_parameter_list",
+  "$@8", "$@9", "function_declaration_tail", "formal_parameter_list",
+  "$@10", "formal_parameter", "parameter_semantics", "function_body",
+  "return", "executable_stmt", "assignment", "assignment_head",
+  "assignment_tail", "print", "$@11", "print_end", "multiple_assignments",
+  "assignment_list", "assignment_end", "left_variable", "$@12",
+  "extra_numeric_constants", "$@13", "$@14", "invocation",
+  "function_invocation_head", "invocation_setup",
+  "function_invocation_tail", "real_parameter_list",
   "real_parameter_list_setup", "real_parameter", "lambda_invocation_head",
-  "$@13", "lambda_invocation_middle", "$@14", "$@15", "$@16",
+  "$@15", "lambda_invocation_middle", "$@16", "$@17", "$@18",
   "lambda_missing_closing_bracket", "lambda_invocation_tail",
   "lambda_real_parameter", "if", "if_word", "if_head",
   "condition_body_setup", "condition_setup", "then_body_setup", "do_while",
-  "$@17", "do_while_head", "do_body", "$@18", "do_while_tail",
+  "$@19", "do_while_head", "do_body", "$@20", "do_while_tail",
   "executable_body", "executable_statements", "opt_trunc_constant",
   "trunc_constant", "opt_trunc_variable", "trunc_variable",
   "trunc_expression", "condition", "comparison", "comparison_operator",
@@ -734,12 +737,12 @@ yysymbol_name (yysymbol_kind_t yysymbol)
 }
 #endif
 
-#define YYPACT_NINF (-311)
+#define YYPACT_NINF (-312)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
 
-#define YYTABLE_NINF (-229)
+#define YYTABLE_NINF (-233)
 
 #define yytable_value_is_error(Yyn) \
   0
@@ -748,48 +751,48 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int16 yypact[] =
 {
-     708,  -311,   -18,  -311,   911,   466,   102,  -311,  -311,   -11,
-    -311,  -311,   173,   728,  -311,  -311,  -311,    55,  -311,  -311,
-    -311,   993,  -311,  -311,  -311,    91,   989,   108,  -311,   336,
-    -311,  1034,    15,  -311,     5,    27,    40,  1011,    24,  -311,
-    -311,   971,   214,    58,   395,   619,  -311,  -311,   192,   428,
-     386,  -311,   226,   248,  -311,  -311,  -311,  -311,    39,    99,
-     410,  -311,   448,   828,   150,  -311,  -311,   148,   166,  -311,
-     203,    39,  -311,   591,  -311,  -311,  -311,  -311,   319,   993,
-    -311,   495,  -311,  -311,   189,  1034,   971,   115,   293,  1034,
-     924,    13,   551,   937,  -311,  -311,   215,   193,   486,   222,
-    -311,   235,   111,   216,   222,  -311,  1029,  -311,   971,   594,
-     576,  -311,   192,  -311,  -311,  -311,  -311,  -311,  -311,    39,
-    -311,  -311,  -311,  -311,  -311,  -311,   470,   470,  -311,  -311,
-     250,   524,   542,   226,   317,   627,   635,   653,  -311,   260,
-     264,   285,   848,   271,   277,   868,  -311,  -311,  -311,   748,
-    -311,  -311,  -311,   299,  -311,  -311,   440,  -311,  -311,   212,
-     222,  -311,  -311,   993,  -311,  -311,  -311,   313,  -311,   331,
-      29,  -311,  -311,  -311,  1034,   950,  -311,  -311,  -311,   360,
-    1034,  -311,  -311,  -311,  -311,  -311,  -311,  -311,  -311,  -311,
-     504,   324,  -311,  -311,   970,  1029,  1029,  -311,   329,  -311,
-      19,  -311,  -311,    47,  -311,   339,   660,  -311,  -311,  -311,
-    -311,   320,    39,  -311,   124,   609,  -311,  -311,  -311,  -311,
-     127,  -311,  -311,  -311,  -311,  -311,  -311,   192,  -311,  -311,
-     192,  -311,  -311,  -311,  -311,  -311,  -311,  -311,  -311,  -311,
-    -311,  -311,  -311,  -311,  -311,   145,   160,  -311,  -311,   768,
-    -311,  -311,  -311,   788,  -311,  -311,  -311,  -311,   440,  -311,
-    -311,   213,  -311,   345,  -311,   149,  -311,    39,    39,  -311,
-    -311,  -311,  -311,  -311,    21,   363,   316,   371,  -311,   373,
-    -311,    31,  -311,  -311,  -311,  -311,   168,  -311,  -311,   320,
-     253,    94,    33,  -311,  -311,   320,   669,   320,  -311,    20,
-    -311,  -311,  -311,  -311,  -311,  -311,   358,  -311,  -311,  -311,
-    -311,  -311,  -311,  -311,  -311,  1063,  -311,   353,  -311,  -311,
-     440,  -311,   440,  -311,  -311,   219,  -311,  -311,  -311,  -311,
-    -311,  -311,  -311,  -311,  -311,  -311,   357,  -311,   362,    38,
-    -311,  -311,  -311,  -311,  -311,   320,   320,  -311,  -311,  -311,
-    -311,  -311,   527,  -311,  1083,  1071,  -311,  -311,   368,  -311,
-    -311,  -311,  -311,  -311,  -311,  -311,  -311,  -311,  1086,   678,
-    -311,   364,  -311,  -311,  -311,    39,   370,   173,   368,   888,
-    -311,   180,   375,   173,   378,   390,     7,  -311,  -311,  1083,
-    -311,   181,  -311,   808,  -311,  -311,  -311,  -311,    26,  -311,
-    -311,  1083,  -311,  -311,  -311,  -311,  -311,  1083,  -311,  -311,
-    -311,  -311
+     671,  -312,   -18,  -312,   417,   456,    57,  -312,  -312,    47,
+    -312,  -312,   130,   702,  -312,  -312,  -312,   147,  -312,  -312,
+    -312,   953,  -312,  -312,  -312,    50,   949,   135,  -312,   368,
+    -312,   994,    35,  -312,   -12,    16,    34,   971,    41,  -312,
+    -312,   931,   271,   187,   349,   634,  -312,  -312,   203,    11,
+     267,  -312,   364,   413,  -312,  -312,  -312,  -312,    73,    96,
+     310,  -312,   418,   802,   106,  -312,  -312,   139,   109,  -312,
+     214,    73,  -312,   555,  -312,  -312,  -312,  -312,   414,   953,
+    -312,   580,  -312,  -312,   197,   994,   931,   136,   799,   994,
+     889,    28,   552,   897,  -312,  -312,   221,   222,   474,   234,
+    -312,   258,   129,   347,   234,  -312,   989,  -312,   931,   583,
+     436,  -312,   203,  -312,  -312,  -312,  -312,  -312,  -312,    73,
+    -312,  -312,  -312,  -312,  -312,  -312,   928,   928,  -312,  -312,
+     270,   521,   525,   364,   291,   330,   616,   624,  -312,   287,
+     290,   398,   822,   293,   276,   842,  -312,  -312,  -312,   722,
+    -312,  -312,  -312,   298,  -312,  -312,   677,  -312,  -312,    60,
+     234,  -312,  -312,   953,  -312,  -312,  -312,   315,  -312,   334,
+      29,  -312,  -312,  -312,   994,   912,  -312,  -312,  -312,   470,
+     994,  -312,  -312,  -312,  -312,  -312,  -312,  -312,  -312,  -312,
+     494,   324,  -312,  -312,   920,   989,   989,  -312,   332,  -312,
+      49,  -312,  -312,   320,  -312,   340,   631,  -312,  -312,  -312,
+    -312,   371,    73,  -312,   185,   598,  -312,  -312,  -312,  -312,
+     190,  -312,  -312,  -312,  -312,  -312,  -312,   203,  -312,  -312,
+     203,  -312,  -312,  -312,  -312,  -312,  -312,  -312,  -312,  -312,
+    -312,  -312,  -312,  -312,  -312,   207,   238,  -312,  -312,   742,
+    -312,  -312,  -312,   762,  -312,  -312,  -312,  -312,   865,  -312,
+    -312,  -312,   199,  -312,   453,  -312,   486,  -312,    73,    73,
+    -312,  -312,  -312,  -312,  -312,    12,   361,   407,   374,  -312,
+     380,  -312,    90,  -312,  -312,  -312,  -312,   260,  -312,  -312,
+     371,   149,   169,    53,  -312,  -312,   371,   650,   371,  -312,
+      36,  -312,  -312,  -312,  -312,  -312,  -312,   384,  -312,  -312,
+    -312,  -312,  -312,  -312,  -312,  -312,  1023,  -312,  -312,   483,
+     394,  -312,  -312,   448,  -312,   448,  -312,  -312,   274,  -312,
+    -312,  -312,  -312,  -312,  -312,  -312,  -312,  -312,  -312,   401,
+    -312,   406,    79,  -312,  -312,  -312,  -312,  -312,   371,   371,
+    -312,  -312,  -312,  -312,  -312,  1054,  -312,   110,  1031,   394,
+    -312,   862,  -312,   273,  -312,   394,  -312,  -312,  -312,  -312,
+    -312,  -312,  -312,  -312,  -312,  1046,   665,  -312,   393,  -312,
+    -312,  -312,    73,   440,   130,  -312,   277,   394,  -312,   782,
+    -312,  -312,  -312,   452,   130,   437,   466,    10,  -312,  -312,
+     110,  -312,  -312,  -312,  -312,  -312,  -312,  -312,    44,  -312,
+    -312,   110,  -312,   110,  -312,  -312,  -312,  -312
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -797,78 +800,78 @@ static const yytype_int16 yypact[] =
    means the default is an error.  */
 static const yytype_int16 yydefact[] =
 {
-       0,     4,     0,   150,     0,     0,     0,    41,    42,   270,
-       8,    10,     0,     0,     2,     7,     5,     0,    80,     6,
-      75,     0,    79,    76,    77,     0,     0,     0,    78,     0,
-      81,     0,     0,    11,     0,     0,     0,     0,   270,   268,
-     267,     0,     0,     0,     0,     0,   257,   259,   225,     0,
-       0,   217,   229,   230,   239,   246,   256,   258,   255,     0,
-       0,    15,     0,     0,     0,     1,     3,     0,   270,    34,
-       0,    36,    82,     0,   120,   119,   127,   123,   131,     0,
-     128,     0,   122,   121,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,   183,   169,   176,     0,     0,     0,
-     103,     0,     0,   111,     0,   172,     0,    74,     0,     0,
-       0,   220,     0,   219,   264,   269,   260,   261,   263,   262,
-     251,   249,   253,   254,   252,   250,     0,     0,    70,    73,
-      69,     0,     0,   218,     0,     0,     0,     0,    93,     0,
-       0,   228,     0,     0,     0,     0,    13,     9,    24,     0,
+       0,     4,     0,   154,     0,     0,     0,    41,    42,   274,
+       8,    10,     0,     0,     2,     7,     5,     0,    84,     6,
+      79,     0,    83,    80,    81,     0,     0,     0,    82,     0,
+      85,     0,     0,    11,     0,     0,     0,     0,   274,   272,
+     271,     0,     0,     0,     0,     0,   261,   263,   229,     0,
+       0,   221,   233,   234,   243,   250,   260,   262,   259,     0,
+       0,    15,     0,     0,     0,     1,     3,     0,   274,    34,
+       0,    36,    86,     0,   124,   123,   131,   127,   135,     0,
+     132,     0,   126,   125,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,   187,   173,   180,     0,     0,     0,
+     107,     0,     0,   115,     0,   176,     0,    78,     0,     0,
+       0,   224,     0,   223,   268,   273,   264,   265,   267,   266,
+     255,   253,   257,   258,   256,   254,     0,     0,    74,    77,
+      73,     0,     0,   222,     0,     0,     0,     0,    97,     0,
+       0,   232,     0,     0,     0,     0,    13,     9,    24,     0,
       20,    22,    23,     0,    30,    32,     0,    31,    29,     0,
-       0,    86,    85,     0,   126,   130,   133,     0,   149,     0,
-       0,   148,   147,   153,     0,     0,   151,   166,   168,   156,
-     159,   207,   206,   209,   211,   213,   214,   212,   215,   216,
-       0,     0,   184,   185,     0,     0,     0,   102,     0,   270,
-       0,   271,   101,     0,   100,     0,     0,   188,   187,   265,
-     266,     0,   112,   171,     0,     0,   203,   202,    68,    71,
-       0,   236,   234,   235,   233,    72,   222,   226,   221,   224,
-     227,   223,   240,   238,   231,   241,   237,   232,   247,   245,
-     242,   248,   244,   243,    91,     0,     0,    19,    16,     0,
-     124,    28,    25,     0,    14,    12,    21,   134,     0,    62,
-      57,     0,    35,    53,    51,     0,    40,    37,    39,   129,
-     132,   162,   205,   204,     0,   158,     0,     0,   155,     0,
-     210,   228,   182,   181,   180,   186,     0,   177,    83,     0,
-       0,     0,     0,    97,    96,     0,     0,     0,   106,     0,
-     179,   178,   201,   200,    67,    66,    95,    88,    87,    90,
-      89,    18,    17,    27,    26,     0,    33,    53,    56,    55,
-       0,    43,     0,    60,    61,     0,   165,   164,   161,   154,
-     163,   152,   157,   160,   175,   174,     0,   108,   107,     0,
-     192,   191,   113,    99,    98,     0,     0,   115,   110,   109,
-      94,    92,     0,   135,     0,     0,    47,    52,     0,    54,
-      59,    58,   105,   104,   190,   189,   116,   118,     0,     0,
-     140,     0,   146,   145,   194,   193,     0,   141,     0,     0,
-      44,     0,     0,   143,     0,     0,     0,   144,   138,     0,
-      48,     0,    64,     0,    46,    45,   136,   199,     0,   198,
-     197,     0,   142,    50,    49,    65,    63,     0,   196,   195,
-     139,   137
+       0,    90,    89,     0,   130,   134,   137,     0,   153,     0,
+       0,   152,   151,   157,     0,     0,   155,   170,   172,   160,
+     163,   211,   210,   213,   215,   217,   218,   216,   219,   220,
+       0,     0,   188,   189,     0,     0,     0,   106,     0,   274,
+       0,   275,   105,     0,   104,     0,     0,   192,   191,   269,
+     270,     0,   116,   175,     0,     0,   207,   206,    72,    75,
+       0,   240,   238,   239,   237,    76,   226,   230,   225,   228,
+     231,   227,   244,   242,   235,   245,   241,   236,   251,   249,
+     246,   252,   248,   247,    95,     0,     0,    19,    16,     0,
+     128,    28,    25,     0,    14,    12,    21,   138,     0,    66,
+      61,    45,     0,    35,    57,    55,     0,    40,    37,    39,
+     133,   136,   166,   209,   208,     0,   162,     0,     0,   159,
+       0,   214,   232,   186,   185,   184,   190,     0,   181,    87,
+       0,     0,     0,     0,   101,   100,     0,     0,     0,   110,
+       0,   183,   182,   205,   204,    71,    70,    99,    92,    91,
+      94,    93,    18,    17,    27,    26,     0,    51,    33,    57,
+       0,    60,    59,     0,    43,     0,    64,    65,     0,   169,
+     168,   165,   158,   167,   156,   161,   164,   179,   178,     0,
+     112,   111,     0,   196,   195,   117,   103,   102,     0,     0,
+     119,   114,   113,    98,    96,     0,   139,     0,     0,     0,
+      49,     0,    46,     0,    56,     0,    58,    63,    62,   109,
+     108,   194,   193,   120,   122,     0,     0,   144,     0,   150,
+     149,   198,   197,     0,   145,    52,     0,     0,    68,     0,
+      48,    47,    44,     0,   147,     0,     0,     0,   148,   142,
+       0,    54,    53,    50,    69,    67,   140,   203,     0,   202,
+     201,     0,   146,     0,   200,   199,   143,   141
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int16 yypgoto[] =
 {
-    -311,  -311,   402,  -311,  -311,    73,  -311,  -311,  -139,  -148,
-     140,  -311,  -311,  -311,  -311,    14,  -311,  -311,  -311,  -311,
-    -311,  -311,   162,  -311,    25,  -311,    45,  -311,   113,  -311,
-    -311,  -311,  -311,  -311,  -311,  -311,   -92,  -311,  -311,  -311,
-    -311,  -311,  -311,  -311,     9,  -311,  -311,  -311,  -311,   -75,
-      48,  -311,  -311,  -311,  -311,  -311,  -311,  -109,  -311,  -311,
-    -311,  -311,  -311,  -311,  -311,  -311,  -311,  -311,  -311,  -311,
-     234,   -60,  -310,   -90,  -311,  -311,  -311,   177,   -27,   350,
-    -311,    69,  -311,   -35,   388,  -311,    30,   134,   147,  -184,
-     -79,    36,     0
+    -312,  -312,   491,  -312,  -312,   297,  -312,  -312,  -141,  -146,
+     299,  -312,  -312,  -312,  -312,    15,  -312,  -312,  -312,   140,
+    -312,  -312,  -312,   120,   257,  -312,    63,  -312,  -290,  -312,
+       7,  -312,  -312,  -312,  -312,  -312,  -312,  -312,   -89,  -312,
+    -312,  -312,  -312,  -312,  -312,  -312,     9,  -312,  -312,  -312,
+    -312,   -58,    77,  -312,  -312,  -312,  -312,  -312,  -312,  -282,
+    -312,  -312,  -312,  -312,  -312,  -312,  -312,  -312,  -312,  -312,
+    -312,  -312,   323,   -61,  -311,   -84,  -312,  -312,  -312,    97,
+     -27,   434,  -312,    27,  -312,   -16,   477,  -312,   150,   111,
+     133,  -197,   -94,   125,     0
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int16 yydefgoto[] =
 {
        0,    13,    14,    63,   147,   148,   142,   248,   149,   150,
-     151,   258,   156,    70,   160,    17,   262,   358,   380,   316,
-     378,   390,   263,   322,   264,   265,   381,    18,   152,    20,
-      21,    72,    22,   306,   351,    23,   102,   298,   103,   104,
-     296,   297,   346,    24,    46,    26,    77,    78,    79,    80,
-      47,   315,   353,   407,   401,   389,   354,   370,   371,    28,
-      29,    87,    88,    89,   177,    30,    35,    31,    95,   196,
-     213,    96,   194,   372,   207,   373,   374,    48,   214,    91,
-     190,    92,    50,    51,    52,    53,   121,    54,    55,   208,
-      56,    57,    58
+     151,   258,   156,    70,   160,    17,   263,   365,   320,   362,
+     318,   387,   359,   385,   264,   325,   265,   266,   363,    18,
+     152,    20,    21,    72,    22,   307,   354,    23,   102,   299,
+     103,   104,   297,   298,   349,    24,    46,    26,    77,    78,
+      79,    80,    47,   316,   356,   413,   411,   400,   357,   377,
+     378,    28,    29,    87,    88,    89,   177,    30,    35,    31,
+      95,   196,   213,    96,   194,   379,   207,   380,   381,    48,
+     214,    91,   190,    92,    50,    51,    52,    53,   121,    54,
+      55,   208,    56,    57,    58
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -876,107 +879,103 @@ static const yytype_int16 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int16 yytable[] =
 {
-      32,   256,    90,   249,   165,   355,   253,   113,   399,    25,
-      33,   211,   206,    32,   181,    61,    97,    71,    62,   292,
-     289,   348,    25,   209,   326,   169,    64,   408,   327,   178,
-     272,    32,  -208,   105,   340,    98,   106,  -111,   400,   364,
-      25,  -111,   368,   119,   182,    99,   101,   100,    27,    99,
-     349,   100,   117,    62,   101,    64,    67,   409,   101,   114,
-     273,    27,  -208,    32,   341,   101,   131,   132,   107,   365,
-      39,    40,    25,    15,    49,   125,   291,    68,   101,    27,
-      38,   115,   116,   205,    69,    32,    15,    12,   269,    32,
-      73,   118,    74,    32,    25,    81,   228,   231,    25,   200,
-      64,   256,    25,    59,   212,   256,   109,   339,   290,    82,
-     110,    27,   202,    19,   274,   276,   171,    39,    40,    75,
-     279,   299,    64,   203,   209,   300,    19,   138,   304,   141,
-     205,    60,   209,    27,    39,    40,    83,    27,   210,   204,
-      16,    27,    32,   172,    94,    32,   307,   205,    81,    32,
-     323,    25,   301,    16,    25,   305,   222,   224,    25,   267,
-     268,   309,     7,     8,   234,   237,   240,   243,   286,   334,
-     261,   324,   153,   308,    32,    32,   154,   215,   122,   122,
-      32,   394,   403,    25,    25,   292,     7,     8,   310,    25,
-      27,   123,   123,    27,    32,   155,   335,    27,    94,   336,
-     338,   339,    94,    25,   157,   342,   193,   347,   395,   404,
-     209,   209,   209,   266,   318,   111,   209,   168,   209,   112,
-     360,   197,    27,    27,   195,   -38,    37,   112,    27,   126,
-     127,   158,    81,   159,   199,   319,    38,    39,    40,   210,
-     393,   361,    27,    12,   199,   256,    99,   210,   100,    32,
-      43,    44,    45,    32,   337,   366,   367,   201,    25,   281,
-     122,   122,    25,   134,   135,   203,   209,   209,   122,   122,
-     122,   122,   261,   123,   123,   209,    39,    40,   225,   325,
-     402,   123,   123,   123,   123,   136,   137,    94,    94,   205,
-     209,   244,   410,    94,   173,   245,   174,    27,   411,   175,
-     176,    27,   250,   221,   223,   251,   209,   285,   227,   230,
-     209,   233,   236,   239,   242,    32,   246,   329,   232,   330,
-     131,   132,   209,   331,    25,   210,   210,   210,   209,    37,
-     257,   210,   203,   210,   261,   270,   261,    84,   271,    38,
-      39,    40,    85,    39,    40,   357,    12,   359,    37,   163,
-     164,   282,    32,    43,   375,    32,   205,   288,    38,    39,
-      40,    25,   115,    27,    25,    86,   277,   278,    32,   386,
-     328,    42,    43,    44,    45,   320,   321,    25,   332,    32,
-     333,   210,   210,   320,   356,   398,   350,   362,    25,   375,
-     210,    64,   363,    32,   379,   387,   120,    64,    37,   388,
-      27,   375,    25,    27,   396,   210,   397,   375,    38,    39,
-      40,   139,   199,    39,    40,    66,    27,    38,    39,    40,
-     317,   210,    37,   391,    12,   210,   205,    27,   193,   128,
-     287,    43,    38,    39,    40,   140,   170,   210,   133,    12,
-    -228,    27,     0,   210,     0,    42,    43,    44,    45,   143,
-    -228,  -228,  -228,     7,     8,   259,   129,     0,     0,   130,
-    -125,     0,   260,   131,   132,   193,     0,    36,   285,     0,
-    -125,  -125,  -125,     0,     0,     0,     0,  -125,    37,  -125,
-       0,   285,    37,  -125,  -125,  -125,  -125,   198,    38,    39,
-      40,     0,    38,    39,    40,    41,   166,     0,   -84,    12,
-       0,    42,    43,    44,    45,   280,    43,  -228,   -84,   -84,
-     -84,   167,     0,     0,     0,   -84,    37,  -228,  -228,  -228,
-       0,   -84,   -84,   -84,   -84,   226,    38,    39,    40,     0,
-     131,   132,     3,    12,     0,     4,    37,     5,     6,    42,
-      43,    44,    45,   229,     0,     0,    38,    39,    40,    38,
-       0,     0,   183,    12,    37,     0,    12,     0,     0,     0,
-      43,    44,    45,  -228,    38,    39,    40,     0,   184,   185,
-     186,    12,   187,  -228,  -228,  -228,     0,   218,    43,    44,
-      45,     0,     0,     0,   188,   189,   131,   132,  -228,     0,
-       0,     0,   161,     0,     0,   216,     0,     0,  -228,  -228,
-    -228,     0,     0,  -228,   219,     0,  -228,   220,     0,     0,
-     302,   131,   132,  -228,  -228,  -228,  -228,  -228,  -228,   162,
-     124,  -228,     0,     0,     0,   217,   131,   132,   235,   131,
-     132,  -228,  -228,  -228,     0,     0,   238,     0,     0,    37,
-     303,    38,    39,    40,   131,   132,     0,    37,    12,    38,
-      39,    40,     0,     0,   241,    43,    12,    38,    39,    40,
-       0,   293,     0,    43,    12,    37,     0,     0,     0,     0,
-     343,    43,  -114,     0,     0,    38,    39,    40,     0,   384,
-       0,  -117,    12,  -114,  -114,     0,     0,     0,   294,    43,
-     295,     0,  -117,  -117,     0,     0,  -114,   344,     0,   345,
-     199,    39,    40,     0,     0,  -117,     0,   385,     1,     2,
-       0,     0,     0,     3,   205,     0,     4,     0,     5,     6,
-       0,     7,     8,     0,     0,     0,     0,     0,    65,     2,
-       9,     0,     0,     3,    10,    11,     4,    12,     5,     6,
-       0,     7,     8,     0,     0,     0,     0,     0,   254,   144,
-       9,     0,     0,     3,    10,    11,     4,    12,     5,     6,
-       0,     7,     8,     0,     0,     0,     0,     0,   311,   144,
-       9,     0,     0,     3,   145,   255,     4,    12,     5,     6,
-       0,     7,     8,     0,     0,     0,     0,     0,   313,   144,
-       9,     0,     0,     3,   145,   312,     4,    12,     5,     6,
-       0,     7,     8,     0,     0,     0,     0,     0,   405,   144,
-       9,     0,     0,     3,   145,   314,     4,    12,     5,     6,
-       0,     7,     8,     0,     0,     0,     0,     0,     0,   144,
-       9,     0,     0,     3,   145,   406,     4,    12,     5,     6,
-       0,     7,     8,     0,     0,     0,     0,     0,     0,   144,
-       9,     0,     0,     3,   145,   146,     4,    12,     5,     6,
-       0,     7,     8,     0,     0,     0,     0,     0,     0,   144,
-       9,     0,     0,     3,   145,   247,     4,    12,     5,     6,
-       0,     7,     8,     0,     0,     0,     0,     0,     0,   144,
-       9,     0,     0,     3,   145,   252,     4,    12,     5,     6,
-       0,     7,     8,     0,     0,     0,     0,     0,     0,     0,
-       9,     0,    34,     0,   145,   392,  -173,    12,     0,  -173,
-    -170,  -173,  -173,     0,     0,   179,     0,     0,     0,  -167,
-     180,     0,  -167,  -173,  -167,  -167,     0,  -173,   191,     0,
-    -173,     0,     3,     0,     0,     4,  -167,     5,     6,     0,
-    -167,   275,     0,  -167,     0,     3,     0,     0,     4,    38,
-       5,     6,     0,     0,   192,     0,    12,     0,     0,     0,
-       0,   283,    38,     0,     0,     3,    93,     0,     4,    12,
-       5,     6,     0,    37,     7,     8,     0,     0,     0,     0,
-       0,     0,    38,    38,    39,    40,     0,   284,     0,    12,
-      12,    37,     0,     0,     0,    37,    42,    43,    44,    45,
+      32,   249,    90,   256,   253,   358,   293,    19,   209,    25,
+      33,   409,   128,    32,   211,   329,   105,    71,   206,   330,
+      19,   165,    25,  -232,   169,   106,   113,    64,   178,   181,
+     273,    32,    49,  -232,  -232,  -232,    97,   351,    94,   129,
+      25,   410,   130,   119,   375,   414,   131,   132,    73,   101,
+     290,    74,   117,    81,   343,    98,    64,  -115,    59,   182,
+     274,   267,   107,    32,   109,    99,   352,   100,   110,   386,
+      62,  -115,    25,    61,   101,   415,    62,    27,    75,    99,
+     371,   100,   199,   101,   344,    32,    60,   141,   101,    32,
+      27,  -212,    94,    32,    25,   342,    94,   386,    25,   200,
+     193,    64,    25,   256,   212,   270,    81,   256,    27,   209,
+     372,   291,   101,   275,   277,   228,   231,   209,   412,   280,
+     118,  -212,   376,    64,   138,   131,   132,   300,   153,   416,
+     202,   417,   199,    39,    40,   215,    82,   171,   155,   112,
+      27,   203,    32,     7,     8,    32,   205,   112,    67,    32,
+     340,    25,    39,    40,    25,   122,   122,   204,    25,   268,
+     269,   203,    27,    83,   172,   205,    27,   154,   287,    68,
+      27,   262,    39,    40,    32,    32,    69,   123,   123,   293,
+      32,    94,    94,    25,    25,   205,   301,    94,   114,    25,
+      81,   305,    39,    40,    32,   125,   209,   209,   209,   342,
+     321,   286,   209,    25,   209,   205,   339,   341,   308,    38,
+     115,   116,   345,   302,   350,   157,    12,   282,   306,    27,
+     389,   322,    27,   221,   223,   168,    27,   210,   227,   230,
+     195,   233,   236,   239,   242,   309,   -38,   122,   122,   310,
+     126,   127,   158,   256,   159,   122,   122,   122,   122,    32,
+     197,    27,    27,    32,   209,   209,   199,    27,    25,   123,
+     123,   337,    25,   209,   373,   374,   311,   123,   123,   123,
+     123,    27,   111,   262,   390,   367,   222,   224,   401,    37,
+     201,   328,   209,    37,   234,   237,   240,   243,   338,    38,
+      39,    40,   232,    38,    39,    40,   368,    15,   225,    16,
+      12,   391,   209,    37,   251,   402,   209,    43,    44,    45,
+      15,   139,    16,    38,    39,    40,    32,   209,   244,   209,
+      12,   245,    37,   193,   250,    25,    27,    43,   210,   257,
+      27,   235,    38,    39,    40,   140,   210,   271,   262,    12,
+     262,   272,    37,    39,    40,    42,    43,    44,    45,   292,
+     120,   283,    38,    39,    40,    32,   205,   382,    32,    12,
+     289,    32,   193,   115,    25,   286,    43,    25,   331,    84,
+      25,    38,    39,    40,    85,    32,   397,    99,    12,   100,
+      37,   335,   286,   203,    25,    43,   364,   336,   366,    32,
+      38,    39,    40,    27,    39,    40,   408,    86,    25,    64,
+     382,   134,   135,    42,    43,    44,    45,   205,   332,    64,
+     333,   382,   353,   382,   334,   210,   210,   210,    34,   143,
+     361,   210,  -177,   210,   398,  -177,  -174,  -177,  -177,   246,
+    -129,   369,    27,   131,   132,    27,   370,   218,    27,  -177,
+    -129,  -129,  -129,  -177,   163,   164,  -177,  -129,  -232,  -129,
+     136,   137,    27,  -129,  -129,  -129,  -129,    36,  -232,  -232,
+    -232,     7,     8,   259,   219,   407,    27,   220,    37,   399,
+     260,   131,   132,   210,   210,   198,   278,   279,    38,    39,
+      40,   406,   210,   323,   324,    41,   -88,   326,   199,    39,
+      40,    42,    43,    44,    45,   281,   -88,   -88,   -88,     7,
+       8,   210,   205,   -88,    66,   392,    37,   403,   327,   -88,
+     -88,   -88,   -88,   323,   360,   319,    38,    39,    40,   288,
+     170,   210,   226,    12,     0,   210,   229,   133,     0,    42,
+      43,    44,    45,    37,     0,     0,   210,    37,   210,     0,
+       0,     0,     0,    38,    39,    40,     0,    38,    39,    40,
+      12,     0,     0,   183,    12,     0,   161,    43,    44,    45,
+       0,    43,    44,    45,  -232,     0,     0,  -232,     0,   184,
+     185,   186,     0,   187,  -232,  -232,  -232,  -232,  -232,  -232,
+       0,   166,     0,   162,   216,   188,   189,   131,   132,     0,
+     131,   132,  -232,     0,     0,  -232,   167,     0,     0,   303,
+       0,     0,  -232,  -232,  -232,  -232,  -232,  -232,     0,     0,
+    -232,     0,     0,     0,   217,   131,   132,   238,   131,   132,
+    -232,  -232,  -232,     0,     0,   241,     0,     0,    37,   304,
+       0,     0,   294,   131,   132,   124,    37,     0,    38,    39,
+      40,     0,     0,  -118,     0,    12,    38,    39,    40,     0,
+       0,   346,    43,    12,  -118,  -118,    38,    39,    40,   295,
+      43,   296,  -121,    12,     0,     0,   395,  -118,     0,     0,
+      43,     1,     2,  -121,  -121,     0,     3,     0,   347,     4,
+     348,     5,     6,     0,     7,     8,  -121,   199,    39,    40,
+       7,     8,   259,     9,   396,     0,     0,    10,    11,   260,
+      12,   205,    65,     2,     0,     0,     0,     3,   261,     0,
+       4,     0,     5,     6,     0,     7,     8,     0,     0,     0,
+       0,     0,   254,   144,     9,     0,     0,     3,    10,    11,
+       4,    12,     5,     6,     0,     7,     8,     0,     0,     0,
+       0,     0,   312,   144,     9,     0,     0,     3,   145,   255,
+       4,    12,     5,     6,     0,     7,     8,     0,     0,     0,
+       0,     0,   314,   144,     9,     0,     0,     3,   145,   313,
+       4,    12,     5,     6,     0,     7,     8,     0,     0,     0,
+       0,     0,   404,   144,     9,     0,     0,     3,   145,   315,
+       4,    12,     5,     6,     0,     7,     8,     0,     0,     0,
+     173,     0,   174,   144,     9,   175,   176,     3,   145,   405,
+       4,    12,     5,     6,     0,     7,     8,     0,     0,     0,
+       0,     0,     0,   144,     9,     0,     0,     3,   145,   146,
+       4,    12,     5,     6,     0,     7,     8,     0,     0,     0,
+       0,     0,     0,   144,     9,     0,     0,     3,   145,   247,
+       4,    12,     5,     6,     0,     7,     8,     0,     0,     0,
+       0,     0,     0,   144,     9,     0,     0,     3,   145,   252,
+       4,    12,     5,     6,     0,     7,     8,     0,     7,     8,
+     259,     0,     0,     0,     9,     0,     0,   260,   145,   388,
+     179,    12,     0,     0,  -171,   180,   317,  -171,   191,  -171,
+    -171,     0,     3,     0,     0,     4,     0,     5,     6,     0,
+       0,  -171,     0,   276,     0,  -171,     0,     3,  -171,    38,
+       4,   284,     5,     6,   192,     3,    12,     0,     4,     0,
+       5,     6,     0,     0,    38,     0,     0,     0,    93,     0,
+      37,    12,    38,    37,     7,     8,     0,   285,     0,    12,
+      38,    39,    40,    38,    39,    40,     0,    12,     0,     0,
+      12,    37,     0,     0,    43,    37,    42,    43,    44,    45,
        0,    38,    39,    40,     0,    38,    39,    40,    12,     0,
       76,     0,    12,    37,    42,    43,    44,    45,    42,    43,
       44,    45,     0,    38,    39,    40,     0,     0,     0,     3,
@@ -984,115 +983,112 @@ static const yytype_int16 yytable[] =
        0,    38,    39,    40,     0,     0,    38,     0,    86,     0,
       93,     0,     0,    12,    42,    43,    44,    45,     3,     0,
        0,     4,     0,     5,     6,     0,     3,     0,     0,     4,
-       0,     5,     6,     0,     0,    38,     0,     0,     0,   352,
-       0,     3,    12,    38,     4,   369,     5,     6,   376,     0,
-     377,     0,     0,     0,     0,   199,    39,    40,    38,     0,
-       0,     0,     0,   382,     0,   383,     0,     0,     0,   205
+       0,     5,     6,     0,     0,    38,     0,     0,     0,   355,
+       0,     3,    12,    38,     4,     0,     5,     6,   383,     3,
+     384,     0,     4,     0,     5,     6,     0,     0,    38,     0,
+       0,     0,     0,   393,     0,   394,    38,     0,     0,     0,
+       0,     0,     0,    12
 };
 
 static const yytype_int16 yycheck[] =
 {
-       0,   149,    29,   142,    79,   315,   145,    42,     1,     0,
-      28,   103,   102,    13,     1,    26,     1,    17,    29,   203,
-       1,     1,    13,   102,     3,    85,    12,     1,     7,    89,
-       1,    31,     1,    28,     1,    20,     9,    22,    31,     1,
-      31,    22,   352,    43,    31,    30,    39,    32,     0,    30,
-      30,    32,    43,    29,    39,    41,     1,    31,    39,     1,
-      31,    13,    31,    63,    31,    39,    35,    36,    28,    31,
-      23,    24,    63,     0,     5,    45,    29,    22,    39,    31,
-      22,    23,    24,    36,    29,    85,    13,    29,   163,    89,
-      21,    43,     1,    93,    85,    26,   131,   132,    89,    99,
-      86,   249,    93,     1,   104,   253,    37,   291,   200,     1,
-      41,    63,     1,     0,   174,   175,     1,    23,    24,    28,
-     180,   211,   108,    12,   203,     1,    13,    28,     1,    60,
-      36,    29,   211,    85,    23,    24,    28,    89,   102,    28,
-       0,    93,   142,    28,    31,   145,     1,    36,    79,   149,
-       1,   142,    28,    13,   145,    28,   126,   127,   149,   159,
-     160,     1,    13,    14,   134,   135,   136,   137,   195,     1,
-     156,    22,    22,    28,   174,   175,    28,   108,    44,    45,
-     180,     1,     1,   174,   175,   369,    13,    14,    28,   180,
-     142,    44,    45,   145,   194,    29,    28,   149,    85,   289,
-     290,   385,    89,   194,     1,   295,    93,   297,    28,    28,
-     289,   290,   291,     1,     1,     1,   295,    28,   297,    42,
-       1,    28,   174,   175,     9,    22,    12,    50,   180,    37,
-      38,    28,   163,    30,    22,    22,    22,    23,    24,   203,
-     379,    22,   194,    29,    22,   393,    30,   211,    32,   249,
-      36,    37,    38,   253,     1,   345,   346,    22,   249,   190,
-     126,   127,   253,    37,    38,    12,   345,   346,   134,   135,
-     136,   137,   258,   126,   127,   354,    23,    24,    28,   265,
-     389,   134,   135,   136,   137,    37,    38,   174,   175,    36,
-     369,    31,   401,   180,     1,    31,     3,   249,   407,     6,
-       7,   253,    31,   126,   127,    28,   385,   194,   131,   132,
-     389,   134,   135,   136,   137,   315,    31,     1,     1,     3,
-      35,    36,   401,     7,   315,   289,   290,   291,   407,    12,
-      31,   295,    12,   297,   320,    22,   322,     1,     7,    22,
-      23,    24,     6,    23,    24,   320,    29,   322,    12,    30,
-      31,    27,   352,    36,   354,   355,    36,    28,    22,    23,
-      24,   352,    23,   315,   355,    29,     6,     7,   368,   369,
-       7,    35,    36,    37,    38,    30,    31,   368,     7,   379,
-       7,   345,   346,    30,    31,   385,    28,    30,   379,   389,
-     354,   377,    30,   393,    26,    31,     1,   383,    12,    29,
-     352,   401,   393,   355,    29,   369,    28,   407,    22,    23,
-      24,     1,    22,    23,    24,    13,   368,    22,    23,    24,
-     258,   385,    12,   378,    29,   389,    36,   379,   315,     1,
-     196,    36,    22,    23,    24,    25,    86,   401,    50,    29,
-      12,   393,    -1,   407,    -1,    35,    36,    37,    38,     1,
-      22,    23,    24,    13,    14,    15,    28,    -1,    -1,    31,
-      12,    -1,    22,    35,    36,   352,    -1,     1,   355,    -1,
-      22,    23,    24,    -1,    -1,    -1,    -1,    29,    12,    31,
-      -1,   368,    12,    35,    36,    37,    38,     1,    22,    23,
-      24,    -1,    22,    23,    24,    29,     1,    -1,    12,    29,
-      -1,    35,    36,    37,    38,     1,    36,    12,    22,    23,
-      24,    16,    -1,    -1,    -1,    29,    12,    22,    23,    24,
-      -1,    35,    36,    37,    38,     1,    22,    23,    24,    -1,
-      35,    36,     5,    29,    -1,     8,    12,    10,    11,    35,
-      36,    37,    38,     1,    -1,    -1,    22,    23,    24,    22,
-      -1,    -1,     1,    29,    12,    -1,    29,    -1,    -1,    -1,
-      36,    37,    38,    12,    22,    23,    24,    -1,    17,    18,
-      19,    29,    21,    22,    23,    24,    -1,     1,    36,    37,
-      38,    -1,    -1,    -1,    33,    34,    35,    36,    12,    -1,
-      -1,    -1,     1,    -1,    -1,     1,    -1,    -1,    22,    23,
-      24,    -1,    -1,    12,    28,    -1,    12,    31,    -1,    -1,
-       1,    35,    36,    22,    23,    24,    22,    23,    24,    28,
-       1,    12,    -1,    -1,    -1,    31,    35,    36,     1,    35,
-      36,    22,    23,    24,    -1,    -1,     1,    -1,    -1,    12,
-      31,    22,    23,    24,    35,    36,    -1,    12,    29,    22,
-      23,    24,    -1,    -1,     1,    36,    29,    22,    23,    24,
-      -1,     1,    -1,    36,    29,    12,    -1,    -1,    -1,    -1,
-       1,    36,    12,    -1,    -1,    22,    23,    24,    -1,     1,
-      -1,    12,    29,    23,    24,    -1,    -1,    -1,    28,    36,
-      30,    -1,    23,    24,    -1,    -1,    36,    28,    -1,    30,
-      22,    23,    24,    -1,    -1,    36,    -1,    29,     0,     1,
-      -1,    -1,    -1,     5,    36,    -1,     8,    -1,    10,    11,
-      -1,    13,    14,    -1,    -1,    -1,    -1,    -1,     0,     1,
-      22,    -1,    -1,     5,    26,    27,     8,    29,    10,    11,
-      -1,    13,    14,    -1,    -1,    -1,    -1,    -1,     0,     1,
-      22,    -1,    -1,     5,    26,    27,     8,    29,    10,    11,
-      -1,    13,    14,    -1,    -1,    -1,    -1,    -1,     0,     1,
-      22,    -1,    -1,     5,    26,    27,     8,    29,    10,    11,
-      -1,    13,    14,    -1,    -1,    -1,    -1,    -1,     0,     1,
-      22,    -1,    -1,     5,    26,    27,     8,    29,    10,    11,
-      -1,    13,    14,    -1,    -1,    -1,    -1,    -1,     0,     1,
-      22,    -1,    -1,     5,    26,    27,     8,    29,    10,    11,
-      -1,    13,    14,    -1,    -1,    -1,    -1,    -1,    -1,     1,
-      22,    -1,    -1,     5,    26,    27,     8,    29,    10,    11,
-      -1,    13,    14,    -1,    -1,    -1,    -1,    -1,    -1,     1,
-      22,    -1,    -1,     5,    26,    27,     8,    29,    10,    11,
-      -1,    13,    14,    -1,    -1,    -1,    -1,    -1,    -1,     1,
-      22,    -1,    -1,     5,    26,    27,     8,    29,    10,    11,
-      -1,    13,    14,    -1,    -1,    -1,    -1,    -1,    -1,     1,
-      22,    -1,    -1,     5,    26,    27,     8,    29,    10,    11,
-      -1,    13,    14,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      22,    -1,     1,    -1,    26,    27,     5,    29,    -1,     8,
-       9,    10,    11,    -1,    -1,     1,    -1,    -1,    -1,     5,
-       6,    -1,     8,    22,    10,    11,    -1,    26,     1,    -1,
-      29,    -1,     5,    -1,    -1,     8,    22,    10,    11,    -1,
-      26,     1,    -1,    29,    -1,     5,    -1,    -1,     8,    22,
-      10,    11,    -1,    -1,    27,    -1,    29,    -1,    -1,    -1,
-      -1,     1,    22,    -1,    -1,     5,    26,    -1,     8,    29,
-      10,    11,    -1,    12,    13,    14,    -1,    -1,    -1,    -1,
-      -1,    -1,    22,    22,    23,    24,    -1,    27,    -1,    29,
-      29,    12,    -1,    -1,    -1,    12,    35,    36,    37,    38,
+       0,   142,    29,   149,   145,   316,   203,     0,   102,     0,
+      28,     1,     1,    13,   103,     3,    28,    17,   102,     7,
+      13,    79,    13,    12,    85,     9,    42,    12,    89,     1,
+       1,    31,     5,    22,    23,    24,     1,     1,    31,    28,
+      31,    31,    31,    43,   355,     1,    35,    36,    21,    39,
+       1,     1,    43,    26,     1,    20,    41,    22,     1,    31,
+      31,     1,    28,    63,    37,    30,    30,    32,    41,   359,
+      29,    22,    63,    26,    39,    31,    29,     0,    28,    30,
+       1,    32,    22,    39,    31,    85,    29,    60,    39,    89,
+      13,     1,    85,    93,    85,   292,    89,   387,    89,    99,
+      93,    86,    93,   249,   104,   163,    79,   253,    31,   203,
+      31,   200,    39,   174,   175,   131,   132,   211,   400,   180,
+      43,    31,    12,   108,    28,    35,    36,   211,    22,   411,
+       1,   413,    22,    23,    24,   108,     1,     1,    29,    42,
+      63,    12,   142,    13,    14,   145,    36,    50,     1,   149,
+       1,   142,    23,    24,   145,    44,    45,    28,   149,   159,
+     160,    12,    85,    28,    28,    36,    89,    28,   195,    22,
+      93,   156,    23,    24,   174,   175,    29,    44,    45,   376,
+     180,   174,   175,   174,   175,    36,     1,   180,     1,   180,
+     163,     1,    23,    24,   194,    45,   290,   291,   292,   396,
+       1,   194,   296,   194,   298,    36,   290,   291,     1,    22,
+      23,    24,   296,    28,   298,     1,    29,   190,    28,   142,
+     361,    22,   145,   126,   127,    28,   149,   102,   131,   132,
+       9,   134,   135,   136,   137,    28,    22,   126,   127,     1,
+      37,    38,    28,   389,    30,   134,   135,   136,   137,   249,
+      28,   174,   175,   253,   348,   349,    22,   180,   249,   126,
+     127,     1,   253,   357,   348,   349,    28,   134,   135,   136,
+     137,   194,     1,   258,     1,     1,   126,   127,     1,    12,
+      22,   266,   376,    12,   134,   135,   136,   137,    28,    22,
+      23,    24,     1,    22,    23,    24,    22,     0,    28,     0,
+      29,    28,   396,    12,    28,    28,   400,    36,    37,    38,
+      13,     1,    13,    22,    23,    24,   316,   411,    31,   413,
+      29,    31,    12,   316,    31,   316,   249,    36,   203,    31,
+     253,     1,    22,    23,    24,    25,   211,    22,   323,    29,
+     325,     7,    12,    23,    24,    35,    36,    37,    38,    29,
+       1,    27,    22,    23,    24,   355,    36,   357,   358,    29,
+      28,   361,   355,    23,   355,   358,    36,   358,     7,     1,
+     361,    22,    23,    24,     6,   375,   376,    30,    29,    32,
+      12,     7,   375,    12,   375,    36,   323,     7,   325,   389,
+      22,    23,    24,   316,    23,    24,   396,    29,   389,   384,
+     400,    37,    38,    35,    36,    37,    38,    36,     1,   394,
+       3,   411,    28,   413,     7,   290,   291,   292,     1,     1,
+      26,   296,     5,   298,    31,     8,     9,    10,    11,    31,
+      12,    30,   355,    35,    36,   358,    30,     1,   361,    22,
+      22,    23,    24,    26,    30,    31,    29,    29,    12,    31,
+      37,    38,   375,    35,    36,    37,    38,     1,    22,    23,
+      24,    13,    14,    15,    28,    28,   389,    31,    12,    29,
+      22,    35,    36,   348,   349,     1,     6,     7,    22,    23,
+      24,    29,   357,    30,    31,    29,    12,     1,    22,    23,
+      24,    35,    36,    37,    38,     1,    22,    23,    24,    13,
+      14,   376,    36,    29,    13,   365,    12,   387,    22,    35,
+      36,    37,    38,    30,    31,   258,    22,    23,    24,   196,
+      86,   396,     1,    29,    -1,   400,     1,    50,    -1,    35,
+      36,    37,    38,    12,    -1,    -1,   411,    12,   413,    -1,
+      -1,    -1,    -1,    22,    23,    24,    -1,    22,    23,    24,
+      29,    -1,    -1,     1,    29,    -1,     1,    36,    37,    38,
+      -1,    36,    37,    38,    12,    -1,    -1,    12,    -1,    17,
+      18,    19,    -1,    21,    22,    23,    24,    22,    23,    24,
+      -1,     1,    -1,    28,     1,    33,    34,    35,    36,    -1,
+      35,    36,    12,    -1,    -1,    12,    16,    -1,    -1,     1,
+      -1,    -1,    22,    23,    24,    22,    23,    24,    -1,    -1,
+      12,    -1,    -1,    -1,    31,    35,    36,     1,    35,    36,
+      22,    23,    24,    -1,    -1,     1,    -1,    -1,    12,    31,
+      -1,    -1,     1,    35,    36,     1,    12,    -1,    22,    23,
+      24,    -1,    -1,    12,    -1,    29,    22,    23,    24,    -1,
+      -1,     1,    36,    29,    23,    24,    22,    23,    24,    28,
+      36,    30,    12,    29,    -1,    -1,     1,    36,    -1,    -1,
+      36,     0,     1,    23,    24,    -1,     5,    -1,    28,     8,
+      30,    10,    11,    -1,    13,    14,    36,    22,    23,    24,
+      13,    14,    15,    22,    29,    -1,    -1,    26,    27,    22,
+      29,    36,     0,     1,    -1,    -1,    -1,     5,    31,    -1,
+       8,    -1,    10,    11,    -1,    13,    14,    -1,    -1,    -1,
+      -1,    -1,     0,     1,    22,    -1,    -1,     5,    26,    27,
+       8,    29,    10,    11,    -1,    13,    14,    -1,    -1,    -1,
+      -1,    -1,     0,     1,    22,    -1,    -1,     5,    26,    27,
+       8,    29,    10,    11,    -1,    13,    14,    -1,    -1,    -1,
+      -1,    -1,     0,     1,    22,    -1,    -1,     5,    26,    27,
+       8,    29,    10,    11,    -1,    13,    14,    -1,    -1,    -1,
+      -1,    -1,     0,     1,    22,    -1,    -1,     5,    26,    27,
+       8,    29,    10,    11,    -1,    13,    14,    -1,    -1,    -1,
+       1,    -1,     3,     1,    22,     6,     7,     5,    26,    27,
+       8,    29,    10,    11,    -1,    13,    14,    -1,    -1,    -1,
+      -1,    -1,    -1,     1,    22,    -1,    -1,     5,    26,    27,
+       8,    29,    10,    11,    -1,    13,    14,    -1,    -1,    -1,
+      -1,    -1,    -1,     1,    22,    -1,    -1,     5,    26,    27,
+       8,    29,    10,    11,    -1,    13,    14,    -1,    -1,    -1,
+      -1,    -1,    -1,     1,    22,    -1,    -1,     5,    26,    27,
+       8,    29,    10,    11,    -1,    13,    14,    -1,    13,    14,
+      15,    -1,    -1,    -1,    22,    -1,    -1,    22,    26,    27,
+       1,    29,    -1,    -1,     5,     6,    31,     8,     1,    10,
+      11,    -1,     5,    -1,    -1,     8,    -1,    10,    11,    -1,
+      -1,    22,    -1,     1,    -1,    26,    -1,     5,    29,    22,
+       8,     1,    10,    11,    27,     5,    29,    -1,     8,    -1,
+      10,    11,    -1,    -1,    22,    -1,    -1,    -1,    26,    -1,
+      12,    29,    22,    12,    13,    14,    -1,    27,    -1,    29,
+      22,    23,    24,    22,    23,    24,    -1,    29,    -1,    -1,
+      29,    12,    -1,    -1,    36,    12,    35,    36,    37,    38,
       -1,    22,    23,    24,    -1,    22,    23,    24,    29,    -1,
       31,    -1,    29,    12,    35,    36,    37,    38,    35,    36,
       37,    38,    -1,    22,    23,    24,    -1,    -1,    -1,     5,
@@ -1101,9 +1097,10 @@ static const yytype_int16 yycheck[] =
       26,    -1,    -1,    29,    35,    36,    37,    38,     5,    -1,
       -1,     8,    -1,    10,    11,    -1,     5,    -1,    -1,     8,
       -1,    10,    11,    -1,    -1,    22,    -1,    -1,    -1,    26,
-      -1,     5,    29,    22,     8,    12,    10,    11,    27,    -1,
-      29,    -1,    -1,    -1,    -1,    22,    23,    24,    22,    -1,
-      -1,    -1,    -1,    27,    -1,    29,    -1,    -1,    -1,    36
+      -1,     5,    29,    22,     8,    -1,    10,    11,    27,     5,
+      29,    -1,     8,    -1,    10,    11,    -1,    -1,    22,    -1,
+      -1,    -1,    -1,    27,    -1,    29,    22,    -1,    -1,    -1,
+      -1,    -1,    -1,    29
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
@@ -1111,47 +1108,47 @@ static const yytype_int16 yycheck[] =
 static const yytype_uint8 yystos[] =
 {
        0,     0,     1,     5,     8,    10,    11,    13,    14,    22,
-      26,    27,    29,    41,    42,    45,    50,    55,    67,    68,
-      69,    70,    72,    75,    83,    84,    85,    90,    99,   100,
-     105,   107,   132,    28,     1,   106,     1,    12,    22,    23,
-      24,    29,    35,    36,    37,    38,    84,    90,   117,   121,
-     122,   123,   124,   125,   127,   128,   130,   131,   132,     1,
+      26,    27,    29,    41,    42,    45,    50,    55,    69,    70,
+      71,    72,    74,    77,    85,    86,    87,    92,   101,   102,
+     107,   109,   134,    28,     1,   108,     1,    12,    22,    23,
+      24,    29,    35,    36,    37,    38,    86,    92,   119,   123,
+     124,   125,   126,   127,   129,   130,   132,   133,   134,     1,
       29,    26,    29,    43,    55,     0,    42,     1,    22,    29,
-      53,   132,    71,   121,     1,    28,    31,    86,    87,    88,
-      89,   121,     1,    28,     1,     6,    29,   101,   102,   103,
-     118,   119,   121,    26,    68,   108,   111,     1,    20,    30,
-      32,    39,    76,    78,    79,    28,     9,    28,    29,   121,
-     121,     1,   117,   123,     1,    23,    24,    84,    90,   132,
-       1,   126,   127,   128,     1,   126,    37,    38,     1,    28,
-      31,    35,    36,   124,    37,    38,    37,    38,    28,     1,
-      25,   121,    46,     1,     1,    26,    27,    44,    45,    48,
-      49,    50,    68,    22,    28,    29,    52,     1,    28,    30,
-      54,     1,    28,    30,    31,    89,     1,    16,    28,   111,
-     119,     1,    28,     1,     3,     6,     7,   104,   111,     1,
+      53,   134,    73,   123,     1,    28,    31,    88,    89,    90,
+      91,   123,     1,    28,     1,     6,    29,   103,   104,   105,
+     120,   121,   123,    26,    70,   110,   113,     1,    20,    30,
+      32,    39,    78,    80,    81,    28,     9,    28,    29,   123,
+     123,     1,   119,   125,     1,    23,    24,    86,    92,   134,
+       1,   128,   129,   130,     1,   128,    37,    38,     1,    28,
+      31,    35,    36,   126,    37,    38,    37,    38,    28,     1,
+      25,   123,    46,     1,     1,    26,    27,    44,    45,    48,
+      49,    50,    70,    22,    28,    29,    52,     1,    28,    30,
+      54,     1,    28,    30,    31,    91,     1,    16,    28,   113,
+     121,     1,    28,     1,     3,     6,     7,   106,   113,     1,
        6,     1,    31,     1,    17,    18,    19,    21,    33,    34,
-     120,     1,    27,    68,   112,     9,   109,    28,     1,    22,
-     132,    22,     1,    12,    28,    36,   113,   114,   129,   130,
-     131,    76,   132,   110,   118,   121,     1,    31,     1,    28,
-      31,   117,   126,   117,   126,    28,     1,   117,   123,     1,
-     117,   123,     1,   117,   126,     1,   117,   126,     1,   117,
-     126,     1,   117,   126,    31,    31,    31,    27,    47,    48,
+     122,     1,    27,    70,   114,     9,   111,    28,     1,    22,
+     134,    22,     1,    12,    28,    36,   115,   116,   131,   132,
+     133,    78,   134,   112,   120,   123,     1,    31,     1,    28,
+      31,   119,   128,   119,   128,    28,     1,   119,   125,     1,
+     119,   125,     1,   119,   128,     1,   119,   128,     1,   119,
+     128,     1,   119,   128,    31,    31,    31,    27,    47,    48,
       31,    28,    27,    48,     0,    27,    49,    31,    51,    15,
-      22,    55,    56,    62,    64,    65,     1,   132,   132,    89,
-      22,     7,     1,    31,   111,     1,   111,     6,     7,   111,
-       1,   121,    27,     1,    27,    68,   118,   110,    28,     1,
-      76,    29,   129,     1,    28,    30,    80,    81,    77,   113,
-       1,    28,     1,    31,     1,    28,    73,     1,    28,     1,
-      28,     0,    27,     0,    27,    91,    59,    62,     1,    22,
-      30,    31,    63,     1,    22,    55,     3,     7,     7,     1,
-       3,     7,     7,     7,     1,    28,   113,     1,   113,   129,
-       1,    31,   113,     1,    28,    30,    82,   113,     1,    30,
-      28,    74,    26,    92,    96,   112,    31,    64,    57,    64,
-       1,    22,    30,    30,     1,    31,   113,   113,   112,    12,
-      97,    98,   113,   115,   116,   132,    27,    29,    60,    26,
-      58,    66,    27,    29,     1,    29,   132,    31,    29,    95,
-      61,    66,    27,    48,     1,    28,    29,    28,   132,     1,
-      31,    94,    97,     1,    28,     0,    27,    93,     1,    31,
-      97,    97
+      22,    31,    55,    56,    64,    66,    67,     1,   134,   134,
+      91,    22,     7,     1,    31,   113,     1,   113,     6,     7,
+     113,     1,   123,    27,     1,    27,    70,   120,   112,    28,
+       1,    78,    29,   131,     1,    28,    30,    82,    83,    79,
+     115,     1,    28,     1,    31,     1,    28,    75,     1,    28,
+       1,    28,     0,    27,     0,    27,    93,    31,    60,    64,
+      58,     1,    22,    30,    31,    65,     1,    22,    55,     3,
+       7,     7,     1,     3,     7,     7,     7,     1,    28,   115,
+       1,   115,   131,     1,    31,   115,     1,    28,    30,    84,
+     115,     1,    30,    28,    76,    26,    94,    98,   114,    62,
+      31,    26,    59,    68,    66,    57,    66,     1,    22,    30,
+      30,     1,    31,   115,   115,   114,    12,    99,   100,   115,
+     117,   118,   134,    27,    29,    63,    68,    61,    27,    48,
+       1,    28,    59,    27,    29,     1,    29,   134,    31,    29,
+      97,     1,    28,    63,     0,    27,    29,    28,   134,     1,
+      31,    96,    99,    95,     1,    31,    99,    99
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
@@ -1161,30 +1158,30 @@ static const yytype_uint8 yyr1[] =
       42,    42,    44,    44,    44,    46,    45,    47,    47,    47,
       48,    48,    49,    49,    49,    49,    49,    49,    49,    50,
       50,    50,    51,    50,    52,    50,    53,    53,    54,    53,
-      53,    55,    55,    57,    56,    58,    58,    60,    59,    61,
-      61,    62,    62,    63,    62,    64,    64,    64,    64,    64,
-      64,    64,    65,    66,    66,    66,    67,    67,    67,    67,
-      67,    67,    67,    67,    67,    68,    68,    68,    68,    68,
-      68,    68,    69,    69,    70,    71,    71,    72,    72,    72,
-      72,    73,    72,    72,    74,    74,    75,    75,    75,    75,
-      75,    75,    75,    76,    76,    76,    76,    76,    76,    77,
-      77,    79,    78,    80,    81,    80,    80,    82,    80,    83,
-      83,    83,    83,    84,    84,    85,    86,    86,    87,    87,
-      87,    88,    89,    89,    91,    90,    93,    92,    94,    92,
-      92,    95,    92,    96,    97,    98,    98,    99,    99,    99,
-     100,   101,   101,   101,   101,   101,   101,   101,   101,   101,
-     101,   101,   101,   101,   101,   101,   102,   103,   104,   105,
-     106,   105,   105,   107,   108,   108,   109,   108,   110,   110,
-     111,   111,   111,   111,   111,   112,   112,   113,   113,   114,
-     114,   114,   114,   115,   115,   116,   116,   116,   116,   116,
-     117,   117,   117,   117,   118,   118,   118,   118,   119,   119,
-     119,   120,   120,   120,   120,   120,   120,   121,   121,   121,
-     121,   121,   121,   121,   121,   121,   121,   121,   122,   123,
-     123,   124,   124,   124,   124,   124,   124,   124,   124,   124,
-     124,   124,   125,   125,   125,   125,   125,   125,   125,   125,
-     125,   125,   125,   126,   126,   127,   127,   127,   128,   128,
-     128,   128,   128,   128,   128,   129,   129,   130,   130,   131,
-     132,   132
+      53,    55,    55,    57,    56,    58,    56,    59,    59,    61,
+      60,    62,    60,    63,    63,    64,    64,    65,    64,    66,
+      66,    66,    66,    66,    66,    66,    67,    68,    68,    68,
+      69,    69,    69,    69,    69,    69,    69,    69,    69,    70,
+      70,    70,    70,    70,    70,    70,    71,    71,    72,    73,
+      73,    74,    74,    74,    74,    75,    74,    74,    76,    76,
+      77,    77,    77,    77,    77,    77,    77,    78,    78,    78,
+      78,    78,    78,    79,    79,    81,    80,    82,    83,    82,
+      82,    84,    82,    85,    85,    85,    85,    86,    86,    87,
+      88,    88,    89,    89,    89,    90,    91,    91,    93,    92,
+      95,    94,    96,    94,    94,    97,    94,    98,    99,   100,
+     100,   101,   101,   101,   102,   103,   103,   103,   103,   103,
+     103,   103,   103,   103,   103,   103,   103,   103,   103,   103,
+     104,   105,   106,   107,   108,   107,   107,   109,   110,   110,
+     111,   110,   112,   112,   113,   113,   113,   113,   113,   114,
+     114,   115,   115,   116,   116,   116,   116,   117,   117,   118,
+     118,   118,   118,   118,   119,   119,   119,   119,   120,   120,
+     120,   120,   121,   121,   121,   122,   122,   122,   122,   122,
+     122,   123,   123,   123,   123,   123,   123,   123,   123,   123,
+     123,   123,   124,   125,   125,   126,   126,   126,   126,   126,
+     126,   126,   126,   126,   126,   126,   127,   127,   127,   127,
+     127,   127,   127,   127,   127,   127,   127,   128,   128,   129,
+     129,   129,   130,   130,   130,   130,   130,   130,   130,   131,
+     131,   132,   132,   133,   134,   134
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
@@ -1194,30 +1191,30 @@ static const yytype_int8 yyr2[] =
        1,     2,     2,     1,     2,     0,     4,     2,     2,     1,
        1,     2,     1,     1,     1,     2,     3,     3,     2,     3,
        3,     3,     0,     5,     0,     4,     1,     3,     0,     3,
-       3,     1,     1,     0,     4,     2,     2,     0,     4,     2,
-       2,     1,     3,     0,     3,     2,     2,     1,     3,     3,
-       2,     2,     1,     3,     2,     3,     5,     5,     4,     3,
-       3,     4,     4,     3,     3,     1,     1,     1,     1,     1,
-       1,     1,     2,     4,     2,     2,     2,     5,     5,     5,
-       5,     0,     6,     3,     1,     0,     4,     4,     5,     5,
-       3,     3,     3,     1,     5,     5,     3,     4,     4,     2,
-       2,     0,     2,     2,     0,     2,     3,     0,     3,     2,
-       2,     2,     2,     2,     4,     2,     2,     1,     1,     3,
-       2,     1,     3,     2,     0,     6,     0,     6,     0,     5,
-       2,     0,     4,     3,     2,     1,     1,     3,     3,     3,
-       1,     2,     4,     2,     4,     3,     2,     4,     3,     2,
-       4,     4,     3,     4,     4,     4,     2,     1,     1,     2,
-       0,     4,     3,     1,     4,     4,     0,     3,     2,     2,
-       3,     3,     3,     1,     2,     1,     2,     1,     1,     4,
-       4,     3,     3,     1,     1,     4,     4,     3,     3,     3,
-       4,     4,     3,     3,     3,     3,     2,     2,     3,     2,
-       3,     1,     1,     1,     1,     1,     1,     1,     2,     2,
-       2,     3,     3,     3,     3,     1,     3,     3,     1,     1,
-       1,     3,     3,     3,     3,     3,     3,     3,     3,     1,
-       3,     3,     3,     3,     3,     3,     1,     3,     3,     2,
-       2,     2,     2,     1,     1,     1,     1,     1,     1,     1,
-       2,     2,     2,     2,     2,     1,     1,     1,     1,     2,
-       1,     3
+       3,     1,     1,     0,     4,     0,     3,     2,     2,     0,
+       4,     0,     3,     2,     2,     1,     3,     0,     3,     2,
+       2,     1,     3,     3,     2,     2,     1,     3,     2,     3,
+       5,     5,     4,     3,     3,     4,     4,     3,     3,     1,
+       1,     1,     1,     1,     1,     1,     2,     4,     2,     2,
+       2,     5,     5,     5,     5,     0,     6,     3,     1,     0,
+       4,     4,     5,     5,     3,     3,     3,     1,     5,     5,
+       3,     4,     4,     2,     2,     0,     2,     2,     0,     2,
+       3,     0,     3,     2,     2,     2,     2,     2,     4,     2,
+       2,     1,     1,     3,     2,     1,     3,     2,     0,     6,
+       0,     6,     0,     5,     2,     0,     4,     3,     2,     1,
+       1,     3,     3,     3,     1,     2,     4,     2,     4,     3,
+       2,     4,     3,     2,     4,     4,     3,     4,     4,     4,
+       2,     1,     1,     2,     0,     4,     3,     1,     4,     4,
+       0,     3,     2,     2,     3,     3,     3,     1,     2,     1,
+       2,     1,     1,     4,     4,     3,     3,     1,     1,     4,
+       4,     3,     3,     3,     4,     4,     3,     3,     3,     3,
+       2,     2,     3,     2,     3,     1,     1,     1,     1,     1,
+       1,     1,     2,     2,     2,     3,     3,     3,     3,     1,
+       3,     3,     1,     1,     1,     3,     3,     3,     3,     3,
+       3,     3,     3,     1,     3,     3,     3,     3,     3,     3,
+       1,     3,     3,     2,     2,     2,     2,     1,     1,     1,
+       1,     1,     1,     1,     2,     2,     2,     2,     2,     1,
+       1,     1,     1,     2,     1,     3
 };
 
 
@@ -1685,7 +1682,7 @@ yyreduce:
     {
         SemanticActions::announceSpecificError(GLOBAL_SCOPE_STATEMENT);
     }
-#line 1689 "src/syntax-analyzer/components/parser.cpp"
+#line 1686 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
   case 6: /* global_statement: executable_stmt  */
@@ -1693,7 +1690,7 @@ yyreduce:
     {
         SemanticActions::announceSpecificError(GLOBAL_SCOPE_STATEMENT);
     }
-#line 1697 "src/syntax-analyzer/components/parser.cpp"
+#line 1694 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
   case 8: /* $@1: %empty  */
@@ -1705,7 +1702,7 @@ yyreduce:
         SemanticAnalyzer::CHK_PROGRAMS.checkProgramDeclaration("");
 
     }
-#line 1709 "src/syntax-analyzer/components/parser.cpp"
+#line 1706 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
   case 10: /* global_statement: '}'  */
@@ -1713,7 +1710,7 @@ yyreduce:
     {
         SemanticActions::announceSpecificError(MISSING_OPENING_BRACKET);
     }
-#line 1717 "src/syntax-analyzer/components/parser.cpp"
+#line 1714 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
   case 11: /* global_statement: error ';'  */
@@ -1722,7 +1719,7 @@ yyreduce:
         SemanticActions::announceSpecificError(GLOBAL_SCOPE_STATEMENT);
         yyerrok;
     }
-#line 1726 "src/syntax-analyzer/components/parser.cpp"
+#line 1723 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
   case 12: /* unnamed_program_tail: program_statements '}'  */
@@ -1730,7 +1727,7 @@ yyreduce:
     {
         SemanticAnalyzer::removeScope();
     }
-#line 1734 "src/syntax-analyzer/components/parser.cpp"
+#line 1731 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
   case 13: /* unnamed_program_tail: '}'  */
@@ -1738,7 +1735,7 @@ yyreduce:
     {
         SemanticAnalyzer::removeScope();
     }
-#line 1742 "src/syntax-analyzer/components/parser.cpp"
+#line 1739 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
   case 14: /* unnamed_program_tail: program_statements $end  */
@@ -1747,7 +1744,7 @@ yyreduce:
         SemanticAnalyzer::removeScope();
         SemanticActions::announceSpecificError(MISSING_CLOSING_BRACKET);
     }
-#line 1751 "src/syntax-analyzer/components/parser.cpp"
+#line 1748 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
   case 15: /* $@2: %empty  */
@@ -1763,7 +1760,7 @@ yyreduce:
         else
             SemanticAnalyzer::addInvalidScope();
     }
-#line 1767 "src/syntax-analyzer/components/parser.cpp"
+#line 1764 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
   case 17: /* program_tail: program_statements '}'  */
@@ -1772,7 +1769,7 @@ yyreduce:
         SemanticActions::logStructure("PROGRAM");
         SemanticAnalyzer::removeScope();
     }
-#line 1776 "src/syntax-analyzer/components/parser.cpp"
+#line 1773 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
   case 18: /* program_tail: program_statements $end  */
@@ -1781,7 +1778,7 @@ yyreduce:
         SemanticActions::announceSpecificError(MISSING_CLOSING_BRACKET);
         SemanticAnalyzer::removeScope();
     }
-#line 1785 "src/syntax-analyzer/components/parser.cpp"
+#line 1782 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
   case 19: /* program_tail: '}'  */
@@ -1790,19 +1787,19 @@ yyreduce:
         SemanticActions::logStructure("PROGRAM");
         SemanticAnalyzer::removeScope();
     }
-#line 1794 "src/syntax-analyzer/components/parser.cpp"
+#line 1791 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
   case 20: /* program_statements: program_statement  */
 #line 217 "include/syntax-analyzer/components/yacc.y"
                                            { (yyval.returnable) = (yyvsp[0].returnable);       }
-#line 1800 "src/syntax-analyzer/components/parser.cpp"
+#line 1797 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
   case 21: /* program_statements: program_statements program_statement  */
 #line 218 "include/syntax-analyzer/components/yacc.y"
                                            { (yyval.returnable) = (yyvsp[-1].returnable) || (yyvsp[0].returnable); }
-#line 1806 "src/syntax-analyzer/components/parser.cpp"
+#line 1803 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
   case 22: /* program_statement: declarative_stmt  */
@@ -1810,7 +1807,7 @@ yyreduce:
     {
         (yyval.returnable) = false;
     }
-#line 1814 "src/syntax-analyzer/components/parser.cpp"
+#line 1811 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
   case 23: /* program_statement: executable_stmt  */
@@ -1818,7 +1815,7 @@ yyreduce:
     {
         (yyval.returnable) = (yyvsp[0].returnable);
     }
-#line 1822 "src/syntax-analyzer/components/parser.cpp"
+#line 1819 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
   case 24: /* program_statement: program_head  */
@@ -1829,7 +1826,7 @@ yyreduce:
        SemanticActions::announceSpecificError(INVALID_PROGRAM_NESTING);
 
     }
-#line 1833 "src/syntax-analyzer/components/parser.cpp"
+#line 1830 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
   case 25: /* program_statement: '{' '}'  */
@@ -1840,7 +1837,7 @@ yyreduce:
         SemanticActions::announceSpecificError(INVALID_COMPOUND_NESTING);
 
     }
-#line 1844 "src/syntax-analyzer/components/parser.cpp"
+#line 1841 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
   case 26: /* program_statement: '{' program_statements '}'  */
@@ -1851,7 +1848,7 @@ yyreduce:
         SemanticActions::announceSpecificError(INVALID_COMPOUND_NESTING);
 
     }
-#line 1855 "src/syntax-analyzer/components/parser.cpp"
+#line 1852 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
   case 27: /* program_statement: '{' program_statements $end  */
@@ -1863,7 +1860,7 @@ yyreduce:
         SemanticActions::announceSpecificError(INVALID_COMPOUND_NESTING);
 
     }
-#line 1867 "src/syntax-analyzer/components/parser.cpp"
+#line 1864 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
   case 28: /* program_statement: error ';'  */
@@ -1872,7 +1869,7 @@ yyreduce:
         yyerrok;
 
     }
-#line 1876 "src/syntax-analyzer/components/parser.cpp"
+#line 1873 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
   case 29: /* declarative_stmt: type variable_list ';'  */
@@ -1880,7 +1877,7 @@ yyreduce:
     {
         SemanticActions::logStructure("VARIABLE DECLARATION");
     }
-#line 1884 "src/syntax-analyzer/components/parser.cpp"
+#line 1881 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
   case 30: /* declarative_stmt: type error ';'  */
@@ -1889,7 +1886,7 @@ yyreduce:
         SemanticActions::specifySyntaxError(MISSING_VARIABLE);
         yyerrok;
     }
-#line 1893 "src/syntax-analyzer/components/parser.cpp"
+#line 1890 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
   case 31: /* declarative_stmt: type variable_list error  */
@@ -1898,7 +1895,7 @@ yyreduce:
         SemanticActions::specifySyntaxError(MISSING_SEMICOLON);
         yyerrok;
     }
-#line 1902 "src/syntax-analyzer/components/parser.cpp"
+#line 1899 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
   case 32: /* $@3: %empty  */
@@ -1910,7 +1907,7 @@ yyreduce:
         SemanticAnalyzer::CHK_FUNCTIONS.notifyFunctionName((yyvsp[-1].sref)->symbol);
 
     }
-#line 1914 "src/syntax-analyzer/components/parser.cpp"
+#line 1911 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
   case 34: /* $@4: %empty  */
@@ -1924,7 +1921,7 @@ yyreduce:
         SemanticActions::announceSpecificError(MISSING_FUNCTION_NAME);
 
     }
-#line 1928 "src/syntax-analyzer/components/parser.cpp"
+#line 1925 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
   case 36: /* variable_list: variable  */
@@ -1932,7 +1929,7 @@ yyreduce:
     {
         SemanticAnalyzer::CHK_VARIABLES.checkVariableDeclaration();
     }
-#line 1936 "src/syntax-analyzer/components/parser.cpp"
+#line 1933 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
   case 37: /* variable_list: variable_list ',' variable  */
@@ -1940,7 +1937,7 @@ yyreduce:
     {
         SemanticAnalyzer::CHK_VARIABLES.checkVariableDeclaration();
     }
-#line 1944 "src/syntax-analyzer/components/parser.cpp"
+#line 1941 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
   case 38: /* $@5: %empty  */
@@ -1948,7 +1945,7 @@ yyreduce:
     {
         SemanticActions::announceSpecificError(MISSING_COMMA);
     }
-#line 1952 "src/syntax-analyzer/components/parser.cpp"
+#line 1949 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
   case 39: /* variable_list: variable_list $@5 variable  */
@@ -1956,7 +1953,7 @@ yyreduce:
     {
         SemanticAnalyzer::CHK_VARIABLES.checkVariableDeclaration();
     }
-#line 1960 "src/syntax-analyzer/components/parser.cpp"
+#line 1957 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
   case 40: /* variable_list: variable_list ',' error  */
@@ -1965,7 +1962,7 @@ yyreduce:
         SemanticActions::specifySyntaxError(MISSING_VARIABLE);
         yyerrok;
     }
-#line 1969 "src/syntax-analyzer/components/parser.cpp"
+#line 1966 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
   case 41: /* type: WORD_UINT  */
@@ -1973,7 +1970,7 @@ yyreduce:
     {
         SemanticAnalyzer::TYPE = UINT;
     }
-#line 1977 "src/syntax-analyzer/components/parser.cpp"
+#line 1974 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
   case 42: /* type: WORD_FLOAT  */
@@ -1982,7 +1979,7 @@ yyreduce:
         SemanticAnalyzer::TYPE = FLOAT;
         SemanticActions::announceSpecificError(NOT_YET_IMPLEMENTED);
     }
-#line 1986 "src/syntax-analyzer/components/parser.cpp"
+#line 1983 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
   case 43: /* $@6: %empty  */
@@ -1991,21 +1988,32 @@ yyreduce:
         SemanticAnalyzer::CHK_FUNCTIONS.checkFunctionDeclaration();
 
     }
-#line 1995 "src/syntax-analyzer/components/parser.cpp"
+#line 1992 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 45: /* unnamed_function_declaration_tail: function_body ';'  */
-#line 356 "include/syntax-analyzer/components/yacc.y"
+  case 45: /* $@7: %empty  */
+#line 353 "include/syntax-analyzer/components/yacc.y"
+    {
+        SemanticAnalyzer::CHK_FUNCTIONS.checkFunctionDeclaration();
+
+        SemanticActions::announceSpecificError(NO_PARAMS_GIVEN);
+
+    }
+#line 2003 "src/syntax-analyzer/components/Parser.cpp"
+    break;
+
+  case 47: /* unnamed_function_declaration_tail: function_body ';'  */
+#line 364 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::removeScope();
         SemanticAnalyzer::CHK_RETURNS.removeFunction();
 
     }
-#line 2005 "src/syntax-analyzer/components/parser.cpp"
+#line 2013 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 46: /* unnamed_function_declaration_tail: function_body error  */
-#line 362 "include/syntax-analyzer/components/yacc.y"
+  case 48: /* unnamed_function_declaration_tail: function_body error  */
+#line 370 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::removeScope();
         SemanticAnalyzer::CHK_RETURNS.removeFunction();
@@ -2014,22 +2022,35 @@ yyreduce:
         yyerrok;
 
     }
-#line 2018 "src/syntax-analyzer/components/parser.cpp"
+#line 2026 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 47: /* $@7: %empty  */
-#line 374 "include/syntax-analyzer/components/yacc.y"
+  case 49: /* $@8: %empty  */
+#line 382 "include/syntax-analyzer/components/yacc.y"
     {
         auto entry = SemanticAnalyzer::CHK_FUNCTIONS.checkFunctionDeclaration();
         if (entry != nullptr)
             CodeGenerator::addIntermediateCodeBlock(entry);
 
     }
-#line 2029 "src/syntax-analyzer/components/parser.cpp"
+#line 2037 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 49: /* function_declaration_tail: function_body ';'  */
-#line 385 "include/syntax-analyzer/components/yacc.y"
+  case 51: /* $@9: %empty  */
+#line 390 "include/syntax-analyzer/components/yacc.y"
+    {
+        auto entry = SemanticAnalyzer::CHK_FUNCTIONS.checkFunctionDeclaration();
+        if (entry != nullptr)
+            CodeGenerator::addIntermediateCodeBlock(entry);
+
+        SemanticActions::announceSpecificError(NO_PARAMS_GIVEN);
+
+    }
+#line 2050 "src/syntax-analyzer/components/Parser.cpp"
+    break;
+
+  case 53: /* function_declaration_tail: function_body ';'  */
+#line 403 "include/syntax-analyzer/components/yacc.y"
     {
         CodeGenerator::notifyEndOfBlock();
 
@@ -2040,11 +2061,11 @@ yyreduce:
         SemanticActions::logStructure("FUNCTION DECLARATION");
 
     }
-#line 2044 "src/syntax-analyzer/components/parser.cpp"
+#line 2065 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 50: /* function_declaration_tail: function_body error  */
-#line 396 "include/syntax-analyzer/components/yacc.y"
+  case 54: /* function_declaration_tail: function_body error  */
+#line 414 "include/syntax-analyzer/components/yacc.y"
     {
         CodeGenerator::notifyEndOfBlock();
 
@@ -2056,39 +2077,39 @@ yyreduce:
         yyerrok;
 
     }
-#line 2060 "src/syntax-analyzer/components/parser.cpp"
+#line 2081 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 53: /* $@8: %empty  */
-#line 413 "include/syntax-analyzer/components/yacc.y"
+  case 57: /* $@10: %empty  */
+#line 431 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticActions::announceSpecificError(MISSING_COMMA);
     }
-#line 2068 "src/syntax-analyzer/components/parser.cpp"
+#line 2089 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 55: /* formal_parameter: type IDENTIFIER  */
-#line 421 "include/syntax-analyzer/components/yacc.y"
+  case 59: /* formal_parameter: type IDENTIFIER  */
+#line 439 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::CHK_FUNCTIONS.notifyParameterSemantic(CV);
         SemanticAnalyzer::CHK_FUNCTIONS.checkParameterDeclaration((yyvsp[0].sref)->symbol);
 
     }
-#line 2078 "src/syntax-analyzer/components/parser.cpp"
+#line 2099 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 56: /* formal_parameter: type error  */
-#line 427 "include/syntax-analyzer/components/yacc.y"
+  case 60: /* formal_parameter: type error  */
+#line 445 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticActions::specifySyntaxError(MISSING_PARAMETER_NAME);
         yyerrok;
 
     }
-#line 2088 "src/syntax-analyzer/components/parser.cpp"
+#line 2109 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 57: /* formal_parameter: IDENTIFIER  */
-#line 433 "include/syntax-analyzer/components/yacc.y"
+  case 61: /* formal_parameter: IDENTIFIER  */
+#line 451 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::TYPE = UNKNOWN;
         SemanticAnalyzer::CHK_FUNCTIONS.notifyParameterSemantic(CV);
@@ -2096,88 +2117,88 @@ yyreduce:
         SemanticActions::announceSpecificErrorWithSymbol(MISSING_PARAMETER_TYPE);
 
     }
-#line 2100 "src/syntax-analyzer/components/parser.cpp"
+#line 2121 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 58: /* formal_parameter: parameter_semantics type IDENTIFIER  */
-#line 441 "include/syntax-analyzer/components/yacc.y"
+  case 62: /* formal_parameter: parameter_semantics type IDENTIFIER  */
+#line 459 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::CHK_FUNCTIONS.checkParameterDeclaration((yyvsp[0].sref)->symbol);
 
     }
-#line 2109 "src/syntax-analyzer/components/parser.cpp"
+#line 2130 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 59: /* formal_parameter: parameter_semantics type error  */
-#line 446 "include/syntax-analyzer/components/yacc.y"
+  case 63: /* formal_parameter: parameter_semantics type error  */
+#line 464 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticActions::specifySyntaxError(MISSING_PARAMETER_NAME);
         yyerrok;
 
     }
-#line 2119 "src/syntax-analyzer/components/parser.cpp"
+#line 2140 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 60: /* formal_parameter: parameter_semantics error  */
-#line 452 "include/syntax-analyzer/components/yacc.y"
+  case 64: /* formal_parameter: parameter_semantics error  */
+#line 470 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticActions::specifySyntaxError(MISSING_PARAMETER_NAME);
         SemanticActions::announceSpecificError(MISSING_PARAMETER_TYPE);
         yyerrok;
 
     }
-#line 2130 "src/syntax-analyzer/components/parser.cpp"
+#line 2151 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 61: /* formal_parameter: parameter_semantics IDENTIFIER  */
-#line 459 "include/syntax-analyzer/components/yacc.y"
+  case 65: /* formal_parameter: parameter_semantics IDENTIFIER  */
+#line 477 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::TYPE = UNKNOWN;
         SemanticAnalyzer::CHK_FUNCTIONS.checkParameterDeclaration((yyvsp[0].sref)->symbol);
         SemanticActions::announceSpecificErrorWithSymbol(MISSING_PARAMETER_TYPE);
 
     }
-#line 2141 "src/syntax-analyzer/components/parser.cpp"
+#line 2162 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 62: /* parameter_semantics: WORD_CR  */
-#line 469 "include/syntax-analyzer/components/yacc.y"
+  case 66: /* parameter_semantics: WORD_CR  */
+#line 487 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::CHK_FUNCTIONS.notifyParameterSemantic(CR);
 
     }
-#line 2150 "src/syntax-analyzer/components/parser.cpp"
+#line 2171 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 63: /* function_body: '{' program_statements '}'  */
-#line 479 "include/syntax-analyzer/components/yacc.y"
+  case 67: /* function_body: '{' program_statements '}'  */
+#line 497 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = (yyvsp[-1].returnable);
     }
-#line 2158 "src/syntax-analyzer/components/parser.cpp"
+#line 2179 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 64: /* function_body: '{' '}'  */
-#line 483 "include/syntax-analyzer/components/yacc.y"
+  case 68: /* function_body: '{' '}'  */
+#line 501 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = false;
     }
-#line 2166 "src/syntax-analyzer/components/parser.cpp"
+#line 2187 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 65: /* function_body: '{' program_statements $end  */
-#line 487 "include/syntax-analyzer/components/yacc.y"
+  case 69: /* function_body: '{' program_statements $end  */
+#line 505 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = (yyvsp[-1].returnable);
 
         SemanticActions::announceSpecificError(MISSING_CLOSING_BRACKET);
 
     }
-#line 2177 "src/syntax-analyzer/components/parser.cpp"
+#line 2198 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 66: /* return: WORD_RETURN '(' expression ')' ';'  */
-#line 499 "include/syntax-analyzer/components/yacc.y"
+  case 70: /* return: WORD_RETURN '(' expression ')' ';'  */
+#line 517 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::ReturnChecker::Element e = { (yyvsp[-2].metadata).expression.type, *StringPool::get((yyvsp[-2].metadata).expression.pid) };
         SemanticAnalyzer::CHK_RETURNS.checkReturnWithBuffered(e);
@@ -2191,11 +2212,11 @@ yyreduce:
             });
 
     }
-#line 2195 "src/syntax-analyzer/components/parser.cpp"
+#line 2216 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 67: /* return: WORD_RETURN '(' expression ')' error  */
-#line 513 "include/syntax-analyzer/components/yacc.y"
+  case 71: /* return: WORD_RETURN '(' expression ')' error  */
+#line 531 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::ReturnChecker::Element e = { (yyvsp[-2].metadata).expression.type, *StringPool::get((yyvsp[-2].metadata).expression.pid) };
         SemanticAnalyzer::CHK_RETURNS.checkReturnWithBuffered(e);
@@ -2212,11 +2233,11 @@ yyreduce:
         yyerrok;
 
     }
-#line 2216 "src/syntax-analyzer/components/parser.cpp"
+#line 2237 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 68: /* return: WORD_RETURN '(' expression error  */
-#line 530 "include/syntax-analyzer/components/yacc.y"
+  case 72: /* return: WORD_RETURN '(' expression error  */
+#line 548 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::ReturnChecker::Element e = { (yyvsp[-1].metadata).expression.type, *StringPool::get((yyvsp[-1].metadata).expression.pid) };
         SemanticAnalyzer::CHK_RETURNS.checkReturnWithBuffered(e);
@@ -2234,11 +2255,11 @@ yyreduce:
         yyerrok;
 
     }
-#line 2238 "src/syntax-analyzer/components/parser.cpp"
+#line 2259 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 69: /* return: WORD_RETURN expression ')'  */
-#line 548 "include/syntax-analyzer/components/yacc.y"
+  case 73: /* return: WORD_RETURN expression ')'  */
+#line 566 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::ReturnChecker::Element e = { (yyvsp[-1].metadata).expression.type, *StringPool::get((yyvsp[-1].metadata).expression.pid) };
         SemanticAnalyzer::CHK_RETURNS.checkReturnWithBuffered(e);
@@ -2255,11 +2276,11 @@ yyreduce:
         SemanticActions::announceSpecificError(MISSING_SEMICOLON);
 
     }
-#line 2259 "src/syntax-analyzer/components/parser.cpp"
+#line 2280 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 70: /* return: WORD_RETURN expression error  */
-#line 565 "include/syntax-analyzer/components/yacc.y"
+  case 74: /* return: WORD_RETURN expression error  */
+#line 583 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::ReturnChecker::Element e = { (yyvsp[-1].metadata).expression.type, *StringPool::get((yyvsp[-1].metadata).expression.pid) };
         SemanticAnalyzer::CHK_RETURNS.checkReturnWithBuffered(e);
@@ -2277,11 +2298,11 @@ yyreduce:
         yyerrok;
 
     }
-#line 2281 "src/syntax-analyzer/components/parser.cpp"
+#line 2302 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 71: /* return: WORD_RETURN '(' expression ';'  */
-#line 583 "include/syntax-analyzer/components/yacc.y"
+  case 75: /* return: WORD_RETURN '(' expression ';'  */
+#line 601 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::ReturnChecker::Element e = { (yyvsp[-1].metadata).expression.type, *StringPool::get((yyvsp[-1].metadata).expression.pid) };
         SemanticAnalyzer::CHK_RETURNS.checkReturnWithBuffered(e);
@@ -2297,11 +2318,11 @@ yyreduce:
         SemanticActions::announceSpecificError(MISSING_CLOSING_PARENTHESIS);
 
     }
-#line 2301 "src/syntax-analyzer/components/parser.cpp"
+#line 2322 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 72: /* return: WORD_RETURN expression ')' ';'  */
-#line 599 "include/syntax-analyzer/components/yacc.y"
+  case 76: /* return: WORD_RETURN expression ')' ';'  */
+#line 617 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::ReturnChecker::Element e = { (yyvsp[-2].metadata).expression.type, *StringPool::get((yyvsp[-2].metadata).expression.pid) };
         SemanticAnalyzer::CHK_RETURNS.checkReturnWithBuffered(e);
@@ -2317,11 +2338,11 @@ yyreduce:
         SemanticActions::announceSpecificError(MISSING_OPENING_PARENTHESIS);
 
     }
-#line 2321 "src/syntax-analyzer/components/parser.cpp"
+#line 2342 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 73: /* return: WORD_RETURN expression ';'  */
-#line 615 "include/syntax-analyzer/components/yacc.y"
+  case 77: /* return: WORD_RETURN expression ';'  */
+#line 633 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::ReturnChecker::Element e = { (yyvsp[-1].metadata).expression.type, *StringPool::get((yyvsp[-1].metadata).expression.pid) };
         SemanticAnalyzer::CHK_RETURNS.checkReturnWithBuffered(e);
@@ -2337,63 +2358,63 @@ yyreduce:
         SemanticActions::announceSpecificError(MISSING_BOTH_PARENTHESIS_RETURN);
 
     }
-#line 2341 "src/syntax-analyzer/components/parser.cpp"
+#line 2362 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 74: /* return: WORD_RETURN error ';'  */
-#line 631 "include/syntax-analyzer/components/yacc.y"
+  case 78: /* return: WORD_RETURN error ';'  */
+#line 649 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticActions::specifySyntaxError(RETURN_SYNTAX_ERROR);
         yyerrok;
 
     }
-#line 2351 "src/syntax-analyzer/components/parser.cpp"
+#line 2372 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 75: /* executable_stmt: assignment  */
-#line 641 "include/syntax-analyzer/components/yacc.y"
+  case 79: /* executable_stmt: assignment  */
+#line 659 "include/syntax-analyzer/components/yacc.y"
                            { (yyval.returnable) = false; }
-#line 2357 "src/syntax-analyzer/components/parser.cpp"
+#line 2378 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 76: /* executable_stmt: multiple_assignments  */
-#line 642 "include/syntax-analyzer/components/yacc.y"
+  case 80: /* executable_stmt: multiple_assignments  */
+#line 660 "include/syntax-analyzer/components/yacc.y"
                            { (yyval.returnable) = false; }
-#line 2363 "src/syntax-analyzer/components/parser.cpp"
+#line 2384 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 77: /* executable_stmt: invocation  */
-#line 643 "include/syntax-analyzer/components/yacc.y"
+  case 81: /* executable_stmt: invocation  */
+#line 661 "include/syntax-analyzer/components/yacc.y"
                            { (yyval.returnable) = false; }
-#line 2369 "src/syntax-analyzer/components/parser.cpp"
+#line 2390 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 78: /* executable_stmt: if  */
-#line 644 "include/syntax-analyzer/components/yacc.y"
+  case 82: /* executable_stmt: if  */
+#line 662 "include/syntax-analyzer/components/yacc.y"
                            { (yyval.returnable) = (yyvsp[0].returnable);    }
-#line 2375 "src/syntax-analyzer/components/parser.cpp"
+#line 2396 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 79: /* executable_stmt: print  */
-#line 645 "include/syntax-analyzer/components/yacc.y"
+  case 83: /* executable_stmt: print  */
+#line 663 "include/syntax-analyzer/components/yacc.y"
                            { (yyval.returnable) = false; }
-#line 2381 "src/syntax-analyzer/components/parser.cpp"
+#line 2402 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 80: /* executable_stmt: return  */
-#line 646 "include/syntax-analyzer/components/yacc.y"
+  case 84: /* executable_stmt: return  */
+#line 664 "include/syntax-analyzer/components/yacc.y"
                            { (yyval.returnable) = true;  }
-#line 2387 "src/syntax-analyzer/components/parser.cpp"
+#line 2408 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 81: /* executable_stmt: do_while  */
-#line 647 "include/syntax-analyzer/components/yacc.y"
+  case 85: /* executable_stmt: do_while  */
+#line 665 "include/syntax-analyzer/components/yacc.y"
                            { (yyval.returnable) = (yyvsp[0].returnable);    }
-#line 2393 "src/syntax-analyzer/components/parser.cpp"
+#line 2414 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 82: /* assignment: assignment_head assignment_tail  */
-#line 654 "include/syntax-analyzer/components/yacc.y"
+  case 86: /* assignment: assignment_head assignment_tail  */
+#line 672 "include/syntax-analyzer/components/yacc.y"
     {
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
         { 
@@ -2416,21 +2437,21 @@ yyreduce:
             });
         }
     }
-#line 2420 "src/syntax-analyzer/components/parser.cpp"
+#line 2441 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 83: /* assignment: variable OP_ASSIGN error ';'  */
-#line 677 "include/syntax-analyzer/components/yacc.y"
+  case 87: /* assignment: variable OP_ASSIGN error ';'  */
+#line 695 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
         yyerrok;
 
     }
-#line 2430 "src/syntax-analyzer/components/parser.cpp"
+#line 2451 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 84: /* assignment_head: variable OP_ASSIGN  */
-#line 686 "include/syntax-analyzer/components/yacc.y"
+  case 88: /* assignment_head: variable OP_ASSIGN  */
+#line 704 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata).reference.sref = SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
         if ((yyval.metadata).reference.sref != nullptr)
@@ -2444,22 +2465,22 @@ yyreduce:
             (yyval.metadata).expression = { UNKNOWN, (yyvsp[-1].pid), false };
         }
     }
-#line 2448 "src/syntax-analyzer/components/parser.cpp"
+#line 2469 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 85: /* assignment_tail: expression ';'  */
-#line 703 "include/syntax-analyzer/components/yacc.y"
+  case 89: /* assignment_tail: expression ';'  */
+#line 721 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[-1].metadata);
 
         SemanticActions::logStructure("ASSIGNMENT");
 
     }
-#line 2459 "src/syntax-analyzer/components/parser.cpp"
+#line 2480 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 86: /* assignment_tail: expression error  */
-#line 710 "include/syntax-analyzer/components/yacc.y"
+  case 90: /* assignment_tail: expression error  */
+#line 728 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[-1].metadata);
 
@@ -2467,11 +2488,11 @@ yyreduce:
         yyerrok;
 
     }
-#line 2471 "src/syntax-analyzer/components/parser.cpp"
+#line 2492 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 87: /* print: WORD_PRINT '(' LITERAL_STRING ')' ';'  */
-#line 723 "include/syntax-analyzer/components/yacc.y"
+  case 91: /* print: WORD_PRINT '(' LITERAL_STRING ')' ';'  */
+#line 741 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticActions::logStructure("PRINT");
 
@@ -2484,11 +2505,11 @@ yyreduce:
             });
 
     }
-#line 2488 "src/syntax-analyzer/components/parser.cpp"
+#line 2509 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 88: /* print: WORD_PRINT '(' LITERAL_STRING ')' error  */
-#line 736 "include/syntax-analyzer/components/yacc.y"
+  case 92: /* print: WORD_PRINT '(' LITERAL_STRING ')' error  */
+#line 754 "include/syntax-analyzer/components/yacc.y"
     {
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
             CodeGenerator::INTERMEDIATE_CODE->addTriple ({
@@ -2501,11 +2522,11 @@ yyreduce:
         SemanticActions::specifySyntaxError(MISSING_SEMICOLON);
         yyerrok;
     }
-#line 2505 "src/syntax-analyzer/components/parser.cpp"
+#line 2526 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 89: /* print: WORD_PRINT '(' expression ')' ';'  */
-#line 749 "include/syntax-analyzer/components/yacc.y"
+  case 93: /* print: WORD_PRINT '(' expression ')' ';'  */
+#line 767 "include/syntax-analyzer/components/yacc.y"
     {
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
             CodeGenerator::INTERMEDIATE_CODE->addTriple ({
@@ -2518,11 +2539,11 @@ yyreduce:
         SemanticActions::logStructure("PRINT");
 
     }
-#line 2522 "src/syntax-analyzer/components/parser.cpp"
+#line 2543 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 90: /* print: WORD_PRINT '(' expression ')' error  */
-#line 762 "include/syntax-analyzer/components/yacc.y"
+  case 94: /* print: WORD_PRINT '(' expression ')' error  */
+#line 780 "include/syntax-analyzer/components/yacc.y"
     {
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
             CodeGenerator::INTERMEDIATE_CODE->addTriple ({
@@ -2536,48 +2557,48 @@ yyreduce:
         yyerrok;
 
     }
-#line 2540 "src/syntax-analyzer/components/parser.cpp"
+#line 2561 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 91: /* $@9: %empty  */
-#line 776 "include/syntax-analyzer/components/yacc.y"
+  case 95: /* $@11: %empty  */
+#line 794 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticActions::specifySyntaxError(MISSING_ARGUMENT);
         yyerrok;
 
     }
-#line 2550 "src/syntax-analyzer/components/parser.cpp"
+#line 2571 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 93: /* print: WORD_PRINT error ';'  */
-#line 783 "include/syntax-analyzer/components/yacc.y"
+  case 97: /* print: WORD_PRINT error ';'  */
+#line 801 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticActions::specifySyntaxError(PRINT_SYNTAX_ERROR);
         yyerrok;
     }
-#line 2559 "src/syntax-analyzer/components/parser.cpp"
+#line 2580 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 95: /* print_end: %empty  */
-#line 792 "include/syntax-analyzer/components/yacc.y"
+  case 99: /* print_end: %empty  */
+#line 810 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticActions::announceSpecificError(MISSING_SEMICOLON);
     }
-#line 2567 "src/syntax-analyzer/components/parser.cpp"
+#line 2588 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 96: /* multiple_assignments: variable assignment_list opt_trunc_constant ';'  */
-#line 801 "include/syntax-analyzer/components/yacc.y"
+  case 100: /* multiple_assignments: variable assignment_list opt_trunc_constant ';'  */
+#line 819 "include/syntax-analyzer/components/yacc.y"
     {
         createMultipleAssignmentTriple((yyvsp[-1].metadata));
         SemanticActions::logStructure("MULTIPLE ASSIGNMENT");
 
     }
-#line 2577 "src/syntax-analyzer/components/parser.cpp"
+#line 2598 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 97: /* multiple_assignments: variable assignment_list opt_trunc_constant error  */
-#line 807 "include/syntax-analyzer/components/yacc.y"
+  case 101: /* multiple_assignments: variable assignment_list opt_trunc_constant error  */
+#line 825 "include/syntax-analyzer/components/yacc.y"
     {
         createMultipleAssignmentTriple((yyvsp[-1].metadata));
 
@@ -2585,11 +2606,11 @@ yyreduce:
         yyerrok;
 
     }
-#line 2589 "src/syntax-analyzer/components/parser.cpp"
+#line 2610 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 98: /* multiple_assignments: variable assignment_list opt_trunc_constant extra_numeric_constants ';'  */
-#line 815 "include/syntax-analyzer/components/yacc.y"
+  case 102: /* multiple_assignments: variable assignment_list opt_trunc_constant extra_numeric_constants ';'  */
+#line 833 "include/syntax-analyzer/components/yacc.y"
     {
         createMultipleAssignmentTriple((yyvsp[-2].metadata));
 
@@ -2597,11 +2618,11 @@ yyreduce:
         SemanticActions::logStructure("MULTIPLE ASSIGNMENT");
 
     }
-#line 2601 "src/syntax-analyzer/components/parser.cpp"
+#line 2622 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 99: /* multiple_assignments: variable assignment_list opt_trunc_constant extra_numeric_constants error  */
-#line 823 "include/syntax-analyzer/components/yacc.y"
+  case 103: /* multiple_assignments: variable assignment_list opt_trunc_constant extra_numeric_constants error  */
+#line 841 "include/syntax-analyzer/components/yacc.y"
     {
         createMultipleAssignmentTriple((yyvsp[-2].metadata));
 
@@ -2610,22 +2631,22 @@ yyreduce:
         yyerrok;
 
     }
-#line 2614 "src/syntax-analyzer/components/parser.cpp"
+#line 2635 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 100: /* multiple_assignments: variable assignment_list ';'  */
-#line 832 "include/syntax-analyzer/components/yacc.y"
+  case 104: /* multiple_assignments: variable assignment_list ';'  */
+#line 850 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
 
         SemanticActions::announceSpecificError(MISSING_RIGHT_SIDE_VALUES);
 
     }
-#line 2625 "src/syntax-analyzer/components/parser.cpp"
+#line 2646 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 101: /* multiple_assignments: variable assignment_list error  */
-#line 839 "include/syntax-analyzer/components/yacc.y"
+  case 105: /* multiple_assignments: variable assignment_list error  */
+#line 857 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
 
@@ -2634,11 +2655,11 @@ yyreduce:
         yyerrok;
 
     }
-#line 2638 "src/syntax-analyzer/components/parser.cpp"
+#line 2659 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 102: /* multiple_assignments: variable error ';'  */
-#line 848 "include/syntax-analyzer/components/yacc.y"
+  case 106: /* multiple_assignments: variable error ';'  */
+#line 866 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
 
@@ -2646,58 +2667,58 @@ yyreduce:
         yyerrok;
 
     }
-#line 2650 "src/syntax-analyzer/components/parser.cpp"
+#line 2671 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 104: /* assignment_list: ',' variable assignment_list opt_trunc_constant ','  */
-#line 860 "include/syntax-analyzer/components/yacc.y"
+  case 108: /* assignment_list: ',' variable assignment_list opt_trunc_constant ','  */
+#line 878 "include/syntax-analyzer/components/yacc.y"
     {
         createMultipleAssignmentTriple((yyvsp[-1].metadata));
     }
-#line 2658 "src/syntax-analyzer/components/parser.cpp"
+#line 2679 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 105: /* assignment_list: ',' variable error opt_trunc_constant ','  */
-#line 864 "include/syntax-analyzer/components/yacc.y"
+  case 109: /* assignment_list: ',' variable error opt_trunc_constant ','  */
+#line 882 "include/syntax-analyzer/components/yacc.y"
     {
         createMultipleAssignmentTriple((yyvsp[-1].metadata));
 
         SemanticActions::specifySyntaxError(MISSING_EQUALS);
 
     }
-#line 2669 "src/syntax-analyzer/components/parser.cpp"
+#line 2690 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 107: /* assignment_list: ',' variable assignment_list opt_trunc_constant  */
-#line 872 "include/syntax-analyzer/components/yacc.y"
+  case 111: /* assignment_list: ',' variable assignment_list opt_trunc_constant  */
+#line 890 "include/syntax-analyzer/components/yacc.y"
     {
         createMultipleAssignmentTriple((yyvsp[0].metadata));
         SemanticActions::announceSpecificError(MISSING_COMMA);
 
     }
-#line 2679 "src/syntax-analyzer/components/parser.cpp"
+#line 2700 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 108: /* assignment_list: ',' variable assignment_list error  */
-#line 878 "include/syntax-analyzer/components/yacc.y"
+  case 112: /* assignment_list: ',' variable assignment_list error  */
+#line 896 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
         yyerrok;
 
     }
-#line 2689 "src/syntax-analyzer/components/parser.cpp"
+#line 2710 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 109: /* assignment_end: opt_trunc_constant ','  */
-#line 887 "include/syntax-analyzer/components/yacc.y"
+  case 113: /* assignment_end: opt_trunc_constant ','  */
+#line 905 "include/syntax-analyzer/components/yacc.y"
     {
         createMultipleAssignmentTriple((yyvsp[-1].metadata));
     }
-#line 2697 "src/syntax-analyzer/components/parser.cpp"
+#line 2718 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 110: /* assignment_end: opt_trunc_constant error  */
-#line 891 "include/syntax-analyzer/components/yacc.y"
+  case 114: /* assignment_end: opt_trunc_constant error  */
+#line 909 "include/syntax-analyzer/components/yacc.y"
     {
         createMultipleAssignmentTriple((yyvsp[-1].metadata));
 
@@ -2705,53 +2726,53 @@ yyreduce:
         yyerrok;
 
     }
-#line 2709 "src/syntax-analyzer/components/parser.cpp"
+#line 2730 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 111: /* $@10: %empty  */
-#line 902 "include/syntax-analyzer/components/yacc.y"
+  case 115: /* $@12: %empty  */
+#line 920 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticActions::announceSpecificErrorWithSymbol(MISSING_COMMA);
     }
-#line 2717 "src/syntax-analyzer/components/parser.cpp"
+#line 2738 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 114: /* $@11: %empty  */
-#line 911 "include/syntax-analyzer/components/yacc.y"
+  case 118: /* $@13: %empty  */
+#line 929 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticActions::announceSpecificError(MISSING_COMMA);
     }
-#line 2725 "src/syntax-analyzer/components/parser.cpp"
+#line 2746 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 117: /* $@12: %empty  */
-#line 917 "include/syntax-analyzer/components/yacc.y"
+  case 121: /* $@14: %empty  */
+#line 935 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticActions::announceSpecificError(MISSING_COMMA);
     }
-#line 2733 "src/syntax-analyzer/components/parser.cpp"
+#line 2754 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 120: /* invocation: function_invocation_head error  */
-#line 928 "include/syntax-analyzer/components/yacc.y"
+  case 124: /* invocation: function_invocation_head error  */
+#line 946 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticActions::specifySyntaxError(MISSING_SEMICOLON);
         yyerrok;
     }
-#line 2742 "src/syntax-analyzer/components/parser.cpp"
+#line 2763 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 122: /* invocation: lambda_invocation_head error  */
-#line 934 "include/syntax-analyzer/components/yacc.y"
+  case 126: /* invocation: lambda_invocation_head error  */
+#line 952 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticActions::specifySyntaxError(MISSING_SEMICOLON);
         yyerrok;
     }
-#line 2751 "src/syntax-analyzer/components/parser.cpp"
+#line 2772 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 123: /* function_invocation_head: invocation_setup function_invocation_tail  */
-#line 944 "include/syntax-analyzer/components/yacc.y"
+  case 127: /* function_invocation_head: invocation_setup function_invocation_tail  */
+#line 962 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata).expression = (yyvsp[-1].metadata).expression;
         StringPool::append((yyval.metadata).expression.pid, *StringPool::get((yyvsp[0].metadata).expression.pid));
@@ -2772,11 +2793,11 @@ yyreduce:
 
         SemanticActions::logStructure("FUNCTION INVOCATION");
     }
-#line 2776 "src/syntax-analyzer/components/parser.cpp"
+#line 2797 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 124: /* function_invocation_head: IDENTIFIER '(' error ')'  */
-#line 965 "include/syntax-analyzer/components/yacc.y"
+  case 128: /* function_invocation_head: IDENTIFIER '(' error ')'  */
+#line 983 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata).expression.pid = StringPool::create((yyvsp[-3].sref)->symbol + "(...)");
         (yyval.metadata).reference.sref = SemanticAnalyzer::CHK_INVOCATIONS.checkFunctionInScope((yyvsp[-3].sref)->symbol);
@@ -2794,11 +2815,11 @@ yyreduce:
         SemanticActions::specifySyntaxError(MISSING_ARGUMENT);
         yyerrok;
     }
-#line 2798 "src/syntax-analyzer/components/parser.cpp"
+#line 2819 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 125: /* invocation_setup: IDENTIFIER '('  */
-#line 986 "include/syntax-analyzer/components/yacc.y"
+  case 129: /* invocation_setup: IDENTIFIER '('  */
+#line 1004 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata).expression.pid = StringPool::create((yyvsp[-1].sref)->symbol + "(");
         (yyval.metadata).reference.sref = SemanticAnalyzer::CHK_INVOCATIONS.checkFunctionInScope((yyvsp[-1].sref)->symbol);
@@ -2813,11 +2834,11 @@ yyreduce:
             (yyval.metadata).expression.type = UNKNOWN;
         }
     }
-#line 2817 "src/syntax-analyzer/components/parser.cpp"
+#line 2838 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 126: /* function_invocation_tail: real_parameter_list ')'  */
-#line 1004 "include/syntax-analyzer/components/yacc.y"
+  case 130: /* function_invocation_tail: real_parameter_list ')'  */
+#line 1022 "include/syntax-analyzer/components/yacc.y"
     {
         StringPool::append((yyvsp[-1].metadata).expression.pid, ")");
         (yyval.metadata).expression.type = UNKNOWN;
@@ -2825,60 +2846,60 @@ yyreduce:
 
         SemanticAnalyzer::CHK_INVOCATIONS.notifyInvocationEnd();
     }
-#line 2829 "src/syntax-analyzer/components/parser.cpp"
+#line 2850 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 127: /* function_invocation_tail: ')'  */
-#line 1012 "include/syntax-analyzer/components/yacc.y"
+  case 131: /* function_invocation_tail: ')'  */
+#line 1030 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata).expression = { UNKNOWN, StringPool::create(")") };
 
         SemanticAnalyzer::CHK_INVOCATIONS.notifyInvocationEnd();
         SemanticActions::announceSpecificError(MISSING_ARGUMENT);
     }
-#line 2840 "src/syntax-analyzer/components/parser.cpp"
+#line 2861 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 128: /* real_parameter_list: real_parameter  */
-#line 1022 "include/syntax-analyzer/components/yacc.y"
+  case 132: /* real_parameter_list: real_parameter  */
+#line 1040 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[0].metadata);
     }
-#line 2848 "src/syntax-analyzer/components/parser.cpp"
+#line 2869 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 129: /* real_parameter_list: real_parameter_list ',' real_parameter  */
-#line 1026 "include/syntax-analyzer/components/yacc.y"
+  case 133: /* real_parameter_list: real_parameter_list ',' real_parameter  */
+#line 1044 "include/syntax-analyzer/components/yacc.y"
     {
         StringPool::append((yyvsp[-2].metadata).expression.pid, ", " + *StringPool::get((yyvsp[0].metadata).expression.pid));
         (yyval.metadata).expression.type = UNKNOWN;
         (yyval.metadata).expression.pid = (yyvsp[-2].metadata).expression.pid;
     }
-#line 2858 "src/syntax-analyzer/components/parser.cpp"
+#line 2879 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 130: /* real_parameter_list: real_parameter_list_setup real_parameter  */
-#line 1032 "include/syntax-analyzer/components/yacc.y"
+  case 134: /* real_parameter_list: real_parameter_list_setup real_parameter  */
+#line 1050 "include/syntax-analyzer/components/yacc.y"
     {
         StringPool::append((yyvsp[-1].metadata).expression.pid, " " + *StringPool::get((yyvsp[0].metadata).expression.pid));
         (yyval.metadata).expression.type = UNKNOWN;
         (yyval.metadata).expression.pid = (yyvsp[-1].metadata).expression.pid;
 
     }
-#line 2869 "src/syntax-analyzer/components/parser.cpp"
+#line 2890 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 131: /* real_parameter_list_setup: real_parameter_list  */
-#line 1042 "include/syntax-analyzer/components/yacc.y"
+  case 135: /* real_parameter_list_setup: real_parameter_list  */
+#line 1060 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[0].metadata);
         SemanticActions::announceSpecificError(MISSING_COMMA);
     }
-#line 2878 "src/syntax-analyzer/components/parser.cpp"
+#line 2899 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 132: /* real_parameter: expression OP_POINTER IDENTIFIER  */
-#line 1050 "include/syntax-analyzer/components/yacc.y"
+  case 136: /* real_parameter: expression OP_POINTER IDENTIFIER  */
+#line 1068 "include/syntax-analyzer/components/yacc.y"
     {
         auto entry = SemanticAnalyzer::CHK_INVOCATIONS.checkParameterInScope((yyvsp[0].sref)->symbol);
         if (entry != nullptr)
@@ -2916,22 +2937,22 @@ yyreduce:
         StringPool::append((yyvsp[-2].metadata).expression.pid, "->" + (yyvsp[0].sref)->symbol);
         (yyval.metadata).expression = { UNKNOWN, (yyvsp[-2].metadata).expression.pid, false };
     }
-#line 2920 "src/syntax-analyzer/components/parser.cpp"
+#line 2941 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 133: /* real_parameter: expression error  */
-#line 1088 "include/syntax-analyzer/components/yacc.y"
+  case 137: /* real_parameter: expression error  */
+#line 1106 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[-1].metadata);
 
         SemanticActions::specifySyntaxError(MISSING_POINTED_PARAMETER);
         yyerrok;
     }
-#line 2931 "src/syntax-analyzer/components/parser.cpp"
+#line 2952 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 134: /* $@13: %empty  */
-#line 1100 "include/syntax-analyzer/components/yacc.y"
+  case 138: /* $@15: %empty  */
+#line 1118 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::CHK_LAMBDAS.notifyDeclaration((yyvsp[-1].sref)->symbol);
         CodeGenerator::addIntermediateCodeBlock (
@@ -2939,51 +2960,51 @@ yyreduce:
         );
 
     }
-#line 2943 "src/syntax-analyzer/components/parser.cpp"
+#line 2964 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 136: /* $@14: %empty  */
-#line 1112 "include/syntax-analyzer/components/yacc.y"
+  case 140: /* $@16: %empty  */
+#line 1130 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::removeScope();
 
     }
-#line 2952 "src/syntax-analyzer/components/parser.cpp"
+#line 2973 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 138: /* $@15: %empty  */
-#line 1118 "include/syntax-analyzer/components/yacc.y"
+  case 142: /* $@17: %empty  */
+#line 1136 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::removeScope();
         SemanticActions::announceSpecificError(MISSING_OPENING_BRACKET);
 
     }
-#line 2962 "src/syntax-analyzer/components/parser.cpp"
+#line 2983 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 141: /* $@16: %empty  */
-#line 1126 "include/syntax-analyzer/components/yacc.y"
+  case 145: /* $@18: %empty  */
+#line 1144 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::removeScope();
 
         SemanticActions::announceSpecificError(MISSING_BOTH_BRACKETS);
 
     }
-#line 2973 "src/syntax-analyzer/components/parser.cpp"
+#line 2994 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 143: /* lambda_missing_closing_bracket: '{' executable_statements '('  */
-#line 1137 "include/syntax-analyzer/components/yacc.y"
+  case 147: /* lambda_missing_closing_bracket: '{' executable_statements '('  */
+#line 1155 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::removeScope();
         SemanticActions::announceSpecificError(MISSING_CLOSING_BRACKET);
 
     }
-#line 2983 "src/syntax-analyzer/components/parser.cpp"
+#line 3004 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 144: /* lambda_invocation_tail: lambda_real_parameter ')'  */
-#line 1146 "include/syntax-analyzer/components/yacc.y"
+  case 148: /* lambda_invocation_tail: lambda_real_parameter ')'  */
+#line 1164 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticActions::logStructure("LAMBDA");
 
@@ -3035,42 +3056,42 @@ yyreduce:
         SemanticActions::logStructure("LAMBDA");
 
     }
-#line 3039 "src/syntax-analyzer/components/parser.cpp"
+#line 3060 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 145: /* lambda_real_parameter: opt_trunc_variable  */
-#line 1200 "include/syntax-analyzer/components/yacc.y"
+  case 149: /* lambda_real_parameter: opt_trunc_variable  */
+#line 1218 "include/syntax-analyzer/components/yacc.y"
                          { (yyval.metadata) = (yyvsp[0].metadata); }
-#line 3045 "src/syntax-analyzer/components/parser.cpp"
+#line 3066 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 146: /* lambda_real_parameter: opt_trunc_constant  */
-#line 1201 "include/syntax-analyzer/components/yacc.y"
+  case 150: /* lambda_real_parameter: opt_trunc_constant  */
+#line 1219 "include/syntax-analyzer/components/yacc.y"
                          { (yyval.metadata) = (yyvsp[0].metadata); }
-#line 3051 "src/syntax-analyzer/components/parser.cpp"
+#line 3072 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 147: /* if: if_word if_head ';'  */
-#line 1208 "include/syntax-analyzer/components/yacc.y"
+  case 151: /* if: if_word if_head ';'  */
+#line 1226 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = (yyvsp[-1].returnable);
     }
-#line 3059 "src/syntax-analyzer/components/parser.cpp"
+#line 3080 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 148: /* if: if_word if_head error  */
-#line 1212 "include/syntax-analyzer/components/yacc.y"
+  case 152: /* if: if_word if_head error  */
+#line 1230 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = (yyvsp[-1].returnable);
 
         SemanticActions::specifySyntaxError(MISSING_SEMICOLON);
         yyerrok;
     }
-#line 3070 "src/syntax-analyzer/components/parser.cpp"
+#line 3091 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 149: /* if: if_word error ';'  */
-#line 1219 "include/syntax-analyzer/components/yacc.y"
+  case 153: /* if: if_word error ';'  */
+#line 1237 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = false;
 
@@ -3078,11 +3099,11 @@ yyreduce:
         yyerrok;
 
     }
-#line 3082 "src/syntax-analyzer/components/parser.cpp"
+#line 3103 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 150: /* if_word: WORD_IF  */
-#line 1230 "include/syntax-analyzer/components/yacc.y"
+  case 154: /* if_word: WORD_IF  */
+#line 1248 "include/syntax-analyzer/components/yacc.y"
     {
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
         {
@@ -3094,11 +3115,11 @@ yyreduce:
             });
         }
     }
-#line 3098 "src/syntax-analyzer/components/parser.cpp"
+#line 3119 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 151: /* if_head: condition_body_setup WORD_ENDIF  */
-#line 1245 "include/syntax-analyzer/components/yacc.y"
+  case 155: /* if_head: condition_body_setup WORD_ENDIF  */
+#line 1263 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = (yyvsp[-1].returnable);
 
@@ -3118,11 +3139,11 @@ yyreduce:
         SemanticActions::logStructure("IF");
 
     }
-#line 3122 "src/syntax-analyzer/components/parser.cpp"
+#line 3143 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 152: /* if_head: condition_body_setup WORD_ELSE executable_body WORD_ENDIF  */
-#line 1265 "include/syntax-analyzer/components/yacc.y"
+  case 156: /* if_head: condition_body_setup WORD_ELSE executable_body WORD_ENDIF  */
+#line 1283 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = (yyvsp[-3].returnable) && (yyvsp[-1].returnable);
 
@@ -3142,11 +3163,11 @@ yyreduce:
         SemanticActions::logStructure("IF-ELSE");
 
     }
-#line 3146 "src/syntax-analyzer/components/parser.cpp"
+#line 3167 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 153: /* if_head: condition_body_setup error  */
-#line 1285 "include/syntax-analyzer/components/yacc.y"
+  case 157: /* if_head: condition_body_setup error  */
+#line 1303 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = (yyvsp[-1].returnable);
 
@@ -3167,11 +3188,11 @@ yyreduce:
         yyerrok;
 
     }
-#line 3171 "src/syntax-analyzer/components/parser.cpp"
+#line 3192 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 154: /* if_head: condition_body_setup WORD_ELSE executable_body error  */
-#line 1306 "include/syntax-analyzer/components/yacc.y"
+  case 158: /* if_head: condition_body_setup WORD_ELSE executable_body error  */
+#line 1324 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = (yyvsp[-3].returnable) && (yyvsp[-1].returnable);
 
@@ -3192,11 +3213,11 @@ yyreduce:
         yyerrok;
 
     }
-#line 3196 "src/syntax-analyzer/components/parser.cpp"
+#line 3217 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 155: /* if_head: condition error WORD_ENDIF  */
-#line 1327 "include/syntax-analyzer/components/yacc.y"
+  case 159: /* if_head: condition error WORD_ENDIF  */
+#line 1345 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = false;
 
@@ -3204,11 +3225,11 @@ yyreduce:
         yyerrok;
 
     }
-#line 3208 "src/syntax-analyzer/components/parser.cpp"
+#line 3229 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 156: /* if_head: condition error  */
-#line 1335 "include/syntax-analyzer/components/yacc.y"
+  case 160: /* if_head: condition error  */
+#line 1353 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = false;
 
@@ -3217,11 +3238,11 @@ yyreduce:
         yyerrok;
 
     }
-#line 3221 "src/syntax-analyzer/components/parser.cpp"
+#line 3242 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 157: /* if_head: condition error WORD_ELSE WORD_ENDIF  */
-#line 1344 "include/syntax-analyzer/components/yacc.y"
+  case 161: /* if_head: condition error WORD_ELSE WORD_ENDIF  */
+#line 1362 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = false;
 
@@ -3229,11 +3250,11 @@ yyreduce:
         yyerrok;
 
     }
-#line 3233 "src/syntax-analyzer/components/parser.cpp"
+#line 3254 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 158: /* if_head: condition_body_setup WORD_ELSE error  */
-#line 1352 "include/syntax-analyzer/components/yacc.y"
+  case 162: /* if_head: condition_body_setup WORD_ELSE error  */
+#line 1370 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = false;
 
@@ -3255,11 +3276,11 @@ yyreduce:
         yyerrok;
 
     }
-#line 3259 "src/syntax-analyzer/components/parser.cpp"
+#line 3280 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 159: /* if_head: condition WORD_ELSE  */
-#line 1374 "include/syntax-analyzer/components/yacc.y"
+  case 163: /* if_head: condition WORD_ELSE  */
+#line 1392 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = false;
 
@@ -3267,22 +3288,22 @@ yyreduce:
         SemanticActions::announceSpecificError(MISSING_ENDIF);
 
     }
-#line 3271 "src/syntax-analyzer/components/parser.cpp"
+#line 3292 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 160: /* if_head: condition WORD_ELSE executable_body WORD_ENDIF  */
-#line 1382 "include/syntax-analyzer/components/yacc.y"
+  case 164: /* if_head: condition WORD_ELSE executable_body WORD_ENDIF  */
+#line 1400 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = false;
 
         SemanticActions::announceSpecificError(MISSING_IF_EXECUTABLE_BODY);
 
     }
-#line 3282 "src/syntax-analyzer/components/parser.cpp"
+#line 3303 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 161: /* if_head: condition_body_setup WORD_ELSE error WORD_ENDIF  */
-#line 1389 "include/syntax-analyzer/components/yacc.y"
+  case 165: /* if_head: condition_body_setup WORD_ELSE error WORD_ENDIF  */
+#line 1407 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = false;
 
@@ -3303,22 +3324,22 @@ yyreduce:
         yyerrok;
 
     }
-#line 3307 "src/syntax-analyzer/components/parser.cpp"
+#line 3328 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 162: /* if_head: WORD_ELSE executable_body WORD_ENDIF  */
-#line 1410 "include/syntax-analyzer/components/yacc.y"
+  case 166: /* if_head: WORD_ELSE executable_body WORD_ENDIF  */
+#line 1428 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = (yyvsp[-1].returnable);
 
         SemanticActions::announceSpecificError(MISSING_IF_STATEMENT);
 
     }
-#line 3318 "src/syntax-analyzer/components/parser.cpp"
+#line 3339 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 163: /* if_head: condition_body_setup WORD_ELSE executable_body INVALID_RWORD  */
-#line 1417 "include/syntax-analyzer/components/yacc.y"
+  case 167: /* if_head: condition_body_setup WORD_ELSE executable_body INVALID_RWORD  */
+#line 1435 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = (yyvsp[-3].returnable) && (yyvsp[-1].returnable);
 
@@ -3335,11 +3356,11 @@ yyreduce:
             STACK.pop();
         }
     }
-#line 3339 "src/syntax-analyzer/components/parser.cpp"
+#line 3360 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 164: /* if_head: condition_body_setup INVALID_RWORD executable_body WORD_ENDIF  */
-#line 1434 "include/syntax-analyzer/components/yacc.y"
+  case 168: /* if_head: condition_body_setup INVALID_RWORD executable_body WORD_ENDIF  */
+#line 1452 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = (yyvsp[-3].returnable) && (yyvsp[-1].returnable);
 
@@ -3356,11 +3377,11 @@ yyreduce:
             STACK.pop();
         }
     }
-#line 3360 "src/syntax-analyzer/components/parser.cpp"
+#line 3381 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 165: /* if_head: condition_body_setup INVALID_RWORD executable_body INVALID_RWORD  */
-#line 1451 "include/syntax-analyzer/components/yacc.y"
+  case 169: /* if_head: condition_body_setup INVALID_RWORD executable_body INVALID_RWORD  */
+#line 1469 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = (yyvsp[-3].returnable) && (yyvsp[-1].returnable);
 
@@ -3377,19 +3398,19 @@ yyreduce:
             STACK.pop();
         }
     }
-#line 3381 "src/syntax-analyzer/components/parser.cpp"
+#line 3402 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 166: /* condition_body_setup: condition_setup then_body_setup  */
-#line 1471 "include/syntax-analyzer/components/yacc.y"
+  case 170: /* condition_body_setup: condition_setup then_body_setup  */
+#line 1489 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = (yyvsp[0].returnable);
     }
-#line 3389 "src/syntax-analyzer/components/parser.cpp"
+#line 3410 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 167: /* condition_setup: condition  */
-#line 1478 "include/syntax-analyzer/components/yacc.y"
+  case 171: /* condition_setup: condition  */
+#line 1496 "include/syntax-analyzer/components/yacc.y"
     {
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
         {
@@ -3401,11 +3422,11 @@ yyreduce:
             }));
         }
     }
-#line 3405 "src/syntax-analyzer/components/parser.cpp"
+#line 3426 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 168: /* then_body_setup: executable_body  */
-#line 1493 "include/syntax-analyzer/components/yacc.y"
+  case 172: /* then_body_setup: executable_body  */
+#line 1511 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = (yyvsp[0].returnable);
 
@@ -3422,36 +3443,36 @@ yyreduce:
             STACK.push(triple);
         }
     }
-#line 3426 "src/syntax-analyzer/components/parser.cpp"
+#line 3447 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 169: /* do_while: do_while_head do_body  */
-#line 1515 "include/syntax-analyzer/components/yacc.y"
+  case 173: /* do_while: do_while_head do_body  */
+#line 1533 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = (yyvsp[0].returnable);
     }
-#line 3434 "src/syntax-analyzer/components/parser.cpp"
+#line 3455 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 170: /* $@17: %empty  */
-#line 1519 "include/syntax-analyzer/components/yacc.y"
+  case 174: /* $@19: %empty  */
+#line 1537 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticActions::announceSpecificError(MISSING_WHILE_EXECUTABLE_BODY);
 
     }
-#line 3443 "src/syntax-analyzer/components/parser.cpp"
+#line 3464 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 171: /* do_while: WORD_DO $@17 WORD_WHILE do_while_tail  */
-#line 1524 "include/syntax-analyzer/components/yacc.y"
+  case 175: /* do_while: WORD_DO $@19 WORD_WHILE do_while_tail  */
+#line 1542 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = false;
     }
-#line 3451 "src/syntax-analyzer/components/parser.cpp"
+#line 3472 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 172: /* do_while: WORD_DO error ';'  */
-#line 1528 "include/syntax-analyzer/components/yacc.y"
+  case 176: /* do_while: WORD_DO error ';'  */
+#line 1546 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = false;
 
@@ -3459,11 +3480,11 @@ yyreduce:
         yyerrok;
 
     }
-#line 3463 "src/syntax-analyzer/components/parser.cpp"
+#line 3484 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 173: /* do_while_head: WORD_DO  */
-#line 1539 "include/syntax-analyzer/components/yacc.y"
+  case 177: /* do_while_head: WORD_DO  */
+#line 1557 "include/syntax-analyzer/components/yacc.y"
     {
         if (CodeGenerator::INTERMEDIATE_CODE != nullptr)
             STACK.push(CodeGenerator::INTERMEDIATE_CODE->addTriple ({
@@ -3473,11 +3494,11 @@ yyreduce:
                 CodeGenerator::Triples::Operand({NULLREF, nullptr})
             }));
     }
-#line 3477 "src/syntax-analyzer/components/parser.cpp"
+#line 3498 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 174: /* do_body: executable_body WORD_WHILE condition ';'  */
-#line 1552 "include/syntax-analyzer/components/yacc.y"
+  case 178: /* do_body: executable_body WORD_WHILE condition ';'  */
+#line 1570 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = (yyvsp[-3].returnable);
 
@@ -3493,11 +3514,11 @@ yyreduce:
         SemanticActions::logStructure("DO-WHILE");
 
     }
-#line 3497 "src/syntax-analyzer/components/parser.cpp"
+#line 3518 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 175: /* do_body: executable_body WORD_WHILE condition error  */
-#line 1568 "include/syntax-analyzer/components/yacc.y"
+  case 179: /* do_body: executable_body WORD_WHILE condition error  */
+#line 1586 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = (yyvsp[-3].returnable);
 
@@ -3505,46 +3526,46 @@ yyreduce:
         yyerrok;
 
     }
-#line 3509 "src/syntax-analyzer/components/parser.cpp"
+#line 3530 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 176: /* $@18: %empty  */
-#line 1576 "include/syntax-analyzer/components/yacc.y"
+  case 180: /* $@20: %empty  */
+#line 1594 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticActions::announceSpecificError(MISSING_WHILE);
 
     }
-#line 3518 "src/syntax-analyzer/components/parser.cpp"
+#line 3539 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 177: /* do_body: executable_body $@18 do_while_tail  */
-#line 1581 "include/syntax-analyzer/components/yacc.y"
+  case 181: /* do_body: executable_body $@20 do_while_tail  */
+#line 1599 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = (yyvsp[-2].returnable);
     }
-#line 3526 "src/syntax-analyzer/components/parser.cpp"
+#line 3547 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 179: /* do_while_tail: condition error  */
-#line 1589 "include/syntax-analyzer/components/yacc.y"
+  case 183: /* do_while_tail: condition error  */
+#line 1607 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticActions::specifySyntaxError(MISSING_SEMICOLON);
         yyerrok;
 
     }
-#line 3536 "src/syntax-analyzer/components/parser.cpp"
+#line 3557 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 180: /* executable_body: '{' executable_statements '}'  */
-#line 1600 "include/syntax-analyzer/components/yacc.y"
+  case 184: /* executable_body: '{' executable_statements '}'  */
+#line 1618 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = (yyvsp[-1].returnable);
     }
-#line 3544 "src/syntax-analyzer/components/parser.cpp"
+#line 3565 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 181: /* executable_body: '{' executable_statements error  */
-#line 1604 "include/syntax-analyzer/components/yacc.y"
+  case 185: /* executable_body: '{' executable_statements error  */
+#line 1622 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = (yyvsp[-1].returnable);
 
@@ -3552,76 +3573,76 @@ yyreduce:
         yyerrok;
 
     }
-#line 3556 "src/syntax-analyzer/components/parser.cpp"
+#line 3577 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 182: /* executable_body: '{' error '}'  */
-#line 1612 "include/syntax-analyzer/components/yacc.y"
+  case 186: /* executable_body: '{' error '}'  */
+#line 1630 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = false;
 
         yyerrok;
     }
-#line 3566 "src/syntax-analyzer/components/parser.cpp"
+#line 3587 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 183: /* executable_body: executable_stmt  */
-#line 1618 "include/syntax-analyzer/components/yacc.y"
+  case 187: /* executable_body: executable_stmt  */
+#line 1636 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = (yyvsp[0].returnable);
     }
-#line 3574 "src/syntax-analyzer/components/parser.cpp"
+#line 3595 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 184: /* executable_body: '{' '}'  */
-#line 1622 "include/syntax-analyzer/components/yacc.y"
+  case 188: /* executable_body: '{' '}'  */
+#line 1640 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.returnable) = false;
     }
-#line 3582 "src/syntax-analyzer/components/parser.cpp"
+#line 3603 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 185: /* executable_statements: executable_stmt  */
-#line 1628 "include/syntax-analyzer/components/yacc.y"
+  case 189: /* executable_statements: executable_stmt  */
+#line 1646 "include/syntax-analyzer/components/yacc.y"
                                             { (yyval.returnable) = (yyvsp[0].returnable);       }
-#line 3588 "src/syntax-analyzer/components/parser.cpp"
+#line 3609 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 186: /* executable_statements: executable_statements executable_stmt  */
-#line 1629 "include/syntax-analyzer/components/yacc.y"
-                                            { (yyval.returnable) = (yyvsp[-1].returnable) || (yyvsp[0].returnable); }
-#line 3594 "src/syntax-analyzer/components/parser.cpp"
-    break;
-
-  case 187: /* opt_trunc_constant: numeric_constant  */
-#line 1636 "include/syntax-analyzer/components/yacc.y"
-    {
-        (yyval.metadata) = (yyvsp[0].metadata);
-    }
-#line 3602 "src/syntax-analyzer/components/parser.cpp"
-    break;
-
-  case 188: /* opt_trunc_constant: trunc_constant  */
-#line 1640 "include/syntax-analyzer/components/yacc.y"
-    {
-        (yyval.metadata) = (yyvsp[0].metadata);
-    }
-#line 3610 "src/syntax-analyzer/components/parser.cpp"
-    break;
-
-  case 189: /* trunc_constant: WORD_TRUNC '(' numeric_constant ')'  */
+  case 190: /* executable_statements: executable_statements executable_stmt  */
 #line 1647 "include/syntax-analyzer/components/yacc.y"
+                                            { (yyval.returnable) = (yyvsp[-1].returnable) || (yyvsp[0].returnable); }
+#line 3615 "src/syntax-analyzer/components/Parser.cpp"
+    break;
+
+  case 191: /* opt_trunc_constant: numeric_constant  */
+#line 1654 "include/syntax-analyzer/components/yacc.y"
+    {
+        (yyval.metadata) = (yyvsp[0].metadata);
+    }
+#line 3623 "src/syntax-analyzer/components/Parser.cpp"
+    break;
+
+  case 192: /* opt_trunc_constant: trunc_constant  */
+#line 1658 "include/syntax-analyzer/components/yacc.y"
+    {
+        (yyval.metadata) = (yyvsp[0].metadata);
+    }
+#line 3631 "src/syntax-analyzer/components/Parser.cpp"
+    break;
+
+  case 193: /* trunc_constant: WORD_TRUNC '(' numeric_constant ')'  */
+#line 1665 "include/syntax-analyzer/components/yacc.y"
     {
         createTruncateTriple((yyval.metadata), (yyvsp[-1].metadata));
 
         (yyval.metadata).expression.pid = StringPool::create("trunc(" + *StringPool::get((yyvsp[-1].metadata).expression.pid) + ")");
 
     }
-#line 3621 "src/syntax-analyzer/components/parser.cpp"
+#line 3642 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 190: /* trunc_constant: WORD_TRUNC '(' numeric_constant error  */
-#line 1654 "include/syntax-analyzer/components/yacc.y"
+  case 194: /* trunc_constant: WORD_TRUNC '(' numeric_constant error  */
+#line 1672 "include/syntax-analyzer/components/yacc.y"
     {
         createTruncateTriple((yyval.metadata), (yyvsp[-1].metadata));
 
@@ -3631,11 +3652,11 @@ yyreduce:
         yyerrok;
 
     }
-#line 3635 "src/syntax-analyzer/components/parser.cpp"
+#line 3656 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 191: /* trunc_constant: WORD_TRUNC numeric_constant ')'  */
-#line 1664 "include/syntax-analyzer/components/yacc.y"
+  case 195: /* trunc_constant: WORD_TRUNC numeric_constant ')'  */
+#line 1682 "include/syntax-analyzer/components/yacc.y"
     {
         createTruncateTriple((yyval.metadata), (yyvsp[-1].metadata));
 
@@ -3644,11 +3665,11 @@ yyreduce:
         SemanticActions::announceSpecificError(MISSING_OPENING_PARENTHESIS);
 
     }
-#line 3648 "src/syntax-analyzer/components/parser.cpp"
+#line 3669 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 192: /* trunc_constant: WORD_TRUNC numeric_constant error  */
-#line 1673 "include/syntax-analyzer/components/yacc.y"
+  case 196: /* trunc_constant: WORD_TRUNC numeric_constant error  */
+#line 1691 "include/syntax-analyzer/components/yacc.y"
     {
         createTruncateTriple((yyval.metadata), (yyvsp[-1].metadata));
 
@@ -3658,11 +3679,11 @@ yyreduce:
         yyerrok;
 
     }
-#line 3662 "src/syntax-analyzer/components/parser.cpp"
+#line 3683 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 193: /* opt_trunc_variable: variable  */
-#line 1686 "include/syntax-analyzer/components/yacc.y"
+  case 197: /* opt_trunc_variable: variable  */
+#line 1704 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata).reference.sref = SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
         if ((yyval.metadata).reference.sref != nullptr)
@@ -3677,19 +3698,19 @@ yyreduce:
         }
 
     }
-#line 3681 "src/syntax-analyzer/components/parser.cpp"
+#line 3702 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 194: /* opt_trunc_variable: trunc_variable  */
-#line 1701 "include/syntax-analyzer/components/yacc.y"
+  case 198: /* opt_trunc_variable: trunc_variable  */
+#line 1719 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[0].metadata);
     }
-#line 3689 "src/syntax-analyzer/components/parser.cpp"
+#line 3710 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 195: /* trunc_variable: WORD_TRUNC '(' variable ')'  */
-#line 1708 "include/syntax-analyzer/components/yacc.y"
+  case 199: /* trunc_variable: WORD_TRUNC '(' variable ')'  */
+#line 1726 "include/syntax-analyzer/components/yacc.y"
     {
         auto entry = SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
         if (entry != nullptr)
@@ -3709,11 +3730,11 @@ yyreduce:
         (yyval.metadata).expression.pid = StringPool::create("trunc " + *StringPool::get((yyvsp[-1].pid)) + ")");
 
     }
-#line 3713 "src/syntax-analyzer/components/parser.cpp"
+#line 3734 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 196: /* trunc_variable: WORD_TRUNC '(' variable error  */
-#line 1728 "include/syntax-analyzer/components/yacc.y"
+  case 200: /* trunc_variable: WORD_TRUNC '(' variable error  */
+#line 1746 "include/syntax-analyzer/components/yacc.y"
     {
         auto entry = SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
         if (entry != nullptr)
@@ -3736,11 +3757,11 @@ yyreduce:
         yyerrok;
 
     }
-#line 3740 "src/syntax-analyzer/components/parser.cpp"
+#line 3761 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 197: /* trunc_variable: WORD_TRUNC variable ')'  */
-#line 1751 "include/syntax-analyzer/components/yacc.y"
+  case 201: /* trunc_variable: WORD_TRUNC variable ')'  */
+#line 1769 "include/syntax-analyzer/components/yacc.y"
     {
         auto entry = SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
         if (entry != nullptr)
@@ -3763,11 +3784,11 @@ yyreduce:
         SemanticActions::announceSpecificError(MISSING_OPENING_PARENTHESIS);
 
     }
-#line 3767 "src/syntax-analyzer/components/parser.cpp"
+#line 3788 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 198: /* trunc_variable: WORD_TRUNC variable error  */
-#line 1774 "include/syntax-analyzer/components/yacc.y"
+  case 202: /* trunc_variable: WORD_TRUNC variable error  */
+#line 1792 "include/syntax-analyzer/components/yacc.y"
     {
         auto entry = SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
         if (entry != nullptr)
@@ -3790,11 +3811,11 @@ yyreduce:
         yyerrok;
 
     }
-#line 3794 "src/syntax-analyzer/components/parser.cpp"
+#line 3815 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 199: /* trunc_variable: WORD_TRUNC error ';'  */
-#line 1797 "include/syntax-analyzer/components/yacc.y"
+  case 203: /* trunc_variable: WORD_TRUNC error ';'  */
+#line 1815 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata).reference  = { NULLREF , nullptr };
         (yyval.metadata).expression = { UNKNOWN, StringPool::create("trunc ..."), false };
@@ -3803,21 +3824,21 @@ yyreduce:
         yyerrok;
 
     }
-#line 3807 "src/syntax-analyzer/components/parser.cpp"
+#line 3828 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 200: /* trunc_expression: WORD_TRUNC '(' expression ')'  */
-#line 1809 "include/syntax-analyzer/components/yacc.y"
+  case 204: /* trunc_expression: WORD_TRUNC '(' expression ')'  */
+#line 1827 "include/syntax-analyzer/components/yacc.y"
     {
         createTruncateTriple((yyval.metadata), (yyvsp[-1].metadata));
         
         (yyval.metadata).expression.pid = StringPool::create("trunc(" + *StringPool::get((yyvsp[-1].metadata).expression.pid) + ")");
     }
-#line 3817 "src/syntax-analyzer/components/parser.cpp"
+#line 3838 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 201: /* trunc_expression: WORD_TRUNC '(' expression error  */
-#line 1815 "include/syntax-analyzer/components/yacc.y"
+  case 205: /* trunc_expression: WORD_TRUNC '(' expression error  */
+#line 1833 "include/syntax-analyzer/components/yacc.y"
     {
         createTruncateTriple((yyval.metadata), (yyvsp[-1].metadata));
         
@@ -3827,11 +3848,11 @@ yyreduce:
         yyerrok;
 
     }
-#line 3831 "src/syntax-analyzer/components/parser.cpp"
+#line 3852 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 202: /* trunc_expression: WORD_TRUNC expression ')'  */
-#line 1825 "include/syntax-analyzer/components/yacc.y"
+  case 206: /* trunc_expression: WORD_TRUNC expression ')'  */
+#line 1843 "include/syntax-analyzer/components/yacc.y"
     {
         createTruncateTriple((yyval.metadata), (yyvsp[-1].metadata));
         
@@ -3840,11 +3861,11 @@ yyreduce:
         SemanticActions::announceSpecificError(MISSING_OPENING_PARENTHESIS);
 
     }
-#line 3844 "src/syntax-analyzer/components/parser.cpp"
+#line 3865 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 203: /* trunc_expression: WORD_TRUNC expression error  */
-#line 1834 "include/syntax-analyzer/components/yacc.y"
+  case 207: /* trunc_expression: WORD_TRUNC expression error  */
+#line 1852 "include/syntax-analyzer/components/yacc.y"
     {
         createTruncateTriple((yyval.metadata), (yyvsp[-1].metadata));
         
@@ -3854,19 +3875,19 @@ yyreduce:
         yyerrok;
 
     }
-#line 3858 "src/syntax-analyzer/components/parser.cpp"
+#line 3879 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 204: /* condition: '(' comparison ')'  */
-#line 1849 "include/syntax-analyzer/components/yacc.y"
+  case 208: /* condition: '(' comparison ')'  */
+#line 1867 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[-1].metadata);
     }
-#line 3866 "src/syntax-analyzer/components/parser.cpp"
+#line 3887 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 205: /* condition: '(' comparison error  */
-#line 1853 "include/syntax-analyzer/components/yacc.y"
+  case 209: /* condition: '(' comparison error  */
+#line 1871 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[-1].metadata);
 
@@ -3874,22 +3895,22 @@ yyreduce:
         yyerrok;
 
     }
-#line 3878 "src/syntax-analyzer/components/parser.cpp"
+#line 3899 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 206: /* condition: comparison ')'  */
-#line 1861 "include/syntax-analyzer/components/yacc.y"
+  case 210: /* condition: comparison ')'  */
+#line 1879 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[-1].metadata);
 
         SemanticActions::announceSpecificError(MISSING_OPENING_PARENTHESIS);
 
     }
-#line 3889 "src/syntax-analyzer/components/parser.cpp"
+#line 3910 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 207: /* condition: comparison error  */
-#line 1868 "include/syntax-analyzer/components/yacc.y"
+  case 211: /* condition: comparison error  */
+#line 1886 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[-1].metadata);
 
@@ -3897,11 +3918,11 @@ yyreduce:
         yyerrok;
 
     }
-#line 3901 "src/syntax-analyzer/components/parser.cpp"
+#line 3922 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 208: /* comparison: expression comparison_operator expression  */
-#line 1879 "include/syntax-analyzer/components/yacc.y"
+  case 212: /* comparison: expression comparison_operator expression  */
+#line 1897 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::TypeChecker::Expression e1 = { (yyvsp[-2].metadata).expression.type, *StringPool::get((yyvsp[-2].metadata).expression.pid) };
         SemanticAnalyzer::TypeChecker::Expression e2 = { (yyvsp[0].metadata).expression.type, *StringPool::get((yyvsp[0].metadata).expression.pid) };
@@ -3924,11 +3945,11 @@ yyreduce:
             (yyval.metadata).reference = { NULLREF, nullptr };
         (yyval.metadata).expression.assignable = false;
     }
-#line 3928 "src/syntax-analyzer/components/parser.cpp"
+#line 3949 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 209: /* comparison: expression error  */
-#line 1902 "include/syntax-analyzer/components/yacc.y"
+  case 213: /* comparison: expression error  */
+#line 1920 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[-1].metadata);
 
@@ -3936,75 +3957,75 @@ yyreduce:
         yyerrok;
 
     }
-#line 3940 "src/syntax-analyzer/components/parser.cpp"
+#line 3961 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 210: /* comparison: expression comparison_operator error  */
-#line 1910 "include/syntax-analyzer/components/yacc.y"
+  case 214: /* comparison: expression comparison_operator error  */
+#line 1928 "include/syntax-analyzer/components/yacc.y"
     {
         yyerrok;
     }
-#line 3948 "src/syntax-analyzer/components/parser.cpp"
+#line 3969 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 211: /* comparison_operator: OP_EQUAL  */
-#line 1917 "include/syntax-analyzer/components/yacc.y"
+  case 215: /* comparison_operator: OP_EQUAL  */
+#line 1935 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.op) = { CODEOP_EQUAL, StringPool::create(Translator::translate(OP_EQUAL)) };
     }
-#line 3956 "src/syntax-analyzer/components/parser.cpp"
+#line 3977 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 212: /* comparison_operator: OP_NOT_EQUAL  */
-#line 1921 "include/syntax-analyzer/components/yacc.y"
+  case 216: /* comparison_operator: OP_NOT_EQUAL  */
+#line 1939 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.op) = { CODEOP_NOT_EQUAL, StringPool::create(Translator::translate(OP_NOT_EQUAL)) };
     }
-#line 3964 "src/syntax-analyzer/components/parser.cpp"
+#line 3985 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 213: /* comparison_operator: OP_GE  */
-#line 1925 "include/syntax-analyzer/components/yacc.y"
+  case 217: /* comparison_operator: OP_GE  */
+#line 1943 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.op) = { CODEOP_GE, StringPool::create(Translator::translate(OP_GE)) };
     }
-#line 3972 "src/syntax-analyzer/components/parser.cpp"
+#line 3993 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 214: /* comparison_operator: OP_LE  */
-#line 1929 "include/syntax-analyzer/components/yacc.y"
+  case 218: /* comparison_operator: OP_LE  */
+#line 1947 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.op) = { CODEOP_LE, StringPool::create(Translator::translate(OP_LE)) };
     }
-#line 3980 "src/syntax-analyzer/components/parser.cpp"
+#line 4001 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 215: /* comparison_operator: '>'  */
-#line 1933 "include/syntax-analyzer/components/yacc.y"
+  case 219: /* comparison_operator: '>'  */
+#line 1951 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.op) = { CODEOP_GT, StringPool::create(">") };
     }
-#line 3988 "src/syntax-analyzer/components/parser.cpp"
+#line 4009 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 216: /* comparison_operator: '<'  */
-#line 1937 "include/syntax-analyzer/components/yacc.y"
+  case 220: /* comparison_operator: '<'  */
+#line 1955 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.op) = { CODEOP_LT, StringPool::create("<") };
     }
-#line 3996 "src/syntax-analyzer/components/parser.cpp"
+#line 4017 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 217: /* expression: term  */
-#line 1946 "include/syntax-analyzer/components/yacc.y"
+  case 221: /* expression: term  */
+#line 1964 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[0].metadata);
     }
-#line 4004 "src/syntax-analyzer/components/parser.cpp"
+#line 4025 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 218: /* expression: expression_setup positive_term  */
-#line 1950 "include/syntax-analyzer/components/yacc.y"
+  case 222: /* expression: expression_setup positive_term  */
+#line 1968 "include/syntax-analyzer/components/yacc.y"
     {
         SemanticAnalyzer::TypeChecker::Expression e1 = { (yyvsp[-1].metadata).expression.type, *StringPool::get((yyvsp[-1].metadata).expression.pid) };
         SemanticAnalyzer::TypeChecker::Expression e2 = { (yyvsp[0].metadata).expression.type, *StringPool::get((yyvsp[0].metadata).expression.pid) };
@@ -4016,22 +4037,22 @@ yyreduce:
         
         (yyval.metadata).expression.assignable = false;
     }
-#line 4020 "src/syntax-analyzer/components/parser.cpp"
+#line 4041 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 219: /* expression: '+' term  */
-#line 1962 "include/syntax-analyzer/components/yacc.y"
+  case 223: /* expression: '+' term  */
+#line 1980 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[0].metadata);
 
         SemanticActions::announceSpecificError(MISSING_LEFT_SUM_OPERAND);
 
     }
-#line 4031 "src/syntax-analyzer/components/parser.cpp"
+#line 4052 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 220: /* expression: '+' error  */
-#line 1969 "include/syntax-analyzer/components/yacc.y"
+  case 224: /* expression: '+' error  */
+#line 1987 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata).reference  = { NULLREF , nullptr };
         (yyval.metadata).expression = { UNKNOWN, StringPool::create("..."), false };
@@ -4040,19 +4061,19 @@ yyreduce:
         yyerrok;
 
     }
-#line 4044 "src/syntax-analyzer/components/parser.cpp"
+#line 4065 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 221: /* expression: expression '+' term  */
-#line 1978 "include/syntax-analyzer/components/yacc.y"
+  case 225: /* expression: expression '+' term  */
+#line 1996 "include/syntax-analyzer/components/yacc.y"
     {
         createArithmeticTriple((yyval.metadata), (yyvsp[-2].metadata), (yyvsp[0].metadata), '+');
     }
-#line 4052 "src/syntax-analyzer/components/parser.cpp"
+#line 4073 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 222: /* expression: expression '+' error  */
-#line 1982 "include/syntax-analyzer/components/yacc.y"
+  case 226: /* expression: expression '+' error  */
+#line 2000 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[-2].metadata);
 
@@ -4060,19 +4081,19 @@ yyreduce:
         yyerrok;
 
     }
-#line 4064 "src/syntax-analyzer/components/parser.cpp"
+#line 4085 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 223: /* expression: expression '-' term  */
-#line 1990 "include/syntax-analyzer/components/yacc.y"
+  case 227: /* expression: expression '-' term  */
+#line 2008 "include/syntax-analyzer/components/yacc.y"
     {
         createArithmeticTriple((yyval.metadata), (yyvsp[-2].metadata), (yyvsp[0].metadata), '-');
     }
-#line 4072 "src/syntax-analyzer/components/parser.cpp"
+#line 4093 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 224: /* expression: expression '-' error  */
-#line 1994 "include/syntax-analyzer/components/yacc.y"
+  case 228: /* expression: expression '-' error  */
+#line 2012 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[-2].metadata);
 
@@ -4080,133 +4101,133 @@ yyreduce:
         yyerrok;
 
     }
-#line 4084 "src/syntax-analyzer/components/parser.cpp"
+#line 4105 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 225: /* expression: trunc_expression  */
-#line 2002 "include/syntax-analyzer/components/yacc.y"
+  case 229: /* expression: trunc_expression  */
+#line 2020 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[0].metadata);
     }
-#line 4092 "src/syntax-analyzer/components/parser.cpp"
+#line 4113 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 226: /* expression: expression '+' trunc_expression  */
-#line 2006 "include/syntax-analyzer/components/yacc.y"
+  case 230: /* expression: expression '+' trunc_expression  */
+#line 2024 "include/syntax-analyzer/components/yacc.y"
     {
         createArithmeticTriple((yyval.metadata), (yyvsp[-2].metadata), (yyvsp[0].metadata), '+');
     }
-#line 4100 "src/syntax-analyzer/components/parser.cpp"
+#line 4121 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 227: /* expression: expression '-' trunc_expression  */
-#line 2010 "include/syntax-analyzer/components/yacc.y"
+  case 231: /* expression: expression '-' trunc_expression  */
+#line 2028 "include/syntax-analyzer/components/yacc.y"
     {
         createArithmeticTriple((yyval.metadata), (yyvsp[-2].metadata), (yyvsp[0].metadata), '-');
     }
-#line 4108 "src/syntax-analyzer/components/parser.cpp"
+#line 4129 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 228: /* expression_setup: expression  */
-#line 2017 "include/syntax-analyzer/components/yacc.y"
+  case 232: /* expression_setup: expression  */
+#line 2035 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[0].metadata);
 
         SemanticActions::announceSpecificError(MISSING_EXPRESSION_OPERATOR);
     }
-#line 4118 "src/syntax-analyzer/components/parser.cpp"
+#line 4139 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 229: /* term: positive_term  */
-#line 2028 "include/syntax-analyzer/components/yacc.y"
+  case 233: /* term: positive_term  */
+#line 2046 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[0].metadata);
     }
-#line 4126 "src/syntax-analyzer/components/parser.cpp"
+#line 4147 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 230: /* term: negative_term  */
-#line 2032 "include/syntax-analyzer/components/yacc.y"
+  case 234: /* term: negative_term  */
+#line 2050 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[0].metadata);
     }
-#line 4134 "src/syntax-analyzer/components/parser.cpp"
+#line 4155 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 231: /* positive_term: positive_term '*' factor  */
-#line 2039 "include/syntax-analyzer/components/yacc.y"
+  case 235: /* positive_term: positive_term '*' factor  */
+#line 2057 "include/syntax-analyzer/components/yacc.y"
     {
         createArithmeticTriple((yyval.metadata), (yyvsp[-2].metadata), (yyvsp[0].metadata), '*');
     }
-#line 4142 "src/syntax-analyzer/components/parser.cpp"
+#line 4163 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 232: /* positive_term: positive_term '/' factor  */
-#line 2043 "include/syntax-analyzer/components/yacc.y"
+  case 236: /* positive_term: positive_term '/' factor  */
+#line 2061 "include/syntax-analyzer/components/yacc.y"
     {
         createArithmeticTriple((yyval.metadata), (yyvsp[-2].metadata), (yyvsp[0].metadata), '/');
     }
-#line 4150 "src/syntax-analyzer/components/parser.cpp"
+#line 4171 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 233: /* positive_term: trunc_expression '/' factor  */
-#line 2047 "include/syntax-analyzer/components/yacc.y"
+  case 237: /* positive_term: trunc_expression '/' factor  */
+#line 2065 "include/syntax-analyzer/components/yacc.y"
     {
         createArithmeticTriple((yyval.metadata), (yyvsp[-2].metadata), (yyvsp[0].metadata), '/');
     }
-#line 4158 "src/syntax-analyzer/components/parser.cpp"
+#line 4179 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 234: /* positive_term: trunc_expression '*' factor  */
-#line 2051 "include/syntax-analyzer/components/yacc.y"
+  case 238: /* positive_term: trunc_expression '*' factor  */
+#line 2069 "include/syntax-analyzer/components/yacc.y"
     {
         createArithmeticTriple((yyval.metadata), (yyvsp[-2].metadata), (yyvsp[0].metadata), '*');
     }
-#line 4166 "src/syntax-analyzer/components/parser.cpp"
+#line 4187 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 235: /* positive_term: trunc_expression '/' trunc_expression  */
-#line 2055 "include/syntax-analyzer/components/yacc.y"
+  case 239: /* positive_term: trunc_expression '/' trunc_expression  */
+#line 2073 "include/syntax-analyzer/components/yacc.y"
     {
         createArithmeticTriple((yyval.metadata), (yyvsp[-2].metadata), (yyvsp[0].metadata), '/');
     }
-#line 4174 "src/syntax-analyzer/components/parser.cpp"
+#line 4195 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 236: /* positive_term: trunc_expression '*' trunc_expression  */
-#line 2059 "include/syntax-analyzer/components/yacc.y"
+  case 240: /* positive_term: trunc_expression '*' trunc_expression  */
+#line 2077 "include/syntax-analyzer/components/yacc.y"
     {
         createArithmeticTriple((yyval.metadata), (yyvsp[-2].metadata), (yyvsp[0].metadata), '*');
     }
-#line 4182 "src/syntax-analyzer/components/parser.cpp"
+#line 4203 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 237: /* positive_term: positive_term '/' trunc_expression  */
-#line 2063 "include/syntax-analyzer/components/yacc.y"
+  case 241: /* positive_term: positive_term '/' trunc_expression  */
+#line 2081 "include/syntax-analyzer/components/yacc.y"
     {
         createArithmeticTriple((yyval.metadata), (yyvsp[-2].metadata), (yyvsp[0].metadata), '/');
     }
-#line 4190 "src/syntax-analyzer/components/parser.cpp"
+#line 4211 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 238: /* positive_term: positive_term '*' trunc_expression  */
-#line 2067 "include/syntax-analyzer/components/yacc.y"
+  case 242: /* positive_term: positive_term '*' trunc_expression  */
+#line 2085 "include/syntax-analyzer/components/yacc.y"
     {
         createArithmeticTriple((yyval.metadata), (yyvsp[-2].metadata), (yyvsp[0].metadata), '*');
     }
-#line 4198 "src/syntax-analyzer/components/parser.cpp"
+#line 4219 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 239: /* positive_term: positive_factor  */
-#line 2071 "include/syntax-analyzer/components/yacc.y"
+  case 243: /* positive_term: positive_factor  */
+#line 2089 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[0].metadata);
     }
-#line 4206 "src/syntax-analyzer/components/parser.cpp"
+#line 4227 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 240: /* positive_term: positive_term '*' error  */
-#line 2075 "include/syntax-analyzer/components/yacc.y"
+  case 244: /* positive_term: positive_term '*' error  */
+#line 2093 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[-2].metadata);
 
@@ -4214,11 +4235,11 @@ yyreduce:
         yyerrok;
 
     }
-#line 4218 "src/syntax-analyzer/components/parser.cpp"
+#line 4239 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 241: /* positive_term: positive_term '/' error  */
-#line 2083 "include/syntax-analyzer/components/yacc.y"
+  case 245: /* positive_term: positive_term '/' error  */
+#line 2101 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[-2].metadata);
 
@@ -4226,51 +4247,51 @@ yyreduce:
         yyerrok;
 
     }
-#line 4230 "src/syntax-analyzer/components/parser.cpp"
+#line 4251 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 242: /* negative_term: negative_term '*' factor  */
-#line 2094 "include/syntax-analyzer/components/yacc.y"
+  case 246: /* negative_term: negative_term '*' factor  */
+#line 2112 "include/syntax-analyzer/components/yacc.y"
     {
         createArithmeticTriple((yyval.metadata), (yyvsp[-2].metadata), (yyvsp[0].metadata), '*');
     }
-#line 4238 "src/syntax-analyzer/components/parser.cpp"
+#line 4259 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 243: /* negative_term: negative_term '/' factor  */
-#line 2098 "include/syntax-analyzer/components/yacc.y"
+  case 247: /* negative_term: negative_term '/' factor  */
+#line 2116 "include/syntax-analyzer/components/yacc.y"
     {
         createArithmeticTriple((yyval.metadata), (yyvsp[-2].metadata), (yyvsp[0].metadata), '/');
     }
-#line 4246 "src/syntax-analyzer/components/parser.cpp"
+#line 4267 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 244: /* negative_term: negative_term '/' trunc_expression  */
-#line 2102 "include/syntax-analyzer/components/yacc.y"
+  case 248: /* negative_term: negative_term '/' trunc_expression  */
+#line 2120 "include/syntax-analyzer/components/yacc.y"
     {
         createArithmeticTriple((yyval.metadata), (yyvsp[-2].metadata), (yyvsp[0].metadata), '/');
     }
-#line 4254 "src/syntax-analyzer/components/parser.cpp"
+#line 4275 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 245: /* negative_term: negative_term '*' trunc_expression  */
-#line 2106 "include/syntax-analyzer/components/yacc.y"
+  case 249: /* negative_term: negative_term '*' trunc_expression  */
+#line 2124 "include/syntax-analyzer/components/yacc.y"
     {
         createArithmeticTriple((yyval.metadata), (yyvsp[-2].metadata), (yyvsp[0].metadata), '*');
     }
-#line 4262 "src/syntax-analyzer/components/parser.cpp"
+#line 4283 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 246: /* negative_term: negative_factor  */
-#line 2110 "include/syntax-analyzer/components/yacc.y"
+  case 250: /* negative_term: negative_factor  */
+#line 2128 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[0].metadata);
     }
-#line 4270 "src/syntax-analyzer/components/parser.cpp"
+#line 4291 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 247: /* negative_term: negative_term '*' error  */
-#line 2114 "include/syntax-analyzer/components/yacc.y"
+  case 251: /* negative_term: negative_term '*' error  */
+#line 2132 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[-2].metadata);
 
@@ -4278,11 +4299,11 @@ yyreduce:
         yyerrok;
 
     }
-#line 4282 "src/syntax-analyzer/components/parser.cpp"
+#line 4303 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 248: /* negative_term: negative_term '/' error  */
-#line 2122 "include/syntax-analyzer/components/yacc.y"
+  case 252: /* negative_term: negative_term '/' error  */
+#line 2140 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[-2].metadata);
 
@@ -4290,33 +4311,33 @@ yyreduce:
         yyerrok;
 
     }
-#line 4294 "src/syntax-analyzer/components/parser.cpp"
+#line 4315 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 249: /* negative_term: '*' factor  */
-#line 2130 "include/syntax-analyzer/components/yacc.y"
+  case 253: /* negative_term: '*' factor  */
+#line 2148 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[0].metadata);
 
         SemanticActions::announceSpecificError(MISSING_LEFT_MUL_FACTOR);
 
     }
-#line 4305 "src/syntax-analyzer/components/parser.cpp"
+#line 4326 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 250: /* negative_term: '/' factor  */
-#line 2137 "include/syntax-analyzer/components/yacc.y"
+  case 254: /* negative_term: '/' factor  */
+#line 2155 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[0].metadata);
 
         SemanticActions::announceSpecificError(MISSING_LEFT_DIV_FACTOR);
 
     }
-#line 4316 "src/syntax-analyzer/components/parser.cpp"
+#line 4337 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 251: /* negative_term: '*' error  */
-#line 2144 "include/syntax-analyzer/components/yacc.y"
+  case 255: /* negative_term: '*' error  */
+#line 2162 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata).reference  = { NULLREF , nullptr };
         (yyval.metadata).expression = { UNKNOWN, StringPool::create("..."), false };
@@ -4325,40 +4346,40 @@ yyreduce:
         yyerrok;
 
     }
-#line 4329 "src/syntax-analyzer/components/parser.cpp"
+#line 4350 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 252: /* negative_term: '/' error  */
-#line 2153 "include/syntax-analyzer/components/yacc.y"
-    {
-        (yyval.metadata).reference  = { NULLREF , nullptr };
-        (yyval.metadata).expression = { UNKNOWN, StringPool::create("..."), false };
-
-        SemanticActions::specifySyntaxError(MISSING_BOTH_FACTORS);
-        yyerrok;
-
-    }
-#line 4342 "src/syntax-analyzer/components/parser.cpp"
-    break;
-
-  case 253: /* factor: positive_factor  */
-#line 2167 "include/syntax-analyzer/components/yacc.y"
-    {
-        (yyval.metadata) = (yyvsp[0].metadata);
-    }
-#line 4350 "src/syntax-analyzer/components/parser.cpp"
-    break;
-
-  case 254: /* factor: negative_factor  */
+  case 256: /* negative_term: '/' error  */
 #line 2171 "include/syntax-analyzer/components/yacc.y"
     {
-        (yyval.metadata) = (yyvsp[0].metadata);
+        (yyval.metadata).reference  = { NULLREF , nullptr };
+        (yyval.metadata).expression = { UNKNOWN, StringPool::create("..."), false };
+
+        SemanticActions::specifySyntaxError(MISSING_BOTH_FACTORS);
+        yyerrok;
+
     }
-#line 4358 "src/syntax-analyzer/components/parser.cpp"
+#line 4363 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 255: /* positive_factor: variable  */
-#line 2178 "include/syntax-analyzer/components/yacc.y"
+  case 257: /* factor: positive_factor  */
+#line 2185 "include/syntax-analyzer/components/yacc.y"
+    {
+        (yyval.metadata) = (yyvsp[0].metadata);
+    }
+#line 4371 "src/syntax-analyzer/components/Parser.cpp"
+    break;
+
+  case 258: /* factor: negative_factor  */
+#line 2189 "include/syntax-analyzer/components/yacc.y"
+    {
+        (yyval.metadata) = (yyvsp[0].metadata);
+    }
+#line 4379 "src/syntax-analyzer/components/Parser.cpp"
+    break;
+
+  case 259: /* positive_factor: variable  */
+#line 2196 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata).reference.sref = SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
         if ((yyval.metadata).reference.sref != nullptr)
@@ -4373,46 +4394,46 @@ yyreduce:
         }
 
     }
-#line 4377 "src/syntax-analyzer/components/parser.cpp"
+#line 4398 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 256: /* positive_factor: positive_constant  */
-#line 2193 "include/syntax-analyzer/components/yacc.y"
+  case 260: /* positive_factor: positive_constant  */
+#line 2211 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[0].metadata);
     }
-#line 4385 "src/syntax-analyzer/components/parser.cpp"
+#line 4406 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 257: /* positive_factor: function_invocation_head  */
-#line 2197 "include/syntax-analyzer/components/yacc.y"
+  case 261: /* positive_factor: function_invocation_head  */
+#line 2215 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[0].metadata);
     }
-#line 4393 "src/syntax-analyzer/components/parser.cpp"
+#line 4414 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 258: /* negative_factor: negative_constant  */
-#line 2204 "include/syntax-analyzer/components/yacc.y"
+  case 262: /* negative_factor: negative_constant  */
+#line 2222 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[0].metadata);
     }
-#line 4401 "src/syntax-analyzer/components/parser.cpp"
+#line 4422 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 259: /* negative_factor: lambda_invocation_head  */
-#line 2208 "include/syntax-analyzer/components/yacc.y"
+  case 263: /* negative_factor: lambda_invocation_head  */
+#line 2226 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata).reference  = { NULLREF , nullptr };
         (yyval.metadata).expression = { UNKNOWN, StringPool::create("..."), false };
         
         SemanticActions::announceSpecificError(INVALID_LAMBDA_USE);
     }
-#line 4412 "src/syntax-analyzer/components/parser.cpp"
+#line 4433 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 260: /* negative_factor: '-' LITERAL_UINT  */
-#line 2215 "include/syntax-analyzer/components/yacc.y"
+  case 264: /* negative_factor: '-' LITERAL_UINT  */
+#line 2233 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata).reference  = { LITERAL, .lref = (yyvsp[0].lref) };
         (yyval.metadata).expression = { UINT, StringPool::create((yyvsp[0].lref)->constant), false };
@@ -4420,22 +4441,22 @@ yyreduce:
         SemanticActions::announceSpecificError(MISSING_LEFT_SUB_OPERAND);
 
     }
-#line 4424 "src/syntax-analyzer/components/parser.cpp"
+#line 4445 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 261: /* negative_factor: '-' function_invocation_head  */
-#line 2223 "include/syntax-analyzer/components/yacc.y"
+  case 265: /* negative_factor: '-' function_invocation_head  */
+#line 2241 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[0].metadata);
 
         SemanticActions::announceSpecificError(MISSING_LEFT_SUB_OPERAND);
 
     }
-#line 4435 "src/syntax-analyzer/components/parser.cpp"
+#line 4456 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 262: /* negative_factor: '-' variable  */
-#line 2230 "include/syntax-analyzer/components/yacc.y"
+  case 266: /* negative_factor: '-' variable  */
+#line 2248 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata).reference.sref = SemanticAnalyzer::CHK_VARIABLES.checkVariableExistanceInScope();
         if ((yyval.metadata).reference.sref != nullptr)
@@ -4451,11 +4472,11 @@ yyreduce:
         SemanticActions::announceSpecificError(MISSING_LEFT_SUB_OPERAND);
 
     }
-#line 4455 "src/syntax-analyzer/components/parser.cpp"
+#line 4476 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 263: /* negative_factor: '-' lambda_invocation_head  */
-#line 2246 "include/syntax-analyzer/components/yacc.y"
+  case 267: /* negative_factor: '-' lambda_invocation_head  */
+#line 2264 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata).reference  = { NULLREF , nullptr };
         (yyval.metadata).expression = { UNKNOWN, StringPool::create("..."), false };
@@ -4464,11 +4485,11 @@ yyreduce:
         SemanticActions::announceSpecificError(INVALID_LAMBDA_USE);
 
     }
-#line 4468 "src/syntax-analyzer/components/parser.cpp"
+#line 4489 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 264: /* negative_factor: '-' error  */
-#line 2255 "include/syntax-analyzer/components/yacc.y"
+  case 268: /* negative_factor: '-' error  */
+#line 2273 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata).reference  = { NULLREF , nullptr };
         (yyval.metadata).expression = { UNKNOWN, StringPool::create("..."), false };
@@ -4477,66 +4498,66 @@ yyreduce:
         yyerrok;
 
     }
-#line 4481 "src/syntax-analyzer/components/parser.cpp"
+#line 4502 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 265: /* numeric_constant: positive_constant  */
-#line 2269 "include/syntax-analyzer/components/yacc.y"
+  case 269: /* numeric_constant: positive_constant  */
+#line 2287 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[0].metadata);
     }
-#line 4489 "src/syntax-analyzer/components/parser.cpp"
+#line 4510 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 266: /* numeric_constant: negative_constant  */
-#line 2273 "include/syntax-analyzer/components/yacc.y"
+  case 270: /* numeric_constant: negative_constant  */
+#line 2291 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata) = (yyvsp[0].metadata);
     }
-#line 4497 "src/syntax-analyzer/components/parser.cpp"
+#line 4518 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 267: /* positive_constant: LITERAL_UINT  */
-#line 2280 "include/syntax-analyzer/components/yacc.y"
+  case 271: /* positive_constant: LITERAL_UINT  */
+#line 2298 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata).reference  = { LITERAL, .lref = (yyvsp[0].lref) };
         (yyval.metadata).expression = { UINT, StringPool::create((yyvsp[0].lref)->constant), false };
     }
-#line 4506 "src/syntax-analyzer/components/parser.cpp"
+#line 4527 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 268: /* positive_constant: LITERAL_FLOAT  */
-#line 2285 "include/syntax-analyzer/components/yacc.y"
+  case 272: /* positive_constant: LITERAL_FLOAT  */
+#line 2303 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata).reference  = { LITERAL, .lref = (yyvsp[0].lref) };
         (yyval.metadata).expression = { FLOAT, StringPool::create((yyvsp[0].lref)->constant), false };
     }
-#line 4515 "src/syntax-analyzer/components/parser.cpp"
+#line 4536 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 269: /* negative_constant: '-' LITERAL_FLOAT  */
-#line 2293 "include/syntax-analyzer/components/yacc.y"
+  case 273: /* negative_constant: '-' LITERAL_FLOAT  */
+#line 2311 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.metadata).reference  = { LITERAL , .lref = SemanticActions::turnNegative((yyvsp[0].lref)) };
         (yyval.metadata).expression = { FLOAT, StringPool::create((yyvsp[0].lref)->constant), false };
 
     }
-#line 4525 "src/syntax-analyzer/components/parser.cpp"
+#line 4546 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 270: /* variable: IDENTIFIER  */
-#line 2304 "include/syntax-analyzer/components/yacc.y"
+  case 274: /* variable: IDENTIFIER  */
+#line 2322 "include/syntax-analyzer/components/yacc.y"
     {
         (yyval.pid) = StringPool::create((yyvsp[0].sref)->symbol);
 
         SemanticAnalyzer::CHK_VARIABLES.notifyVariableName((yyvsp[0].sref)->symbol);
 
     }
-#line 4536 "src/syntax-analyzer/components/parser.cpp"
+#line 4557 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
-  case 271: /* variable: variable '.' IDENTIFIER  */
-#line 2311 "include/syntax-analyzer/components/yacc.y"
+  case 275: /* variable: variable '.' IDENTIFIER  */
+#line 2329 "include/syntax-analyzer/components/yacc.y"
     {
         StringPool::append((yyvsp[-2].pid), "." + (yyvsp[0].sref)->symbol);
         (yyval.pid) = (yyvsp[-2].pid);
@@ -4544,11 +4565,11 @@ yyreduce:
         SemanticAnalyzer::CHK_VARIABLES.notifyVariablePrefix((yyvsp[0].sref)->symbol);
 
     }
-#line 4548 "src/syntax-analyzer/components/parser.cpp"
+#line 4569 "src/syntax-analyzer/components/Parser.cpp"
     break;
 
 
-#line 4552 "src/syntax-analyzer/components/parser.cpp"
+#line 4573 "src/syntax-analyzer/components/Parser.cpp"
 
       default: break;
     }
@@ -4741,7 +4762,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 2320 "include/syntax-analyzer/components/yacc.y"
+#line 2338 "include/syntax-analyzer/components/yacc.y"
  // Codes ------------------------------------------
 
 void yyerror(const char* s)

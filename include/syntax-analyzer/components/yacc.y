@@ -349,6 +349,14 @@ unnamed_function_declaration_middle:
 
     } // Action: checkFunctionDeclaration()
     unnamed_function_declaration_tail
+    | ')'
+    {
+        SemanticAnalyzer::CHK_FUNCTIONS.checkFunctionDeclaration();
+
+        SemanticActions::announceSpecificError(NO_PARAMS_GIVEN);
+
+    } // Error: No params Given
+    unnamed_function_declaration_tail
 ;
 
 unnamed_function_declaration_tail:
@@ -377,6 +385,16 @@ function_declaration_middle:
             CodeGenerator::addIntermediateCodeBlock(entry);
 
     } // Action: checkFunctionDeclaration()
+    function_declaration_tail
+    | ')'
+    {
+        auto entry = SemanticAnalyzer::CHK_FUNCTIONS.checkFunctionDeclaration();
+        if (entry != nullptr)
+            CodeGenerator::addIntermediateCodeBlock(entry);
+
+        SemanticActions::announceSpecificError(NO_PARAMS_GIVEN);
+
+    } // Error: No params Given
     function_declaration_tail
 ;
 

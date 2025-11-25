@@ -15,9 +15,9 @@ using namespace LexicalAnalyzer;
  */
 TEST_F(TestLexicalAnalyzer, comments)
 {
-    REPORT_HANDLER.setOutput(OUTPUT_DIRECTORY + "/comments.log");
+    REPORT_HANDLER.setOutput(OUTPUT_DIRECTORY + "/lexical_comments.log");
 
-    const std::string file = WORKING_DIRECTORY + "/tests/unit/lexical-analyzer/files/comments.txt";
+    const std::string file = WORKING_DIRECTORY + "/tests/unit/lexical-analyzer/files/lexical_comments.txt";
     assert(open(file.c_str()));
 
     // ----- Comentarios ----- //

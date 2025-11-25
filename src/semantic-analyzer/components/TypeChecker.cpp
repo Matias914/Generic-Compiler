@@ -49,7 +49,7 @@ namespace SemanticAnalyzer
                 ERROR,
                 INCOMPATIBLE_TYPES,
                 LexicalAnalyzer::YYLINENO,
-                {e1.representation, e2.representation}
+            {e1.representation, typeToString(e1.type), e2.representation, typeToString(e2.type)}
             );
             ERROR_HANDLER.add(l);
             return UNKNOWN;
@@ -68,7 +68,7 @@ namespace SemanticAnalyzer
                 ERROR,
                 INCOMPATIBLE_WITH_SEMANTIC,
                 LexicalAnalyzer::YYLINENO,
-                {e1.representation, e2.representation, "CR"}
+                {e1.representation, e2.representation, semanticToString(e2.type)}
             );
             ERROR_HANDLER.add(l);
             return UNKNOWN;
@@ -86,11 +86,37 @@ namespace SemanticAnalyzer
                 ERROR,
                 INCOMPATIBLE_TYPES,
                 LexicalAnalyzer::YYLINENO,
-                {e1.representation, e2.representation}
+                {e1.representation, typeToString(e1.type), e2.representation, typeToString(e2.type)}
             );
             ERROR_HANDLER.add(l);
             return UNKNOWN;
         }
         return e1.type;
+    }
+
+    std::string TypeChecker::typeToString(const int type)
+    {
+        switch (type)
+        {
+        case UINT:
+            return "uint";
+        case FLOAT:
+            return "float";
+        default:
+            return "unknown";
+        }
+    }
+
+    std::string TypeChecker::semanticToString(const int semantic)
+    {
+        switch (semantic)
+        {
+        case CR:
+            return "cr";
+        case CV:
+            return "cv";
+        default:
+            return "unknown";
+        }
     }
 }

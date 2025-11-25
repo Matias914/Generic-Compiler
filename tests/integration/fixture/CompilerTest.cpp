@@ -1,13 +1,15 @@
-#include "TestParserLexer.h"
+#include "CompilerTest.h"
+
+#include <iostream>
 
 #include "utils/CompilerState.h"
 
-void TestParserLexer::SetUp()
+void CompilerTest::SetUp()
 {
     CompilerState::reset();
 }
 
-void TestParserLexer::TearDown()
+void CompilerTest::TearDown()
 {
     if (VERBOSE_OPTION)
         if (REPORT_HANDLER.validOutput())

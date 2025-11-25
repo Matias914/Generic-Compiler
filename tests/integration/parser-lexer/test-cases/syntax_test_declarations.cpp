@@ -1,15 +1,15 @@
-#include "../fixture/TestParserLexer.h"
+#include "../../fixture/CompilerTest.h"
 #include "gtest/gtest.h"
 #include "lexical-analyzer/LexicalAnalyzer.h"
 #include "syntax-analyzer/SyntaxAnalyzer.h"
 #include "utils/ReportHandler.h"
 #include "utils/resources/codes.h"
 
-TEST_F(TestParserLexer, declarations)
+TEST_F(CompilerTest, declarations)
 {
-    REPORT_HANDLER.setOutput(OUTPUT_DIRECTORY + "/declarations.log");
+    REPORT_HANDLER.setOutput(OUTPUT_DIRECTORY + "/syntax_declarations.log");
 
-    const std::string file = WORKING_DIRECTORY + "/tests/integration/parser-lexer/files/declarations.txt";
+    const std::string file = WORKING_DIRECTORY + "/tests/integration/parser-lexer/files/syntax_declarations.txt";
     assert(LexicalAnalyzer::open(file));
 
     SyntaxAnalyzer::analyze();
