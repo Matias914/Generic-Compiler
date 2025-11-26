@@ -63,22 +63,20 @@ sudo docker run --rm \
     cp gc_tests /generic_compiler/bin/
   "
 ```
+#### Para Windows (PowerShell):
 
-#### Para Windows (Powershell/CMD):
+En PowerShell se usa `${PWD}` para el directorio actual y el acento grave (backtick) `` ` `` para los saltos de línea.
 
-```bash
-docker run --rm ^
-  -v "%cd%":/generic_compiler <nombre-imagen> ^
-  bash -c "
-    set -e &&
-    mkdir -p /tmp/build &&
-    cd /tmp/build &&
-    cmake -DCMAKE_TOOLCHAIN_FILE=/generic_compiler/windows-toolchain.cmake /generic_compiler &&
-    make &&
-    mkdir -p /generic_compiler/bin &&
-    cp gc.exe /generic_compiler/bin/ &&
-    cp gc_tests.exe /generic_compiler/bin/
-  "
+```powershell
+docker run --rm -v "${PWD}:/generic_compiler" <nombre-imagen> bash -c "set -e && mkdir -p /tmp/build && cd /tmp/build && cmake -DCMAKE_TOOLCHAIN_FILE=/generic_compiler/windows-toolchain.cmake /generic_compiler && make && mkdir -p /generic_compiler/bin && cp gc.exe /generic_compiler/bin/ && cp gc_tests.exe /generic_compiler/bin/"
+```
+
+#### Para Windows (Command Prompt / CMD):
+
+En CMD se usa `%cd%` para el directorio actual y el acento circunflejo `^` para los saltos de línea.
+
+```cmd
+docker run --rm -v "%cd%":/generic_compiler <nombre-imagen> bash -c "set -e && mkdir -p /tmp/build && cd /tmp/build && cmake -DCMAKE_TOOLCHAIN_FILE=/generic_compiler/windows-toolchain.cmake /generic_compiler && make && mkdir -p /generic_compiler/bin && cp gc.exe /generic_compiler/bin/ && cp gc_tests.exe /generic_compiler/bin/"
 ```
 
 Este comando dejará los ejecutables `gc` y `gc_tests` en una nueva carpeta `bin/` en la raíz de tu proyecto.
