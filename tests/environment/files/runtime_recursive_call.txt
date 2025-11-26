@@ -9,7 +9,10 @@
 
 PROGRAMA {
     uint RECURSIVA (uint A) {
-        return (RECURSIVA(A->A));
+        uint INTERMEDIA (uint A) {
+            return (RECURSIVA(A->A));
+        };
+        return (INTERMEDIA(A->A));
     };
 
     uint NORMAL (uint A) {
