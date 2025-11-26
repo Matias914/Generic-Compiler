@@ -83,8 +83,8 @@ TEST_F(EnvironmentTest, RunRuntimeCases)
                 "docker run --rm "
                 "-v \"" + WORKING_DIRECTORY + ":/app\" "
                 "gc-test-env "
-                "bash -c \"sed -i 's/\\r$//' " + relScriptPathInDocker + " && "
-                "bash " + relScriptPathInDocker + " " + relFilesPathInDocker + "\"";
+                "bash -c 'sed -i \"s/\\r$//\" " + relScriptPathInDocker + " && "
+                "bash " + relScriptPathInDocker + " " + relFilesPathInDocker + "'";
             dockerCmd += " > \"" + tempOut + "\"";
             runCommand(dockerCmd);
 
@@ -98,9 +98,13 @@ TEST_F(EnvironmentTest, RunRuntimeCases)
             std::cout << "[OUT ] Salida Real: " << actualNorm << std::endl;
 
             if (actualNorm == "SCRIPT_DETECTED_COMILATION_ERROR") {
+                // Se elimina el archivo temporal de salida
+                if (fs::exists(tempOut)) fs::remove(tempOut);
                 FAIL() << "El compilador 'gc' falló al compilar " << filename;
             }
             if (actualNorm == "SCRIPT_DETECTED_WABT_ERROR") {
+                // Se elimina el archivo temporal de salida
+                if (fs::exists(tempOut)) fs::remove(tempOut);
                 FAIL() << "El comando wat2wasm falló al ejecutarse " << filename;
             }
 

@@ -15,7 +15,7 @@ fi
 
 # --- DEBUGGING ---
 # Se manda esto a stderr para verlo en consola pero no ensuciar el archivo de salida
-echo "DEBUG: Docker recibió el archivo: '$SOURCE_SOURCE_REL_PATH'" >&2
+echo "DEBUG: Docker recibió el archivo: '$SOURCE_REL_PATH'" >&2
 
 # Se crea compilador dentro del entorno de Docker
 mkdir -p build
