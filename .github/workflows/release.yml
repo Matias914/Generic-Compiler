@@ -1,0 +1,54 @@
+name: Create GitHub Release
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker image
+        run: docker build -t generic-compiler-image .
+
+      # --- Construcción y Empaquetado para Linux ---
+      - name: Build Linux binary
+        run: >
+          docker run --rm --user root -v "$(pwd)":/generic_compiler -w /generic_compiler generic-compiler-image bash -c
+          "set -e && mkdir -p /tmp/build && cd /tmp/build && cmake /generic_compiler && make && mkdir -p /generic_compiler/bin && cp gc
+          /generic_compiler/bin/ && cp gc_tests /generic_compiler/bin/"
+
+      - name: Create Linux release archive
+        run: tar -czvf gc-linux-amd64.tar.gz -C bin/ gc gc_tests
+
+      # --- Construcción y Empaquetado para Windows ---
+      - name: Build Windows binary
+        run: >
+          docker run --rm --user root -v "$(pwd)":/generic_compiler -w /generic_compiler generic-compiler-image bash -c
+          "set -e && mkdir -p /tmp/build && cd /tmp/build && cmake -DCMAKE_TOOLCHAIN_FILE=/generic_compiler/windows-toolchain.cmake
+          /generic_compiler && make && mkdir -p /generic_compiler/bin && cp gc.exe /generic_compiler/bin/ && cp gc_tests.exe /generic_compiler/bin/"
+
+      - name: Install zip for Windows archive
+        run: sudo apt-get update && sudo apt-get install -y zip
+
+      - name: Create Windows release archive
+        run: zip gc-windows-amd64.zip bin/gc.exe bin/gc_tests.exe
+
+      # --- Creación de la Release en GitHub ---
+      - name: Create Release and Upload Assets
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            gc-linux-amd64.tar.gz
+            gc-windows-amd64.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
