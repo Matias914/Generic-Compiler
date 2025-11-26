@@ -35,7 +35,7 @@ unsigned int Translator::translate(const char c)
         return MINUS;
     if (asc == 43)
         return PLUS;
-    if (asc == 9 || asc == 32)
+    if (asc == 9 || asc == 32 || asc == 13)
         return BLANK;
     if (asc == 10)
         return ENDLINE;

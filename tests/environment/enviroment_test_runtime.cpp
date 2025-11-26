@@ -84,7 +84,7 @@ TEST_F(EnvironmentTest, RunRuntimeCases)
                 "-v \"" + WORKING_DIRECTORY + ":/app\" "
                 "gc-test-env "
                 "bash -c \"sed -i 's/\\r$//' " + relScriptPathInDocker + " && "
-                "bash " + relScriptPathInDocker + " " + relFilesPathInDocker + " &&" "\"";
+                "bash " + relScriptPathInDocker + " " + relFilesPathInDocker + "\"";
             dockerCmd += " > \"" + tempOut + "\"";
             runCommand(dockerCmd);
 
