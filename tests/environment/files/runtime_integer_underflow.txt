@@ -1,0 +1,19 @@
+## ------------------------------ ##
+##   Prueba en RUNTIME de Error   ##
+## ------------------------------ ##
+
+##
+    En este archivo se demuestra que la resta con underflow falla
+    en ejecución con un ejemplo claro.
+##
+
+PROGRAMA {
+    uint X, Y, Z;
+
+    X, Y, Z = 1UI, 2UI, 0UI;
+
+    print(X);
+    print(Y);
+
+    X := X - Y;
+}

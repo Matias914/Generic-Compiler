@@ -24,7 +24,7 @@ int main(int argc, char** argv)
 {
     testing::InitGoogleTest(&argc, argv);
 
-    // Parsing requiere argumentos del tipo --option para diferenciarlos
+    // Parsing requiere argumentos del tipo '--' para diferenciarlos
     // del resto de argumentos de GoogleTest.
     for (int i = 1; i < argc; ++i) {
         if (std::string arg = argv[i]; arg.rfind("--input=", 0) == 0) {

@@ -1,0 +1,28 @@
+## ------------------------------ ##
+##   Prueba en RUNTIME de Error   ##
+## ------------------------------ ##
+
+##
+    En este archivo se demuestra que la recursividad falla
+    en ejecución con un ejemplo claro.
+##
+
+PROGRAMA {
+    uint RECURSIVA (uint A) {
+        return (RECURSIVA(A->A));
+    };
+
+    uint NORMAL (uint A) {
+        print(A);
+        return (RECURSIVA(A->A));
+    };
+
+    uint X, Y, Z;
+
+    X, Y, Z = 1UI, 2UI, 0UI;
+
+    print(X);
+    print(Y);
+
+    X := NORMAL(Y->A);
+}

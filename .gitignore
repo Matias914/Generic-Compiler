@@ -56,3 +56,6 @@ outputs/
 bin/
 
 docs/demo.tape
+
+*.wat
+*.wasm

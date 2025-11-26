@@ -97,6 +97,7 @@ set(TEST_SOURCES
         tests/integration/code-generation/test-cases/code_test_functions.cpp
         tests/integration/code-generation/test-cases/code_test_assignments.cpp
         tests/integration/code-generation/test-cases/code_test_control.cpp
+        tests/environment/enviroment_test_runtime.cpp
 )
 
 # =========================================================

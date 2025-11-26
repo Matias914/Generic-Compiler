@@ -10,7 +10,9 @@ TEST_F(CompilerTest, semantic_variables)
     REPORT_HANDLER.setOutput(OUTPUT_DIRECTORY + "/semantic_variables.log");
 
     const std::string file = WORKING_DIRECTORY + "/tests/integration/semantic-analysis/files/semantic_variables.txt";
+    std::cout << file << std::endl;
     assert(LexicalAnalyzer::open(file));
+
 
     SyntaxAnalyzer::analyze();
 

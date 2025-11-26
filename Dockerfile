@@ -1,29 +1,5 @@
 FROM ubuntu:22.04
 
-# ------- apt-get update
-# Actualiza la lista de paquetes disponibles
-# "Refresca" el catálogo de software disponible
-#
-# ------- && apt-get install -y
-# && = "y si el comando anterior fue exitoso, entonces..."
-# install -y = instalar paquetes sin preguntar (parametro "yes")
-#
-# Los paquetes:
-#
-# ------- build-essential:
-# Meta-paquete que incluye gcc, g++, make y otras herramientas básicas de compilación
-# ------- cmake:
-# Sistema de build que CLion necesita
-# ------- gdb:
-# Debugger que CLion usa para depurar código
-# ------- rsync:
-# CLion lo usa para sincronizar archivos entre tu máquina y el contenedor
-# ------- tar:
-# Para comprimir/descomprimir archivos (CLion también lo necesita)
-#
-# ------- && rm -rf /var/lib/apt/lists/*
-# Limpia la caché de apt-get para hacer la imagen más pequeña
-# /var/lib/apt/lists/* contiene los metadatos de paquetes que ya no necesitas
 RUN apt-get update && apt-get install -y \
     build-essential \
     cmake \
