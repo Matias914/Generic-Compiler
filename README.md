@@ -140,7 +140,7 @@ Para verificar la integridad y el correcto funcionamiento de los componentes del
 
 ## Ejecución en Navegador (Runtime) 🚀
 
-El proyecto incluye un entorno web para ejecutar tus archivos `.wat` compilados.
+El proyecto incluye un entorno web para ejecutar tus archivos `.wasm` compilados.
 
 1.  **Inicia un servidor web local** desde la raíz del proyecto:
 
@@ -150,6 +150,6 @@ El proyecto incluye un entorno web para ejecutar tus archivos `.wat` compilados.
 
 2.  **Abre tu navegador** e ingresa a la URL del runtime pasando tu archivo como parámetro:
 
-    `http://localhost:8000/runtime/index.html?file=../outputs/program001.wat`
+    `http://localhost:8000/runtime/index.html?file=../outputs/program001.wasm`
 
-    *(Asegúrate de que la ruta relativa en `file=` apunte a donde generaste tu archivo wat).*
+    *(Asegúrate de que la ruta relativa en `file=` apunte a donde generaste tu archivo wasm).*
